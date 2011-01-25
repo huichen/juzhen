@@ -11,6 +11,7 @@
 namespace MAT {
 using namespace std;
 
+#define CD complex<double>
 #define CMatrix Matrix<complex<double> >
 #define CDMatrix DMatrix<complex<double> >
 
@@ -41,12 +42,14 @@ public:
   Matrix() : nCol(0), nRow(0) {
     _Data = NULL;  
     _DataSize = 0;
+    _Transpose = CblasNoTrans;
   } 
 
   Matrix(size_t nr, size_t nc) : nCol(nc), nRow(nr) {
     _Data = (DataType *) malloc(nCol*nRow*sizeof(DataType));
     assert(_Data);
     _DataSize = nr*nc;
+    _Transpose = CblasNoTrans;
   } 
 
   Matrix(const DataType *data, size_t nr, size_t nc) : nCol(nc), nRow(nr) {
@@ -56,6 +59,7 @@ public:
     assert(_Data);
     memcpy(_Data, data, nCol*nRow*sizeof(DataType));    
     _DataSize = nCol * nRow;
+    _Transpose = CblasNoTrans;
   } 
 
   DataType * getDataPtr() const {
@@ -72,6 +76,7 @@ public:
     _Data = (DataType *) malloc(nCol*nRow*sizeof(DataType));
     memcpy(_Data, m.getDataPtr(), nCol*nRow*sizeof(DataType));    
     _DataSize = nCol*nRow;
+    _Transpose = m._Transpose;
   } 
 
   const Matrix<DataType>& operator= (const Matrix<DataType> &rhs) {
@@ -85,6 +90,7 @@ public:
       _DataSize = nCol*nRow;
     }
     memcpy(_Data, rhs.getDataPtr(), nCol*nRow*sizeof(DataType));    
+    _Transpose = rhs._Transpose;
     return *this;
   } 
 
@@ -96,6 +102,7 @@ public:
       _DataSize = sizeof(rhs); 
     }
     memcpy(_Data, rhs, sizeof(rhs)*sizeof(DataType));
+    _Transpose = CblasNoTrans;
     return *this;
   } 
 
@@ -103,6 +110,14 @@ public:
     for (size_t i=0; i<_DataSize; i++) _Data[i]=rhs;
     return *this;
   } 
+
+  void setTranspose(CBLAS_TRANSPOSE tr) {
+    _Transpose = tr;
+  }
+
+  CBLAS_TRANSPOSE getTranspose() const {
+    return _Transpose;
+  }
 
   void setDim(size_t nr, size_t nc) {
     if (_DataSize < nc * nr) {
@@ -119,34 +134,73 @@ public:
 
   DataType& operator()(size_t i, size_t j) {
     assert(i<nRow && j<nCol);
-    return _Data[j*nRow + i];
+    if (_Transpose == CblasNoTrans) return _Data[j*nRow + i];
+    else return _Data[i*nCol + j];
   }
 
   DataType operator()(size_t i, size_t j) const {
     assert(i<nRow && j<nCol);
-    return _Data[j*nRow + i];
+    if (_Transpose == CblasNoTrans) return _Data[j*nRow + i];
+    else return _Data[i*nCol + j];
   }
 
   const Matrix<DataType> operator*(const Matrix<DataType>& rhs) {
+
     assert (nCol == rhs.nRow);
+    size_t m,n,k1,k2,lda,ldb;
+    m = nRow;
+    k1 = nCol;
+    k2 = rhs.nRow;
+    n = rhs.nCol;
+    lda = (_Transpose==CblasTrans)? nCol: nRow;
+    ldb = (rhs._Transpose==CblasTrans)? rhs.nCol: rhs.nRow;
 
-    Matrix<DataType> m;
+    Matrix<DataType> ma;
 
-    m.setDim(nRow, rhs.nCol);
+    ma.setDim(m,n);
     DataType alpha, beta;
     alpha = 1;
     beta = 0;
-    gemm<DataType>(CblasColMajor, CblasNoTrans, CblasNoTrans, nRow, rhs.nCol, nCol, 
-      alpha, _Data, nRow, rhs.getDataPtr(), nCol, beta, m.getDataPtr(), nRow);
+    
+    gemm<DataType>(CblasColMajor, _Transpose, rhs._Transpose, m, n, k1, 
+      alpha, _Data, lda, rhs.getDataPtr(), ldb, beta, ma.getDataPtr(), m);
 
-    return m;
+    return ma;
   } 
-  
+
+  Matrix<DataType> &transpose() {
+    _Transpose = (_Transpose == CblasTrans)? CblasNoTrans: CblasTrans;
+   setDim(nCol, nRow);
+   return *this;
+  } 
+
+  Matrix<DataType> &conjTrans() {
+   transpose();
+   for (size_t i=0; i<nRow; i++) 
+     for (size_t j=0; j<nCol; j++) 
+       (*this)(i,j)=conj((*this)(i,j));
+   return *this;
+  } 
+
+
+
 protected:
   DataType * _Data; 
   size_t _DataSize;
+  CBLAS_TRANSPOSE _Transpose;
 };
 
+template<typename DataType> Matrix<DataType> transpose(const Matrix<DataType> &m) {
+  Matrix<DataType> m1 = m;
+  m.transpose();
+  return m1;
+}
+
+template<typename DataType> Matrix<DataType> conjTrans(const Matrix<DataType> &m) {
+  Matrix<DataType> m1 = m;
+  m.conjTrans();
+  return m1;
+}
 
 
 template<typename DataType> class DMatrix : public Matrix<DataType> {
@@ -169,8 +223,8 @@ public:
 template<> class DMatrix<complex<double> > : public Matrix<complex<double> > {
 
 public:
-	DMatrix(size_t n) {
-		Matrix<complex<double> >::_Data = (complex<double>  *) malloc( n*n*sizeof(complex<double> ));
+  DMatrix(size_t n) {
+    Matrix<complex<double> >::_Data = (complex<double>  *) malloc( n*n*sizeof(complex<double> ));
     assert(Matrix<complex<double> >::_Data);
     Matrix<complex<double> >::nCol = n;
     Matrix<complex<double> >::nRow = n;
@@ -182,8 +236,6 @@ public:
         else (*this)(i,j)=0;
   }
 };
-
-
 
 template<typename DataType> ostream& operator<< (ostream& out, const Matrix<DataType> &m) {
   for (size_t i=0; i<m.nRow; i++) {
@@ -237,5 +289,19 @@ int main() {
   cout << "1=" << endl << CDMatrix(4) << endl;
   cout << "m6*1=" << endl << m6*CDMatrix(4) << endl;
 
+  CD c1[]={ CD(1.,0.), CD(-3., 0.), CD(2.0, 0.), CD(-2., .0), CD(6., 0.), CD(3.0, 0.)};
+  CMatrix m7(c1, 2,3);
+  //cout << "t(m7)=" << endl << transpose(m7) << endl;
+  //cout << "t^2(m7)=" << endl << transpose(transpose(m7)) << endl;
+  cout << "m7=" << endl << m7 << endl;
+
+  CD c2[]={CD( 1., 1.0),  CD( 2., 0.),    CD(3., 0.0 ),   CD(6., 0.), 
+           CD( 1., .0),  CD( 2., 0.),    CD(3., 0.0 ),   CD(6., 0.), 
+           CD( 1., .0),  CD( 2., 0.),    CD(3., 0.0 ),   CD(6., 0.)};
+  CMatrix m8(c2, 4, 3);
+  m8.conjTrans();
+  cout << "m8=" << endl << m8 << endl;
+
+  cout << "m7*m8=" << endl << m7*m8 << endl;
   return 0;
 }
