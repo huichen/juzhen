@@ -14,7 +14,7 @@ using namespace std;
 
 #define CD complex<double>
 #define CMatrix Matrix<complex<double> >
-#define CDMatrix DMatrix<complex<double> >
+#define CIdentityMatrix IdentityMatrix<complex<double> >
 
 /* complex constant */
 complex<double> C1 = complex<double>(1,0);
@@ -27,7 +27,7 @@ template<> void gemm<double>(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE Tran
   cblas_dgemm(Order, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, c, ldc); 
 };
 
-template<> void gemm<complex<double> >(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const complex<double>  alpha, const complex<double>  *A, const MKL_INT lda, const complex<double>  *B, const MKL_INT ldb, const complex<double>  beta, complex<double>  *c, const MKL_INT ldc) { 
+template<> void gemm<CD >(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const CD  alpha, const CD  *A, const MKL_INT lda, const CD  *B, const MKL_INT ldb, const CD  beta, CD  *c, const MKL_INT ldc) { 
   cblas_zgemm(Order, TransA, TransB, M, N, K, &alpha, A, lda, B, ldb, &beta, c, ldc); 
 };
 
@@ -243,10 +243,10 @@ protected:
 };
 
 /* Matrix derived classes */
-template<typename DataType> class DMatrix : public Matrix<DataType> {
-// diagnal matrix
+template<typename DataType> class IdentityMatrix : public Matrix<DataType> {
+// identity matrix
 public:
-  DMatrix(size_t n) {
+  IdentityMatrix(size_t n) {
     Matrix<DataType>::_Data = (DataType *) malloc( n*n*sizeof(DataType));
     assert(Matrix<DataType>::_Data);
     Matrix<DataType>::nCol = n;
@@ -260,10 +260,10 @@ public:
   }
 };
 
-template<> class DMatrix<complex<double> > : public Matrix<complex<double> > {
+template<> class IdentityMatrix<complex<double> > : public Matrix<complex<double> > {
 // complex diagnal
 public:
-  DMatrix(size_t n) {
+  IdentityMatrix(size_t n) {
     Matrix<complex<double> >::_Data = (complex<double>  *) malloc( n*n*sizeof(complex<double> ));
     assert(Matrix<complex<double> >::_Data);
     Matrix<complex<double> >::nCol = n;

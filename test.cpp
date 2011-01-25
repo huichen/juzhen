@@ -29,7 +29,7 @@ int main() {
   P("m4",m4)
 
 // diagnal matrix
-  Matrix<double> m5 = DMatrix<double>(3);
+  Matrix<double> m5 = IdentityMatrix<double>(3);
   P("m5", m5)
   P("m4*m5", m4*m5)
 
@@ -37,8 +37,8 @@ int main() {
   m6 = C1*3. + Ci*2.;
 
   P("m6", m6)
-  P("1", CDMatrix(4))
-  P("m6*1", m6*CDMatrix(4))
+  P("1", CIdentityMatrix(4))
+  P("m6*1", m6*CIdentityMatrix(4))
 
 // complex conjugate transpose
 
