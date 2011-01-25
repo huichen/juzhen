@@ -236,6 +236,31 @@ public:
    return *this;
   } 
 
+  Matrix<DataType> subMatrix(size_t r1, size_t r2, size_t c1, size_t c2) {
+    assert(r1<=r2 && c1<=c2);
+    Matrix<DataType> m(r2-r1, c2-c1);
+    for (size_t i=0; i<m.nRow; i++) 
+      for (size_t j=0; j<m.nCol; j++) 
+        m(i,j) = (*this)(i+r1, j+c1);
+    return m;
+  }
+
+  Matrix<DataType> &replace(size_t r, size_t c, Matrix<DataType> mt) {
+    for (size_t i=0; i<mt.nRow; i++) 
+      for (size_t j=0; j<mt.nCol; j++) 
+        (*this)(i+r, j+c) = mt(i,j);
+    return *this;
+  }
+
+  Matrix<DataType> colVector(size_t c) {
+   return subMatrix(0,nRow, c, c+1);
+  }
+
+  Matrix<DataType> rowVector(size_t r) {
+   return subMatrix(r, r+1, 0, nCol);
+  }
+
+/* private data */
 protected:
   DataType * _Data; 
   size_t _DataSize;
@@ -255,28 +280,10 @@ public:
     
     for (size_t i=0; i<n; i++) 
       for (size_t j=0; j<n; j++)
-        if (i==j) (*this)(i,j)=1;
+        if (i==j) (*this)(i,j)=1.;
         else (*this)(i,j)=0;
   }
 };
-
-template<> class IdentityMatrix<complex<double> > : public Matrix<complex<double> > {
-// complex diagnal
-public:
-  IdentityMatrix(size_t n) {
-    Matrix<complex<double> >::_Data = (complex<double>  *) malloc( n*n*sizeof(complex<double> ));
-    assert(Matrix<complex<double> >::_Data);
-    Matrix<complex<double> >::nCol = n;
-    Matrix<complex<double> >::nRow = n;
-    Matrix<complex<double> >::_DataSize = n*n;
-    
-    for (size_t i=0; i<n; i++) 
-	    for (size_t j=0; j<n; j++)
-        if (i==j) (*this)(i,j)=C1;
-        else (*this)(i,j)=0;
-  }
-};
-
 
 /* matrix operation functions */
 
@@ -306,7 +313,6 @@ template<typename DataType> const Matrix<DataType> operator*(const Matrix<DataTy
 }
 
 /* stream operator overload */
-
 template<typename DataType> ostream& operator<< (ostream& out, const Matrix<DataType> &m) {
   for (size_t i=0; i<m.nRow; i++) {
     for (size_t j=0; j<m.nCol; j++)
