@@ -1,3 +1,3 @@
 all:
-	icc mklcpp.cpp -o mklcpp -lmkl_rt
-	./mklcpp
+	icc test.cpp -o test -lmkl_rt
+	./test
