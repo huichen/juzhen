@@ -7,13 +7,11 @@ using namespace MAT;
 int main() {
 
 // assign and copy
-  Matrix<double> m1;
 
   double a[] = {1., 2., 3., 4.};
   double b[] = {1., 2., 3., 4., 5., 6.};
 
-  m1 = a;
-  m1.setDim(2, 2);
+  Matrix<double> m1(a, 2, 2);
   P("m1(0,1)", m1(0,1))
 
   Matrix<double> m2 = m1;
@@ -30,6 +28,8 @@ int main() {
 
 // identity matrix
   Matrix<double> m5 = IdentityMatrix<double>(3);
+  cout << m5.nCol << m5.nRow << sizeof(m5.getDataPtr()) << endl;
+  P("IdentityMatrix(3)=", IdentityMatrix<double>(3))
   P("m5", m5)
   P("m4*m5", m4*m5)
 

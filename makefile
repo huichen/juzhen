@@ -1,5 +1,5 @@
 all:
-	icc test.cpp -o test -lmkl_rt
+	icc test.cpp -o test -lmkl_rt -g
 	./test
 
 clean:

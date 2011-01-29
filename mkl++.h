@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <complex>
 #include <cmath>
+#include <memory>
 
 namespace MAT {
 using namespace std;
@@ -21,7 +22,9 @@ complex<double> C1 = complex<double>(1,0);
 complex<double> Ci = complex<double>(0,1);
 
 /* MKL function wrappers implemented with templates*/
-template<typename T> void gemm(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const T alpha, const T *A, const MKL_INT lda, const T *B, const MKL_INT ldb, const T beta, T *c, const MKL_INT ldc) { };
+template<typename T> void gemm(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const T alpha, const T *A, const MKL_INT lda, const T *B, const MKL_INT ldb, const T beta, T *c, const MKL_INT ldc) { 
+  assert(0); // always fails
+};
 
 template<> void gemm<double>(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const double alpha, const double *A, const MKL_INT lda, const double *B, const MKL_INT ldb, const double beta, double *c, const MKL_INT ldc) { 
   cblas_dgemm(Order, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, c, ldc); 
@@ -29,6 +32,60 @@ template<> void gemm<double>(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE Tran
 
 template<> void gemm<CD >(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const CD  alpha, const CD  *A, const MKL_INT lda, const CD  *B, const MKL_INT ldb, const CD  beta, CD  *c, const MKL_INT ldc) { 
   cblas_zgemm(Order, TransA, TransB, M, N, K, &alpha, A, lda, B, ldb, &beta, c, ldc); 
+};
+
+template<typename DataType> class DataArray {
+public:
+  DataArray(size_t s) {
+    _Data = (DataType *) malloc(s*sizeof(DataType));
+    assert (_Data);
+    size = s;
+  }
+
+  DataArray(const DataArray<DataType> &da) {
+    if (&da) {
+      _Data = (DataType *) malloc(da.size*sizeof(DataType));
+      assert (_Data);
+      if (da._Data) memcpy(_Data, da._Data, da.size*sizeof(DataType));
+      size = da.size;
+    } else {
+      size = 0;
+      _Data = NULL;
+    }
+  }
+
+  DataArray(const DataArray<DataType> &da, const size_t s) {
+    _Data = (DataType *) malloc(s*sizeof(DataType));
+    assert (_Data);
+    if (&da) {
+      size = (s < da.size? s : da.size);
+      memcpy(_Data, da._Data, size*sizeof(DataType));
+    }
+  }
+
+  DataArray(const DataType *da, const size_t s) {
+    _Data = (DataType *) malloc(s*sizeof(DataType));
+    assert (_Data);
+    if (da) memcpy(_Data, da, s*sizeof(DataType));
+    size = s;
+  }
+   
+  ~DataArray() {
+    if (_Data) free(_Data);
+  } 
+
+  DataType& operator[](const size_t i) {
+    return _Data[i];
+  }
+ 
+  DataType * _Data;
+  size_t size;
+};
+
+template<typename DataType>
+class DataPtr{
+public:
+  typedef auto_ptr<DataArray<DataType> > Type;
 };
 
 /* Matrix class */
@@ -39,18 +96,15 @@ public:
 
 /* deconstruction, construction and assignment */
   ~Matrix() {
-    if(_Data) free(_Data);
   }
 
   Matrix() : nCol(0), nRow(0) {
-    _Data = NULL;  
     _DataSize = 0;
     _Transpose = CblasNoTrans;
   } 
 
   Matrix(size_t nr, size_t nc) : nCol(nc), nRow(nr) {
-    _Data = (DataType *) malloc(nCol*nRow*sizeof(DataType));
-    assert(_Data);
+    _Data = DataPtr<DataType>::Type(new DataArray<DataType>(nCol*nRow));
     _DataSize = nr*nc;
     _Transpose = CblasNoTrans;
   } 
@@ -58,19 +112,16 @@ public:
   Matrix(const DataType *data, size_t nr, size_t nc) : nCol(nc), nRow(nr) {
     nCol = nc;
     nRow = nr;
-    _Data = (DataType *) malloc(nCol*nRow*sizeof(DataType));
-    assert(_Data);
-    memcpy(_Data, data, nCol*nRow*sizeof(DataType));    
-    _DataSize = nCol * nRow;
+    _Data = DataPtr<DataType>::Type(new DataArray<DataType>(data, nr*nc));
+    _DataSize = nr*nc;
     _Transpose = CblasNoTrans;
   } 
 
   Matrix(const Matrix<DataType> &m) {
     nCol = m.nCol;
     nRow = m.nRow;
-    _Data = (DataType *) malloc(nCol*nRow*sizeof(DataType));
-    memcpy(_Data, m.getDataPtr(), nCol*nRow*sizeof(DataType));    
-    _DataSize = nCol*nRow;
+    _Data = DataPtr<DataType>::Type(new DataArray<DataType>(*(m._Data))); 
+    _DataSize = m._DataSize;
     _Transpose = m._Transpose;
   } 
 
@@ -79,36 +130,21 @@ public:
     nCol = rhs.nCol;
     nRow = rhs.nRow;
     if (nCol*nRow > _DataSize) {
-      free(_Data);
-      _Data = (DataType *) malloc(nCol*nRow*sizeof(DataType));
-      assert(_Data);
+      _Data = rhs._Data;
       _DataSize = nCol*nRow;
     }
-    memcpy(_Data, rhs.getDataPtr(), nCol*nRow*sizeof(DataType));    
     _Transpose = rhs._Transpose;
     return *this;
   } 
 
-  const Matrix<DataType>& operator= (const DataType *rhs) {
-    if (sizeof(rhs)>_DataSize) {
-      if (_Data) free(_Data);
-      _Data = (DataType *) malloc( sizeof(rhs)*sizeof(DataType));
-      assert(_Data);
-      _DataSize = sizeof(rhs); 
-    }
-    memcpy(_Data, rhs, sizeof(rhs)*sizeof(DataType));
-    _Transpose = CblasNoTrans;
-    return *this;
-  } 
-
   const Matrix<DataType>& operator= (const DataType rhs) {
-    for (size_t i=0; i<_DataSize; i++) _Data[i]=rhs;
+    for (size_t i=0; i<_DataSize; i++) (*_Data)[i]=rhs;
     return *this;
   } 
 
 /* interface to private data */
   DataType * getDataPtr() const {
-    return _Data;
+    return (*_Data)._Data;
   }
 
   size_t getDataSize() {
@@ -124,10 +160,7 @@ public:
 
   void setDim(size_t nr, size_t nc) {
     if (_DataSize < nc * nr) {
-      DataType * newData = (DataType *) malloc( nc*nr*sizeof(DataType));
-      assert(newData);
-      memcpy(newData, _Data, nCol*nRow*sizeof(DataType));
-      if (_Data) free(_Data);
+      typename DataPtr<DataType>::Type newData(new DataArray<DataType>(*_Data, nr*nc));
       _Data = newData;
       _DataSize = nc*nr;
     }
@@ -138,14 +171,14 @@ public:
 /* operator overloading */
   inline DataType& operator()(size_t i, size_t j) {
     assert(i<nRow && j<nCol);
-    if (_Transpose == CblasNoTrans) return _Data[j*nRow + i];
-    else return _Data[i*nCol + j];
+    if (_Transpose == CblasNoTrans) return (*_Data)[j*nRow + i];
+    else return (*_Data)[i*nCol + j];
   }
 
   inline DataType operator()(size_t i, size_t j) const {
     assert(i<nRow && j<nCol);
-    if (_Transpose == CblasNoTrans) return _Data[j*nRow + i];
-    else return _Data[i*nCol + j];
+    if (_Transpose == CblasNoTrans) return (*_Data)[j*nRow + i];
+    else return (*_Data)[i*nCol + j];
   }
 
   // arithmetic
@@ -167,7 +200,7 @@ public:
     beta = 0;
     
     gemm<DataType>(CblasColMajor, _Transpose, rhs._Transpose, m, n, k1, 
-      alpha, _Data, lda, rhs.getDataPtr(), ldb, beta, ma.getDataPtr(), m);
+      alpha, (*_Data)._Data, lda, rhs.getDataPtr(), ldb, beta, ma.getDataPtr(), m);
 
     return ma;
   } 
@@ -262,7 +295,7 @@ public:
 
 /* private data */
 protected:
-  DataType * _Data; 
+  typename DataPtr<DataType>::Type _Data; 
   size_t _DataSize;
   CBLAS_TRANSPOSE _Transpose;
 };
@@ -272,8 +305,7 @@ template<typename DataType> class IdentityMatrix : public Matrix<DataType> {
 // identity matrix
 public:
   IdentityMatrix(size_t n) {
-    Matrix<DataType>::_Data = (DataType *) malloc( n*n*sizeof(DataType));
-    assert(Matrix<DataType>::_Data);
+    Matrix<DataType>::_Data = DataPtr<DataType>::Type(new DataArray<DataType>(n*n));
     Matrix<DataType>::nCol = n;
     Matrix<DataType>::nRow = n;
     Matrix<DataType>::_DataSize = n*n;
