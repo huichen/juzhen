@@ -1,37 +1,107 @@
 #ifndef MKLPP_H
 #include <iostream>
 #include <mkl_cblas.h>
+#include <mkl_lapacke.h>
 #include <mkl.h>
 #include <string.h>
 #include <assert.h>
-#include <complex>
-#include <cmath>
 #include <memory>
 
 namespace mklpp {
 using namespace std;
 
-#define CD complex<double>
-#define cmatrix matrix<complex<double> >
-#define cidmatrix idmatrix<complex<double> >
+#define CD MKL_Complex16 
+#define cmatrix matrix<CD>
 
 /* complex constant */
-complex<double> C1 = complex<double>(1,0);
-complex<double> Ci = complex<double>(0,1);
+CD C1 = {1.,0.};
+CD Ci = {0.,1.};
+
+/* overloading MKL_Complex16 operations */
+inline const CD operator+(const CD &a, const CD &b) {
+  CD c;
+  c.real = a.real + b.real; 
+  c.imag = a.imag + b.real;
+  return c;
+}
+
+inline CD& operator+=(CD &a, const CD &b) {
+  a.real += b.real; 
+  a.imag += b.real;
+  return a;
+}
+
+inline const CD operator-(const CD &a, const CD &b) {
+  CD c;
+  c.real = a.real - b.real; 
+  c.imag = a.imag - b.real;
+  return c;
+}
+
+inline CD& operator-=(CD &a, const CD &b) {
+  a.real -= b.real; 
+  a.imag -= b.real;
+  return a;
+}
+
+inline const CD operator*(const CD &a, const CD &b) {
+  CD c;
+  c.real = a.real*b.real - a.imag*b.imag; 
+  c.imag = a.real*b.imag + a.imag*b.real;
+  return c;
+}
+
+inline const CD operator*(const CD &a, const double b) {
+  CD c;
+  c.real = a.real * b; 
+  c.imag = a.imag * b;
+  return c;
+}
+
+inline const CD operator/(const CD &a, const double b) {
+  CD c;
+  c.real = a.real / b; 
+  c.imag = a.imag / b;
+  return c;
+}
+
+inline const CD conj(const CD &a) {
+  CD c;
+  c.real = a.real; 
+  c.imag = -a.imag;
+  return c;
+}
+
+ostream& operator<< (ostream& out, const CD &m) {
+  out << "(" << m.real << ", " << m.imag << ")";
+  return out; 
+}
+ 
 
 /* MKL function wrappers implemented with templates*/
-template<typename T> void gemm(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const T alpha, const T *A, const MKL_INT lda, const T *B, const MKL_INT ldb, const T beta, T *c, const MKL_INT ldc) { 
+template<typename T> void gemm(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const T *A, const MKL_INT lda, const T *B, const MKL_INT ldb, T *c, const MKL_INT ldc) { 
   assert(0); // always fails
 };
 
-template<> void gemm<double>(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const double alpha, const double *A, const MKL_INT lda, const double *B, const MKL_INT ldb, const double beta, double *c, const MKL_INT ldc) { 
-  cblas_dgemm(Order, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, c, ldc); 
+template<> void gemm<double>(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const double *A, const MKL_INT lda, const double *B, const MKL_INT ldb, double *c, const MKL_INT ldc) { 
+  cblas_dgemm(Order, TransA, TransB, M, N, K, 1., A, lda, B, ldb, 0., c, ldc); 
 };
 
-template<> void gemm<CD >(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const CD  alpha, const CD  *A, const MKL_INT lda, const CD  *B, const MKL_INT ldb, const CD  beta, CD  *c, const MKL_INT ldc) { 
+template<> void gemm<CD>(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const CD  *A, const MKL_INT lda, const CD  *B, const MKL_INT ldb, CD  *c, const MKL_INT ldc) { 
+  CD alpha = {1., 0.};
+  CD beta = {0., 0.};
   cblas_zgemm(Order, TransA, TransB, M, N, K, &alpha, A, lda, B, ldb, &beta, c, ldc); 
 };
 
+template<typename T> int geev(const CBLAS_ORDER order, const MKL_INT n, T *a, const MKL_INT lda, T * w, T *vl, const MKL_INT ldvl, T *vr, const MKL_INT ldvr) { 
+  assert(0); // always fails
+};
+
+template<> int geev<CD>(const CBLAS_ORDER order, const MKL_INT n, CD *a, const MKL_INT lda, CD * w, CD *vl, const MKL_INT ldvl, CD *vr, const MKL_INT ldvr) { 
+  return LAPACKE_zgeev(LAPACK_COL_MAJOR, 'V', 'V', n, a, lda, w, vl, ldvl, vr, ldvr); 
+};
+
+/* array for auto_ptr */
 template<typename DataType> class DataArray {
 public:
   DataArray(size_t s) {
@@ -181,12 +251,9 @@ public:
     matrix<DataType> ma;
 
     ma.resize(m,n);
-    DataType alpha, beta;
-    alpha = 1;
-    beta = 0;
-    
+
     gemm<DataType>(CblasColMajor, _Transpose, rhs._Transpose, m, n, k1, 
-      alpha, (*_Data)._Data, lda, rhs.getDataPtr(), ldb, beta, ma.getDataPtr(), m);
+      (*_Data)._Data, lda, rhs.getDataPtr(), ldb, ma.getDataPtr(), m);
 
     return ma;
   } 
@@ -251,14 +318,14 @@ public:
    trans();
    for (size_t i=0; i<nRow; i++) 
      for (size_t j=0; j<nCol; j++) 
-       (*this)(i,j)=std::conj((*this)(i,j));
+       (*this)(i,j)=mklpp::conj((*this)(i,j));
    return *this;
   } 
 
   matrix<DataType> &conj() {
    for (size_t i=0; i<nRow; i++) 
      for (size_t j=0; j<nCol; j++) 
-       (*this)(i,j)=std::conj((*this)(i,j));
+       (*this)(i,j)=mklpp::conj((*this)(i,j));
    return *this;
   } 
 
@@ -306,9 +373,31 @@ public:
     for (size_t i=0; i<n; i++) 
       for (size_t j=0; j<n; j++)
         if (i==j) (*this)(i,j)=1.;
-        else (*this)(i,j)=0;
+        else (*this)(i,j)=0.;
   }
 };
+
+class cidmatrix : public matrix<CD> {
+// identity matrix
+public:
+  cidmatrix(size_t n) {
+    matrix<CD>::_Data = DataPtr<CD>::Type(new DataArray<CD>(n*n));
+    matrix<CD>::nCol = n;
+    matrix<CD>::nRow = n;
+    matrix<CD>::_DataSize = n*n;
+    
+    for (size_t i=0; i<n; i++) 
+      for (size_t j=0; j<n; j++)
+        if (i==j) {
+          (*this)(i,j).real = 1.;
+          (*this)(i,j).imag = 0.;
+        } else { 
+          (*this)(i,j).real = 0.;
+          (*this)(i,j).imag = 0.;
+        }
+  }
+};
+
 
 /* matrix operation functions */
 
