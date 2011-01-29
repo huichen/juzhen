@@ -10,12 +10,37 @@
 namespace mklpp {
 using namespace std;
 
-#define CD MKL_Complex16 
+//#define CD MKL_Complex16 
+#define CD ComplexDouble 
+#define MKLCD MKL_Complex16 
 #define cmatrix matrix<CD>
 
+/* wrapping MKL_Complex16 */
+struct _ComplexDouble : MKLCD {
+  _ComplexDouble() {};
+  _ComplexDouble(double r, double i) { real = r; imag = i;};
+  _ComplexDouble(double r) { real = r; imag =0.0;};
+  _ComplexDouble(MKLCD c) { real = c.real; imag =c.imag;};
+
+  const struct _ComplexDouble & operator=(double r) {
+    real = r;
+    imag = 0.0;
+    return *this;
+  }
+
+  const struct _ComplexDouble & operator=(const MKLCD &c) {
+    real = c.real;
+    imag = c.imag;
+    return *this;
+  }
+};
+
+typedef struct _ComplexDouble ComplexDouble;
+
 /* complex constant */
-CD C1 = {1.,0.};
-CD Ci = {0.,1.};
+CD C1 (1.,0.);
+CD Ci (0.,1.);
+CD C0 (0.,0.);
 
 /* overloading MKL_Complex16 operations */
 inline const CD operator+(const CD &a, const CD &b) {
@@ -51,11 +76,23 @@ inline const CD operator*(const CD &a, const CD &b) {
   return c;
 }
 
+inline CD& operator*=(CD &a, const CD &b) {
+  a.real = a.real*b.real - a.imag*b.imag; 
+  a.imag = a.real*b.imag + a.imag*b.real;
+  return a;
+}
+
 inline const CD operator*(const CD &a, const double b) {
   CD c;
   c.real = a.real * b; 
   c.imag = a.imag * b;
   return c;
+}
+
+inline CD& operator*=(CD &a, const double b) {
+  a.real = a.real * b; 
+  a.imag = a.imag * b;
+  return a;
 }
 
 inline const CD operator*(const double b, const CD &a) {
@@ -64,8 +101,6 @@ inline const CD operator*(const double b, const CD &a) {
   c.imag = a.imag * b;
   return c;
 }
-
-
 
 inline const CD operator/(const CD &a, const double b) {
   CD c;
@@ -97,8 +132,8 @@ template<> void gemm<double>(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE Tran
 };
 
 template<> void gemm<CD>(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N, const MKL_INT K, const CD  *A, const MKL_INT lda, const CD  *B, const MKL_INT ldb, CD  *c, const MKL_INT ldc) { 
-  CD alpha = {1., 0.};
-  CD beta = {0., 0.};
+  CD alpha (1., 0.);
+  CD beta (0., 0.);
   cblas_zgemm(Order, TransA, TransB, M, N, K, &alpha, A, lda, B, ldb, &beta, c, ldc); 
 };
 
@@ -138,6 +173,13 @@ public:
       size = (s < da.size? s : da.size);
       memcpy(_Data, da._Data, size*sizeof(DataType));
     }
+  }
+
+  template<typename T> DataArray(const T *da, const size_t s) {
+    _Data = (DataType *) malloc(s*sizeof(DataType));
+    assert (_Data);
+    if (da) for (size_t i=0; i<s; i++) _Data[i] = da[i];
+    size = s;
   }
 
   DataArray(const DataType *da, const size_t s) {
@@ -186,7 +228,7 @@ public:
     _Transpose = CblasNoTrans;
   } 
 
-  matrix(const DataType *data, size_t nr, size_t nc) : nCol(nc), nRow(nr) {
+  template<typename T> matrix(const T *data, size_t nr, size_t nc) : nCol(nc), nRow(nr) {
     _Data = DataPtr<DataType>::Type(new DataArray<DataType>(data, nr*nc));
     _DataSize = nr*nc;
     _Transpose = CblasNoTrans;
@@ -379,10 +421,8 @@ public:
     if ( _Transpose == CblasTrans) {
       m.resize(nCol, nCol);
       for (size_t i=0; i<nRow; i++) 
-        for (size_t j=0; j<nCol; j++) {
-          m(i,j).real = (*this)(j,i).real;
-          m(i,j).imag = (*this)(j,i).imag;
-        }
+        for (size_t j=0; j<nCol; j++) 
+          m(i,j)= (*this)(j,i);
     }    
 
     vl.resize(nCol,nCol);
@@ -401,10 +441,8 @@ public:
     if ( _Transpose == CblasTrans) {
       m.resize(nCol, nCol);
       for (size_t i=0; i<nRow; i++) 
-        for (size_t j=0; j<nCol; j++) {
-          m(i,j).real = (*this)(j,i).real;
-          m(i,j).imag = (*this)(j,i).imag;
-        }
+        for (size_t j=0; j<nCol; j++) 
+          m(i,j) = (*this)(j,i);
     }    
 
     vr.resize(nCol,nCol);
@@ -422,10 +460,8 @@ public:
     if ( _Transpose == CblasTrans) {
       m.resize(nCol, nCol);
       for (size_t i=0; i<nRow; i++) 
-        for (size_t j=0; j<nCol; j++) {
-          m(i,j).real = (*this)(j,i).real;
-          m(i,j).imag = (*this)(j,i).imag;
-        }
+        for (size_t j=0; j<nCol; j++) 
+          m(i,j) = (*this)(j,i);
     }    
 
     vl.resize(nCol,nCol);
@@ -462,32 +498,12 @@ public:
   }
 };
 
-class cidmatrix : public matrix<CD> {
-// identity matrix
-public:
-  cidmatrix(size_t n) {
-    matrix<CD>::_Data = DataPtr<CD>::Type(new DataArray<CD>(n*n));
-    matrix<CD>::nCol = n;
-    matrix<CD>::nRow = n;
-    matrix<CD>::_DataSize = n*n;
-    matrix<CD>::_Transpose = CblasNoTrans;
-    
-    for (size_t i=0; i<n; i++) 
-      for (size_t j=0; j<n; j++)
-        if (i==j) {
-          (*this)(i,j).real = 1.;
-          (*this)(i,j).imag = 0.;
-        } else { 
-          (*this)(i,j).real = 0.;
-          (*this)(i,j).imag = 0.;
-        }
-  }
-};
+typedef idmatrix<CD> cidmatrix;
 
 template<typename DataType> class diagmatrix : public matrix<DataType> {
 // diagnol matrix build from vector
 public:
-  diagmatrix(const matrix<DataType> &v) {
+  template<typename T> diagmatrix(const matrix<T> &v) {
     assert (v.nCol == 1 || v.nRow == 1); 
     size_t n = (v.nCol >v.nRow? v.nCol:v.nRow);
     matrix<DataType>::_Data = DataPtr<DataType>::Type(new DataArray<DataType>(n*n));
@@ -503,30 +519,7 @@ public:
   }
 };
 
-class cdiagmatrix : public matrix<CD> {
-// diagnol matrix build from vector
-public:
-  cdiagmatrix(const matrix<CD> &v) {
-    assert (v.nCol == 1 || v.nRow == 1); 
-    size_t n = (v.nCol >v.nRow? v.nCol:v.nRow);
-    matrix<CD>::_Data = DataPtr<CD>::Type(new DataArray<CD>(n*n));
-    matrix<CD>::nCol = n;
-    matrix<CD>::nRow = n;
-    matrix<CD>::_DataSize = n*n;
-    matrix<CD>::_Transpose = CblasNoTrans;
-    
-    for (size_t i=0; i<n; i++) 
-      for (size_t j=0; j<n; j++)
-        if (i==j) {
-          (*this)(i,j).real = v(i).real;
-          (*this)(i,j).imag = v(i).imag;
-        } else { 
-          (*this)(i,j).real = 0.;
-          (*this)(i,j).imag = 0.;
-        }
-  }
-};
-
+typedef diagmatrix<CD> cdiagmatrix;
 
 template<typename DataType> matrix<DataType> trans(const matrix<DataType> &m) {
   matrix<DataType> m1 = m;
@@ -553,6 +546,13 @@ template<typename DataType, typename T> const matrix<DataType> operator*(const T
     for (size_t j=0; j<ma.nCol; j++)
       m(i,j) = ma(i,j)*lhs; 
   return m;
+}
+
+template<typename DataType, typename T> const matrix<DataType> & operator*=(matrix<DataType> &ma, const T lhs) {
+  for (size_t i=0; i<ma.nRow; i++)
+    for (size_t j=0; j<ma.nCol; j++)
+      ma(i,j) *= lhs; 
+  return ma;
 }
 
 template<typename DataType> const matrix<DataType> operator*(const matrix<DataType>& lhs, const matrix<DataType>& ma) {
