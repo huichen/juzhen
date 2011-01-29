@@ -1,9 +1,7 @@
 #ifndef MKLPP_H
 #include <iostream>
-#include <mkl_types.h>
 #include <mkl_cblas.h>
 #include <mkl.h>
-#include <stdio.h>
 #include <string.h>
 #include <assert.h>
 #include <complex>
@@ -110,19 +108,13 @@ public:
   } 
 
   Matrix(const DataType *data, size_t nr, size_t nc) : nCol(nc), nRow(nr) {
-    nCol = nc;
-    nRow = nr;
     _Data = DataPtr<DataType>::Type(new DataArray<DataType>(data, nr*nc));
     _DataSize = nr*nc;
     _Transpose = CblasNoTrans;
   } 
 
-  Matrix(const Matrix<DataType> &m) {
-    nCol = m.nCol;
-    nRow = m.nRow;
+  Matrix(const Matrix<DataType> &m) : nCol(m.nCol), nRow(m.nRow), _DataSize(m._DataSize), _Transpose(m._Transpose){
     _Data = DataPtr<DataType>::Type(new DataArray<DataType>(*(m._Data))); 
-    _DataSize = m._DataSize;
-    _Transpose = m._Transpose;
   } 
 
   const Matrix<DataType>& operator= (const Matrix<DataType> &rhs) {
