@@ -73,5 +73,27 @@ int main() {
   P("m7(1,)", m7.row(1))
   P("m7(,1)", m7.col(1))
 
+// eigen systems
+
+  CD c3[] = {{1, 0}, {0, 0}, {0, 3.2}, {0, 0},
+	{1.23, 0}, {1, 0}, {0, 0}, {0, 2},
+	{3, 0.77}, {0, 0}, {1, 2.0}, {0, 0},
+	{0, 4}, {2.2, 0}, {0, 0}, {1, 0}
+	};
+  cmatrix m10 (c3, 4, 4);
+  m10.trans();
+  P("m10", m10)
+  cmatrix e, vl, vr;
+  m10.eigen(e, vl, vr);
+  P("eigen(m10):e", e)
+  P("eigen(m10):vl", vl)
+  P("eigen(m10):vr", vr)
+
+  cmatrix ee = cdiagmatrix(e);
+
+  P("ee", ee)
+  P("m10*vr", m10*vr)
+  P("vr*ee", vr*ee)
+//  P("m10*vr-vr*e", m10*vr - vr*ee)
   return 0;
 }

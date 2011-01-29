@@ -34,7 +34,7 @@ inline CD& operator+=(CD &a, const CD &b) {
 inline const CD operator-(const CD &a, const CD &b) {
   CD c;
   c.real = a.real - b.real; 
-  c.imag = a.imag - b.real;
+  c.imag = a.imag - b.imag;
   return c;
 }
 
@@ -57,6 +57,15 @@ inline const CD operator*(const CD &a, const double b) {
   c.imag = a.imag * b;
   return c;
 }
+
+inline const CD operator*(const double b, const CD &a) {
+  CD c;
+  c.real = a.real * b; 
+  c.imag = a.imag * b;
+  return c;
+}
+
+
 
 inline const CD operator/(const CD &a, const double b) {
   CD c;
@@ -93,11 +102,11 @@ template<> void gemm<CD>(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, 
   cblas_zgemm(Order, TransA, TransB, M, N, K, &alpha, A, lda, B, ldb, &beta, c, ldc); 
 };
 
-template<typename T> int geev(const CBLAS_ORDER order, const MKL_INT n, T *a, const MKL_INT lda, T * w, T *vl, const MKL_INT ldvl, T *vr, const MKL_INT ldvr) { 
+template<typename T> int geev(const int order, const MKL_INT n, T *a, const MKL_INT lda, T * w, T *vl, const MKL_INT ldvl, T *vr, const MKL_INT ldvr) { 
   assert(0); // always fails
 };
 
-template<> int geev<CD>(const CBLAS_ORDER order, const MKL_INT n, CD *a, const MKL_INT lda, CD * w, CD *vl, const MKL_INT ldvl, CD *vr, const MKL_INT ldvr) { 
+template<> int geev<CD>(const int order, const MKL_INT n, CD *a, const MKL_INT lda, CD * w, CD *vl, const MKL_INT ldvl, CD *vr, const MKL_INT ldvr) { 
   return LAPACKE_zgeev(LAPACK_COL_MAJOR, 'V', 'V', n, a, lda, w, vl, ldvl, vr, ldvr); 
 };
 
@@ -237,6 +246,16 @@ public:
     else return (*_Data)[i*nCol + j];
   }
 
+  inline DataType& operator()(size_t i) {
+    assert((nCol == 1 && i<nRow) || (nRow == 1 && i<nCol));
+    return (*_Data)[i];
+  }
+
+  inline DataType& operator()(size_t i) const {
+    assert((nCol == 1 && i<nRow) || (nRow == 1 && i<nCol));
+    return (*_Data)[i];
+  }
+
   // arithmetic
   const matrix<DataType> operator*(const matrix<DataType>& rhs) const {
     assert (nCol == rhs.nRow);
@@ -253,12 +272,12 @@ public:
     ma.resize(m,n);
 
     gemm<DataType>(CblasColMajor, _Transpose, rhs._Transpose, m, n, k1, 
-      (*_Data)._Data, lda, rhs.getDataPtr(), ldb, ma.getDataPtr(), m);
+      getDataPtr(), lda, rhs.getDataPtr(), ldb, ma.getDataPtr(), m);
 
     return ma;
   } 
 
-  template<typename T> const matrix<DataType> operator+(const matrix<T>& rhs) {
+  template<typename T> const matrix<DataType> operator+(const matrix<T>& rhs) const {
     assert(nCol == rhs.nCol && nRow == rhs.nRow);
     matrix<DataType> m(nRow, nCol);
     for (size_t i=0; i<nRow; i++)
@@ -275,7 +294,7 @@ public:
     return *this;
   }
 
-  template<typename T> const matrix<DataType> operator-(const matrix<T>& rhs) {
+  template<typename T> const matrix<DataType> operator-(const matrix<T>& rhs) const {
     assert(nCol == rhs.nCol && nRow == rhs.nRow);
     matrix<DataType> m(nRow, nCol);
     for (size_t i=0; i<nRow; i++)
@@ -353,6 +372,26 @@ public:
    return block(r, r+1, 0, nCol);
   }
 
+/* solvers */
+  void eigen(matrix<DataType> &e, matrix<DataType> &vl, matrix<DataType> &vr) {
+    assert (nCol == nRow && (_Transpose == CblasNoTrans || _Transpose == CblasTrans));
+    matrix<DataType> m(*this);
+    if ( _Transpose == CblasTrans) {
+      m.resize(nCol, nCol);
+      for (size_t i=0; i<nRow; i++) 
+        for (size_t j=0; j<nCol; j++) {
+          m(i,j).real = (*this)(j,i).real;
+          m(i,j).imag = (*this)(j,i).imag;
+        }
+    }    
+
+    vl.resize(nCol,nCol);
+    vr.resize(nCol,nCol);
+    e.resize(nCol, 1);
+
+    geev<DataType>(LAPACK_COL_MAJOR, nCol, m.getDataPtr(), nCol, e.getDataPtr(), vl.getDataPtr(), nCol, vr.getDataPtr(), nCol); 
+  } 
+
 /* private data */
 protected:
   typename DataPtr<DataType>::Type _Data; 
@@ -369,6 +408,7 @@ public:
     matrix<DataType>::nCol = n;
     matrix<DataType>::nRow = n;
     matrix<DataType>::_DataSize = n*n;
+    matrix<DataType>::_Transpose = CblasNoTrans;
     
     for (size_t i=0; i<n; i++) 
       for (size_t j=0; j<n; j++)
@@ -385,6 +425,7 @@ public:
     matrix<CD>::nCol = n;
     matrix<CD>::nRow = n;
     matrix<CD>::_DataSize = n*n;
+    matrix<CD>::_Transpose = CblasNoTrans;
     
     for (size_t i=0; i<n; i++) 
       for (size_t j=0; j<n; j++)
@@ -398,8 +439,49 @@ public:
   }
 };
 
+template<typename DataType> class diagmatrix : public matrix<DataType> {
+// diagnol matrix build from vector
+public:
+  diagmatrix(const matrix<DataType> &v) {
+    assert (v.nCol == 1 || v.nRow == 1); 
+    size_t n = (v.nCol >v.nRow? v.nCol:v.nRow);
+    matrix<DataType>::_Data = DataPtr<DataType>::Type(new DataArray<DataType>(n*n));
+    matrix<DataType>::nCol = n;
+    matrix<DataType>::nRow = n;
+    matrix<DataType>::_DataSize = n*n;
+    matrix<DataType>::_Transpose = CblasNoTrans;
+    
+    for (size_t i=0; i<n; i++) 
+      for (size_t j=0; j<n; j++)
+        if (i==j) (*this)(i,j)=v(i);
+        else (*this)(i,j)=0.;
+  }
+};
 
-/* matrix operation functions */
+class cdiagmatrix : public matrix<CD> {
+// diagnol matrix build from vector
+public:
+  cdiagmatrix(const matrix<CD> &v) {
+    assert (v.nCol == 1 || v.nRow == 1); 
+    size_t n = (v.nCol >v.nRow? v.nCol:v.nRow);
+    matrix<CD>::_Data = DataPtr<CD>::Type(new DataArray<CD>(n*n));
+    matrix<CD>::nCol = n;
+    matrix<CD>::nRow = n;
+    matrix<CD>::_DataSize = n*n;
+    matrix<CD>::_Transpose = CblasNoTrans;
+    
+    for (size_t i=0; i<n; i++) 
+      for (size_t j=0; j<n; j++)
+        if (i==j) {
+          (*this)(i,j).real = v(i).real;
+          (*this)(i,j).imag = v(i).imag;
+        } else { 
+          (*this)(i,j).real = 0.;
+          (*this)(i,j).imag = 0.;
+        }
+  }
+};
+
 
 template<typename DataType> matrix<DataType> trans(const matrix<DataType> &m) {
   matrix<DataType> m1 = m;
