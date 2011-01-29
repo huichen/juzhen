@@ -28,7 +28,6 @@ int main() {
 
 // identity matrix
   matrix<double> m5 = idmatrix<double>(3);
-  cout << m5.nCol << m5.nRow << sizeof(m5.getDataPtr()) << endl;
   P("idmatrix(3)=", idmatrix<double>(3))
   P("m5", m5)
   P("m4*m5", m4*m5)
@@ -50,7 +49,7 @@ int main() {
            CD( 1., .0),  CD( 2., 0.),    CD(3., 0.0 ),   CD(6., 0.), 
            CD( 1., .0),  CD( 2., 0.),    CD(3., 0.0 ),   CD(6., 0.)};
   cmatrix m8(c2, 4, 3);
-  m8.conjTrans();
+  m8.herm();
   P("m8", m8)
 
 // arithmetic operations
@@ -69,10 +68,10 @@ int main() {
   P("m7/4.", m7/4.)
 
 // sub-matrix
-  P("m7(1->2, 1->3)", m7.submatrix(1,2,1,3))
-  P("m8(1->2, 1->2)=I ", m8.replace(1,1,cidmatrix(2)))
-  P("m7(1,)", m7.rowVector(1))
-  P("m7(,1)", m7.colVector(1))
+  P("m7(1->2, 1->3)", m7.block(1,2,1,3))
+  P("m8(1->2, 1->2)=I ", m8.insert(1,1,cidmatrix(2)))
+  P("m7(1,)", m7.row(1))
+  P("m7(,1)", m7.col(1))
 
   return 0;
 }

@@ -142,14 +142,8 @@ public:
   size_t getDataSize() {
     return _DataSize;
   }
-  void setTranspose(CBLAS_TRANSPOSE tr) {
-    _Transpose = tr;
-  }
 
-  CBLAS_TRANSPOSE getTranspose() const {
-    return _Transpose;
-  }
-
+/* resizing/reshaping matrix */
   void resize(size_t nr, size_t nc) {
     if (_DataSize < nc * nr) {
       typename DataPtr<DataType>::Type newData(new DataArray<DataType>(*_Data, nr*nc));
@@ -247,21 +241,28 @@ public:
   }
 
 /* matrix specific operations */
-  matrix<DataType> &transpose() {
+  matrix<DataType> &trans() {
     _Transpose = (_Transpose == CblasTrans)? CblasNoTrans: CblasTrans;
    resize(nCol, nRow);
    return *this;
   } 
 
-  matrix<DataType> &conjTrans() {
-   transpose();
+  matrix<DataType> &herm() {
+   trans();
    for (size_t i=0; i<nRow; i++) 
      for (size_t j=0; j<nCol; j++) 
-       (*this)(i,j)=conj((*this)(i,j));
+       (*this)(i,j)=std::conj((*this)(i,j));
    return *this;
   } 
 
-  matrix<DataType> submatrix(size_t r1, size_t r2, size_t c1, size_t c2) {
+  matrix<DataType> &conj() {
+   for (size_t i=0; i<nRow; i++) 
+     for (size_t j=0; j<nCol; j++) 
+       (*this)(i,j)=std::conj((*this)(i,j));
+   return *this;
+  } 
+
+  matrix<DataType> block(size_t r1, size_t r2, size_t c1, size_t c2) {
     assert(r1<=r2 && c1<=c2);
     matrix<DataType> m(r2-r1, c2-c1);
     for (size_t i=0; i<m.nRow; i++) 
@@ -270,19 +271,19 @@ public:
     return m;
   }
 
-  matrix<DataType> &replace(size_t r, size_t c, matrix<DataType> mt) {
+  matrix<DataType> &insert(size_t r, size_t c, matrix<DataType> mt) {
     for (size_t i=0; i<mt.nRow; i++) 
       for (size_t j=0; j<mt.nCol; j++) 
         (*this)(i+r, j+c) = mt(i,j);
     return *this;
   }
 
-  matrix<DataType> colVector(size_t c) {
-   return submatrix(0,nRow, c, c+1);
+  matrix<DataType> col(size_t c) {
+   return block(0,nRow, c, c+1);
   }
 
-  matrix<DataType> rowVector(size_t r) {
-   return submatrix(r, r+1, 0, nCol);
+  matrix<DataType> row(size_t r) {
+   return block(r, r+1, 0, nCol);
   }
 
 /* private data */
@@ -311,15 +312,21 @@ public:
 
 /* matrix operation functions */
 
-template<typename DataType> matrix<DataType> transpose(const matrix<DataType> &m) {
+template<typename DataType> matrix<DataType> trans(const matrix<DataType> &m) {
   matrix<DataType> m1 = m;
-  m.transpose();
+  m.trans();
   return m1;
 }
 
-template<typename DataType> matrix<DataType> conjTrans(const matrix<DataType> &m) {
+template<typename DataType> matrix<DataType> herm(const matrix<DataType> &m) {
   matrix<DataType> m1 = m;
-  m.conjTrans();
+  m.herm();
+  return m1;
+}
+
+template<typename DataType> matrix<DataType> conj(const matrix<DataType> &m) {
+  matrix<DataType> m1 = m;
+  m.conj();
   return m1;
 }
 
