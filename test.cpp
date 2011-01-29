@@ -83,10 +83,9 @@ int main() {
   cmatrix m10 (c3, 4, 4);
   m10.trans();
   P("m10", m10)
-  cmatrix e, vl, vr;
-  m10.eigen(e, vl, vr);
+  cmatrix e, vr ;
+  m10.reigen(e, vr);
   P("eigen(m10):e", e)
-  P("eigen(m10):vl", vl)
   P("eigen(m10):vr", vr)
 
   cmatrix ee = cdiagmatrix(e);

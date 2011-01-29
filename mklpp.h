@@ -102,12 +102,12 @@ template<> void gemm<CD>(const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA, 
   cblas_zgemm(Order, TransA, TransB, M, N, K, &alpha, A, lda, B, ldb, &beta, c, ldc); 
 };
 
-template<typename T> int geev(const int order, const MKL_INT n, T *a, const MKL_INT lda, T * w, T *vl, const MKL_INT ldvl, T *vr, const MKL_INT ldvr) { 
+template<typename T> int geev(const int order, char nl, char nr, const MKL_INT n, T *a, const MKL_INT lda, T * w, T *vl, const MKL_INT ldvl, T *vr, const MKL_INT ldvr) { 
   assert(0); // always fails
 };
 
-template<> int geev<CD>(const int order, const MKL_INT n, CD *a, const MKL_INT lda, CD * w, CD *vl, const MKL_INT ldvl, CD *vr, const MKL_INT ldvr) { 
-  return LAPACKE_zgeev(LAPACK_COL_MAJOR, 'V', 'V', n, a, lda, w, vl, ldvl, vr, ldvr); 
+template<> int geev<CD>(const int order, char nl, char nr, const MKL_INT n, CD *a, const MKL_INT lda, CD * w, CD *vl, const MKL_INT ldvl, CD *vr, const MKL_INT ldvr) { 
+  return LAPACKE_zgeev(LAPACK_COL_MAJOR, nl, nr, n, a, lda, w, vl, ldvl, vr, ldvr); 
 };
 
 /* array for auto_ptr */
@@ -388,8 +388,53 @@ public:
     vl.resize(nCol,nCol);
     vr.resize(nCol,nCol);
     e.resize(nCol, 1);
+    
+    char nl = &vl? 'V': 'N';
+    char nr = &vr? 'V': 'N';
 
-    geev<DataType>(LAPACK_COL_MAJOR, nCol, m.getDataPtr(), nCol, e.getDataPtr(), vl.getDataPtr(), nCol, vr.getDataPtr(), nCol); 
+    geev<DataType>(LAPACK_COL_MAJOR, nl, nr, nCol, m.getDataPtr(), nCol, e.getDataPtr(), vl.getDataPtr(), nCol, vr.getDataPtr(), nCol); 
+  } 
+
+  void reigen(matrix<DataType> &e, matrix<DataType> &vr) {
+    assert (nCol == nRow && (_Transpose == CblasNoTrans || _Transpose == CblasTrans));
+    matrix<DataType> m(*this);
+    if ( _Transpose == CblasTrans) {
+      m.resize(nCol, nCol);
+      for (size_t i=0; i<nRow; i++) 
+        for (size_t j=0; j<nCol; j++) {
+          m(i,j).real = (*this)(j,i).real;
+          m(i,j).imag = (*this)(j,i).imag;
+        }
+    }    
+
+    vr.resize(nCol,nCol);
+    e.resize(nCol, 1);
+    
+    char nl = 'N';
+    char nr = 'V';
+
+    geev<DataType>(LAPACK_COL_MAJOR, nl, nr, nCol, m.getDataPtr(), nCol, e.getDataPtr(), NULL, nCol, vr.getDataPtr(), nCol); 
+  } 
+
+  void leigen(matrix<DataType> &e, matrix<DataType> &vl) {
+    assert (nCol == nRow && (_Transpose == CblasNoTrans || _Transpose == CblasTrans));
+    matrix<DataType> m(*this);
+    if ( _Transpose == CblasTrans) {
+      m.resize(nCol, nCol);
+      for (size_t i=0; i<nRow; i++) 
+        for (size_t j=0; j<nCol; j++) {
+          m(i,j).real = (*this)(j,i).real;
+          m(i,j).imag = (*this)(j,i).imag;
+        }
+    }    
+
+    vl.resize(nCol,nCol);
+    e.resize(nCol, 1);
+    
+    char nl = 'V';
+    char nr = 'N';
+
+    geev<DataType>(LAPACK_COL_MAJOR, nl, nr, nCol, m.getDataPtr(), nCol, e.getDataPtr(), vl.getDataPtr(), nCol, NULL, nCol); 
   } 
 
 /* private data */
