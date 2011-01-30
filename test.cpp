@@ -1,6 +1,6 @@
 #include "mklpp.h"
 
-#define P(s,m) cout << s << "=" << endl << m << endl;
+#define P(s,m) std::cout << s << "=" << std::endl << m << std::endl;
 
 using namespace mklpp;
 
@@ -83,16 +83,35 @@ int main() {
   cmatrix m10 (c3, 4, 4);
   m10.trans();
   P("m10", m10)
-  cmatrix e, vr ;
+  cvector e;
+  cmatrix vr ;
   m10.reigen(e, vr);
   P("eigen(m10):e", e)
   P("eigen(m10):vr", vr)
-
-  cmatrix ee = cdiagmatrix(e);
+  P("diag(e)", diag(e))
+  cmatrix ee = diag(e);
 
   P("ee", ee)
   P("m10*vr", m10*vr)
   P("vr*ee", vr*ee)
 //  P("m10*vr-vr*e", m10*vr - vr*ee)
+
+/* vector */
+  double cv1[] = {1, 2, 3, 4};
+  double cv2[] = {1, 3, 2, 4};
+  
+  dvector v1 (cv1, 4);
+  dvector v2 (cv2, 4);
+
+  P("v1", v1)
+  P("v2", v2)
+  P("v1*v1", v1*v1)
+  P("v1+v2", v1+v2)
+  P("3*v1", 3*v1)
+  P("v1*3", v1*3)
+  P("diag(v2)", diag(v2))
+  P("diag(v2)*v1", diag(v2)*v1)
+  P("v1*diag(v2)", v1*diag(v2))
+
   return 0;
 }

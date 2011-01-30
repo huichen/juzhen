@@ -34,9 +34,13 @@ public:
     _Transpose = CblasNoTrans;
   } 
 
-  matrix(const matrix<DataType> &m) : nCol(m.nCol), nRow(m.nRow), _DataSize(m._DataSize), _Transpose(m._Transpose){
-    _Data = DataPtr<DataType>::Type(new DataArray<DataType>(*(m._Data))); 
+  template<typename T> matrix(const matrix<T> &m) : nCol(m.nCol), nRow(m.nRow), _DataSize(m.nRow*m.nCol), _Transpose(m.getTranspose()){
+    _Data = DataPtr<DataType>::Type(new DataArray<DataType>(m.getDataPtr(), m.nRow*m.nCol)); 
   } 
+
+  matrix(const matrix<DataType> &m) : nCol(m.nCol), nRow(m.nRow), _DataSize(m._DataSize), _Transpose(m._Transpose){
+    _Data = DataPtr<DataType>::Type(new DataArray<DataType>(*(m._Data)));
+  }
 
   const matrix<DataType>& operator= (const matrix<DataType> &rhs) {
     if (&rhs==this) return *this;
@@ -60,8 +64,16 @@ public:
     return (*_Data)._Data;
   }
 
-  size_t getDataSize() {
+  DataArray<DataType>& getDataArray() const {
+    return *_Data;
+  }
+
+  size_t getDataSize() const {
     return _DataSize;
+  }
+
+  CBLAS_TRANSPOSE getTranspose() const {
+    return _Transpose;
   }
 
 /* resizing/reshaping matrix */
@@ -98,26 +110,17 @@ public:
     return (*_Data)[i];
   }
 
+  inline DataType& operator[](size_t i) {
+    assert((nCol == 1 && i<nRow) || (nRow == 1 && i<nCol));
+    return (*_Data)[i];
+  }
+
+  inline DataType& operator[](size_t i) const {
+    assert((nCol == 1 && i<nRow) || (nRow == 1 && i<nCol));
+    return (*_Data)[i];
+  }
+
   // arithmetic
-  const matrix<DataType> operator*(const matrix<DataType>& rhs) const {
-    assert (nCol == rhs.nRow);
-    size_t m,n,k1,k2,lda,ldb;
-    m = nRow;
-    k1 = nCol;
-    k2 = rhs.nRow;
-    n = rhs.nCol;
-    lda = (_Transpose==CblasTrans)? nCol: nRow;
-    ldb = (rhs._Transpose==CblasTrans)? rhs.nCol: rhs.nRow;
-
-    matrix<DataType> ma;
-
-    ma.resize(m,n);
-
-    gemm<DataType>(CblasColMajor, _Transpose, rhs._Transpose, m, n, k1, 
-      getDataPtr(), lda, rhs.getDataPtr(), ldb, ma.getDataPtr(), m);
-
-    return ma;
-  } 
 
   template<typename T> const matrix<DataType> operator+(const matrix<T>& rhs) const {
     assert(nCol == rhs.nCol && nRow == rhs.nRow);
@@ -153,6 +156,62 @@ public:
     return *this;
   }
 
+  const matrix<DataType> operator*(const double rhs) {
+    matrix<DataType> m(nRow, nCol);
+    for (size_t i=0; i<nRow; i++)
+      for (size_t j=0; j<nCol; j++)
+        m(i,j) = (*this)(i,j)*rhs; 
+    return m;
+  }
+
+  const matrix<DataType> operator*(const CD rhs) {
+    matrix<DataType> m(nRow, nCol);
+    for (size_t i=0; i<nRow; i++)
+      for (size_t j=0; j<nCol; j++)
+        m(i,j) = (*this)(i,j)*rhs; 
+    return m;
+  }
+
+  matrix<DataType> & operator*=(const double lhs) {
+    for (size_t i=0; i<ma.nRow; i++)
+      for (size_t j=0; j<ma.nCol; j++)
+      (*this)(i,j) *= lhs; 
+    return *this;
+  }
+
+  matrix<DataType> & operator*=(const CD lhs) {
+    for (size_t i=0; i<ma.nRow; i++)
+      for (size_t j=0; j<ma.nCol; j++)
+      (*this)(i,j) *= lhs; 
+    return *this;
+  }
+ 
+  const matrix<DataType> operator*(const matrix<DataType>& rhs) const {
+    assert (nCol == rhs.nRow);
+    size_t m,n,k1,k2,lda,ldb;
+    m = nRow;
+    k1 = nCol;
+    k2 = rhs.nRow;
+    n = rhs.nCol;
+    lda = (_Transpose==CblasTrans)? nCol: nRow;
+    ldb = (rhs._Transpose==CblasTrans)? rhs.nCol: rhs.nRow;
+
+    matrix<DataType> ma;
+
+    ma.resize(m,n);
+
+    gemm<DataType>(CblasColMajor, _Transpose, rhs._Transpose, m, n, k1, 
+      getDataPtr(), lda, rhs.getDataPtr(), ldb, ma.getDataPtr(), m);
+
+    return ma;
+  } 
+
+  matrix<DataType>& operator*=(const matrix<DataType>& rhs) {
+    matrix<DataType> ma = (*this)*rhs; 
+    (*this) = ma;
+    return (*this);
+  }
+ 
   template<typename T> const matrix<DataType> operator/(const T rhs) {
     matrix<DataType> m(nRow, nCol);
     for (size_t i=0; i<nRow; i++)
@@ -283,6 +342,22 @@ protected:
 typedef matrix<CD> cmatrix;
 typedef matrix<double> dmatrix;
 
+matrix<double> real(const matrix<CD> &ma) {
+ matrix<double> m(ma.nRow, ma.nCol);
+ for (size_t i=0; i<ma.nRow; i++) 
+   for (size_t j=0; j<ma.nCol; j++) 
+     m(i,j)=ma(i,j).real;
+ return m;
+} 
+
+matrix<double> imag(const matrix<CD> &ma) {
+ matrix<double> m(ma.nRow, ma.nCol);
+ for (size_t i=0; i<ma.nRow; i++) 
+   for (size_t j=0; j<ma.nCol; j++) 
+     m(i,j)=ma(i,j).imag;
+ return m;
+}
+
 template<typename DataType> matrix<DataType> trans(const matrix<DataType> &m) {
   matrix<DataType> m1 = m;
   m.trans();
@@ -291,7 +366,7 @@ template<typename DataType> matrix<DataType> trans(const matrix<DataType> &m) {
 
 template<typename DataType> matrix<DataType> herm(const matrix<DataType> &m) {
   matrix<DataType> m1 = m;
-  m.herm();
+  m1.herm();
   return m1;
 }
 
@@ -302,7 +377,7 @@ template<typename DataType> matrix<DataType> conj(const matrix<DataType> &m) {
 }
 
 /* arithmetic */
-template<typename DataType, typename T> const matrix<DataType> operator*(const T lhs, const matrix<DataType> &ma) {
+template<typename DataType> const matrix<DataType> operator*(const double lhs, const matrix<DataType> &ma) {
   matrix<DataType> m(ma.nRow, ma.nCol);
   for (size_t i=0; i<ma.nRow; i++)
     for (size_t j=0; j<ma.nCol; j++)
@@ -310,15 +385,12 @@ template<typename DataType, typename T> const matrix<DataType> operator*(const T
   return m;
 }
 
-template<typename DataType, typename T> const matrix<DataType> & operator*=(matrix<DataType> &ma, const T lhs) {
+template<typename DataType> const matrix<DataType> operator*(const CD lhs, const matrix<DataType> &ma) {
+  matrix<DataType> m(ma.nRow, ma.nCol);
   for (size_t i=0; i<ma.nRow; i++)
     for (size_t j=0; j<ma.nCol; j++)
-      ma(i,j) *= lhs; 
-  return ma;
-}
-
-template<typename DataType> const matrix<DataType> operator*(const matrix<DataType>& lhs, const matrix<DataType>& ma) {
-  return ma.operator*(lhs);
+      m(i,j) = ma(i,j)*lhs; 
+  return m;
 }
 
 /* stream operator overload */
@@ -356,32 +428,6 @@ public:
 
 typedef idmatrix<CD> cidmatrix;
 typedef idmatrix<double> didmatrix;
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-/* diagmatrix class
-   diagnal matrix build from vector */
-template<typename DataType> class diagmatrix : public matrix<DataType> {
-public:
-  template<typename T> diagmatrix(const matrix<T> &v) {
-    assert (v.nCol == 1 || v.nRow == 1); 
-    size_t n = (v.nCol >v.nRow? v.nCol:v.nRow);
-    matrix<DataType>::_Data = DataPtr<DataType>::Type(new DataArray<DataType>(n*n));
-    matrix<DataType>::nCol = n;
-    matrix<DataType>::nRow = n;
-    matrix<DataType>::_DataSize = n*n;
-    matrix<DataType>::_Transpose = CblasNoTrans;
-    
-    for (size_t i=0; i<n; i++) 
-      for (size_t j=0; j<n; j++)
-        if (i==j) (*this)(i,j)=v(i);
-        else (*this)(i,j)=0.;
-  }
-};
-
-typedef diagmatrix<CD> cdiagmatrix;
-typedef diagmatrix<double> ddiagmatrix;
 /////////////////////////////////////////////////////////////////////////////
 
 

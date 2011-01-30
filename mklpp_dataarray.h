@@ -6,13 +6,27 @@
 
 namespace mklpp {
 
-/* array for auto_ptr */
+/////////////////////////////////////////////////////////////////////////////
+/* DataArray
+   wrapper for auto_ptr */
 template<typename DataType> class DataArray {
 public:
   DataArray(size_t s) {
     _Data = (DataType *) malloc(s*sizeof(DataType));
     assert (_Data);
     size = s;
+  }
+
+  template<typename T> DataArray(const DataArray<T> &da) {
+    if (&da) {
+      _Data = (DataType *) malloc(da.size*sizeof(DataType));
+      assert (_Data);
+      if (da._Data) for(size_t i=0; i<da.size; i++) _Data[i] = da[i]; 
+      size = da.size;
+    } else {
+      size = 0;
+      _Data = NULL;
+    }
   }
 
   DataArray(const DataArray<DataType> &da) {
@@ -24,6 +38,15 @@ public:
     } else {
       size = 0;
       _Data = NULL;
+    }
+  }
+
+  template<typename T> DataArray(const DataArray<T> &da, const size_t s) {
+    _Data = (DataType *) malloc(s*sizeof(DataType));
+    assert (_Data);
+    if (&da) {
+      size = (s < da.size? s : da.size);
+      for(size_t i=0; i<size; i++) _Data[i] = da[i]; 
     }
   }
 
@@ -58,6 +81,10 @@ public:
     return _Data[i];
   }
  
+  DataType& operator[](const size_t i) const {
+    return _Data[i];
+  }
+
   DataType * _Data;
   size_t size;
 };
@@ -67,6 +94,7 @@ class DataPtr{
 public:
   typedef std::auto_ptr<DataArray<DataType> > Type;
 };
+/////////////////////////////////////////////////////////////////////////////
 
 }
 #endif
