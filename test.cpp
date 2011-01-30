@@ -1,4 +1,5 @@
 #include "mklpp.h"
+#include <vector>
 
 #define P(s,m) std::cout << s << "=" << std::endl << m << std::endl;
 
@@ -112,6 +113,18 @@ int main() {
   P("diag(v2)", diag(v2))
   P("diag(v2)*v1", diag(v2)*v1)
   P("v1*diag(v2)", v1*diag(v2))
+
+  vector<double> sv1(4);
+  sv1[0]=1;
+  sv1[1]=2;
+  sv1[2]=3;
+  sv1[3]=7;
+
+  P("dvector(sv1)", dvector(sv1))
+  dvector v3;
+  v3 = sv1;
+  P("v3", v3)
+  P("dvector(v3.stl())", dvector(v3.stl()))
 
   return 0;
 }

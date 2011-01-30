@@ -2,6 +2,8 @@
 #define MKLPP_VECTOR_H
 
 #include "mklpp_matrix.h"
+#include <algorithm>
+#include <vector>
 
 namespace mklpp {
 
@@ -19,7 +21,27 @@ public:
     matrix<DataType>::_DataSize = m.nRow*m.nCol;
     matrix<DataType>::_Transpose = CblasNoTrans;
   }
+
   template<typename T> vector(const T *data, size_t n) : matrix<DataType>(data, n, 1){ } 
+
+
+  vector(const std::vector<DataType> &v) : matrix<DataType>(&v[0], v.size(), 1) {
+  }
+
+  vector<DataType>& operator=(const vector<DataType> &v) { 
+    matrix<DataType>::_Data = DataPtr<DataType>::Type(new DataArray<DataType>(v.getDataPtr(), v.size())); 
+    matrix<DataType>::nCol =1;
+    matrix<DataType>::nRow = v.size();
+    matrix<DataType>::_DataSize = v.size();
+    matrix<DataType>::_Transpose = CblasNoTrans;
+    return *this;
+  } 
+
+  vector<DataType>& operator=(const std::vector<DataType> &v) { 
+    resize(v.size());
+    for(size_t i=0; i<v.size(); i++) (*this)[i] = v[i];
+    return *this;
+  } 
 
   void resize(size_t n) { matrix<DataType>::resize(n,1);}
   void resize(size_t nc, size_t nr) {};
@@ -103,6 +125,17 @@ public:
     return (*this);
   }
 
+  vector<DataType> &sort() {
+    std::vector<DataType> v(matrix<DataType>::getDataPtr(), matrix<DataType>::getDataPtr()+size());
+    std::sort(v.begin(), v.end());
+    for (size_t i=0; i<v.size(); i++) (*this)[i] = v[i];
+    return (*this);
+  }
+
+  std::vector<DataType> stl() {
+    std::vector<DataType> v(matrix<DataType>::getDataPtr(), matrix<DataType>::getDataPtr()+size());
+    return v;
+  }
 };
 
 typedef vector<CD> cvector;
@@ -136,6 +169,14 @@ vector<double> imag(const vector<CD> &ma) {
  for (size_t i=0; i<ma.size(); i++) 
      m(i)=ma(i).imag;
  return m;
+}
+
+template<typename DataType> vector<DataType> sort(const vector<DataType> &v) {
+  vector<DataType> v2(v.size());
+  std::vector<DataType> v1(v.getDataPtr(), v.getDataPtr()+v.size());
+  std::sort(v1.begin(), v1.end());
+  for (size_t i=0; i<v1.size(); i++) v2[i] = v1[i];
+  return v2;
 }
 
 template<typename DataType> matrix<DataType> diag(const vector<DataType> &v) {

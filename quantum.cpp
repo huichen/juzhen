@@ -1,5 +1,5 @@
 #include "mklpp.h"
-#define N 9
+#define N 90
 using namespace mklpp;
 
 int main() {
@@ -15,6 +15,6 @@ int main() {
   cmatrix wave;
   H.reigen(energy, wave);
 
-  std::cout << "energy= " << real(energy) << std::endl;
+  std::cout << "energy= " << sort(real(energy)) << std::endl;
   return 0;
 }
