@@ -74,9 +74,9 @@ public:
 
   const matrix<DataType> operator*(const CD rhs);
 
-  matrix<DataType> & operator*=(const double lhs);
+  matrix<DataType> & operator*=(const double rhs);
 
-  matrix<DataType> & operator*=(const CD lhs);
+  matrix<DataType> & operator*=(const CD rhs);
  
   const matrix<DataType> operator*(const matrix<DataType>& rhs) const;
 
@@ -341,18 +341,18 @@ const matrix<DataType> matrix<DataType>::operator*(const CD rhs) {
 }
 
 template<typename DataType> 
-matrix<DataType> & matrix<DataType>::operator*=(const double lhs) {
+matrix<DataType> & matrix<DataType>::operator*=(const double rhs) {
   for (size_t i=0; i<ma.nRow(); i++)
     for (size_t j=0; j<ma.nCol(); j++)
-    (*this)(i,j) *= lhs; 
+    (*this)(i,j) *= rhs; 
   return *this;
 }
 
 template<typename DataType> 
-matrix<DataType> & matrix<DataType>::operator*=(const CD lhs) {
+matrix<DataType> & matrix<DataType>::operator*=(const CD rhs) {
   for (size_t i=0; i<ma.nRow(); i++)
     for (size_t j=0; j<ma.nCol(); j++)
-    (*this)(i,j) *= lhs; 
+    (*this)(i,j) *= rhs; 
   return *this;
 }
  
