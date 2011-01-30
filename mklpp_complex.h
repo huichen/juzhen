@@ -10,37 +10,47 @@ namespace mklpp {
 #define CD ComplexDouble 
 #define MKLCD MKL_Complex16 
 
-
 /////////////////////////////////////////////////////////////////////////////
 /* _ComplexDouble structure 
    wrapping MKL_Complex16 with more interfaces*/
 struct _ComplexDouble : MKLCD {
   _ComplexDouble() {};
-  _ComplexDouble(double r, double i) { real = r; imag = i;};
-  _ComplexDouble(double r) { real = r; imag =0.0;};
-  _ComplexDouble(MKLCD c) { real = c.real; imag =c.imag;};
+  _ComplexDouble(double r, double i);
+  _ComplexDouble(double r);
+  _ComplexDouble(MKLCD c);
 
-  const struct _ComplexDouble & operator=(double r) {
-    real = r;
-    imag = 0.0;
-    return *this;
-  }
+  const struct _ComplexDouble & operator=(double r);
 
-  const struct _ComplexDouble & operator=(const MKLCD &c) {
-    real = c.real;
-    imag = c.imag;
-    return *this;
-  }
+  const struct _ComplexDouble & operator=(const MKLCD &c);
 };
 
-typedef struct _ComplexDouble ComplexDouble;
+typedef struct _ComplexDouble CD;
+
+_ComplexDouble::_ComplexDouble(double r, double i) { real = r; imag = i;};
+_ComplexDouble::_ComplexDouble(double r) { real = r; imag =0.0;};
+_ComplexDouble::_ComplexDouble(MKLCD c) { real = c.real; imag =c.imag;};
+
+const CD& _ComplexDouble::operator=(double r) {
+  real = r;
+  imag = 0.0;
+  return *this;
+}
+
+const CD& _ComplexDouble::operator=(const MKLCD &c) {
+  real = c.real;
+  imag = c.imag;
+  return *this;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
 
 /* complex constant */
 CD C1 (1.,0.);
 CD Ci (0.,1.);
 CD C0 (0.,0.);
 
-/* overloading MKL_Complex16 operations */
+/* arithmatic operations */
 inline const CD operator+(const CD &a, const CD &b) {
   CD c;
   c.real = a.real + b.real; 
