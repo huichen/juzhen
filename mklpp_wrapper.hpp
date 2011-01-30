@@ -1,5 +1,5 @@
-#ifndef MKLPP_WRAPPER_H
-#define MKLPP_WRAPPER_H
+#ifndef MKLPP_WRAPPER_HPP
+#define MKLPP_WRAPPER_HPP
 #include <mkl_cblas.h>
 #include <mkl_lapacke.h>
 #include <mkl.h>

@@ -1,5 +1,5 @@
-#ifndef MKLPP_MATRIX_H
-#define MKLPP_MATRIX_H
+#ifndef MKLPP_MATRIX_HPP
+#define MKLPP_MATRIX_HPP
 #include <mklpp_complex.hpp>
 #include <mklpp_wrapper.hpp>
 #include <mklpp_dataarray.hpp>

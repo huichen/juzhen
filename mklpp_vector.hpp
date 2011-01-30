@@ -1,5 +1,5 @@
-#ifndef MKLPP_VECTOR_H
-#define MKLPP_VECTOR_H
+#ifndef MKLPP_VECTOR_HPP
+#define MKLPP_VECTOR_HPP
 
 #include <mklpp_matrix.hpp>
 #include <algorithm>

@@ -1,5 +1,5 @@
-#ifndef MKLPP_DATAARRAY_H
-#define MKLPP_DATAARRAY_H
+#ifndef MKLPP_DATAARRAY_HPP
+#define MKLPP_DATAARRAY_HPP
 #include <string.h>
 #include <assert.h>
 #include <memory>

@@ -1,5 +1,5 @@
-#ifndef MKLPP_COMPLEX_H
-#define MKLPP_COMPLEX_H
+#ifndef MKLPP_COMPLEX_HPP
+#define MKLPP_COMPLEX_HPP
 #include <iostream>
 #include <mkl_cblas.h>
 #include <mkl_lapacke.h>
