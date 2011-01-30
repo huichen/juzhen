@@ -1,10 +1,10 @@
 all:
-	icc quantum.cpp -o quantum -lmkl_rt -pthread -liomp5 -O3 
-	./quantum
+	icc example.cpp -o example -lmkl_rt -pthread -liomp5 -O3 
+	./example
 
-t:
-	icc test.cpp -o test -lmkl_rt -liomp5 -lpthread -g
-	./test
+test:
+	icc unittest.cpp -o unittest -lmkl_rt -liomp5 -lpthread -g
+	./unittest
 
 clean:
-	rm test quantum
+	rm -rf unittest example 
