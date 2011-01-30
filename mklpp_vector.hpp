@@ -1,7 +1,7 @@
 #ifndef MKLPP_VECTOR_H
 #define MKLPP_VECTOR_H
 
-#include "mklpp_matrix.h"
+#include <mklpp_matrix.hpp>
 #include <algorithm>
 #include <vector>
 

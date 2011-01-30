@@ -1,8 +1,8 @@
 #ifndef MKLPP_MATRIX_H
 #define MKLPP_MATRIX_H
-#include "mklpp_complex.h"
-#include "mklpp_wrapper.h"
-#include "mklpp_dataarray.h"
+#include <mklpp_complex.hpp>
+#include <mklpp_wrapper.hpp>
+#include <mklpp_dataarray.hpp>
 
 namespace mklpp {
 
