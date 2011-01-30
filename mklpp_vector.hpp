@@ -9,7 +9,7 @@ namespace mklpp {
 
 /////////////////////////////////////////////////////////////////////////////
 /* vector class
-   nCol = 1 or nRow =1 matrix */
+   m_ncol = 1 or m_nrow =1 matrix */
 template<typename DataType> class vector : public matrix<DataType> {
 public:
   vector();
@@ -91,13 +91,13 @@ vector<DataType>::vector(size_t i) : matrix<DataType>(i, 1) { }
 
 template<typename DataType>
 vector<DataType>::vector(const matrix<DataType> &m) {
-  matrix<DataType>::_Data = 
+  matrix<DataType>::m_data = 
     DataPtr<DataType>::Type(new DataArray<DataType>(m.getDataPtr(), 
-                                                    m.nRow*m.nCol)); 
-  matrix<DataType>::nCol =1;
-  matrix<DataType>::nRow = m.nRow*m.nCol;
-  matrix<DataType>::_DataSize = m.nRow*m.nCol;
-  matrix<DataType>::_Transpose = CblasNoTrans;
+                                                    m.nRow()*m.nCol())); 
+  matrix<DataType>::m_ncol =1;
+  matrix<DataType>::m_nrow = m.nRow()*m.nCol();
+  matrix<DataType>::m_datasize = m.nRow()*m.nCol();
+  matrix<DataType>::m_transpose = CblasNoTrans;
 }
 
 template<typename DataType>
@@ -112,13 +112,13 @@ vector<DataType>::vector(const std::vector<DataType> &v)
 
 template<typename DataType>
 vector<DataType>& vector<DataType>::operator=(const vector<DataType> &v) { 
-  matrix<DataType>::_Data = 
+  matrix<DataType>::m_data = 
     DataPtr<DataType>::Type(new DataArray<DataType>(v.getDataPtr(), 
                                                     v.size())); 
-  matrix<DataType>::nCol =1;
-  matrix<DataType>::nRow = v.size();
-  matrix<DataType>::_DataSize = v.size();
-  matrix<DataType>::_Transpose = CblasNoTrans;
+  matrix<DataType>::m_ncol =1;
+  matrix<DataType>::m_nrow = v.size();
+  matrix<DataType>::m_datasize = v.size();
+  matrix<DataType>::m_transpose = CblasNoTrans;
   return *this;
 } 
 
@@ -138,7 +138,7 @@ void vector<DataType>::resize(size_t nc, size_t nr) {};
 
 template<typename DataType>
 size_t vector<DataType>::size() const {
-  return matrix<DataType>::nCol==1?matrix<DataType>::nRow:matrix<DataType>::nCol;
+  return matrix<DataType>::m_ncol==1?matrix<DataType>::m_nrow:matrix<DataType>::m_ncol;
 }
 
 template<typename DataType>
@@ -323,7 +323,7 @@ template<typename DataType>
 const vector<DataType> 
 operator*(const double lhs, const vector<DataType> &ma) {
   vector<DataType> m(ma.size());
-  for (size_t i=0; i<ma.nRow; i++)
+  for (size_t i=0; i<ma.nRow(); i++)
       m(i) = ma(i)*lhs; 
   return m;
 }
@@ -332,7 +332,7 @@ template<typename DataType>
 const vector<DataType> 
 operator*(const CD lhs, const vector<DataType> &ma) {
   vector<DataType> m(ma.size());
-  for (size_t i=0; i<ma.nRow; i++)
+  for (size_t i=0; i<ma.nRow(); i++)
       m(i) = ma(i)*lhs; 
   return m;
 }

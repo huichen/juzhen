@@ -12,9 +12,6 @@ namespace mklpp {
 template<typename DataType> 
 class DataArray {
 public:
-  DataType * _Data;
-  size_t size;
-
   DataArray(size_t s);
  
   template<typename T> 
@@ -37,6 +34,12 @@ public:
   DataType& operator[](const size_t i); 
  
   DataType& operator[](const size_t i) const;
+
+  DataType * getDataPtr();
+
+private:
+  DataType * _Data;
+  size_t size;
 };
 
 template<typename DataType>
@@ -125,6 +128,11 @@ DataType& DataArray<DataType>::operator[](const size_t i) {
 template<typename DataType>
 DataType& DataArray<DataType>::operator[](const size_t i) const {
   return _Data[i];
+}
+
+template<typename DataType>
+DataType * DataArray<DataType>::getDataPtr() {
+  return _Data;
 }
 /////////////////////////////////////////////////////////////////////////////
 
