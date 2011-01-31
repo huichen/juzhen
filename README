@@ -1,0 +1,18 @@
+Prerequisite
+  You need Intel MKL. 
+
+How to use
+  1. Run unit tests first and make sure it passes everything:
+     cd mklpp_source_dir
+     make 
+     
+  2. #include <mklpp.hpp> in your source file and add '-Imklpp_source_dir' 
+     to your compile flags 
+
+Problems and improvements
+  Please report issues through github:
+  https://github.com/huichen/mklpp/issues
+  I don't have time to write all new features you want but I'm very glad to merge 
+  them into my branch.
+
+Published under GPL v3.0.
