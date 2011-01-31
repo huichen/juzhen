@@ -1,5 +1,5 @@
 #include <iostream>
-#include <mklpp.h>
+#include <mklpp.hpp>
 #include <unittest.hpp>
 #include <vector>
 #include <sstream>
