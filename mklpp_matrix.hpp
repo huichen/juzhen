@@ -96,9 +96,9 @@ public:
 
   matrix<DataType> &conj();
 
-  matrix<DataType> block(size_t r1, size_t r2, size_t c1, size_t c2);
+  matrix<DataType> block(size_t r1, size_t r2, size_t c1, size_t c2) const;
 
-  matrix<DataType> &replace(size_t r, size_t c, matrix<DataType> mt);
+  matrix<DataType> &replace(size_t r, size_t c, const matrix<DataType> &mt);
 
   matrix<DataType> col(size_t c);
 
@@ -434,7 +434,7 @@ matrix<DataType> & matrix<DataType>::conj() {
 
 template<typename DataType> 
 matrix<DataType> matrix<DataType>::block(size_t r1, size_t r2, 
-                                         size_t c1, size_t c2) {
+                                         size_t c1, size_t c2) const {
   assert(r1<=r2 && c1<=c2);
   matrix<DataType> m(r2-r1, c2-c1);
   for (size_t i=0; i<m.nRow(); i++) 
@@ -445,7 +445,7 @@ matrix<DataType> matrix<DataType>::block(size_t r1, size_t r2,
 
 template<typename DataType> 
 matrix<DataType> & matrix<DataType>::replace(size_t r, size_t c, 
-                                            matrix<DataType> mt) {
+                                            const matrix<DataType> &mt) {
   for (size_t i=0; i<mt.nRow(); i++) 
     for (size_t j=0; j<mt.nCol(); j++) 
       (*this)(i+r, j+c) = mt(i,j);
