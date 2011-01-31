@@ -187,6 +187,7 @@ matrix<DataType>::operator= (const DataType rhs) {
 
 template<typename DataType> 
 bool matrix<DataType>::operator== (const matrix<DataType> &rhs) {
+  if (&rhs==this) return true;
   if (m_nrow != rhs.nRow() || m_ncol != rhs.nCol()) return false;
   for (size_t i=0; i<m_nrow; i++)
     for (size_t j=0; j<m_ncol; j++)
@@ -196,11 +197,7 @@ bool matrix<DataType>::operator== (const matrix<DataType> &rhs) {
 
 template<typename DataType> 
 bool matrix<DataType>::operator!= (const matrix<DataType> &rhs) {
-  if (m_nrow != rhs.nRow() || m_ncol != rhs.nCol()) return true;
-  for (size_t i=0; i<m_nrow; i++)
-    for (size_t j=0; j<m_ncol; j++)
-      if ((*this)(i,j)==rhs(i,j)) return false;
-  return true;
+  return !(operator==(rhs));
 }
 
 /* interface to private data */
@@ -264,25 +261,21 @@ inline DataType matrix<DataType>::operator()(size_t i, size_t j) const {
 
 template<typename DataType> 
 inline DataType& matrix<DataType>::operator()(size_t i) {
-  assert((m_ncol == 1 && i<m_nrow) || (m_nrow == 1 && i<m_ncol));
   return (*m_data)[i];
 }
 
 template<typename DataType> 
 inline DataType& matrix<DataType>::operator()(size_t i) const {
-  assert((m_ncol == 1 && i<m_nrow) || (m_nrow == 1 && i<m_ncol));
   return (*m_data)[i];
 }
 
 template<typename DataType> 
 inline DataType& matrix<DataType>::operator[](size_t i) {
-  assert((m_ncol == 1 && i<m_nrow) || (m_nrow == 1 && i<m_ncol));
   return (*m_data)[i];
 }
 
 template<typename DataType> 
 inline DataType& matrix<DataType>::operator[](size_t i) const {
-  assert((m_ncol == 1 && i<m_nrow) || (m_nrow == 1 && i<m_ncol));
   return (*m_data)[i];
 }
 
@@ -559,7 +552,7 @@ matrix<double> imag(const matrix<CD> &ma) {
 template<typename DataType> 
 matrix<DataType> trans(const matrix<DataType> &m) {
   matrix<DataType> m1 = m;
-  m.trans();
+  m1.trans();
   return m1;
 }
 
@@ -573,7 +566,7 @@ matrix<DataType> herm(const matrix<DataType> &m) {
 template<typename DataType> 
 matrix<DataType> conj(const matrix<DataType> &m) {
   matrix<DataType> m1 = m;
-  m.conj();
+  m1.conj();
   return m1;
 }
 
