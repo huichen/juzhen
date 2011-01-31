@@ -1,5 +1,5 @@
 Prerequisite
-  You need Intel MKL. 
+  You need Intel C++ compiler and MKL. 
 
 How to use
   1. Run unit tests first and make sure it passes everything:
