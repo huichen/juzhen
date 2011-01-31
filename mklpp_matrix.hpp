@@ -3,6 +3,7 @@
 #include <mklpp_complex.hpp>
 #include <mklpp_wrapper.hpp>
 #include <mklpp_dataarray.hpp>
+#include <sstream>
 
 namespace mklpp {
 
@@ -30,6 +31,8 @@ public:
   const matrix<DataType>& operator= (const DataType rhs);
  
   bool operator== (const matrix<DataType> &rhs); 
+
+  bool operator!= (const matrix<DataType> &rhs); 
 
 /* interface to private data */
   size_t nRow() const;
@@ -154,6 +157,7 @@ matrix<DataType>::matrix(const matrix<T> &m)
   m_data = DataPtr<DataType>::Type(
     new DataArray<DataType>(m.getDataPtr(), m.nRow()*m.nCol())
   ); 
+  m_transpose = m.getTranspose();
 } 
 
 template<typename DataType> 
@@ -169,10 +173,7 @@ matrix<DataType>::operator= (const matrix<DataType> &rhs) {
   if (&rhs==this) return *this;
   m_ncol = rhs.nCol();
   m_nrow = rhs.nRow();
-  if (m_ncol*m_nrow > m_datasize) {
-    m_data = rhs.m_data;
-    m_datasize = m_ncol*m_nrow;
-  }
+  m_data = DataPtr<DataType>::Type(new DataArray<DataType>(*(rhs.m_data)));
   m_transpose = rhs.m_transpose;
   return *this;
 } 
@@ -192,6 +193,15 @@ bool matrix<DataType>::operator== (const matrix<DataType> &rhs) {
       if ((*this)(i,j)!=rhs(i,j)) return false;
   return true;
 } 
+
+template<typename DataType> 
+bool matrix<DataType>::operator!= (const matrix<DataType> &rhs) {
+  if (m_nrow != rhs.nRow() || m_ncol != rhs.nCol()) return true;
+  for (size_t i=0; i<m_nrow; i++)
+    for (size_t j=0; j<m_ncol; j++)
+      if ((*this)(i,j)==rhs(i,j)) return false;
+  return true;
+}
 
 /* interface to private data */
 template<typename DataType> 
@@ -599,6 +609,15 @@ std::ostream& operator<< (std::ostream& out,
   }
   return out; 
 }
+
+template<typename DataType> 
+std::string toString(const matrix<DataType> &m) {
+  std::ostringstream out;
+  out << m;
+  return out.str(); 
+}
+
+
 
 /////////////////////////////////////////////////////////////////////////////
 

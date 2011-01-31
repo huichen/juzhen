@@ -22,6 +22,15 @@ struct _ComplexDouble : MKLCD {
   const struct _ComplexDouble & operator=(double r);
 
   const struct _ComplexDouble & operator=(const MKLCD &c);
+
+  bool operator==(const MKLCD &c);
+
+  bool operator==(const double c);
+
+  bool operator!=(const MKLCD &c);
+
+  bool operator!=(const double c);
+
 };
 
 typedef struct _ComplexDouble CD;
@@ -41,6 +50,27 @@ const CD& _ComplexDouble::operator=(const MKLCD &c) {
   imag = c.imag;
   return *this;
 }
+
+bool _ComplexDouble::operator==(const MKLCD &c) {
+  if (real == c.real && imag == c.imag) return true;
+  else return false;
+}
+
+bool _ComplexDouble::operator==(const double c) {
+  if (real == c && imag == 0) return true;
+  else return false;
+}
+
+bool _ComplexDouble::operator!=(const MKLCD &c) {
+  if (real == c.real && imag == c.imag) return false;
+  else return true;
+}
+
+bool _ComplexDouble::operator!=(const double c) {
+  if (real == c && imag == 0) return false;
+  else return true;
+}
+
 
 
 /////////////////////////////////////////////////////////////////////////////

@@ -23,12 +23,25 @@ BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   m2(0,1) = 99.;
   V(m2, "1 99 \n2 4 ")
 
+  m1 = m2;
+  V(m1, "1 99 \n2 4 ")
+
   matrix<double> m3(b, 3, 2);
   V(m3, "1 4 \n2 5 \n3 6 ")
 
   matrix<double> m4(3,3);
   m4 = 3;
   V(m4, "3 3 3 \n3 3 3 \n3 3 3 ")
+
+  cmatrix m5 = m3;
+  V(m5, "(1, 0) (4, 0) \n(2, 0) (5, 0) \n(3, 0) (6, 0) ")
+
+  cmatrix m6;
+  m6 = m3;
+  V(m6, "(1, 0) (4, 0) \n(2, 0) (5, 0) \n(3, 0) (6, 0) ")
+
+  cmatrix m7(m6.getDataPtr(),2,2);
+  V(m7, "(1, 0) (3, 0) \n(2, 0) (4, 0) ")
 
 END_TEST(MatrixAssignment)
 
@@ -41,20 +54,17 @@ BEGIN_TEST(IdentityMatrix, "IdentityMatrix")
 
 END_TEST(IdentityMatrix)
 
-/*
-// complex conjugate transpose
+BEGIN_TEST(MatrixHermitian, "MatrixHermitian")
 
   MKLCD c1[]= { {1.,0.}, {-3., 0.}, {2.0, 0.}, {-2., .0}, {6., 0.}, {3.0, 0.}};
-  cmatrix m7(c1, 2,3);
-  P("m7", m7)
+  cmatrix m1(c1, 2,3);
+  V(herm(m1), "(1, 0) (-3, 0) \n(2, 0) (-2, 0) \n(6, 0) (3, 0) ")
 
-  MKLCD c2[]={{ 1., 1.0},  { 2., 0.},    {3., 0.0 },   {6., 0.}, 
-           { 1., .0},  { 2., 0.},    {3., 0.0 },   {6., 0.}, 
-           { 1., .0},  { 2., 0.},    {3., 0.0 },   {6., 0.}};
-  cmatrix m8(c2, 4, 3);
-  m8.herm();
-  P("m8", m8)
+  VE(m1, herm(herm(m1)))
 
+END_TEST(MatrixHermitian)
+
+/*
 // arithmetic operations
 
   P("m7*m8", m7*m8)
@@ -98,16 +108,15 @@ END_TEST(IdentityMatrix)
   P("m10*vr", m10*vr)
   P("vr*ee", vr*ee)
 //  P("m10*vr-vr*e", m10*vr - vr*ee)
-
-// vector
+*/
+BEGIN_TEST(VectorOperation, "VectorOperation")
   double cv1[] = {1, 2, 3, 4};
   double cv2[] = {1, 3, 2, 4};
   
   dvector v1 (cv1, 4);
   dvector v2 (cv2, 4);
-
-  P("v1", v1)
-  P("v2", v2)
+  
+/*
   P("v1*v1", v1*v1)
   P("v1+v2", v1+v2)
   P("3*v1", 3*v1)
@@ -115,19 +124,23 @@ END_TEST(IdentityMatrix)
   P("diag(v2)", diag(v2))
   P("diag(v2)*v1", diag(v2)*v1)
   P("v1*diag(v2)", v1*diag(v2))
-
+*/
   vector<double> sv1(4);
   sv1[0]=1;
   sv1[1]=2;
   sv1[2]=3;
   sv1[3]=7;
 
-  P("dvector(sv1)", dvector(sv1))
+  V(sv1,"{1, 2, 3, 7}")
+  V(dvector(sv1),"{1, 2, 3, 7}")
+
   dvector v3;
   v3 = sv1;
-  P("v3", v3)
-  P("dvector(v3.stl())", dvector(v3.stl()))
-*/
+  V(v3,"{1, 2, 3, 7}")
+
+  V(dvector(v3.stl()), "{1, 2, 3, 7}")
+
+END_TEST(VectorOperation)
 
   UnitTest MyTest;
   MyTest.Run(); 

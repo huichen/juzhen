@@ -364,6 +364,14 @@ std::ostream& operator<< (std::ostream& out, const vector<DataType> &m) {
   return out; 
 }
 
+template<typename DataType> 
+std::string toString(const vector<DataType> &m) {
+  std::ostringstream out;
+  out << m;
+  return out.str(); 
+}
+
+
 }
 /////////////////////////////////////////////////////////////////////////////
 
