@@ -1,45 +1,47 @@
-#include "mklpp.h"
+#include <iostream>
+#include <mklpp.h>
+#include <unittest.hpp>
 #include <vector>
-
-#define P(s,m) std::cout << s << "=" << std::endl << m << std::endl;
+#include <sstream>
 
 using namespace mklpp;
 
+INIT_UNITTEST
+
 int main() {
 
-// assign and copy
-
+BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   double a[] = {1., 2., 3., 4.};
   double b[] = {1., 2., 3., 4., 5., 6.};
 
   matrix<double> m1(a, 2, 2);
-  P("m1(0,1)", m1(0,1))
+  V(m1, "1 3 \n2 4 ")
 
   matrix<double> m2 = m1;
+  V(m2, "1 3 \n2 4 ")
+
   m2(0,1) = 99.;
+  V(m2, "1 99 \n2 4 ")
 
-  matrix<double> m3(b, 2, 3);
-
-  P("m1",m1)
-  P("m2",m2)
+  matrix<double> m3(b, 3, 2);
+  V(m3, "1 4 \n2 5 \n3 6 ")
 
   matrix<double> m4(3,3);
   m4 = 3;
-  P("m4",m4)
+  V(m4, "3 3 3 \n3 3 3 \n3 3 3 ")
 
-// identity matrix
-  matrix<double> m5 = idmatrix<double>(3);
-  P("idmatrix(3)=", idmatrix<double>(3))
-  P("m5", m5)
-  P("m4*m5", m4*m5)
+END_TEST(MatrixAssignment)
 
-  cmatrix m6(4,4);
-  m6 = C1*3. + Ci*2.;
+BEGIN_TEST(IdentityMatrix, "IdentityMatrix")
+  matrix<double> m1 = idmatrix<double>(3);
+  V(m1, "1 0 0 \n0 1 0 \n0 0 1 ")
 
-  P("m6", m6)
-  P("1", cidmatrix(4))
-  P("m6*1", m6*cidmatrix(4))
+  cidmatrix m2(2);
+  V(m2, "(1, 0) (0, 0) \n(0, 0) (1, 0) ")
 
+END_TEST(IdentityMatrix)
+
+/*
 // complex conjugate transpose
 
   MKLCD c1[]= { {1.,0.}, {-3., 0.}, {2.0, 0.}, {-2., .0}, {6., 0.}, {3.0, 0.}};
@@ -97,7 +99,7 @@ int main() {
   P("vr*ee", vr*ee)
 //  P("m10*vr-vr*e", m10*vr - vr*ee)
 
-/* vector */
+// vector
   double cv1[] = {1, 2, 3, 4};
   double cv2[] = {1, 3, 2, 4};
   
@@ -125,6 +127,10 @@ int main() {
   v3 = sv1;
   P("v3", v3)
   P("dvector(v3.stl())", dvector(v3.stl()))
+*/
+
+  UnitTest MyTest;
+  MyTest.Run(); 
 
   return 0;
 }
