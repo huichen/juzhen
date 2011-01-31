@@ -92,9 +92,9 @@ std::cout << m_name << (return_value?" passed.":" FAILED!") << std::endl; \
 } \
 }; \
 static test s_TestFunction_##test ; \
-UnitTest::AddTest(&s_TestFunction_##test) ;
+UnitTest::AddTest(&s_TestFunction_##test) ; 
 
-
+#define RUN_TEST UnitTest::Run(); 
 
 /////////////////////////////////////////////////////////////////////////////
 /* TestFunction class */
@@ -109,7 +109,7 @@ public:
 /* UnitTest class */
 class UnitTest {
 public:
-  void Run();
+  static void Run();
   static void AddTest(TestFunction *t); 
   static int m_nfail;
   static int m_nsucc;
@@ -151,7 +151,6 @@ std::string serialize(std::string s) {
     else os.append(s.begin()+i, s.begin()+i+1); 
   return os;
 }
-
 
 
 #endif

@@ -8,6 +8,9 @@ using namespace mklpp;
 
 int main() {
 
+/**
+ * Tests for matrix
+*/
 BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   double a[] = {1., 2., 3., 4.};
   double b[] = {1., 2., 3., 4., 5., 6.};
@@ -140,6 +143,50 @@ BEGIN_TEST(MatrixIndex, "MatrixIndex")
 
 END_TEST(MatrixIndex)
 
+BEGIN_TEST(MatrixArithmatic, "MatrixArithmatic")
+  double a[] = {1., 2., 3., 4., 5., 6.};
+  dmatrix m1(a, 2, 3);
+
+  dmatrix m2 = m1+m1;
+  V(m2, "2 6 10 \n4 8 12 ")
+
+  m2 = m1;
+  m2 += m1;
+  V(m2, "2 6 10 \n4 8 12 ")
+
+  m2 = m1 + m1;
+  m2 = m2 - m1; 
+  V(m2, "1 3 5 \n2 4 6 ")
+
+  m2 = m1 + m1;
+  m2 -= m1; 
+  V(m2, "1 3 5 \n2 4 6 ")
+
+  V(m1*2, "2 6 10 \n4 8 12 ")
+
+  V(2*m1, "2 6 10 \n4 8 12 ")
+
+  m2 = m1;
+  m2 *= 2;
+  V(m2, "2 6 10 \n4 8 12 ")
+
+  V(m2/2, "1 3 5 \n2 4 6 ")
+
+  m2 /= 2;
+  V(m2, "1 3 5 \n2 4 6 ")
+
+  double b[] = {1, 2, 3, 4};
+  dmatrix m3(b, 2, 2);
+
+  dmatrix m4;
+  m4 = m3*m2;
+  V(m4, "7 15 23 \n10 22 34 ")
+
+  m4 = m3;
+  m4 *= m2;
+  V(m4, "7 15 23 \n10 22 34 ")
+
+END_TEST(MatrixArithmatic)
 
 BEGIN_TEST(MatrixHermTransConj, "MatrixHermTransConj")
 
@@ -176,6 +223,81 @@ BEGIN_TEST(MatrixHermTransConj, "MatrixHermTransConj")
 
 END_TEST(MatrixHermTransConj)
 
+
+BEGIN_TEST(MatrixBlockReplace, "MatrixBlockReplace")
+  double a[] = {1., 2., 3., 4., 5., 6.};
+  double b[] = {20, 30, 40, 50};
+  dmatrix m1(a, 2, 3);
+  dmatrix m2(b, 2, 2);
+
+  V(m1.block(0,1,0,2), "1 3 ")
+  V(m1.block(0,1,0,1), "1 ")
+
+  m1.replace(0,1, m2);
+  V(m1, "1 20 40 \n2 30 50 ")
+
+END_TEST(MatrixBlockReplace)
+
+
+BEGIN_TEST(MatrixGetRowCol, "MatrixGetRowCol")
+  double a[] = {1., 2., 3., 4., 5., 6.};
+  dmatrix m1(a, 2, 3);
+
+  V(m1.col(1), "3 \n4 ")
+
+  V(m1.row(1), "2 4 6 ")
+
+END_TEST(MatrixGetRowCol)
+
+
+BEGIN_TEST(MatrixSolver, "MatrixSolver")
+
+  double a[] = {1., 2., 3., 4., 5., 6., 8, 20, 33};
+  dmatrix m1(a, 3, 3);
+  
+  cvector v;
+  dmatrix vl, vr;
+
+  m1.eigen(v, vl, vr);
+  V(v, "{(37.6431, 0), (-0.0563885, 0), (1.41334, 0)}")
+  V(vl, "-0.090437 -0.451975 -0.0714581 \n-0.190746 0.807446 -0.834439 \n-0.977465 -0.379144 0.546447 ")
+  V(vr, "-0.236039 -0.989503 -0.891627 \n-0.51814 0.128295 -0.421717 \n-0.82208 0.0665147 0.164791 ")
+
+  m1.leigen(v, vl);
+  V(v, "{(37.6431, 0), (-0.0563885, 0), (1.41334, 0)}")
+  V(vl, "-0.090437 -0.451975 -0.0714581 \n-0.190746 0.807446 -0.834439 \n-0.977465 -0.379144 0.546447 ")
+
+  m1.reigen(v, vr);
+  V(v, "{(37.6431, 0), (-0.0563885, 0), (1.41334, 0)}")
+  V(vr, "-0.236039 -0.989503 -0.891627 \n-0.51814 0.128295 -0.421717 \n-0.82208 0.0665147 0.164791 ")
+
+/* complex */
+  MKLCD b[] = {{1., 1}, {2., 3.2}, {3.,4}, {4.,1}, {5.,1}, {6.,22}, {8,23}, {20,1},{33,2}};
+  cmatrix m2(b, 3, 3);
+
+  cvector v1;
+  cmatrix vl1, vr1;
+
+  m2.eigen(v1, vl1, vr1);
+  V(v1, "{(38.6085, 15.7802), (4.08146, -2.43421), (-3.68992, -9.34598)}")
+  V(vl1, "(0.0903046, -0.103983) (-0.0911386, -0.47054) (-0.114558, 0.0915536) \n(0.338112, -0.412648) (0.852899, 0) (0.862411, 0) \n(0.834527, 0) (-0.199099, 0.0566482) (-0.439391, -0.204148) ")
+  V(vr1, "(0.342437, 0.337502) (0.979951, 0) (0.82562, 0) \n(0.40302, -0.101577) (0.0410844, 0.0457229) (0.00844035, -0.458344) \n(0.772066, 0) (-0.100078, -0.160943) (-0.319397, 0.078653) ")
+
+  m2.leigen(v1, vl1);
+  V(v1, "{(38.6085, 15.7802), (4.08146, -2.43421), (-3.68992, -9.34598)}")
+  V(vl1, "(0.0903046, -0.103983) (-0.0911386, -0.47054) (-0.114558, 0.0915536) \n(0.338112, -0.412648) (0.852899, 0) (0.862411, 0) \n(0.834527, 0) (-0.199099, 0.0566482) (-0.439391, -0.204148) ")
+
+  m2.reigen(v1, vr1);
+  V(v1, "{(38.6085, 15.7802), (4.08146, -2.43421), (-3.68992, -9.34598)}")
+  V(vr1, "(0.342437, 0.337502) (0.979951, 0) (0.82562, 0) \n(0.40302, -0.101577) (0.0410844, 0.0457229) (0.00844035, -0.458344) \n(0.772066, 0) (-0.100078, -0.160943) (-0.319397, 0.078653) ")
+
+ END_TEST(MatrixSolver)
+
+
+
+/**
+ * Tests for identity matrix
+*/
 BEGIN_TEST(IdentityMatrix, "IdentityMatrix")
   dmatrix m1 = didmatrix(3);
   V(m1, "1 0 0 \n0 1 0 \n0 0 1 ")
@@ -186,7 +308,10 @@ BEGIN_TEST(IdentityMatrix, "IdentityMatrix")
 END_TEST(IdentityMatrix)
 
 
-BEGIN_TEST(VectorOperation, "VectorOperation")
+/**
+ * Tests for vector 
+*/
+BEGIN_TEST(VectorTests, "VectorTests")
   double cv1[] = {1, 2, 3, 4};
   double cv2[] = {1, 3, 2, 4};
   
@@ -216,15 +341,73 @@ BEGIN_TEST(VectorOperation, "VectorOperation")
 
   VDE(v4.size(), 4)
 
+  dvector v5;
+  v5 = v1+v2;
+  V(v5, "{2, 5, 5, 8}")
+
+  v5 = v1;
+  v5 += v2;
+  V(v5, "{2, 5, 5, 8}")
+
+  v5 = v1;
+  v5 -= v2;
+  V(v5, "{0, -1, 1, 0}")
+
+  v5 = v1;
+  v5 = v5*2;
+  V(v5, "{2, 4, 6, 8}")
+
+  v5 = v1;
+  v5 *= 2;
+  V(v5, "{2, 4, 6, 8}")
+
+  v5 = v1+v1;
+  v5 = v5/2;
+  V(v5, "{1, 2, 3, 4}")
+
+  v5 = v1+v1;
+  v5 /= 2;
+  V(v5, "{1, 2, 3, 4}")
+
   VDE(v1*v1, 30)
+  
+  dmatrix m2 = didmatrix(4);
+  V(v1*m2, "{1, 2, 3, 4}")
+  V(m2*v1, "{1, 2, 3, 4}")
+
+  MKLCD c1[]= { {1.,2.}, {-3., -1.}, {2.0, 0.}, {-2., .0}, {6., 7.}, {3.0, 0.}};
+  cvector v6(c1, 6);
+
+  V(v6, "{(1, 2), (-3, -1), (2, 0), (-2, 0), (6, 7), (3, 0)}")
+
+  V(trans(v6), "{(1, 2), (-3, -1), (2, 0), (-2, 0), (6, 7), (3, 0)}")
+
+  V(conj(v6), "{(1, -2), (-3, 1), (2, 0), (-2, 0), (6, -7), (3, 0)}")
+
+  V(herm(v6), "{(1, -2), (-3, 1), (2, 0), (-2, 0), (6, -7), (3, 0)}")
+
+  VME(v6, conj(herm(v6)))
+
+  VME(herm(v6), conj(trans(v6)))
+
+  cvector v7;
+  v7 = v6;
+  v7.trans();
+  V(trans(v7), "{(1, 2), (-3, -1), (2, 0), (-2, 0), (6, 7), (3, 0)}")
+
+  v7 = v6;
+  v7.conj();
+  V(v7, "{(1, -2), (-3, 1), (2, 0), (-2, 0), (6, -7), (3, 0)}")
+
+  v7 = v6;
+  v7.herm();
+  V(v7, "{(1, -2), (-3, 1), (2, 0), (-2, 0), (6, -7), (3, 0)}")
   
   V(dvector(v1.stl()), "{1, 2, 3, 4}")
 
+END_TEST(VectorTests)
 
-END_TEST(VectorOperation)
-
-  UnitTest MyTest;
-  MyTest.Run(); 
+RUN_TEST
 
   return 0;
 }

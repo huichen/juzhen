@@ -44,11 +44,11 @@ public:
   template<typename T> 
   vector<DataType>& operator-=(const vector<T>& rhs); 
 
-  const vector<DataType> operator*(const double rhs);
+  const vector<DataType> operator*(const double rhs) const;
 
   vector<DataType>& operator*=(const double rhs); 
 
-  const vector<DataType> operator*(const CD rhs);
+  const vector<DataType> operator*(const CD rhs) const;
 
   vector<DataType>& operator*=(const CD rhs);
 
@@ -57,7 +57,7 @@ public:
   vector<DataType>& operator*=(const matrix<DataType>& rhs);
 
   template<typename T> 
-  const DataType operator* (const vector<T> &rv);
+  const DataType operator* (const vector<T> &rv) const;
 
   template<typename T> 
   const vector<DataType> operator/(const T rhs) const;
@@ -150,7 +150,8 @@ const vector<DataType> vector<DataType>::operator+(const vector<T>& rhs) const {
 template<typename DataType>
 template<typename T> 
 vector<DataType>& vector<DataType>::operator+=(const vector<T>& rhs) {
-  return matrix<DataType>::operator+=(rhs);
+  matrix<DataType>::operator+=(rhs);
+  return *this;
 }
 
 template<typename DataType>
@@ -163,27 +164,30 @@ vector<DataType>::operator-(const vector<T>& rhs) const {
 template<typename DataType>
 template<typename T> 
 vector<DataType>& vector<DataType>::operator-=(const vector<T>& rhs) {
-  return matrix<DataType>::operator-=(rhs);
+  matrix<DataType>::operator-=(rhs);
+  return *this;
 }
 
 template<typename DataType>
-const vector<DataType> vector<DataType>::operator*(const double rhs) {
+const vector<DataType> vector<DataType>::operator*(const double rhs) const {
   return matrix<DataType>::operator*(rhs);
 }
 
 template<typename DataType>
 vector<DataType>& vector<DataType>::operator*=(const double rhs) {
-  return matrix<DataType>::operator*=(rhs);
+  matrix<DataType>::operator*=(rhs);
+  return *this;
 }
 
 template<typename DataType>
-const vector<DataType> vector<DataType>::operator*(const CD rhs) {
+const vector<DataType> vector<DataType>::operator*(const CD rhs) const {
   return matrix<DataType>::operator*(rhs);
 }
 
 template<typename DataType>
 vector<DataType>& vector<DataType>::operator*=(const CD rhs) {
-  return matrix<DataType>::operator*=(rhs);
+  matrix<DataType>::operator*=(rhs);
+  return *this;
 }
 
 template<typename DataType>
@@ -205,7 +209,7 @@ vector<DataType>& vector<DataType>::operator*=(const matrix<DataType>& rhs) {
 
 template<typename DataType>
 template<typename T> 
-const DataType vector<DataType>::operator* (const vector<T> &rv) {
+const DataType vector<DataType>::operator* (const vector<T> &rv) const {
   assert(size() == rv.size());
   DataType res = 0;
   for(size_t i =0;i<size(); i++) res+=(*this)[i]*rv[i];
@@ -221,7 +225,8 @@ const vector<DataType> vector<DataType>::operator/(const T rhs) const {
 template<typename DataType>
 template<typename T> 
 vector<DataType>& vector<DataType>::operator/=(const T rhs) {
-  return matrix<DataType>::operator/=(rhs);
+  matrix<DataType>::operator/=(rhs);
+  return *this;
 }
 
 template<typename DataType>
