@@ -69,6 +69,8 @@ int geev<double>(
   int res = LAPACKE_dgeev(LAPACK_COL_MAJOR, nl, nr, n, 
                          a, lda, wr, wi, vl, ldvl, vr, ldvr); 
   for(size_t i=0; i<n; i++) {w[i].real = wr[i]; w[i].imag = wi[i];}
+  free(wr);
+  free(wi);
   return res;
 };
 
