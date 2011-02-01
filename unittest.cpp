@@ -333,6 +333,11 @@ BEGIN_TEST(VectorTests, "VectorTests")
   v3 = v1;
   V(dvector(v3), "{1, 2, 3, 4}")
 
+  dvector vv(4);
+  vv = 1;
+  VDE(vv.size(), 4);
+  V(vv, "{1, 1, 1, 1}");
+
   v4.resize(4);
   V(v4, "{1, 2, 3, 4}")
 
@@ -389,6 +394,8 @@ BEGIN_TEST(VectorTests, "VectorTests")
   VME(v6, conj(herm(v6)))
 
   VME(herm(v6), conj(trans(v6)))
+
+  V(v6.block(1,4), "{(-3, -1), (2, 0), (-2, 0)}")
 
   cvector v7;
   v7 = v6;

@@ -27,6 +27,8 @@ public:
 
   vector<DataType>& operator=(const std::vector<DataType> &v);
 
+  vector<DataType>& operator=(const DataType rhs);
+
   void resize(size_t n);
   void resize(size_t nc, size_t nr);
 
@@ -129,6 +131,12 @@ vector<DataType>::operator=(const std::vector<DataType> &v) {
   for(size_t i=0; i<v.size(); i++) (*this)[i] = v[i];
   return *this;
 } 
+
+template<typename DataType>
+vector<DataType>& vector<DataType>::operator=(const DataType rhs) {
+  matrix<DataType>::operator=(rhs);
+  return *this;
+}
 
 template<typename DataType>
 void vector<DataType>::resize(size_t n) { matrix<DataType>::resize(n,1);}
@@ -243,8 +251,7 @@ vector<DataType> & vector<DataType>::conj() {
 
 template<typename DataType>
 vector<DataType> vector<DataType>::block(size_t i1, size_t i2) {
-  matrix<DataType>::block(i1, i2, 0, 1);
-  return (*this);
+  return matrix<DataType>::block(i1, i2, 0, 1);
 }
 
 template<typename DataType>

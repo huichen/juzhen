@@ -136,7 +136,7 @@ matrix<DataType>::matrix() : m_ncol(0), m_nrow(0) {
 template<typename DataType> 
 matrix<DataType>::matrix(size_t nr, size_t nc) : m_ncol(nc), m_nrow(nr) {
     m_data = DataPtr<DataType>::Type(new DataArray<DataType>(m_ncol*m_nrow));
-    m_datasize = nr*nc;
+    m_datasize = m_nrow*m_ncol;
     m_transpose = CblasNoTrans;
   } 
 
