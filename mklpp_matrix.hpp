@@ -26,9 +26,9 @@ public:
  
   matrix(const matrix<DataType> &m); 
 
-  const matrix<DataType>& operator= (const matrix<DataType> &rhs);
+  matrix<DataType>& operator= (const matrix<DataType> &rhs);
  
-  const matrix<DataType>& operator= (const DataType rhs);
+  matrix<DataType>& operator= (const DataType rhs);
  
   bool operator== (const matrix<DataType> &rhs); 
 
@@ -42,8 +42,6 @@ public:
   DataType * getDataPtr() const; 
 
   DataArray<DataType>& getDataArray() const; 
-
-  size_t getDataSize() const; 
 
   CBLAS_TRANSPOSE getTranspose() const;
  
@@ -100,9 +98,9 @@ public:
 
   matrix<DataType> &replace(size_t r, size_t c, const matrix<DataType> &mt);
 
-  matrix<DataType> col(size_t c);
+  matrix<DataType> col(size_t c) const;
 
-  matrix<DataType> row(size_t r);
+  matrix<DataType> row(size_t r) const;
 
 /* solvers */
   void eigen(matrix<CD> &e, matrix<DataType> &vl, matrix<DataType> &vr);
@@ -119,8 +117,6 @@ protected:
 
   typename DataPtr<DataType>::Type m_data; 
 
-  size_t m_datasize;
-
   CBLAS_TRANSPOSE m_transpose;
 };
 
@@ -129,14 +125,12 @@ typedef matrix<double> dmatrix;
 
 template<typename DataType> 
 matrix<DataType>::matrix() : m_ncol(0), m_nrow(0) {
-  m_datasize = 0;
   m_transpose = CblasNoTrans;
 } 
 
 template<typename DataType> 
 matrix<DataType>::matrix(size_t nr, size_t nc) : m_ncol(nc), m_nrow(nr) {
     m_data = DataPtr<DataType>::Type(new DataArray<DataType>(m_ncol*m_nrow));
-    m_datasize = m_nrow*m_ncol;
     m_transpose = CblasNoTrans;
   } 
 
@@ -145,7 +139,6 @@ template<typename T>
 matrix<DataType>::matrix(const T *data, size_t nr, size_t nc) 
   : m_ncol(nc), m_nrow(nr) {
   m_data = DataPtr<DataType>::Type(new DataArray<DataType>(data, nr*nc));
-  m_datasize = nr*nc;
   m_transpose = CblasNoTrans;
 } 
 
@@ -153,7 +146,7 @@ template<typename DataType>
 template<typename T> 
 matrix<DataType>::matrix(const matrix<T> &m) 
   : m_ncol(m.nCol()), m_nrow(m.nRow()), 
-  m_datasize(m.nRow()*m.nCol()), m_transpose(m.getTranspose()){
+  m_transpose(m.getTranspose()){
   m_data = DataPtr<DataType>::Type(
     new DataArray<DataType>(m.getDataPtr(), m.nRow()*m.nCol())
   ); 
@@ -163,12 +156,12 @@ matrix<DataType>::matrix(const matrix<T> &m)
 template<typename DataType> 
 matrix<DataType>::matrix(const matrix<DataType> &m) 
   : m_ncol(m.nCol()), m_nrow(m.nRow()), 
-  m_datasize(m.m_datasize), m_transpose(m.m_transpose){
+  m_transpose(m.m_transpose){
   m_data = DataPtr<DataType>::Type(new DataArray<DataType>(*(m.m_data)));
 }
 
 template<typename DataType> 
-const matrix<DataType>& 
+matrix<DataType>& 
 matrix<DataType>::operator= (const matrix<DataType> &rhs) {
   if (&rhs==this) return *this;
   m_ncol = rhs.nCol();
@@ -179,9 +172,9 @@ matrix<DataType>::operator= (const matrix<DataType> &rhs) {
 } 
 
 template<typename DataType> 
-const matrix<DataType>& 
+matrix<DataType>& 
 matrix<DataType>::operator= (const DataType rhs) {
-  for (size_t i=0; i<m_datasize; i++) (*m_data)[i]=rhs;
+  for (size_t i=0; i<m_ncol*m_nrow; i++) (*m_data)[i]=rhs;
   return *this;
 } 
 
@@ -222,11 +215,6 @@ DataArray<DataType>& matrix<DataType>::getDataArray() const {
 }
 
 template<typename DataType> 
-size_t matrix<DataType>::getDataSize() const {
-  return m_datasize;
-}
-
-template<typename DataType> 
 CBLAS_TRANSPOSE matrix<DataType>::getTranspose() const {
   return m_transpose;
 }
@@ -234,11 +222,10 @@ CBLAS_TRANSPOSE matrix<DataType>::getTranspose() const {
 /* resizing/reshaping matrix */
 template<typename DataType> 
 void matrix<DataType>::resize(size_t nr, size_t nc) {
-  if (m_datasize < nc * nr) {
+  if (m_nrow*m_ncol < nc * nr) {
     typename DataPtr<DataType>::Type 
       newData(new DataArray<DataType>(*m_data, nr*nc));
     m_data = newData;
-    m_datasize = nc*nr;
   }
   m_ncol = nc;
   m_nrow = nr;
@@ -453,12 +440,12 @@ matrix<DataType> & matrix<DataType>::replace(size_t r, size_t c,
 }
 
 template<typename DataType> 
-matrix<DataType> matrix<DataType>::col(size_t c) {
+matrix<DataType> matrix<DataType>::col(size_t c) const {
  return block(0,m_nrow, c, c+1);
 }
 
 template<typename DataType> 
-matrix<DataType> matrix<DataType>::row(size_t r) {
+matrix<DataType> matrix<DataType>::row(size_t r) const {
  return block(r, r+1, 0, m_ncol);
 }
 
@@ -634,7 +621,6 @@ idmatrix<DataType>::idmatrix(size_t n) {
     DataPtr<DataType>::Type(new DataArray<DataType>(n*n));
   matrix<DataType>::m_ncol = n;
   matrix<DataType>::m_nrow = n;
-  matrix<DataType>::m_datasize = n*n;
   matrix<DataType>::m_transpose = CblasNoTrans;
   
   for (size_t i=0; i<n; i++) 

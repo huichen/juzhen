@@ -12,6 +12,8 @@ namespace mklpp {
 template<typename DataType> 
 class DataArray {
 public:
+  DataArray();
+
   DataArray(size_t s);
  
   template<typename T> 
@@ -43,6 +45,12 @@ private:
 };
 
 template<typename DataType>
+DataArray<DataType>::DataArray() {
+  _Data = NULL;
+  size = 0;
+}
+
+template<typename DataType>
 DataArray<DataType>::DataArray(size_t s) {
   _Data = (DataType *) malloc(s*sizeof(DataType));
   assert (_Data);
@@ -52,11 +60,11 @@ DataArray<DataType>::DataArray(size_t s) {
 template<typename DataType>
 template<typename T> 
 DataArray<DataType>::DataArray(const DataArray<T> &da) {
-  if (&da) {
+  if (&da && da.size >0) {
     _Data = (DataType *) malloc(da.size*sizeof(DataType));
     assert (_Data);
-    if (da._Data) for(size_t i=0; i<da.size; i++) _Data[i] = da[i]; 
     size = da.size;
+    if (da._Data) for(size_t i=0; i< da.size; i++) _Data[i] = da[i]; 
   } else {
     size = 0;
     _Data = NULL;
@@ -65,11 +73,11 @@ DataArray<DataType>::DataArray(const DataArray<T> &da) {
 
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataArray<DataType> &da) {
-  if (&da) {
+  if (&da && da.size >0) {
     _Data = (DataType *) malloc(da.size*sizeof(DataType));
     assert (_Data);
-    if (da._Data) memcpy(_Data, da._Data, da.size*sizeof(DataType));
     size = da.size;
+    if (da._Data) memcpy(_Data, da._Data, da.size*sizeof(DataType));
   } else {
     size = 0;
     _Data = NULL;
@@ -79,40 +87,62 @@ DataArray<DataType>::DataArray(const DataArray<DataType> &da) {
 template<typename DataType>
 template<typename T> 
 DataArray<DataType>::DataArray(const DataArray<T> &da, const size_t s) {
-  _Data = (DataType *) malloc(s*sizeof(DataType));
-  assert (_Data);
-  if (&da) {
-    size = (s < da.size? s : da.size);
-    for(size_t i=0; i<size; i++) _Data[i] = da[i]; 
+  if ((&da && da.size>0)||s>0) {
+    size_t reals;
+    if (&da)  reals = da.size>s?da.size:s;
+    else reals = s;
+    _Data = (DataType *) malloc(reals*sizeof(DataType));
+    assert (_Data);
+    size = reals;
+    if (&da && da._Data) for(size_t i=0; i< da.size; i++) _Data[i] = da[i]; 
+  } else {
+    size = 0;
+    _Data = NULL;
   }
 }
 
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataArray<DataType> &da, 
                                const size_t s) {
-  _Data = (DataType *) malloc(s*sizeof(DataType));
-  assert (_Data);
-  if (&da) {
-    size = (s < da.size? s : da.size);
-    memcpy(_Data, da._Data, size*sizeof(DataType));
+  if ((&da && da.size>0)||s>0) {
+    size_t reals;
+    if (&da)  reals = da.size>s?da.size:s;
+    else reals = s;
+    _Data = (DataType *) malloc(reals*sizeof(DataType));
+    assert (_Data);
+    size = reals;
+    if (&da && da._Data) memcpy(_Data, da._Data, da.size*sizeof(DataType));
+  } else {
+    size = 0;
+    _Data = NULL;
   }
 }
 
 template<typename DataType>
 template<typename T> 
 DataArray<DataType>::DataArray(const T *da, const size_t s) {
-  _Data = (DataType *) malloc(s*sizeof(DataType));
-  assert (_Data);
-  if (da) for (size_t i=0; i<s; i++) _Data[i] = da[i];
-  size = s;
+  if (s > 0) {
+    _Data = (DataType *) malloc(s*sizeof(DataType));
+    assert (_Data);
+    if (da) for (size_t i=0; i<s; i++) _Data[i] = da[i];
+    size = s;
+  } else { 
+    size = 0;
+    _Data = NULL;
+  }
 }
 
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataType *da, const size_t s) {
-  _Data = (DataType *) malloc(s*sizeof(DataType));
-  assert (_Data);
-  if (da) memcpy(_Data, da, s*sizeof(DataType));
-  size = s;
+  if (s > 0) {
+    _Data = (DataType *) malloc(s*sizeof(DataType));
+    assert (_Data);
+    if (da) memcpy(_Data, da, s*sizeof(DataType));
+    size = s;
+  } else { 
+    size = 0;
+    _Data = NULL;
+  } 
 }
  
 template<typename DataType>

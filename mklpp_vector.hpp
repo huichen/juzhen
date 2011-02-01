@@ -98,7 +98,6 @@ vector<DataType>::vector(const matrix<DataType> &m) {
                                                     m.nRow()*m.nCol())); 
   matrix<DataType>::m_ncol =1;
   matrix<DataType>::m_nrow = m.nRow()*m.nCol();
-  matrix<DataType>::m_datasize = m.nRow()*m.nCol();
   matrix<DataType>::m_transpose = CblasNoTrans;
 }
 
@@ -119,7 +118,6 @@ vector<DataType>& vector<DataType>::operator=(const vector<DataType> &v) {
                                                     v.size())); 
   matrix<DataType>::m_ncol =1;
   matrix<DataType>::m_nrow = v.size();
-  matrix<DataType>::m_datasize = v.size();
   matrix<DataType>::m_transpose = CblasNoTrans;
   return *this;
 } 

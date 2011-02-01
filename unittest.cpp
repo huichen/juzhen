@@ -94,8 +94,6 @@ BEGIN_TEST(MatrixPrivateData, "MatrixPrivateData")
 
   VDE(m1.nRow(), 2)
 
-  VDE(m1.getDataSize(), 6)
-
   VDE(m1.getTranspose(), CblasNoTrans)
 
   m1.trans();
