@@ -1,9 +1,18 @@
+ifeq (${BLASLIB}, mkl) 
+CFLAGS = -DUSE_MKL -I./ -lmkl_rt -liomp5 -lpthread 
+else
+ifeq (${BLASLIB}, atlas)
+CFLAGS = -DUSE_ATLAS -I./  -lblas -llapack 
+else
+endif
+endif
+
 test:
-	g++ unittest.cpp -DUSE_ATLAS -I./ -o unittest -lblas -llapack -g
+	g++ unittest.cpp -o unittest $(CFLAGS) -g
 	./unittest
 
 sample:
-	g++ example.cpp -DUSE_ATLAS -I./ -o example -lblas -llapack 
+	g++ example.cpp -o example $(CFLAGS) 
 	./example
 
 clean:
