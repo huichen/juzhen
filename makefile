@@ -1,7 +1,7 @@
-ifeq (${BLASLIB}, mkl) 
+ifeq (${MLCPP_BLASLIB}, mkl) 
 CFLAGS = -DUSE_MKL -I./ -lmkl_rt -liomp5 -lpthread 
 else
-ifeq (${BLASLIB}, atlas)
+ifeq (${MLCPP_BLASLIB}, atlas)
 CFLAGS = -DUSE_ATLAS -I./  -lblas -llapack 
 else
 endif
