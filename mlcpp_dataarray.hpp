@@ -1,8 +1,9 @@
-#ifndef MKLPP_DATAARRAY_HPP
-#define MKLPP_DATAARRAY_HPP
+#ifndef MLCPP_DATAARRAY_HPP
+#define MLCPP_DATAARRAY_HPP
 #include <string.h>
 #include <assert.h>
 #include <memory>
+#include <stdlib.h>
 
 namespace mlcpp {
 

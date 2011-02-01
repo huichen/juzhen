@@ -1,9 +1,10 @@
-#ifndef MKLPP_MATRIX_HPP
-#define MKLPP_MATRIX_HPP
+#ifndef MLCPP_MATRIX_HPP
+#define MLCPP_MATRIX_HPP
 #include <mlcpp_complex.hpp>
-#include <mlcpp_wrapper.hpp>
 #include <mlcpp_dataarray.hpp>
 #include <sstream>
+
+#include <mlcpp_wrapper.hpp>
 
 namespace mlcpp {
 

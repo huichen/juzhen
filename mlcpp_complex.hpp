@@ -1,33 +1,49 @@
-#ifndef MKLPP_COMPLEX_HPP
-#define MKLPP_COMPLEX_HPP
+#ifndef MLCPP_COMPLEX_HPP
+#define MLCPP_COMPLEX_HPP
 #include <iostream>
+
+#ifdef USE_MKL
 #include <mkl_cblas.h>
 #include <mkl_lapacke.h>
 #include <mkl.h>
+#else
+#ifdef USE_ATLAS
+#include <atlas/cblas.h>
+#include <atlas/clapack.h>
+#endif
+#endif
+
 namespace mlcpp {
+
+
+#ifdef USE_MKL
+#define _CD MKL_Complex16 
+#else
+
+typedef struct { double real; double imag;} _CD; 
+#endif
 
 //#define CD MKL_Complex16 
 #define CD ComplexDouble 
-#define MKLCD MKL_Complex16 
 
 /////////////////////////////////////////////////////////////////////////////
 /* _ComplexDouble structure 
    wrapping MKL_Complex16 with more interfaces*/
-struct _ComplexDouble : MKLCD {
+struct _ComplexDouble : _CD {
   _ComplexDouble() {};
   _ComplexDouble(double r, double i);
   _ComplexDouble(double r);
-  _ComplexDouble(MKLCD c);
+  _ComplexDouble(_CD c);
 
   const struct _ComplexDouble & operator=(double r);
 
-  const struct _ComplexDouble & operator=(const MKLCD &c);
+  const struct _ComplexDouble & operator=(const _CD &c);
 
-  bool operator==(const MKLCD &c);
+  bool operator==(const _CD &c);
 
   bool operator==(const double c);
 
-  bool operator!=(const MKLCD &c);
+  bool operator!=(const _CD &c);
 
   bool operator!=(const double c);
 
@@ -37,7 +53,7 @@ typedef struct _ComplexDouble CD;
 
 _ComplexDouble::_ComplexDouble(double r, double i) { real = r; imag = i;};
 _ComplexDouble::_ComplexDouble(double r) { real = r; imag =0.0;};
-_ComplexDouble::_ComplexDouble(MKLCD c) { real = c.real; imag =c.imag;};
+_ComplexDouble::_ComplexDouble(_CD c) { real = c.real; imag =c.imag;};
 
 const CD& _ComplexDouble::operator=(double r) {
   real = r;
@@ -45,13 +61,13 @@ const CD& _ComplexDouble::operator=(double r) {
   return *this;
 }
 
-const CD& _ComplexDouble::operator=(const MKLCD &c) {
+const CD& _ComplexDouble::operator=(const _CD &c) {
   real = c.real;
   imag = c.imag;
   return *this;
 }
 
-bool _ComplexDouble::operator==(const MKLCD &c) {
+bool _ComplexDouble::operator==(const _CD &c) {
   if (real == c.real && imag == c.imag) return true;
   else return false;
 }
@@ -61,7 +77,7 @@ bool _ComplexDouble::operator==(const double c) {
   else return false;
 }
 
-bool _ComplexDouble::operator!=(const MKLCD &c) {
+bool _ComplexDouble::operator!=(const _CD &c) {
   if (real == c.real && imag == c.imag) return false;
   else return true;
 }
