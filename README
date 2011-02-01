@@ -1,17 +1,17 @@
 Prerequisite
-  You need Intel C++ compiler and MKL. 
+  You need BLAS and LAPACK packages. Intel C++ compiler and MKL are optional.
 
 How to use
   1. Run unit tests first and make sure it passes everything:
-     cd mklpp_source_dir
-     make 
+     cd mlcpp_source_dir
+     make (or make -f makefile.mkl for MKL) 
      
-  2. #include <mklpp.hpp> in your source file and add '-Imklpp_source_dir' 
+  2. #include <mlcpp.hpp> in your source file and add '-Imlcpp_source_dir' 
      to your compile flags 
 
 Problems and improvements
   Please report issues through github:
-  https://github.com/huichen/mklpp/issues
+  https://github.com/huichen/mlcpp/issues
   I don't have time to write all new features you want but I'm very glad to merge 
   them into my branch.
 

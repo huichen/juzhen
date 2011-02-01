@@ -1,11 +1,11 @@
 #ifndef MKLPP_VECTOR_HPP
 #define MKLPP_VECTOR_HPP
 
-#include <mklpp_matrix.hpp>
+#include <mlcpp_matrix.hpp>
 #include <algorithm>
 #include <vector>
 
-namespace mklpp {
+namespace mlcpp {
 
 /////////////////////////////////////////////////////////////////////////////
 /* vector class
@@ -94,7 +94,7 @@ vector<DataType>::vector(size_t i) : matrix<DataType>(i, 1) { }
 template<typename DataType>
 vector<DataType>::vector(const matrix<DataType> &m) {
   matrix<DataType>::m_data = 
-    DataPtr<DataType>::Type(new DataArray<DataType>(m.getDataPtr(), 
+   typename DataPtr<DataType>::Type(new DataArray<DataType>(m.getDataPtr(), 
                                                     m.nRow()*m.nCol())); 
   matrix<DataType>::m_ncol =1;
   matrix<DataType>::m_nrow = m.nRow()*m.nCol();
@@ -114,7 +114,7 @@ vector<DataType>::vector(const std::vector<DataType> &v)
 template<typename DataType>
 vector<DataType>& vector<DataType>::operator=(const vector<DataType> &v) { 
   matrix<DataType>::m_data = 
-    DataPtr<DataType>::Type(new DataArray<DataType>(v.getDataPtr(), 
+   typename DataPtr<DataType>::Type(new DataArray<DataType>(v.getDataPtr(), 
                                                     v.size())); 
   matrix<DataType>::m_ncol =1;
   matrix<DataType>::m_nrow = v.size();

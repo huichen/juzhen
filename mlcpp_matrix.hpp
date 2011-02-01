@@ -1,11 +1,11 @@
 #ifndef MKLPP_MATRIX_HPP
 #define MKLPP_MATRIX_HPP
-#include <mklpp_complex.hpp>
-#include <mklpp_wrapper.hpp>
-#include <mklpp_dataarray.hpp>
+#include <mlcpp_complex.hpp>
+#include <mlcpp_wrapper.hpp>
+#include <mlcpp_dataarray.hpp>
 #include <sstream>
 
-namespace mklpp {
+namespace mlcpp {
 
 /////////////////////////////////////////////////////////////////////////////
 /* matrix class */
@@ -130,7 +130,7 @@ matrix<DataType>::matrix() : m_ncol(0), m_nrow(0) {
 
 template<typename DataType> 
 matrix<DataType>::matrix(size_t nr, size_t nc) : m_ncol(nc), m_nrow(nr) {
-    m_data = DataPtr<DataType>::Type(new DataArray<DataType>(m_ncol*m_nrow));
+    m_data = typename DataPtr<DataType>::Type(new DataArray<DataType>(m_ncol*m_nrow));
     m_transpose = CblasNoTrans;
   } 
 
@@ -138,7 +138,7 @@ template<typename DataType>
 template<typename T> 
 matrix<DataType>::matrix(const T *data, size_t nr, size_t nc) 
   : m_ncol(nc), m_nrow(nr) {
-  m_data = DataPtr<DataType>::Type(new DataArray<DataType>(data, nr*nc));
+  m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(data, nr*nc));
   m_transpose = CblasNoTrans;
 } 
 
@@ -147,7 +147,7 @@ template<typename T>
 matrix<DataType>::matrix(const matrix<T> &m) 
   : m_ncol(m.nCol()), m_nrow(m.nRow()), 
   m_transpose(m.getTranspose()){
-  m_data = DataPtr<DataType>::Type(
+  m_data =typename DataPtr<DataType>::Type(
     new DataArray<DataType>(m.getDataPtr(), m.nRow()*m.nCol())
   ); 
   m_transpose = m.getTranspose();
@@ -157,7 +157,7 @@ template<typename DataType>
 matrix<DataType>::matrix(const matrix<DataType> &m) 
   : m_ncol(m.nCol()), m_nrow(m.nRow()), 
   m_transpose(m.m_transpose){
-  m_data = DataPtr<DataType>::Type(new DataArray<DataType>(*(m.m_data)));
+  m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(*(m.m_data)));
 }
 
 template<typename DataType> 
@@ -166,7 +166,7 @@ matrix<DataType>::operator= (const matrix<DataType> &rhs) {
   if (&rhs==this) return *this;
   m_ncol = rhs.nCol();
   m_nrow = rhs.nRow();
-  m_data = DataPtr<DataType>::Type(new DataArray<DataType>(*(rhs.m_data)));
+  m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(*(rhs.m_data)));
   m_transpose = rhs.m_transpose;
   return *this;
 } 
@@ -340,8 +340,8 @@ matrix<DataType> & matrix<DataType>::operator*=(const double rhs) {
 
 template<typename DataType> 
 matrix<DataType> & matrix<DataType>::operator*=(const CD rhs) {
-  for (size_t i=0; i<ma.nRow(); i++)
-    for (size_t j=0; j<ma.nCol(); j++)
+  for (size_t i=0; i<nRow(); i++)
+    for (size_t j=0; j<nCol(); j++)
     (*this)(i,j) *= rhs; 
   return *this;
 }
@@ -407,7 +407,7 @@ matrix<DataType> & matrix<DataType>::herm() {
  trans();
  for (size_t i=0; i<m_nrow; i++) 
    for (size_t j=0; j<m_ncol; j++) 
-     (*this)(i,j)=mklpp::conj((*this)(i,j));
+     (*this)(i,j)=mlcpp::conj((*this)(i,j));
  return *this;
 } 
 
@@ -415,7 +415,7 @@ template<typename DataType>
 matrix<DataType> & matrix<DataType>::conj() {
  for (size_t i=0; i<m_nrow; i++) 
    for (size_t j=0; j<m_ncol; j++) 
-     (*this)(i,j)=mklpp::conj((*this)(i,j));
+     (*this)(i,j)=mlcpp::conj((*this)(i,j));
  return *this;
 } 
 
@@ -618,7 +618,7 @@ typedef idmatrix<double> didmatrix;
 template<typename DataType> 
 idmatrix<DataType>::idmatrix(size_t n) {
   matrix<DataType>::m_data = 
-    DataPtr<DataType>::Type(new DataArray<DataType>(n*n));
+    typename DataPtr<DataType>::Type(new DataArray<DataType>(n*n));
   matrix<DataType>::m_ncol = n;
   matrix<DataType>::m_nrow = n;
   matrix<DataType>::m_transpose = CblasNoTrans;

@@ -4,7 +4,7 @@
 #include <mkl_cblas.h>
 #include <mkl_lapacke.h>
 #include <mkl.h>
-namespace mklpp {
+namespace mlcpp {
 
 //#define CD MKL_Complex16 
 #define CD ComplexDouble 

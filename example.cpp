@@ -1,6 +1,6 @@
-#include <mklpp.hpp>
+#include <mlcpp.hpp>
 #define N 90
-using namespace mklpp;
+using namespace mlcpp;
 
 int main() {
   dvector potential(N);

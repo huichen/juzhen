@@ -1,10 +1,10 @@
 #include <iostream>
-#include <mklpp.hpp>
+#include <mlcpp.hpp>
 #include <unittest.hpp>
 #include <vector>
 #include <sstream>
 
-using namespace mklpp;
+using namespace mlcpp;
 
 int main() {
 

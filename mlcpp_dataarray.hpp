@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <memory>
 
-namespace mklpp {
+namespace mlcpp {
 
 /////////////////////////////////////////////////////////////////////////////
 /* DataArray

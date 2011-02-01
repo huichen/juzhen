@@ -1,9 +1,9 @@
 test:
-	icc unittest.cpp -I./ -o unittest -lmkl_rt -liomp5 -lpthread -g
+	g++ unittest.cpp -I./ -o unittest -lblas -llapack -g
 	./unittest
 
 sample:
-	icc example.cpp -I./ -o example -lmkl_rt -pthread -liomp5 -O3 
+	g++ example.cpp -I./ -o example -lblas -llapack 
 	./example
 
 clean:

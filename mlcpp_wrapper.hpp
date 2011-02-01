@@ -5,7 +5,7 @@
 #include <mkl.h>
 #include <assert.h>
 
-namespace mklpp {
+namespace mlcpp {
 
 /* MKL function wrappers implemented with templates*/
 template<typename T> 

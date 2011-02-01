@@ -31,7 +31,7 @@ if (lhs!=rhs) { \
 UnitTest::m_nfail++; \
 return_value = false;\
 std::cout << " FAILED!" << std::endl;\
-  std::cout << "  Expect " << "[" << serialize(toString(lhs)) << "]" << std::endl; \ 
+  std::cout << "  Expect " << "[" << serialize(toString(lhs)) << "]" << std::endl; \
   std::cout << "       = ["<< serialize(toString(rhs)) <<"]" <<std::endl ; \
 } else { \
 UnitTest::m_nsucc++; \
@@ -62,7 +62,7 @@ if (!(lhs)) { \
 UnitTest::m_nfail++; \
 return_value = false;\
 std::cout << " FAILED!" << std::endl;\
-  std::cout << "  Expect true." << std::endl; \ 
+  std::cout << "  Expect true." << std::endl; \
 } else { \
 UnitTest::m_nsucc++; \
 std::cout << " passed" << std::endl; \
