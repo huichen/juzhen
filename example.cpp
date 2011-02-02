@@ -11,10 +11,12 @@ int main() {
   cmatrix H = diag(potential);
   for (int i=0; i<N-1; i++) H(i, i+1) = H(i+1, i) = -1;
 
+#ifdef USE_MKL
   cvector energy;
   cmatrix wave;
   H.reigen(energy, wave);
 
   std::cout << "energy= " << sort(real(energy)) << std::endl;
+#endif
   return 0;
 }
