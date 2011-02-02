@@ -5,11 +5,11 @@ How to use
   1. Set MLCPP_BLASLIB envron to mkl if you want to use MKL 
      export MLCPP_BLASLIB=mkl
 
-  1. Run unit tests first and make sure it passes everything:
+  2. Run unit tests first and make sure it passes everything:
      cd mlcpp_source_dir
      make 
      
-  2. #include <mlcpp.hpp> in your source file 
+  3. #include <mlcpp.hpp> in your source file 
      and add '-Imlcpp_source_dir' to your compile flags. 
      Use '-DUSE_MKL' if you use MKL 
 
