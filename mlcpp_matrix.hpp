@@ -100,11 +100,6 @@ public:
   DataArray<DataType>& getDataArray() const; 
 
   /**
-   * Return the matrix's transpose type: CblasNoTrans or CblasTrans. 
-   */
-  CBLAS_TRANSPOSE getTranspose() const;
- 
-  /**
    * Resizing or reshaping the matrix. If the resized size is larger than
    * the original, new memory will be allocated and data will be copied to
    * the new position. 
@@ -219,19 +214,19 @@ public:
    ************************************/
 
   /**
-   * Transpose the matrix. 
+   * Get the matrix's transposition. 
    */
-  matrix<DataType> &trans();
+  matrix<DataType> trans()const;
 
   /**
-   * Replace the matrix with its hermitian.  
+   * Get the matrix's hermitian.  
    */
-  matrix<DataType> &herm();
+  matrix<DataType> herm() const;
 
   /**
-   * Replace the matrix with its conjugate.  
+   * Get the matrix's conjugate.  
    */
-  matrix<DataType> &conj();
+  matrix<DataType> conj()const;
 
   /**
    * Get a sub-block of the matrix between r1th (containing) row and r2th 
@@ -302,12 +297,6 @@ protected:
    */
   typename DataPtr<DataType>::Type m_data; 
 
-  /**
-   * The matrix is transposed (saved as in row-major order in memory) if 
-   * m_transpose == CblasTrans, otherwise not transposed (saved as in 
-   * column-major order in memory).
-   */
-  CBLAS_TRANSPOSE m_transpose;
 };
 
 typedef matrix<CD> cmatrix;
@@ -315,13 +304,11 @@ typedef matrix<double> dmatrix;
 
 template<typename DataType> 
 matrix<DataType>::matrix() : m_ncol(0), m_nrow(0) {
-  m_transpose = CblasNoTrans;
 } 
 
 template<typename DataType> 
 matrix<DataType>::matrix(size_t nr, size_t nc) : m_ncol(nc), m_nrow(nr) {
     m_data = typename DataPtr<DataType>::Type(new DataArray<DataType>(m_ncol*m_nrow));
-    m_transpose = CblasNoTrans;
   } 
 
 template<typename DataType> 
@@ -329,24 +316,20 @@ template<typename T>
 matrix<DataType>::matrix(const T *data, size_t nr, size_t nc) 
   : m_ncol(nc), m_nrow(nr) {
   m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(data, nr*nc));
-  m_transpose = CblasNoTrans;
 } 
 
 template<typename DataType> 
 template<typename T> 
 matrix<DataType>::matrix(const matrix<T> &m) 
-  : m_ncol(m.nCol()), m_nrow(m.nRow()), 
-  m_transpose(m.getTranspose()){
+  : m_ncol(m.nCol()), m_nrow(m.nRow()) { 
   m_data =typename DataPtr<DataType>::Type(
     new DataArray<DataType>(m.getDataPtr(), m.nRow()*m.nCol())
   ); 
-  m_transpose = m.getTranspose();
 } 
 
 template<typename DataType> 
 matrix<DataType>::matrix(const matrix<DataType> &m) 
-  : m_ncol(m.nCol()), m_nrow(m.nRow()), 
-  m_transpose(m.m_transpose){
+  : m_ncol(m.nCol()), m_nrow(m.nRow()) { 
   m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(*(m.m_data)));
 }
 
@@ -357,7 +340,6 @@ matrix<DataType>::operator= (const matrix<DataType> &rhs) {
   m_ncol = rhs.nCol();
   m_nrow = rhs.nRow();
   m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(*(rhs.m_data)));
-  m_transpose = rhs.m_transpose;
   return *this;
 } 
 
@@ -404,11 +386,6 @@ DataArray<DataType>& matrix<DataType>::getDataArray() const {
   return *m_data;
 }
 
-template<typename DataType> 
-CBLAS_TRANSPOSE matrix<DataType>::getTranspose() const {
-  return m_transpose;
-}
-
 /* resizing/reshaping matrix */
 template<typename DataType> 
 void matrix<DataType>::resize(size_t nr, size_t nc) {
@@ -425,15 +402,13 @@ void matrix<DataType>::resize(size_t nr, size_t nc) {
 template<typename DataType> 
 inline DataType& matrix<DataType>::operator()(size_t i, size_t j) {
   assert(i<m_nrow && j<m_ncol);
-  if (m_transpose == CblasNoTrans) return (*m_data)[j*m_nrow + i];
-  else return (*m_data)[i*m_ncol + j];
+  return (*m_data)[j*m_nrow + i];
 }
 
 template<typename DataType> 
 inline DataType matrix<DataType>::operator()(size_t i, size_t j) const {
   assert(i<m_nrow && j<m_ncol);
-  if (m_transpose == CblasNoTrans) return (*m_data)[j*m_nrow + i];
-  else return (*m_data)[i*m_ncol + j];
+  return (*m_data)[j*m_nrow + i];
 }
 
 template<typename DataType> 
@@ -545,14 +520,14 @@ matrix<DataType>::operator*(const matrix<DataType>& rhs) const {
   k1 = m_ncol;
   k2 = rhs.nRow();
   n = rhs.nCol();
-  lda = (m_transpose==CblasTrans)? m_ncol: m_nrow;
-  ldb = (rhs.m_transpose==CblasTrans)? rhs.nCol(): rhs.nRow();
+  lda = m_nrow;
+  ldb = rhs.nRow();
 
   matrix<DataType> ma;
 
   ma.resize(m,n);
 
-  gemm<DataType>(CblasColMajor, m_transpose, rhs.m_transpose, m, n, k1, 
+  gemm<DataType>(CblasColMajor, CblasNoTrans, CblasNoTrans, m, n, k1, 
     getDataPtr(), lda, rhs.getDataPtr(), ldb, ma.getDataPtr(), m);
 
   return ma;
@@ -586,27 +561,30 @@ matrix<DataType>& matrix<DataType>::operator/=(const T rhs) {
 
 /* matrix specific operations */
 template<typename DataType> 
-matrix<DataType> & matrix<DataType>::trans() {
-  m_transpose = (m_transpose == CblasTrans)? CblasNoTrans: CblasTrans;
- resize(m_ncol, m_nrow);
- return *this;
+matrix<DataType> matrix<DataType>::trans() const {
+  matrix<DataType> m(m_ncol, m_nrow); 
+  for (size_t i=0; i<m_nrow; i++) 
+    for (size_t j=0; j<m_ncol; j++) 
+      m(j,i)=(*this)(i,j);
+  return m;
 } 
 
 template<typename DataType> 
-matrix<DataType> & matrix<DataType>::herm() {
- trans();
- for (size_t i=0; i<m_nrow; i++) 
-   for (size_t j=0; j<m_ncol; j++) 
-     (*this)(i,j)=mlcpp::conj((*this)(i,j));
- return *this;
+matrix<DataType> matrix<DataType>::herm() const {
+  matrix<DataType> m(m_ncol, m_nrow); 
+  for (size_t i=0; i<m_nrow; i++) 
+    for (size_t j=0; j<m_ncol; j++) 
+      m(j,i)=mlcpp::conj((*this)(i,j));
+  return m;
 } 
 
 template<typename DataType> 
-matrix<DataType> & matrix<DataType>::conj() {
- for (size_t i=0; i<m_nrow; i++) 
-   for (size_t j=0; j<m_ncol; j++) 
-     (*this)(i,j)=mlcpp::conj((*this)(i,j));
- return *this;
+matrix<DataType> matrix<DataType>::conj() const {
+  matrix<DataType> m(m_nrow, m_ncol); 
+  for (size_t i=0; i<m_nrow; i++) 
+    for (size_t j=0; j<m_ncol; j++) 
+      m(i,j)=mlcpp::conj((*this)(i,j));
+  return m;
 } 
 
 template<typename DataType> 
@@ -643,15 +621,8 @@ matrix<DataType> matrix<DataType>::row(size_t r) const {
 template<typename DataType> 
 void matrix<DataType>::eigen(matrix<CD> &e, matrix<DataType> &vl, 
                              matrix<DataType> &vr) {
-  assert (m_ncol == m_nrow && 
-          (m_transpose == CblasNoTrans || m_transpose == CblasTrans));
+  assert (m_ncol == m_nrow);
   matrix<DataType> m(*this);
-  if ( m_transpose == CblasTrans) {
-    m.resize(m_ncol, m_ncol);
-    for (size_t i=0; i<m_nrow; i++) 
-      for (size_t j=0; j<m_ncol; j++) 
-        m(i,j)= (*this)(j,i);
-  }    
 
   vl.resize(m_ncol,m_ncol);
   vr.resize(m_ncol,m_ncol);
@@ -667,15 +638,8 @@ void matrix<DataType>::eigen(matrix<CD> &e, matrix<DataType> &vl,
 
 template<typename DataType> 
 void matrix<DataType>::reigen(matrix<CD> &e, matrix<DataType> &vr) {
-  assert (m_ncol == m_nrow && (m_transpose == CblasNoTrans || 
-                           m_transpose == CblasTrans));
+  assert (m_ncol == m_nrow);
   matrix<DataType> m(*this);
-  if ( m_transpose == CblasTrans) {
-    m.resize(m_ncol, m_ncol);
-    for (size_t i=0; i<m_nrow; i++) 
-      for (size_t j=0; j<m_ncol; j++) 
-        m(i,j) = (*this)(j,i);
-  }    
 
   vr.resize(m_ncol,m_ncol);
   e.resize(m_ncol, 1);
@@ -689,15 +653,8 @@ void matrix<DataType>::reigen(matrix<CD> &e, matrix<DataType> &vr) {
 
 template<typename DataType> 
 void matrix<DataType>::leigen(matrix<CD> &e, matrix<DataType> &vl) {
-  assert (m_ncol == m_nrow && (m_transpose == CblasNoTrans || 
-                           m_transpose == CblasTrans));
+  assert (m_ncol == m_nrow);
   matrix<DataType> m(*this);
-  if ( m_transpose == CblasTrans) {
-    m.resize(m_ncol, m_ncol);
-    for (size_t i=0; i<m_nrow; i++) 
-      for (size_t j=0; j<m_ncol; j++) 
-        m(i,j) = (*this)(j,i);
-  }    
 
   vl.resize(m_ncol,m_ncol);
   e.resize(m_ncol, 1);
@@ -728,23 +685,17 @@ matrix<double> imag(const matrix<CD> &ma) {
 
 template<typename DataType> 
 matrix<DataType> trans(const matrix<DataType> &m) {
-  matrix<DataType> m1 = m;
-  m1.trans();
-  return m1;
+  return m.trans();
 }
 
 template<typename DataType> 
 matrix<DataType> herm(const matrix<DataType> &m) {
-  matrix<DataType> m1 = m;
-  m1.herm();
-  return m1;
+  return m.herm();
 }
 
 template<typename DataType> 
 matrix<DataType> conj(const matrix<DataType> &m) {
-  matrix<DataType> m1 = m;
-  m1.conj();
-  return m1;
+  return m.conj();
 }
 
 /* arithmetic */
@@ -815,7 +766,6 @@ idmatrix<DataType>::idmatrix(size_t n) {
     typename DataPtr<DataType>::Type(new DataArray<DataType>(n*n));
   matrix<DataType>::m_ncol = n;
   matrix<DataType>::m_nrow = n;
-  matrix<DataType>::m_transpose = CblasNoTrans;
   
   for (size_t i=0; i<n; i++) 
     for (size_t j=0; j<n; j++)

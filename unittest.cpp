@@ -94,14 +94,6 @@ BEGIN_TEST(MatrixPrivateData, "MatrixPrivateData")
 
   VDE(m1.nRow(), 2)
 
-  VDE(m1.getTranspose(), CblasNoTrans)
-
-  m1.trans();
-  VDE(m1.getTranspose(), CblasTrans)
-
-  m1.trans();
-  VDE(m1.getTranspose(), CblasNoTrans)
-
 END_TEST(MatrixPrivateData)
 
 BEGIN_TEST(MatrixResize, "MatrixResize")
@@ -209,14 +201,14 @@ BEGIN_TEST(MatrixHermTransConj, "MatrixHermTransConj")
   VME(m1, trans(herm(conj(m1))))
 
   cmatrix m2;
-  m2 = herm(m1);
+  m2 = m1.herm();
   V(m2, "(1, -2) (-3, 1) \n(2, -0.1) (-2, -0.1) \n(6, -7) (3, -0.1) ")
 
-  m2 = trans(m1);
-  V(m2, "(1, 2) (-3, -1) \n(2, 0.1) (-2, 0.1) \n(6, 7) (3, 0.1) ")
-
-  m2 = conj(m1);
+  m2 = m1.conj();
   V(m2, "(1, -2) (2, -0.1) (6, -7) \n(-3, 1) (-2, -0.1) (3, -0.1) ")
+
+  m2 = m1.trans();
+  V(m2, "(1, 2) (-3, -1) \n(2, 0.1) (-2, 0.1) \n(6, 7) (3, 0.1) ")
 
 
 END_TEST(MatrixHermTransConj)
@@ -397,16 +389,13 @@ BEGIN_TEST(VectorTests, "VectorTests")
   V(v6.block(1,4), "{(-3, -1), (2, 0.1), (-2, 0.1)}")
 
   cvector v7;
-  v7 = v6;
-  v7.trans();
+  v7 = v6.trans();
   V(trans(v7), "{(1, 2), (-3, -1), (2, 0.1), (-2, 0.1), (6, 7), (3, 0.1)}")
 
-  v7 = v6;
-  v7.conj();
+  v7 = v6.conj();
   V(v7, "{(1, -2), (-3, 1), (2, -0.1), (-2, -0.1), (6, -7), (3, -0.1)}")
 
-  v7 = v6;
-  v7.herm();
+  v7 = v6.herm();
   V(v7, "{(1, -2), (-3, 1), (2, -0.1), (-2, -0.1), (6, -7), (3, -0.1)}")
   
   V(dvector(v1.stl()), "{1, 2, 3, 4}")

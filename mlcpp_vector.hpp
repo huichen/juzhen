@@ -145,19 +145,19 @@ public:
   vector<DataType>& operator/=(const T rhs); 
 
   /**
-   * Transpose a vector.
+   * Get transpose of a vector (no effect).
    */
-  vector<DataType> &trans();
+  vector<DataType> trans() const;
 
   /**
-   * Take the hermitian of a vector (just conjugate it). 
+   * Get hermitian of a vector (just conjugate it). 
    */
-  vector<DataType> &herm();
+  vector<DataType> herm() const;
 
   /**
-   * Conjugate a vector.
+   * Get conjugate of a vector.
    */
-  vector<DataType> &conj(); 
+  vector<DataType> conj() const; 
 
   /**
    * Return a sub-vector of [i1, i2)
@@ -196,7 +196,6 @@ vector<DataType>::vector(const matrix<DataType> &m) {
                                                     m.nRow()*m.nCol())); 
   matrix<DataType>::m_ncol =1;
   matrix<DataType>::m_nrow = m.nRow()*m.nCol();
-  matrix<DataType>::m_transpose = CblasNoTrans;
 }
 
 template<typename DataType>
@@ -216,7 +215,6 @@ vector<DataType>& vector<DataType>::operator=(const vector<DataType> &v) {
                                                     v.size())); 
   matrix<DataType>::m_ncol =1;
   matrix<DataType>::m_nrow = v.size();
-  matrix<DataType>::m_transpose = CblasNoTrans;
   return *this;
 } 
 
@@ -298,16 +296,14 @@ template<typename DataType>
 const vector<DataType> 
 vector<DataType>::operator*(const matrix<DataType>& rhs) const {
   matrix<DataType> m = (*this);
-  m.trans();
-  vector<DataType> v1 = m*rhs;
+  vector<DataType> v1 = m.trans() * rhs;
   return v1;
 }
 
 template<typename DataType>
 vector<DataType>& vector<DataType>::operator*=(const matrix<DataType>& rhs) {
   matrix<DataType> m = (*this);
-  m.trans();
-  (*this) = m*rhs;
+  (*this) = trans(m)*rhs;
   return *this;
 }
 
@@ -334,15 +330,18 @@ vector<DataType>& vector<DataType>::operator/=(const T rhs) {
 }
 
 template<typename DataType>
-vector<DataType> & vector<DataType>::trans() {return *this;};
+vector<DataType> vector<DataType>::trans() const {
+  return *this;
+}
 
 template<typename DataType>
-vector<DataType> & vector<DataType>::herm() {return conj();};
+vector<DataType> vector<DataType>::herm() const {
+  return matrix<DataType>::conj();
+}
 
 template<typename DataType>
-vector<DataType> & vector<DataType>::conj() {
-  matrix<DataType>::conj();
-  return (*this);
+vector<DataType> vector<DataType>::conj() const {
+  return matrix<DataType>::conj();
 }
 
 template<typename DataType>
@@ -381,16 +380,12 @@ vector<DataType> trans(const vector<DataType> &v) {
 
 template<typename DataType> 
 vector<DataType> herm(const vector<DataType> &v) {
-  vector<DataType> v1 = v;
-  v1.herm();
-  return v1;
+  return v.herm();
 }
 
 template<typename DataType> 
 vector<DataType> conj(const vector<DataType> &v) {
-  vector<DataType> v1 = v;
-  v1.conj();
-  return v1;
+  return v.conj();
 }
 
 vector<double> real(const vector<CD> &ma) {
