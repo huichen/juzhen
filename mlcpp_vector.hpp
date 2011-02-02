@@ -145,7 +145,17 @@ public:
   vector<DataType>& operator/=(const T rhs); 
 
   /**
-   * Get transpose of a vector (no effect).
+   * Get real part of a vector.
+   */
+  vector<double> real() const;
+
+  /**
+   * Get imaginary part of a vector.
+   */
+  vector<double> imag() const;
+
+  /**
+   * Get transpose of a vector (just conjugate it). 
    */
   vector<DataType> trans() const;
 
@@ -330,6 +340,16 @@ vector<DataType>& vector<DataType>::operator/=(const T rhs) {
 }
 
 template<typename DataType>
+vector<double> vector<DataType>::real() const {
+  return matrix<DataType>::real();
+}
+
+template<typename DataType>
+vector<double> vector<DataType>::imag() const {
+  return matrix<DataType>::imag();
+}
+
+template<typename DataType>
 vector<DataType> vector<DataType>::trans() const {
   return *this;
 }
@@ -388,18 +408,12 @@ vector<DataType> conj(const vector<DataType> &v) {
   return v.conj();
 }
 
-vector<double> real(const vector<CD> &ma) {
- vector<double> m(ma.size());
- for (size_t i=0; i<ma.size(); i++) 
-     m(i)=ma(i).real;
- return m;
+vector<double> real(const vector<CD> &v) {
+ return v.real();
 } 
 
-vector<double> imag(const vector<CD> &ma) {
- vector<double> m(ma.size());
- for (size_t i=0; i<ma.size(); i++) 
-     m(i)=ma(i).imag;
- return m;
+vector<double> imag(const vector<CD> &v) {
+ return v.imag();
 }
 
 template<typename DataType> 

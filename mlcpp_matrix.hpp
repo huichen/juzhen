@@ -214,6 +214,16 @@ public:
    ************************************/
 
   /**
+   * Get the matrix's real part. 
+   */
+  matrix<double> real() const;
+
+  /**
+   * Get the matrix's imaginary part.  
+   */
+  matrix<double> imag() const;
+
+  /**
    * Get the matrix's transposition. 
    */
   matrix<DataType> trans()const;
@@ -561,6 +571,24 @@ matrix<DataType>& matrix<DataType>::operator/=(const T rhs) {
 
 /* matrix specific operations */
 template<typename DataType> 
+matrix<double> matrix<DataType>::real() const{
+ matrix<double> m(m_nrow, m_ncol);
+ for (size_t i=0; i<m_nrow; i++) 
+   for (size_t j=0; j<m_ncol; j++) 
+     m(i,j)=(*this)(i,j).real;
+ return m;
+} 
+
+template<typename DataType> 
+matrix<double> matrix<DataType>::imag() const{
+ matrix<double> m(m_nrow, m_ncol);
+ for (size_t i=0; i<m_nrow; i++) 
+   for (size_t j=0; j<m_ncol; j++) 
+     m(i,j)=(*this)(i,j).imag;
+ return m;
+}
+
+template<typename DataType> 
 matrix<DataType> matrix<DataType>::trans() const {
   matrix<DataType> m(m_ncol, m_nrow); 
   for (size_t i=0; i<m_nrow; i++) 
@@ -667,20 +695,12 @@ void matrix<DataType>::leigen(matrix<CD> &e, matrix<DataType> &vl) {
 } 
 /////////////////////////////////////////////////////////////////////////////
 
-matrix<double> real(const matrix<CD> &ma) {
- matrix<double> m(ma.nRow(), ma.nCol());
- for (size_t i=0; i<ma.nRow(); i++) 
-   for (size_t j=0; j<ma.nCol(); j++) 
-     m(i,j)=ma(i,j).real;
- return m;
+matrix<double> real(const matrix<CD> &m) {
+  return m.real();
 } 
 
-matrix<double> imag(const matrix<CD> &ma) {
- matrix<double> m(ma.nRow(), ma.nCol());
- for (size_t i=0; i<ma.nRow(); i++) 
-   for (size_t j=0; j<ma.nCol(); j++) 
-     m(i,j)=ma(i,j).imag;
- return m;
+matrix<double> imag(const matrix<CD> &m) {
+  return m.imag();
 }
 
 template<typename DataType> 
