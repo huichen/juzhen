@@ -1,17 +1,17 @@
 Prerequisite
-  You need BLAS and LAPACK packages. 
+  You need a package that provides CBLAS functions, such as MKL. 
 
 How to use
-  1. Set MLCPP_BLASLIB envron as the library you have, such as
+  1. Set MLCPP_BLASLIB envron to mkl if you want to use MKL 
      export MLCPP_BLASLIB=mkl
-     export MLCPP_BLASLIB=atlas
 
   1. Run unit tests first and make sure it passes everything:
      cd mlcpp_source_dir
      make (or make -f makefile.mkl for MKL) 
      
-  2. #include <mlcpp.hpp> in your source file and add '-Imlcpp_source_dir' 
-     to your compile flags 
+  2. #include <mlcpp.hpp> in your source file 
+     and add '-Imlcpp_source_dir' to your compile flags. 
+     Use '-DUSE_MKL' if you want to use MKL  
 
 Problems and improvements
   Please report issues through github:

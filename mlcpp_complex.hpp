@@ -7,10 +7,7 @@
 #include <mkl_lapacke.h>
 #include <mkl.h>
 #else
-#ifdef USE_ATLAS
-#include <atlas/cblas.h>
-#include <atlas/clapack.h>
-#endif
+#include <cblas.h>
 #endif
 
 namespace mlcpp {
@@ -19,7 +16,6 @@ namespace mlcpp {
 #ifdef USE_MKL
 #define _CD MKL_Complex16 
 #else
-
 typedef struct { double real; double imag;} _CD; 
 #endif
 

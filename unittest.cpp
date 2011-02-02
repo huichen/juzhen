@@ -248,6 +248,7 @@ BEGIN_TEST(MatrixGetRowCol, "MatrixGetRowCol")
 END_TEST(MatrixGetRowCol)
 
 
+#ifdef USE_MKL
 BEGIN_TEST(MatrixSolver, "MatrixSolver")
 
   double a[] = {1., 2., 3., 4., 5., 6., 8, 20, 33};
@@ -290,7 +291,7 @@ BEGIN_TEST(MatrixSolver, "MatrixSolver")
   V(vr1, "(0.342437, 0.337502) (0.979951, 0) (0.82562, 0) \n(0.40302, -0.101577) (0.0410844, 0.0457229) (0.00844035, -0.458344) \n(0.772066, 0) (-0.100078, -0.160943) (-0.319397, 0.078653) ")
 
  END_TEST(MatrixSolver)
-
+#endif
 
 
 /**

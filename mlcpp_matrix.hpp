@@ -471,7 +471,7 @@ void matrix<DataType>::eigen(matrix<CD> &e, matrix<DataType> &vl,
   char nl = &vl? 'V': 'N';
   char nr = &vr? 'V': 'N';
 
-  geev<DataType>(LAPACK_COL_MAJOR, nl, nr, m_ncol, m.getDataPtr(), m_ncol, 
+  geev<DataType>(nl, nr, m_ncol, m.getDataPtr(), m_ncol, 
                  e.getDataPtr(), vl.getDataPtr(), m_ncol, 
                  vr.getDataPtr(), m_ncol);
 } 
@@ -494,7 +494,7 @@ void matrix<DataType>::reigen(matrix<CD> &e, matrix<DataType> &vr) {
   char nl = 'N';
   char nr = 'V';
 
-  geev<DataType>(LAPACK_COL_MAJOR, nl, nr, m_ncol, m.getDataPtr(), m_ncol, 
+  geev<DataType>(nl, nr, m_ncol, m.getDataPtr(), m_ncol, 
                  e.getDataPtr(), NULL, m_ncol, vr.getDataPtr(), m_ncol); 
 } 
 
@@ -516,7 +516,7 @@ void matrix<DataType>::leigen(matrix<CD> &e, matrix<DataType> &vl) {
   char nl = 'V';
   char nr = 'N';
 
-  geev<DataType>(LAPACK_COL_MAJOR, nl, nr, m_ncol, m.getDataPtr(), m_ncol, 
+  geev<DataType>(nl, nr, m_ncol, m.getDataPtr(), m_ncol, 
                  e.getDataPtr(), vl.getDataPtr(), m_ncol, NULL, m_ncol); 
 } 
 /////////////////////////////////////////////////////////////////////////////

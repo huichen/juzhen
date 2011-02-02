@@ -4,9 +4,7 @@
 #ifdef USE_MKL
 #include <mlcpp_wrapper_mkl.hpp>
 #else
-#ifdef USE_ATLAS
-#include <mlcpp_wrapper_atlas.hpp>
-#endif
+#include <mlcpp_wrapper_blas.hpp>
 #endif
 
 #endif

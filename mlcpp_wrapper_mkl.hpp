@@ -41,7 +41,7 @@ void gemm<CD>(
 
 template<typename T> 
 int geev(
-  const int order, char nl, char nr, const MKL_INT n, 
+  char nl, char nr, const MKL_INT n, 
   T *a, const MKL_INT lda, CD * w, T *vl, const MKL_INT ldvl, 
   T *vr, const MKL_INT ldvr) { 
   assert(0); // always fails
@@ -49,7 +49,7 @@ int geev(
 
 template<> 
 int geev<CD>(
-  const int order, char nl, char nr, const MKL_INT n, 
+  char nl, char nr, const MKL_INT n, 
   CD *a, const MKL_INT lda, CD * w, CD *vl, const MKL_INT ldvl, 
   CD *vr, const MKL_INT ldvr) { 
   return LAPACKE_zgeev(LAPACK_COL_MAJOR, nl, nr, n, 
@@ -58,7 +58,7 @@ int geev<CD>(
 
 template<> 
 int geev<double>(
-  const int order, char nl, char nr, const MKL_INT n, 
+  char nl, char nr, const MKL_INT n, 
   double *a, const MKL_INT lda, CD * w, double *vl, const MKL_INT ldvl, 
   double *vr, const MKL_INT ldvr) { 
 
