@@ -20,7 +20,7 @@
 
   -# Following functions only compiles with MKL <br><br> 
      matrix::eigen, matrix::leigen, matrix::reigen <br><br> 
-  -# matrix::getDataPtr() provides column-major raw array pointer of a matrix to use in low-level BLAS/LAPACK functions  <br><br> 
+  -# matrix::getDataPtr() provides column-major raw pointer to be used in low-level BLAS/LAPACK functions.<br><br> 
 
 *  @section problems_and_improvements Problems and improvements
 

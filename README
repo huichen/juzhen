@@ -1,31 +1,7 @@
 Matrix Library for C++ (mlcpp)
 Author: Hui Chen <usa dot chen at gmail dot com>
 
-Prerequisite
-  You need a package that provides CBLAS functions, such as MKL. 
 
-How to use
-  1. Set MLCPP_BLASLIB envron to mkl if you want to use MKL 
-     export MLCPP_BLASLIB=mkl
+Read the project's website for details:
 
-  2. Run unit tests first and make sure it passes everything:
-     cd mlcpp_source_dir
-     make 
-     
-  3. #include <mlcpp.hpp> in your source file 
-     and add '-Imlcpp_source_dir' to your compile flags. 
-     Use '-DUSE_MKL' if you use MKL 
-
-Notes
-  1. Following functions only compiles with MKL
-     matrix::eigen, matrix::leigen, matrix::reigen 
-
-  2. matrix::getDataPtr() provides column-major raw array pointer of a matrix 
-     to use in unwrapped BLAS/LAPACK functions 
-
-Problems and improvements
-  Please report issues through github:
-  https://github.com/huichen/mlcpp/issues
-  I don't have time to write all new features you want but I'm very glad to merge 
-  them into my branch.
-
+http://huichen.org/mlcpp/
