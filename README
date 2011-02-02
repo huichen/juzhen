@@ -14,8 +14,11 @@ How to use
      Use '-DUSE_MKL' if you use MKL 
 
 Notes
-  Following functions only compiles with MKL
-  matrix::eigen, matrix::leigen, matrix::reigen 
+  1. Following functions only compiles with MKL
+     matrix::eigen, matrix::leigen, matrix::reigen 
+
+  2. matrix::getDataPtr() provides column-major raw array pointer of a matrix 
+     to use in unwrapped BLAS/LAPACK functions 
 
 Problems and improvements
   Please report issues through github:
