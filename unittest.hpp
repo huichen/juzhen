@@ -97,24 +97,51 @@ UnitTest::AddTest(&s_TestFunction_##test) ;
 #define RUN_TEST UnitTest::Run(); 
 
 /////////////////////////////////////////////////////////////////////////////
-/* TestFunction class */
+/** 
+ * Functor class. All unit tests must be derived from it. 
+ */
 class TestFunction {
 public:
+  /**
+   * Unit test needs to overload this virtual function, which is defined by
+   * the macros BEGIN_TEST and END_TEST automatically.
+   */ 
   virtual void Run() {}
 };
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-/* UnitTest class */
+/** 
+ * UnitTest maintains all unit tests. 
+ */
 class UnitTest {
 public:
+  /**
+   * Run all unit tests.
+   */
   static void Run();
+
+  /**
+   * Add a test.
+   */
   static void AddTest(TestFunction *t); 
+
+  /**
+   * Number of failed tests.
+   */
   static int m_nfail;
+
+  /**
+   * Number of successful tests.
+   */
   static int m_nsucc;
 
 private:
+
+  /**
+   * Vector that contains all tests.
+   */
   static std::vector<TestFunction*> m_tests; 
 };
 

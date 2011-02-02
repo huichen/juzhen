@@ -8,77 +8,175 @@
 namespace mlcpp {
 
 /////////////////////////////////////////////////////////////////////////////
-/* vector class
-   m_ncol = 1 or m_nrow =1 matrix */
+/** 
+ *  vector class
+ */
 template<typename DataType> class vector : public matrix<DataType> {
 public:
+  /**
+   * Default constructor.
+   */
   vector();
 
+  /**
+   * Construct a vector of size i.
+   */
   vector(size_t i);
 
+  /**
+   * Construct a vector from a matrix's column-major raw array.
+   */
   vector(const matrix<DataType> &m);
 
+  /**
+   * Construct a vector from an array. The size of the vector will be
+   * the bigger of data's size and n.
+   */
   template<typename T> 
   vector(const T *data, size_t n);
 
+  /**
+   * Construct a vector from an existing vector.
+   */
   vector(const std::vector<DataType> &v);
 
+  /**
+   * Copy a vector from another vector.
+   */
   vector<DataType>& operator=(const vector<DataType> &v);
 
+  /**
+   * Copy a vector from a STL vector.
+   */
   vector<DataType>& operator=(const std::vector<DataType> &v);
 
+  /**
+   * Assign all elements in the vector to be rhs. 
+   */
   vector<DataType>& operator=(const DataType rhs);
 
+  /**
+   * Resize a vector.
+   */
   void resize(size_t n);
+
+  /**
+   * This has no effect. 
+   */
   void resize(size_t nc, size_t nr);
 
+  /**
+   * Return the size of the vector.
+   */
   size_t size() const;
 
+  /**
+   * Add two vectors.
+   */
   template<typename T> 
   const vector<DataType> operator+(const vector<T>& rhs) const;
  
+  /**
+   * Add two vectors.
+   */
   template<typename T> 
   vector<DataType>& operator+=(const vector<T>& rhs);
  
+  /**
+   * Subtract two vectors.
+   */
   template<typename T> 
   const vector<DataType> operator-(const vector<T>& rhs) const;
  
+  /**
+   * Subtract two vectors.
+   */
   template<typename T> 
   vector<DataType>& operator-=(const vector<T>& rhs); 
 
+  /**
+   * Multiply a vector with a real number. 
+   */
   const vector<DataType> operator*(const double rhs) const;
 
+  /**
+   * Multiply a vector with a real number. 
+   */
   vector<DataType>& operator*=(const double rhs); 
 
+  /**
+   * Multiply a vector with a complex number. 
+   */
   const vector<DataType> operator*(const CD rhs) const;
 
+  /**
+   * Multiply a vector with a complex number. 
+   */
   vector<DataType>& operator*=(const CD rhs);
 
+  /**
+   * Multiply a vector and a matrix. The vector's size must be equal
+   * to the matrix's number of rows. 
+   */
   const vector<DataType> operator*(const matrix<DataType>& rhs) const;
 
+  /**
+   * Multiply a vector and a matrix. The vector's size must be equal
+   * to the matrix's number of rows. 
+   */
   vector<DataType>& operator*=(const matrix<DataType>& rhs);
 
+  /**
+   * Dot product two vectors. 
+   */
   template<typename T> 
   const DataType operator* (const vector<T> &rv) const;
 
+  /**
+   * Divide a vector by a constant.
+   */
   template<typename T> 
   const vector<DataType> operator/(const T rhs) const;
 
+  /**
+   * Divide a vector by a constant.
+   */
   template<typename T> 
   vector<DataType>& operator/=(const T rhs); 
 
+  /**
+   * Transpose a vector.
+   */
   vector<DataType> &trans();
 
+  /**
+   * Take the hermitian of a vector (just conjugate it). 
+   */
   vector<DataType> &herm();
 
+  /**
+   * Conjugate a vector.
+   */
   vector<DataType> &conj(); 
 
+  /**
+   * Return a sub-vector of [i1, i2)
+   */
   vector<DataType> block(size_t i1, size_t i2);
 
+  /**
+   * Replace the sub-vector starting at i with another vector v. 
+   */
   vector<DataType> &insert(size_t i, vector<DataType> v);
 
+  /**
+   * Sort a vector. This will give you error for a complex vector.
+   */
   vector<DataType> &sort();
 
+  /**
+   * Get a STL vector from the vector. 
+   */
   std::vector<DataType> stl();
 };
 

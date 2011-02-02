@@ -8,40 +8,90 @@
 namespace mlcpp {
 
 /////////////////////////////////////////////////////////////////////////////
-/* DataArray
-   wrapper for auto_ptr */
+/** 
+ * DataArray is a wrapper for raw array. The resources are stored in and 
+ * handled by auto_ptr to prevent memory leaks.
+ */
 template<typename DataType> 
 class DataArray {
 public:
+  /**
+   * Default constructor.
+   */
   DataArray();
 
+  /**
+   * Construct an array of size s. 
+   */
   DataArray(size_t s);
  
+  /**
+   * Construct an array from another array.  
+   */
   template<typename T> 
   DataArray(const DataArray<T> &da);
  
+  /**
+   * Construct an array from another array. 
+   */
   DataArray(const DataArray<DataType> &da);
  
+  /**
+   * Construct an array from another array. The size of the new array
+   * is the larger of da's size and s. 
+   */
   template<typename T> 
   DataArray(const DataArray<T> &da, const size_t s);
  
+  /**
+   * Construct an array from another array. The size of the new array
+   * is the larger of da's size and s. 
+   */
   DataArray(const DataArray<DataType> &da, const size_t s);
  
+  /**
+   * Construct an array from a raw array. The size of the new array
+   * is the larger of the raw array's size and s. 
+   */
   template<typename T> 
   DataArray(const T *da, const size_t s);
 
+  /**
+   * Construct an array from a raw array. The size of the new array
+   * is the larger of the raw array's size and s. 
+   */
   DataArray(const DataType *da, const size_t s);
    
+  /**
+   * Destructor frees allocated memory.
+   */
   ~DataArray();
  
+  /**
+   * Returns the reference of ith index in the raw array.
+   */
   DataType& operator[](const size_t i); 
  
+  /**
+   * Returns the reference of ith index in the raw array.
+   */
   DataType& operator[](const size_t i) const;
 
+  /**
+   * Returns the pointer of raw array. This is pretty useful when calling 
+   * low level blas/lapack functions.
+   */
   DataType * getDataPtr();
 
 private:
+  /**
+   * Pointer to the raw array.
+   */
   DataType * _Data;
+
+  /**
+   * Length of the raw array. It's a actual number of total items in the array.
+   */
   size_t size;
 };
 
@@ -170,10 +220,15 @@ DataType * DataArray<DataType>::getDataPtr() {
 
 
 /////////////////////////////////////////////////////////////////////////////
-/* DataPtr class*/
+/**
+ *  DataPtr class contains the type for DataArray's auto pointer.
+ */
 template<typename DataType>
 class DataPtr{
 public:
+  /**
+   *  Type is the type for DataArray's auto pointer.
+   */
   typedef std::auto_ptr<DataArray<DataType> > Type;
 };
 /////////////////////////////////////////////////////////////////////////////

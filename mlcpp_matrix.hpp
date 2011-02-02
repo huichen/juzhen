@@ -9,115 +9,304 @@
 namespace mlcpp {
 
 /////////////////////////////////////////////////////////////////////////////
-/* matrix class */
+/** 
+ * The basic matrix class that all variant matrix classes are derived from
+ */
 template<typename DataType> 
 class matrix {
 public:
+  /**
+   * Deconstructor. 
+   */
   ~matrix() {}
 
+  /**
+   * Default constructor. 
+   */
   matrix();
 
+  /**
+   * Construct an matrix of nr rows and nc columns. Memory is allocated but
+   * matrix's items have undetermined values. 
+   */
   matrix(size_t nr, size_t nc);
  
+  /**
+   * Construct an matrix of nr rows and nc columns from a raw array. nr*nc
+   * numbers will be allocated in memory. If data's size is larger than nr*nc 
+   * only first nr*nc numbers are used in column-major order. If data's 
+   * size is smaller than nr*nc, all numbers from data will be used and the 
+   * matrix's rests number have undetermined values. 
+   */
   template<typename T> 
   matrix(const T *data, size_t nr, size_t nc); 
 
+  /**
+   * Construct from another matrix. All numbers are copied. 
+   */
   template<typename T> 
   matrix(const matrix<T> &m);
  
+  /**
+   * Construct from another matrix. All numbers are copied. 
+   */
   matrix(const matrix<DataType> &m); 
 
+  /**
+   * Copy from another matrix. New memory is allocated if it's necessary. 
+   */
   matrix<DataType>& operator= (const matrix<DataType> &rhs);
  
+  /**
+   * Assign all numbers in the matrix to be rhs.
+   */
   matrix<DataType>& operator= (const DataType rhs);
  
+  /**
+   * Check if two matrices are equal. The two matrices must have the same
+   * numbers of rows and columns if it returns true. 
+   */
   bool operator== (const matrix<DataType> &rhs); 
 
+  /**
+   * Check if two matrices are not equal. Returns false if the two matrices 
+   * have different numbers of rows or columns. 
+   */
   bool operator!= (const matrix<DataType> &rhs); 
 
-/* interface to private data */
+  /***********************************************
+   *  interface to private data 
+   **********************************************/
+
+  /**
+   * Return number of rows that the matrix has.
+   */
   size_t nRow() const;
 
+  /**
+   * Return number of columns that the matrix has.
+   */
   size_t nCol() const;
 
+  /**
+   * Returns the pointer of raw array. This is pretty useful when calling 
+   * low level blas/lapack functions.
+   */
   DataType * getDataPtr() const; 
 
+  /**
+   * Return the reference to the matrix's DataArray.
+   */
   DataArray<DataType>& getDataArray() const; 
 
+  /**
+   * Return the matrix's transpose type: CblasNoTrans or CblasTrans. 
+   */
   CBLAS_TRANSPOSE getTranspose() const;
  
-/* resizing/reshaping matrix */
+  /**
+   * Resizing or reshaping the matrix. If the resized size is larger than
+   * the original, new memory will be allocated and data will be copied to
+   * the new position. 
+   */
   void resize(size_t nr, size_t nc); 
 
-/* indexing */
+  /**
+   * Find the reference of item located at ith row and jth column.
+   */
   inline DataType& operator()(size_t i, size_t j); 
 
+  /**
+   * Find the reference of item located at ith row and jth column.
+   */
   inline DataType operator()(size_t i, size_t j) const; 
 
+  /**
+   * Find the reference of item located at ith position in the raw data array.
+   * The array is saved in a column-major order in memory.
+   */
   inline DataType& operator()(size_t i);
  
+  /**
+   * Find the reference of item located at ith position in the raw data array.
+   * The array is saved in a column-major order in memory.
+   */
   inline DataType& operator()(size_t i) const;
 
+  /**
+   * Find the reference of item located at ith position in the raw data array.
+   * The array is saved in a column-major order in memory.
+   */
   inline DataType& operator[](size_t i);
  
+  /**
+   * Find the reference of item located at ith position in the raw data array.
+   * The array is saved in a column-major order in memory.
+   */
   inline DataType& operator[](size_t i) const; 
 
-/* arithmetic */
+  /****************************
+   * Arithmetic operations 
+   ***************************/
+
+  /** 
+   * Add two matrices
+   */
   template<typename T> 
   const matrix<DataType> operator+(const matrix<T>& rhs) const;
  
+  /** 
+   * Add one matrices upto another matrix. 
+   */
   template<typename T> matrix<DataType>& operator+=(const matrix<T>& rhs);
  
+  /**
+   * Subtract one matrix and another matrix.
+   */
   template<typename T> const matrix<DataType> operator-(const matrix<T>& rhs) const;
 
+  /**
+   * Subtract one matrix from another matrix.
+   */
   template<typename T> matrix<DataType>& operator-=(const matrix<T>& rhs);
 
+  /**
+   * Multiply each element in the matrix by a real number and
+   * get a new matrix.
+   */
   const matrix<DataType> operator*(const double rhs) const;
 
+  /**
+   * Multiply each element in the matrix by a complex number and 
+   * get a new matrix.
+   */
   const matrix<DataType> operator*(const CD rhs) const;
 
+  /**
+   * Multiply each element in the matrix by a real number.
+   */
   matrix<DataType> & operator*=(const double rhs);
 
+  /**
+   * Multiply each element in the matrix by a complex number.
+   */
   matrix<DataType> & operator*=(const CD rhs);
  
+  /**
+   * Multiply two matrices and get a new matrix. Number of columns of the first
+   * matrix must equals to the number of columns of the second matrix.
+   */
   const matrix<DataType> operator*(const matrix<DataType>& rhs) const;
 
+  /**
+   * Multiply the matrix with a new matrix. Number of columns of the first
+   * matrix must equals to the number of columns of the second matrix.
+   */
   matrix<DataType>& operator*=(const matrix<DataType>& rhs);
  
+  /**
+   * Divide each element in the matrix by a constant to get a new matrix.
+   */
   template<typename T> const matrix<DataType> operator/(const T rhs) const;
 
+  /**
+   * Divide each element in the matrix by a constant.
+   */
   template<typename T> matrix<DataType>& operator/=(const T rhs);
 
-/* matrix specific operations */
+  /*************************************
+   *  matrix specific operations 
+   ************************************/
+
+  /**
+   * Transpose the matrix. 
+   */
   matrix<DataType> &trans();
 
+  /**
+   * Replace the matrix with its hermitian.  
+   */
   matrix<DataType> &herm();
 
+  /**
+   * Replace the matrix with its conjugate.  
+   */
   matrix<DataType> &conj();
 
+  /**
+   * Get a sub-block of the matrix between r1th (containing) row and r2th 
+   * (not containing) row, and between c1th (containing) column and c2th 
+   * (not containing) column.  
+   */
   matrix<DataType> block(size_t r1, size_t r2, size_t c1, size_t c2) const;
 
+  /**
+   * Replace a sub-block of the matrix with another matrix value. The
+   * sub-block starts at (r-th row, c-th column) at its upper-left corner,
+   * and is replace by values from mt's (0,0) position. 
+   */
   matrix<DataType> &replace(size_t r, size_t c, const matrix<DataType> &mt);
 
+  /**
+   * Return the matrix's c-th column.
+   */
   matrix<DataType> col(size_t c) const;
 
+  /**
+   * Return the matrix's r-th row.
+   */
   matrix<DataType> row(size_t r) const;
 
-/* solvers */
+  /**
+   * Solve eigen system and put eigen values into e, corresponding 
+   * left-eigen vectors into vl and corresponding right-eigen vectors
+   * into vr. vl and vr will be square matrices.
+   * 
+   * If you are linking to basic blas library only, this function is not
+   * implemented yet. 
+   */
   void eigen(matrix<CD> &e, matrix<DataType> &vl, matrix<DataType> &vr);
 
+  /**
+   * Solve eigen system and put eigen values into e, corresponding 
+   * left-eigen vectors into vl. vl will be square matrix.
+   *
+   * If you are linking to basic blas library only, this function is not
+   * implemented yet. 
+   */
   void reigen(matrix<CD> &e, matrix<DataType> &vr);
 
+  /**
+   * Solve eigen system and put eigen values into e, corresponding 
+   * right-eigen vectors into vr. vr will be square matrix.
+   *
+   * If you are linking to basic blas library only, this function is not
+   * implemented yet. 
+   */
   void leigen(matrix<CD> &e, matrix<DataType> &vl);
 
 /* private data */
 protected:
+  /**
+   * Number of columns.
+   */
   size_t m_ncol;
 
+  /**
+   * Number of rows.
+   */
   size_t m_nrow;
 
+  /**
+   * Auto pointer to resource. 
+   */
   typename DataPtr<DataType>::Type m_data; 
 
+  /**
+   * The matrix is transposed (saved as in row-major order in memory) if 
+   * m_transpose == CblasTrans, otherwise not transposed (saved as in 
+   * column-major order in memory).
+   */
   CBLAS_TRANSPOSE m_transpose;
 };
 
@@ -605,11 +794,15 @@ std::string toString(const matrix<DataType> &m) {
 
 
 /////////////////////////////////////////////////////////////////////////////
-/* idmatrix class
-   identity matrix */
+/** 
+ * Identity matrix
+ */
 template<typename DataType> 
 class idmatrix : public matrix<DataType> {
 public:
+  /**
+   * Construct an identity matrix of n x n. 
+   */
   idmatrix(size_t n);
 };
 

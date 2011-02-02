@@ -16,3 +16,6 @@ sample:
 
 clean:
 	rm -rf unittest example 
+
+doc:
+	doxygen *.cpp *.hpp

@@ -12,35 +12,85 @@
 
 namespace mlcpp {
 
-
 #ifdef USE_MKL
 #define _CD MKL_Complex16 
 #else
-typedef struct { double real; double imag;} _CD; 
+/**
+ * _CD is the native complex struct that contains two double numbers, real
+ * part before the imaginary part.
+ */
+typedef struct { 
+  /**
+   * Real part of the complex number.
+   */
+  double real; 
+  /**
+   * Imaginary part of the complex number.
+   */
+  double imag;
+} _CD; 
 #endif
 
-//#define CD MKL_Complex16 
 #define CD ComplexDouble 
 
 /////////////////////////////////////////////////////////////////////////////
-/* _ComplexDouble structure 
-   wrapping MKL_Complex16 with more interfaces*/
+/** 
+ * _ComplexDouble supplements the native complex structure with some
+ * missing interfaces.
+ */
 struct _ComplexDouble : _CD {
+
+  /** 
+   * Default constructor.
+   */
   _ComplexDouble() {};
+
+  /** 
+   * Construct a complex number from its real and imaginary part. 
+   */
   _ComplexDouble(double r, double i);
+
+  /** 
+   * Construct a complex number from a real number with imaginary part to be
+   * zero.
+   */
   _ComplexDouble(double r);
+
+  /**
+   * Construct(copying) a complex number from another complex number.
+   */
   _ComplexDouble(_CD c);
 
+  /**
+   * Copy from a real number with imaginary part set to zero. 
+   */
   const struct _ComplexDouble & operator=(double r);
 
+  /**
+   * Copy from another complex number
+   */
   const struct _ComplexDouble & operator=(const _CD &c);
 
+  /**
+   * Check if two complex numbers equal.
+   */
   bool operator==(const _CD &c);
 
+  /**
+   * Check if a complex number equals to a real number and its imaginary part
+   * is zero. 
+   */
   bool operator==(const double c);
 
+  /**
+   * Check if two complex numbers are not equal.
+   */
   bool operator!=(const _CD &c);
 
+  /**
+   * Check if a complex number is not equal to a real number. It holds true
+   * when the imaginary part of the complex number is not zero. 
+   */
   bool operator!=(const double c);
 
 };
