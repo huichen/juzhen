@@ -6,6 +6,16 @@
 * @section prerequisite Prerequisite
   You need a package that provides CBLAS functions, such as MKL. 
 
+* @section download Download 
+  
+  Pull the source code of mlcpp from github:
+
+  https://github.com/huichen/mlcpp
+
+  Direct link to tarball is
+
+  https://github.com/huichen/mlcpp/tarball/master 
+
 * @section how_to_use How to use
   -# Set MLCPP_BLASLIB envron to mkl if you want to use MKL <br> <br> 
      export MLCPP_BLASLIB=mkl<br><br> 
