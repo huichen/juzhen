@@ -60,7 +60,7 @@ BEGIN_TEST(MatrixCompare, "MatrixCompare")
 
   dmatrix m1(a, 2, 2);
   dmatrix m2(a, 2, 3);
-
+  
   VB(m1==m1)
 
   VB(m1!=m2)
@@ -210,6 +210,16 @@ BEGIN_TEST(MatrixHermTransConj, "MatrixHermTransConj")
   m2 = m1.trans();
   V(m2, "(1, 2) (-3, -1) \n(2, 0.1) (-2, 0.1) \n(6, 7) (3, 0.1) ")
 
+  double a[] = {1., 2., 3., 4.};
+  dmatrix m3(a, 2, 2);
+
+  V(m3, "1 3 \n2 4 ")
+
+  V(conj(m3), "1 3 \n2 4 ")
+
+  V(trans(m3), "1 2 \n3 4 ")
+
+  V(herm(m3), "1 2 \n3 4 ")
 
 END_TEST(MatrixHermTransConj)
 
@@ -385,6 +395,17 @@ BEGIN_TEST(VectorTests, "VectorTests")
   VME(v6, conj(herm(v6)))
 
   VME(herm(v6), conj(trans(v6)))
+
+  double a[] = {1., 2., 3., 4.};
+  dvector m3(a, 4);
+
+  V(m3, "{1, 2, 3, 4}")
+
+  V(conj(m3), "{1, 2, 3, 4}")
+
+  V(trans(m3), "{1, 2, 3, 4}")
+
+  V(herm(m3), "{1, 2, 3, 4}")
 
   V(v6.block(1,4), "{(-3, -1), (2, 0.1), (-2, 0.1)}")
 

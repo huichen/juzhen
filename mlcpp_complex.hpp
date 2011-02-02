@@ -242,6 +242,10 @@ inline const CD conj(const CD &a) {
   return c;
 }
 
+inline double conj(const double &a) {
+  return a;
+}
+
 std::ostream& operator<< (std::ostream& out, const CD &m) {
   out << "(" << m.real << ", " << m.imag << ")";
   return out; 
