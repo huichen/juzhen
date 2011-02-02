@@ -15,7 +15,7 @@ sample:
 	./example
 
 clean:
-	rm -rf unittest example 
+	rm -rf unittest example html latex
 
 doc:
-	doxygen *.cpp *.hpp
+	doxygen . 
