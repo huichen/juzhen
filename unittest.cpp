@@ -375,6 +375,15 @@ BEGIN_TEST(VectorTests, "VectorTests")
   v5 /= 2;
   V(v5, "{1, 2, 3, 4}")
 
+  VDE(max(v5), 4)
+  VDE(v5.max(), 4)
+
+  VDE(norm(v5)*norm(v5), 30)
+  VDE(v5.norm()*v5.norm(), 30)
+
+  VDE(sum(v5), 10)
+  VDE(v5.sum(), 10)
+
   VDE(v1*v1, 30)
   
   dmatrix m2 = didmatrix(4);
@@ -425,6 +434,9 @@ BEGIN_TEST(VectorTests, "VectorTests")
   v7 = v6.herm();
   V(v7, "{(1, -2), (-3, 1), (2, -0.1), (-2, -0.1), (6, -7), (3, -0.1)}")
   
+  VDE(norm(v6)*norm(v6), 117.03)
+  VDE(v6.norm()*v6.norm(), 117.03)
+
   V(dvector(v1.stl()), "{1, 2, 3, 4}")
 
 END_TEST(VectorTests)

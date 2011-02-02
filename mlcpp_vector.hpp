@@ -4,6 +4,7 @@
 #include <mlcpp_matrix.hpp>
 #include <algorithm>
 #include <vector>
+#include <math.h>
 
 namespace mlcpp {
 
@@ -168,6 +169,21 @@ public:
    * Get conjugate of a vector.
    */
   vector<DataType> conj() const; 
+
+  /**
+   * Get sum of a vector's all elements.
+   */
+  DataType sum() const; 
+
+  /**
+   * Get norm_2 of a vector.
+   */
+  double norm() const; 
+
+  /**
+   * Get the maximum element of a vector.
+   */
+  DataType max() const; 
 
   /**
    * Return a sub-vector of [i1, i2)
@@ -354,6 +370,32 @@ vector<DataType> vector<DataType>::trans() const {
   return *this;
 }
 
+
+template<typename DataType>
+DataType vector<DataType>::sum() const {
+  DataType r = 0;
+  for(size_t i=0; i<size(); i++)
+    r += (*this)(i);
+  return r;
+} 
+
+template<typename DataType>
+double vector<DataType>::norm() const {
+  double r = 0;
+  for(size_t i=0; i<size(); i++)
+    r += abs2((*this)(i));
+  return sqrt(r);
+} 
+
+template<typename DataType>
+DataType vector<DataType>::max() const {
+  assert(size()>0);
+  DataType r = (*this)(0);
+  for(size_t i=1; i<size(); i++)
+    if (r < (*this)(i)) r = (*this)(i); 
+  return r;
+} 
+
 template<typename DataType>
 vector<DataType> vector<DataType>::herm() const {
   return matrix<DataType>::conj();
@@ -409,12 +451,27 @@ vector<DataType> conj(const vector<DataType> &v) {
 }
 
 vector<double> real(const vector<CD> &v) {
- return v.real();
+  return v.real();
 } 
 
 vector<double> imag(const vector<CD> &v) {
- return v.imag();
+  return v.imag();
 }
+
+template<typename DataType> 
+DataType sum(const vector<DataType> v) {
+  return v.sum();
+} 
+
+template<typename DataType> 
+double norm(const vector<DataType> v) {
+  return v.norm();
+} 
+
+template<typename DataType> 
+DataType max(const vector<DataType> v) {
+  return v.max();
+} 
 
 template<typename DataType> 
 vector<DataType> sort(const vector<DataType> &v) {
