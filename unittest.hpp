@@ -35,7 +35,7 @@ std::cout << " FAILED!" << std::endl;\
   std::cout << "       = ["<< serialize(toString(rhs)) <<"]" <<std::endl ; \
 } else { \
 UnitTest::m_nsucc++; \
-std::cout << " passed" << std::endl; \
+std::cout << " passed." << std::endl; \
 }
 
 /**
@@ -50,7 +50,7 @@ std::cout << " FAILED!" << std::endl;\
   std::cout << "  Expect " << lhs << " = " << rhs <<std::endl ; \
 } else { \
 UnitTest::m_nsucc++; \
-std::cout << " passed" << std::endl; \
+std::cout << " passed." << std::endl; \
 }
 
 /**
@@ -65,7 +65,7 @@ std::cout << " FAILED!" << std::endl;\
   std::cout << "  Expect true." << std::endl; \
 } else { \
 UnitTest::m_nsucc++; \
-std::cout << " passed" << std::endl; \
+std::cout << " passed." << std::endl; \
 }
 
 /**

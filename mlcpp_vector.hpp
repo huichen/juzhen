@@ -186,6 +186,11 @@ public:
   DataType max() const; 
 
   /**
+   * Swap two elements.
+   */
+  vector<DataType> &swap(size_t i1, size_t i2);
+
+  /**
    * Return a sub-vector of [i1, i2)
    */
   vector<DataType> block(size_t i1, size_t i2);
@@ -219,9 +224,9 @@ template<typename DataType>
 vector<DataType>::vector(const matrix<DataType> &m) {
   matrix<DataType>::m_data = 
    typename DataPtr<DataType>::Type(new DataArray<DataType>(m.getDataPtr(), 
-                                                    m.nRow()*m.nCol())); 
+                                                    m.nrow()*m.ncol())); 
   matrix<DataType>::m_ncol =1;
-  matrix<DataType>::m_nrow = m.nRow()*m.nCol();
+  matrix<DataType>::m_nrow = m.nrow()*m.ncol();
 }
 
 template<typename DataType>
@@ -406,6 +411,16 @@ vector<DataType> vector<DataType>::conj() const {
   return matrix<DataType>::conj();
 }
 
+template<typename DataType> 
+vector<DataType> & vector<DataType>::swap(size_t i1, size_t i2) {
+  assert(i1<size() && i2<size());
+  DataType temp;
+  temp = (*this)(i1);
+  (*this)(i1) = (*this)(i2);
+  (*this)(i2) = temp;
+  return *this;
+}
+
 template<typename DataType>
 vector<DataType> vector<DataType>::block(size_t i1, size_t i2) {
   return matrix<DataType>::block(i1, i2, 0, 1);
@@ -497,7 +512,7 @@ template<typename DataType>
 const vector<DataType> 
 operator*(const double lhs, const vector<DataType> &ma) {
   vector<DataType> m(ma.size());
-  for (size_t i=0; i<ma.nRow(); i++)
+  for (size_t i=0; i<ma.nrow(); i++)
       m(i) = ma(i)*lhs; 
   return m;
 }
@@ -506,7 +521,7 @@ template<typename DataType>
 const vector<DataType> 
 operator*(const CD lhs, const vector<DataType> &ma) {
   vector<DataType> m(ma.size());
-  for (size_t i=0; i<ma.nRow(); i++)
+  for (size_t i=0; i<ma.nrow(); i++)
       m(i) = ma(i)*lhs; 
   return m;
 }

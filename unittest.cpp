@@ -90,9 +90,9 @@ BEGIN_TEST(MatrixPrivateData, "MatrixPrivateData")
   double a[] = {1., 2., 3., 4., 5., 6.};
   dmatrix m1(a, 2, 3);
 
-  VDE(m1.nCol(), 3)
+  VDE(m1.ncol(), 3)
 
-  VDE(m1.nRow(), 2)
+  VDE(m1.nrow(), 2)
 
 END_TEST(MatrixPrivateData)
 
@@ -209,6 +209,18 @@ BEGIN_TEST(MatrixHermTransConj, "MatrixHermTransConj")
   VME(trans(m1), herm(conj(m1)))
 
   VME(m1, trans(herm(conj(m1))))
+
+  cmatrix m2 = m1;
+  V(m2.swapcol(1,2), "(1, 2) (6, 7) (2, 0.1) \n(-3, -1) (3, 0.1) (-2, 0.1) " )
+  m2 = m1;
+  m2.swapcol(1,2);
+  V(m2, "(1, 2) (6, 7) (2, 0.1) \n(-3, -1) (3, 0.1) (-2, 0.1) " )
+
+  m2 = m1;
+  m2.swaprow(0,1);
+  V(m2, "(-3, -1) (-2, 0.1) (3, 0.1) \n(1, 2) (2, 0.1) (6, 7) " )
+  m2 = m1;
+  V(m2.swaprow(0,1), "(-3, -1) (-2, 0.1) (3, 0.1) \n(1, 2) (2, 0.1) (6, 7) " )
 
   double a[] = {1., 2., 3., 4.};
   dmatrix m3(a, 2, 2);
@@ -438,6 +450,13 @@ BEGIN_TEST(VectorTests, "VectorTests")
   VDE(v6.norm()*v6.norm(), 117.03)
 
   V(dvector(v1.stl()), "{1, 2, 3, 4}")
+
+  dvector v8 =  m3;
+  V(v8.swap(1,2), "{1, 3, 2, 4}")
+
+  v8 = m3;
+  v8.swap(1,2);
+  V(v8, "{1, 3, 2, 4}")
 
 END_TEST(VectorTests)
 
