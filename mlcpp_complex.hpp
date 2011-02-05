@@ -64,34 +64,34 @@ struct _ComplexDouble : _CD {
   /**
    * Copy from a real number with imaginary part set to zero. 
    */
-  const struct _ComplexDouble & operator=(double r);
+  inline const struct _ComplexDouble & operator=(double r);
 
   /**
    * Copy from another complex number
    */
-  const struct _ComplexDouble & operator=(const _CD &c);
+  inline const struct _ComplexDouble & operator=(const _CD &c);
 
   /**
    * Check if two complex numbers equal.
    */
-  bool operator==(const _CD &c);
+  inline bool operator==(const _CD &c);
 
   /**
    * Check if a complex number equals to a real number and its imaginary part
    * is zero. 
    */
-  bool operator==(const double c);
+  inline bool operator==(const double c);
 
   /**
    * Check if two complex numbers are not equal.
    */
-  bool operator!=(const _CD &c);
+  inline bool operator!=(const _CD &c);
 
   /**
    * Check if a complex number is not equal to a real number. It holds true
    * when the imaginary part of the complex number is not zero. 
    */
-  bool operator!=(const double c);
+  inline bool operator!=(const double c);
 
 };
 
@@ -101,34 +101,34 @@ _ComplexDouble::_ComplexDouble(double r, double i) { real = r; imag = i;};
 _ComplexDouble::_ComplexDouble(double r) { real = r; imag =0.0;};
 _ComplexDouble::_ComplexDouble(_CD c) { real = c.real; imag =c.imag;};
 
-const CD& _ComplexDouble::operator=(double r) {
+inline const CD& _ComplexDouble::operator=(double r) {
   real = r;
   imag = 0.0;
   return *this;
 }
 
-const CD& _ComplexDouble::operator=(const _CD &c) {
+inline const CD& _ComplexDouble::operator=(const _CD &c) {
   real = c.real;
   imag = c.imag;
   return *this;
 }
 
-bool _ComplexDouble::operator==(const _CD &c) {
+inline bool _ComplexDouble::operator==(const _CD &c) {
   if (real == c.real && imag == c.imag) return true;
   else return false;
 }
 
-bool _ComplexDouble::operator==(const double c) {
+inline bool _ComplexDouble::operator==(const double c) {
   if (real == c && imag == 0) return true;
   else return false;
 }
 
-bool _ComplexDouble::operator!=(const _CD &c) {
+inline bool _ComplexDouble::operator!=(const _CD &c) {
   if (real == c.real && imag == c.imag) return false;
   else return true;
 }
 
-bool _ComplexDouble::operator!=(const double c) {
+inline bool _ComplexDouble::operator!=(const double c) {
   if (real == c && imag == 0) return false;
   else return true;
 }

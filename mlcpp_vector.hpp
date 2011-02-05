@@ -69,7 +69,7 @@ public:
   /**
    * Return the size of the vector.
    */
-  size_t size() const;
+  inline size_t size() const;
 
   /**
    * Add two vectors.
@@ -131,7 +131,7 @@ public:
    * Dot product two vectors. 
    */
   template<typename T> 
-  const DataType operator* (const vector<T> &rv) const;
+  const DataType operator* (const vector<T> &rv);
 
   /**
    * Divide a vector by a constant.
@@ -241,19 +241,18 @@ vector<DataType>::vector(const std::vector<DataType> &v)
 
 template<typename DataType>
 vector<DataType>& vector<DataType>::operator=(const vector<DataType> &v) { 
-  matrix<DataType>::m_data = 
-   typename DataPtr<DataType>::Type(new DataArray<DataType>(v.getDataPtr(), 
-                                                    v.size())); 
-  matrix<DataType>::m_ncol =1;
-  matrix<DataType>::m_nrow = v.size();
+  matrix<DataType>::operator=(v);
   return *this;
 } 
 
 template<typename DataType>
 vector<DataType> & 
 vector<DataType>::operator=(const std::vector<DataType> &v) { 
-  resize(v.size());
-  for(size_t i=0; i<v.size(); i++) (*this)[i] = v[i];
+  size_t s = v.size();
+  resize(s);
+  DataType *p1;
+  p1 = getDataPtr();
+  for(size_t i=0; i<s; i++) *(p1++) = v[i];
   return *this;
 } 
 
@@ -270,8 +269,8 @@ template<typename DataType>
 void vector<DataType>::resize(size_t nc, size_t nr) {};
 
 template<typename DataType>
-size_t vector<DataType>::size() const {
-  return matrix<DataType>::m_ncol==1?matrix<DataType>::m_nrow:matrix<DataType>::m_ncol;
+inline size_t vector<DataType>::size() const {
+  return matrix<DataType>::m_nrow;
 }
 
 template<typename DataType>
@@ -340,10 +339,13 @@ vector<DataType>& vector<DataType>::operator*=(const matrix<DataType>& rhs) {
 
 template<typename DataType>
 template<typename T> 
-const DataType vector<DataType>::operator* (const vector<T> &rv) const {
+const DataType vector<DataType>::operator* (const vector<T> &rv) {
   assert(size() == rv.size());
   DataType res = 0;
-  for(size_t i =0;i<size(); i++) res+=(*this)[i]*rv[i];
+  size_t s = size();
+  DataType *p1 = matrix<DataType>::getDataPtr();
+  T *p2 = rv.getDataPtr();
+  for(size_t i =0;i<s; i++) res+=*(p1++)*(*(p2++));
   return res;
 }
 
@@ -379,16 +381,18 @@ vector<DataType> vector<DataType>::trans() const {
 template<typename DataType>
 DataType vector<DataType>::sum() const {
   DataType r = 0;
+  DataType *p = matrix<DataType>::getDataPtr();
   for(size_t i=0; i<size(); i++)
-    r += (*this)(i);
+    r += *(p++);
   return r;
 } 
 
 template<typename DataType>
 double vector<DataType>::norm() const {
   double r = 0;
+  DataType *p = matrix<DataType>::getDataPtr();
   for(size_t i=0; i<size(); i++)
-    r += abs2((*this)(i));
+    r += abs2(*(p++));
   return sqrt(r);
 } 
 
@@ -396,8 +400,11 @@ template<typename DataType>
 DataType vector<DataType>::max() const {
   assert(size()>0);
   DataType r = (*this)(0);
-  for(size_t i=1; i<size(); i++)
-    if (r < (*this)(i)) r = (*this)(i); 
+  DataType *p = matrix<DataType>::getDataPtr();
+  for(size_t i=0; i<size(); i++) {
+    if (r < *p) r = *p; 
+    p++;
+  }
   return r;
 } 
 
@@ -414,10 +421,11 @@ vector<DataType> vector<DataType>::conj() const {
 template<typename DataType> 
 vector<DataType> & vector<DataType>::swap(size_t i1, size_t i2) {
   assert(i1<size() && i2<size());
+  DataType *p = matrix<DataType>::m_data->m_data;
   DataType temp;
-  temp = (*this)(i1);
-  (*this)(i1) = (*this)(i2);
-  (*this)(i2) = temp;
+  temp = p[i1];
+  p[i1] = p[i2];
+  p[i2] = temp;
   return *this;
 }
 
@@ -525,28 +533,14 @@ vector<DataType> sort(const vector<DataType> &v) {
 }
 
 /**
- * Build a diagonal matrix from a vector. 
- */
-template<typename DataType> 
-matrix<DataType> diag(const vector<DataType> &v) {
-  size_t n = v.size();
-  matrix<DataType> m(n,n);
-  for (size_t i=0; i<n; i++) 
-    for (size_t j=0; j<n; j++)
-      if (i==j) m(i,j)=v(i);
-      else m(i,j)=0.;
-  return m;
-}
-
-/**
  * Multiply a real number and a vector.
  */
 template<typename DataType> 
 const vector<DataType> 
 operator*(const double lhs, const vector<DataType> &ma) {
   vector<DataType> m(ma.size());
-  for (size_t i=0; i<ma.nrow(); i++)
-      m(i) = ma(i)*lhs; 
+  for (size_t i=0; i<ma.size(); i++)
+    m(i) = ma(i)*lhs; 
   return m;
 }
 
@@ -557,7 +551,7 @@ template<typename DataType>
 const vector<DataType> 
 operator*(const CD lhs, const vector<DataType> &ma) {
   vector<DataType> m(ma.size());
-  for (size_t i=0; i<ma.nrow(); i++)
+  for (size_t i=0; i<ma.size(); i++)
       m(i) = ma(i)*lhs; 
   return m;
 }

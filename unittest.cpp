@@ -435,7 +435,7 @@ BEGIN_TEST(VectorTests, "VectorTests")
   V(herm(m3), "{1, 2, 3, 4}")
 
   V(v6.block(1,4), "{(-3, -1), (2, 0.1), (-2, 0.1)}")
-
+ 
   cvector v7;
   v7 = v6.trans();
   V(trans(v7), "{(1, 2), (-3, -1), (2, 0.1), (-2, 0.1), (6, 7), (3, 0.1)}")
