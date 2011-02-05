@@ -11,7 +11,7 @@ test:
 	./unittest
 
 sample:
-	$(CC) example.cpp -o example $(CFLAGS) 
+	$(CC) example.cpp -o example $(CFLAGS) -O3 -DNDEBUG 
 	./example
 
 clean:
