@@ -450,44 +450,71 @@ std::vector<DataType> vector<DataType>::stl() {
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * Return the transpose of a vector.
+ */
 template<typename DataType> 
 vector<DataType> trans(const vector<DataType> &v) {
   return v;
 }
 
+/**
+ * Return the hermitian of a vector.
+ */
 template<typename DataType> 
 vector<DataType> herm(const vector<DataType> &v) {
   return v.herm();
 }
 
+/**
+ * Return the conjugate of a vector.
+ */
 template<typename DataType> 
 vector<DataType> conj(const vector<DataType> &v) {
   return v.conj();
 }
 
+/**
+ * Return the real part of a vector.
+ */
 vector<double> real(const vector<CD> &v) {
   return v.real();
 } 
 
+/**
+ * Return the imaginary part of a vector.
+ */
 vector<double> imag(const vector<CD> &v) {
   return v.imag();
 }
 
+/**
+ * Find the sum of a vector's all elements.
+ */
 template<typename DataType> 
 DataType sum(const vector<DataType> v) {
   return v.sum();
 } 
 
+/**
+ * Find the norm-2 of a vector.
+ */
 template<typename DataType> 
 double norm(const vector<DataType> v) {
   return v.norm();
 } 
 
+/**
+ * Find the maximum element in a vector.
+ */
 template<typename DataType> 
 DataType max(const vector<DataType> v) {
   return v.max();
 } 
 
+/**
+ * Sort a vector.
+ */
 template<typename DataType> 
 vector<DataType> sort(const vector<DataType> &v) {
   vector<DataType> v2(v.size());
@@ -497,6 +524,9 @@ vector<DataType> sort(const vector<DataType> &v) {
   return v2;
 }
 
+/**
+ * Build a diagonal matrix from a vector. 
+ */
 template<typename DataType> 
 matrix<DataType> diag(const vector<DataType> &v) {
   size_t n = v.size();
@@ -508,6 +538,9 @@ matrix<DataType> diag(const vector<DataType> &v) {
   return m;
 }
 
+/**
+ * Multiply a real number and a vector.
+ */
 template<typename DataType> 
 const vector<DataType> 
 operator*(const double lhs, const vector<DataType> &ma) {
@@ -517,6 +550,9 @@ operator*(const double lhs, const vector<DataType> &ma) {
   return m;
 }
 
+/**
+ * Multiply a complex number and a vector.
+ */
 template<typename DataType> 
 const vector<DataType> 
 operator*(const CD lhs, const vector<DataType> &ma) {
@@ -526,6 +562,9 @@ operator*(const CD lhs, const vector<DataType> &ma) {
   return m;
 }
 
+/**
+ * Multiply a matrix and a vector.
+ */
 template<typename DataType> 
 const vector<DataType> 
 operator*(const matrix<DataType>& ma, const vector<DataType>& v) {
@@ -534,6 +573,9 @@ operator*(const matrix<DataType>& ma, const vector<DataType>& v) {
   return v1;
 }
 
+/**
+ * Multiply a matrix and a vector.
+ */
 template<typename DataType> 
 vector<DataType>& 
 operator*=(matrix<DataType>& ma, const vector<DataType>& v) {
@@ -552,6 +594,10 @@ std::ostream& operator<< (std::ostream& out, const vector<DataType> &m) {
   out << "}";
   return out; 
 }
+
+/**
+ * Return string form of a matrix.
+ */
 
 template<typename DataType> 
 std::string toString(const vector<DataType> &m) {

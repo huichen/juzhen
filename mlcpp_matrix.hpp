@@ -727,30 +727,47 @@ void matrix<DataType>::leigen(matrix<CD> &e, matrix<DataType> &vl) {
 } 
 /////////////////////////////////////////////////////////////////////////////
 
+/** 
+ * Return the real part of a matrix 
+ */
 matrix<double> real(const matrix<CD> &m) {
   return m.real();
 } 
 
+/** 
+ * Return the imaginary part of a matrix 
+ */
 matrix<double> imag(const matrix<CD> &m) {
   return m.imag();
 }
 
+/** 
+ * Return transpose of a matrix 
+ */
 template<typename DataType> 
 matrix<DataType> trans(const matrix<DataType> &m) {
   return m.trans();
 }
 
+/** 
+ * Return hermitian of a matrix 
+ */
 template<typename DataType> 
 matrix<DataType> herm(const matrix<DataType> &m) {
   return m.herm();
 }
 
+/** 
+ * Return conjugate of a matrix 
+ */
 template<typename DataType> 
 matrix<DataType> conj(const matrix<DataType> &m) {
   return m.conj();
 }
 
-/* arithmetic */
+/** 
+ * Multiply a double number and a matrix
+ */
 template<typename DataType> 
 const matrix<DataType> operator*(const double lhs, 
                                  const matrix<DataType> &ma) {
@@ -761,6 +778,9 @@ const matrix<DataType> operator*(const double lhs,
   return m;
 }
 
+/** 
+ * Multiply a complex number and a matrix
+ */
 template<typename DataType> 
 const matrix<DataType> operator*(const CD lhs, 
                                  const matrix<DataType> &ma) {
@@ -783,6 +803,9 @@ std::ostream& operator<< (std::ostream& out,
   return out; 
 }
 
+/**
+ * Get print form of a matrix.
+ */
 template<typename DataType> 
 std::string toString(const matrix<DataType> &m) {
   std::ostringstream out;
