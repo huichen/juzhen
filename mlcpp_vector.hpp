@@ -251,7 +251,7 @@ vector<DataType>::operator=(const std::vector<DataType> &v) {
   size_t s = v.size();
   resize(s);
   DataType *p1;
-  p1 = getDataPtr();
+  p1 = matrix<DataType>::getDataPtr();
   for(size_t i=0; i<s; i++) *(p1++) = v[i];
   return *this;
 } 

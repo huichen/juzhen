@@ -107,6 +107,11 @@ public:
   void resize(size_t nr, size_t nc); 
 
   /**
+   * Set all elements to be zero.
+   */
+  inline void clear(); 
+
+  /**
    * Find the reference of item located at ith row and jth column.
    */
   inline DataType& operator()(size_t i, size_t j); 
@@ -424,6 +429,12 @@ void matrix<DataType>::resize(size_t nr, size_t nc) {
   m_ncol = nc;
   m_nrow = nr;
 } 
+
+template<typename DataType> 
+inline void matrix<DataType>::clear() {
+  if (m_data->m_data)
+    memset(m_data->m_data, 0, m_data->m_size*sizeof(DataType));
+}
 
 /* operator overloading */
 template<typename DataType> 

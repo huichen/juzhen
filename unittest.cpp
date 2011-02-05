@@ -51,6 +51,11 @@ BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   m8 = m8;
   V(m8, "3 3 3 3 \n3 3 3 3 \n3 3 3 3 \n3 3 3 3 ")
 
+  dmatrix m9(3,3);
+  m9 = 4;
+  m9.clear();
+  V(m9, "0 0 0 \n0 0 0 \n0 0 0 ")
+
 END_TEST(MatrixAssignment)
 
 BEGIN_TEST(MatrixCompare, "MatrixCompare")
