@@ -104,7 +104,7 @@ template<typename DataType>
 DataArray<DataType>::DataArray(size_t s) {
   m_data = (DataType *) malloc(s*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "Malloc is called." << std::endl;
+  std::cout << "DataArray(size_t) is called." << std::endl;
 #endif
   assert (m_data);
   m_size = s;
@@ -116,7 +116,7 @@ DataArray<DataType>::DataArray(const DataArray<T> &da) {
   if (&da && da.m_size >0) {
     m_data = (DataType *) malloc(da.m_size*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "Malloc is called." << std::endl;
+  std::cout << "DataArray(const DataArray<T> &) is called." << std::endl;
 #endif
     assert (m_data);
     m_size = da.m_size;
@@ -137,7 +137,7 @@ DataArray<DataType>::DataArray(const DataArray<DataType> &da) {
   if (&da && da.m_size >0) {
     m_data = (DataType *) malloc(da.m_size*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "Malloc is called." << std::endl;
+  std::cout << "DataArray(const DataArray<DataType> &) is called." << std::endl;
 #endif
     assert (m_data);
     m_size = da.m_size;
@@ -157,7 +157,7 @@ DataArray<DataType>::DataArray(const DataArray<T> &da, const size_t s) {
     else reals = s;
     m_data = (DataType *) malloc(reals*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "Malloc is called." << std::endl;
+  std::cout << "DataArray(const DataArray<T> &, const size_t) is called." << std::endl;
 #endif
     assert (m_data);
     m_size = reals;
@@ -182,7 +182,7 @@ DataArray<DataType>::DataArray(const DataArray<DataType> &da,
     else reals = s;
     m_data = (DataType *) malloc(reals*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "Malloc is called." << std::endl;
+  std::cout << "DataArray(const DataArray<DataType> &, const size_t) is called." << std::endl;
 #endif
     assert (m_data);
     m_size = reals;
@@ -199,7 +199,7 @@ DataArray<DataType>::DataArray(const T *da, const size_t s) {
   if (s > 0) {
     m_data = (DataType *) malloc(s*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "Malloc is called." << std::endl;
+  std::cout << "DataArray(const T *, const size_t) is called." << std::endl;
 #endif
     assert (m_data);
     if (da) {
@@ -219,7 +219,7 @@ DataArray<DataType>::DataArray(const DataType *da, const size_t s) {
   if (s > 0) {
     m_data = (DataType *) malloc(s*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "Malloc is called." << std::endl;
+  std::cout << "DataArray(const DataType *, const size_t) is called." << std::endl;
 #endif
     assert (m_data);
     if (da) memcpy(m_data, da, s*sizeof(DataType));
