@@ -146,7 +146,7 @@ CD C0 (0.,0.);
 inline const CD operator+(const CD &a, const CD &b) {
   CD c;
   c.real = a.real + b.real; 
-  c.imag = a.imag + b.real;
+  c.imag = a.imag + b.imag;
   return c;
 }
 

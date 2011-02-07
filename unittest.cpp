@@ -185,6 +185,14 @@ BEGIN_TEST(MatrixArithmatic, "MatrixArithmatic")
   m4 *= m2;
   V(m4, "7 15 23 \n10 22 34 ")
 
+  _CD c1[]= { {1.,2.}, {-3., -1.}, {2.0, 0.1}, {-2., 0.1}, {6., 7.}, {3.0, 0.1}};
+  cmatrix m5(c1, 2,3);
+  V(m5, "(1, 2) (2, 0.1) (6, 7) \n(-3, -1) (-2, 0.1) (3, 0.1) ")
+
+  cmatrix m6;
+  m6 = m5 + m5;
+  V(m6, "(2, 4) (4, 0.2) (12, 14) \n(-6, -2) (-4, 0.2) (6, 0.2) ")
+
 END_TEST(MatrixArithmatic)
 
 BEGIN_TEST(MatrixHermTransConj, "MatrixHermTransConj")
