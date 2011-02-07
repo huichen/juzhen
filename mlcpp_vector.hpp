@@ -325,15 +325,14 @@ vector<DataType>& vector<DataType>::operator*=(const CD rhs) {
 template<typename DataType>
 const vector<DataType> 
 vector<DataType>::operator*(const matrix<DataType>& rhs) const {
-  matrix<DataType> m = (*this);
-  vector<DataType> v1 = m.trans() * rhs;
-  return v1;
+  return matrix<DataType>::trans() * rhs;
 }
 
 template<typename DataType>
 vector<DataType>& vector<DataType>::operator*=(const matrix<DataType>& rhs) {
-  matrix<DataType> m = (*this);
-  (*this) = trans(m)*rhs;
+  
+  matrix<DataType> m = *this;
+  (*this) = m.trans() * rhs;
   return *this;
 }
 
@@ -397,6 +396,16 @@ double vector<DataType>::norm() const {
 } 
 
 template<typename DataType>
+vector<DataType> vector<DataType>::herm() const {
+  return matrix<DataType>::conj();
+}
+
+template<typename DataType>
+vector<DataType> vector<DataType>::conj() const {
+  return matrix<DataType>::conj();
+}
+
+template<typename DataType>
 DataType vector<DataType>::max() const {
   assert(size()>0);
   DataType r = (*this)(0);
@@ -407,16 +416,6 @@ DataType vector<DataType>::max() const {
   }
   return r;
 } 
-
-template<typename DataType>
-vector<DataType> vector<DataType>::herm() const {
-  return matrix<DataType>::conj();
-}
-
-template<typename DataType>
-vector<DataType> vector<DataType>::conj() const {
-  return matrix<DataType>::conj();
-}
 
 template<typename DataType> 
 vector<DataType> & vector<DataType>::swap(size_t i1, size_t i2) {
@@ -538,10 +537,21 @@ vector<DataType> sort(const vector<DataType> &v) {
 template<typename DataType> 
 const vector<DataType> 
 operator*(const double lhs, const vector<DataType> &ma) {
-  vector<DataType> m(ma.size());
-  for (size_t i=0; i<ma.size(); i++)
-    m(i) = ma(i)*lhs; 
-  return m;
+  if (m.m_temporary) {
+    DataType *p = ma.getDataPtr();
+    size_t maxi = size();
+    for (size_t i=0; i<maxi; i++)
+      *(p++) *= lhs; 
+    return ma; 
+  } else {
+    vector<DataType> m(ma.size());
+    DataType *p1 = ma.getDataPtr();
+    DataType *p2 = m.getDataPtr();
+    size_t maxi = size();
+    for (size_t i=0; i<maxi; i++)
+      *(p2++) = *(p1++)*lhs; 
+    return m;
+  }
 }
 
 /**
@@ -550,10 +560,21 @@ operator*(const double lhs, const vector<DataType> &ma) {
 template<typename DataType> 
 const vector<DataType> 
 operator*(const CD lhs, const vector<DataType> &ma) {
-  vector<DataType> m(ma.size());
-  for (size_t i=0; i<ma.size(); i++)
-      m(i) = ma(i)*lhs; 
-  return m;
+  if (m.m_temporary) {
+    DataType *p = ma.getDataPtr();
+    size_t maxi = size();
+    for (size_t i=0; i<maxi; i++)
+      *(p++) *= lhs; 
+    return ma; 
+  } else {
+    vector<DataType> m(ma.size());
+    DataType *p1 = ma.getDataPtr();
+    DataType *p2 = m.getDataPtr();
+    size_t maxi = size();
+    for (size_t i=0; i<maxi; i++)
+      *(p2++) = *(p1++)*lhs; 
+    return m;
+  }
 }
 
 /**
@@ -562,9 +583,7 @@ operator*(const CD lhs, const vector<DataType> &ma) {
 template<typename DataType> 
 const vector<DataType> 
 operator*(const matrix<DataType>& ma, const vector<DataType>& v) {
-  matrix<DataType> m = v;
-  vector<DataType> v1 = ma*m;
-  return v1;
+  return ma*((matrix<DataType>&)v);
 }
 
 /**
@@ -573,8 +592,7 @@ operator*(const matrix<DataType>& ma, const vector<DataType>& v) {
 template<typename DataType> 
 vector<DataType>& 
 operator*=(matrix<DataType>& ma, const vector<DataType>& v) {
-  matrix<DataType> m = v;
-  ma *= m;
+  ma *= (matrix<DataType>&) v;
   return ma;
 }
 

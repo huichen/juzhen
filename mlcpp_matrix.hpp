@@ -166,19 +166,32 @@ public:
   const matrix<DataType> operator+(const matrix<T>& rhs) const;
  
   /** 
+   * Add two matrices
+   */
+  const matrix<DataType> operator+(const matrix<DataType>& rhs) const;
+ 
+  /** 
    * Add one matrices upto another matrix. 
    */
-  template<typename T> matrix<DataType>& operator+=(const matrix<T>& rhs);
+  template<typename T> 
+  matrix<DataType>& operator+=(const matrix<T>& rhs);
  
   /**
    * Subtract one matrix and another matrix.
    */
-  template<typename T> const matrix<DataType> operator-(const matrix<T>& rhs) const;
+  template<typename T> 
+  const matrix<DataType> operator-(const matrix<T>& rhs) const;
+
+  /**
+   * Subtract one matrix and another matrix.
+   */
+  const matrix<DataType> operator-(const matrix<DataType>& rhs) const;
 
   /**
    * Subtract one matrix from another matrix.
    */
-  template<typename T> matrix<DataType>& operator-=(const matrix<T>& rhs);
+  template<typename T> 
+  matrix<DataType>& operator-=(const matrix<T>& rhs);
 
   /**
    * Multiply each element in the matrix by a real number and
@@ -217,12 +230,14 @@ public:
   /**
    * Divide each element in the matrix by a constant to get a new matrix.
    */
-  template<typename T> const matrix<DataType> operator/(const T rhs) const;
+  template<typename T> 
+  const matrix<DataType> operator/(const T rhs) const;
 
   /**
    * Divide each element in the matrix by a constant.
    */
-  template<typename T> matrix<DataType>& operator/=(const T rhs);
+  template<typename T> 
+  matrix<DataType>& operator/=(const T rhs);
 
   /*************************************
    *  matrix specific operations 
@@ -498,24 +513,43 @@ const matrix<DataType>
 matrix<DataType>::operator+(const matrix<T>& rhs) const {
   assert(m_ncol == rhs.ncol() && m_nrow == rhs.nrow());
   if (m_temporary) {
-  size_t endi = m_nrow*m_ncol;
-  DataType *p2, *p3;
-  p2=getDataPtr();
-  p3=rhs.getDataPtr();
-  for (size_t i=0; i<endi; i++)
-    *(p2++) += *(p3++);
-  return *this;
+    (const_cast<matrix<DataType>* >(this))->operator+=(rhs);
+    return *this;
   } else {
-  matrix<DataType> m(m_nrow, m_ncol);
-  size_t endi = m_nrow*m_ncol;
-  DataType *p1, *p2, *p3;
-  p1=m.getDataPtr();
-  p2=getDataPtr();
-  p3=rhs.getDataPtr();
-  for (size_t i=0; i<endi; i++)
-    *(p1++) = *(p2++) + *(p3++);
-  m.m_temporary = true;
-  return m;
+    matrix<DataType> m(m_nrow, m_ncol);
+    size_t endi = m_nrow*m_ncol;
+    DataType *p1, *p2, *p3;
+    p1=m.getDataPtr();
+    p2=getDataPtr();
+    p3=rhs.getDataPtr();
+    for (size_t i=0; i<endi; i++)
+      *(p1++) = *(p2++) + *(p3++);
+    m.m_temporary = true;
+    return m;
+  }
+}
+
+template<typename DataType> 
+const matrix<DataType> 
+matrix<DataType>::operator+(const matrix<DataType>& rhs) const {
+  assert(m_ncol == rhs.ncol() && m_nrow == rhs.nrow());
+  if (m_temporary) {
+    (const_cast<matrix<DataType>* >(this))->operator+=(rhs);
+    return *this;
+  } else if (rhs.m_temporary) {
+    (const_cast<matrix<DataType>& >(rhs)).operator+=(*this);
+    return rhs;
+  } else {
+     matrix<DataType> m(m_nrow, m_ncol);
+    size_t endi = m_nrow*m_ncol;
+    DataType *p1, *p2, *p3;
+    p1=m.getDataPtr();
+    p2=getDataPtr();
+    p3=rhs.getDataPtr();
+    for (size_t i=0; i<endi; i++)
+      *(p1++) = *(p2++) + *(p3++);
+    m.m_temporary = true;
+    return m;
   }
 }
 
@@ -537,15 +571,52 @@ template<typename T>
 const matrix<DataType> 
 matrix<DataType>::operator-(const matrix<T>& rhs) const {
   assert(m_ncol == rhs.ncol() && m_nrow == rhs.nrow());
-  matrix<DataType> m(m_nrow, m_ncol);
-  size_t endi = m_nrow*m_ncol;
-  DataType *p1, *p2, *p3;
-  p1=m.getDataPtr();
-  p2=getDataPtr();
-  p3=rhs.getDataPtr();
-  for (size_t i=0; i<endi; i++)
-    *(p1++) = *(p2++) - *(p3++);
-  return m;
+  if (m_temporary) {
+    (const_cast<matrix<DataType>* >(this))->operator-=(rhs);
+    return *this;
+  } else {
+    matrix<DataType> m(m_nrow, m_ncol);
+    size_t endi = m_nrow*m_ncol;
+    DataType *p1, *p2, *p3;
+    p1=m.getDataPtr();
+    p2=getDataPtr();
+    p3=rhs.getDataPtr();
+    for (size_t i=0; i<endi; i++)
+      *(p1++) = *(p2++) - *(p3++);
+    m_temporary = true;
+    return m;
+  }
+}
+
+template<typename DataType> 
+const matrix<DataType> 
+matrix<DataType>::operator-(const matrix<DataType>& rhs) const {
+  assert(m_ncol == rhs.ncol() && m_nrow == rhs.nrow());
+  if (m_temporary) {
+    (const_cast<matrix<DataType>* >(this))->operator-=(rhs);
+    return *this;
+  } else if (rhs.m_temporary) {
+    size_t endi = m_nrow*m_ncol;
+    DataType *p2, *p3;
+    p2=getDataPtr();
+    p3=rhs.getDataPtr();
+    for (size_t i=0; i<endi; i++) {
+      *(p3) = *(p2++) - *(p3);
+      p3++;
+    }
+    return rhs;
+  } else {
+    matrix<DataType> m(m_nrow, m_ncol);
+    size_t endi = m_nrow*m_ncol;
+    DataType *p1, *p2, *p3;
+    p1=m.getDataPtr();
+    p2=getDataPtr();
+    p3=rhs.getDataPtr();
+    for (size_t i=0; i<endi; i++)
+      *(p1++) = *(p2++) - *(p3++);
+    m.m_temporary = true;
+    return m;
+  }
 }
 
 template<typename DataType> 
@@ -563,26 +634,38 @@ matrix<DataType>& matrix<DataType>::operator-=(const matrix<T>& rhs) {
 
 template<typename DataType> 
 const matrix<DataType> matrix<DataType>::operator*(const double rhs) const {
-  matrix<DataType> m(m_nrow, m_ncol);
-  size_t endi = m_nrow*m_ncol;
-  DataType *p1, *p2;
-  p1=m.getDataPtr();
-  p2=getDataPtr();
-  for (size_t i=0; i<endi; i++)
-    *(p1++) = *(p2++)*rhs; 
-  return m;
+  if (m_temporary) {
+    (const_cast<matrix<DataType>* >(this))->operator*=(rhs);
+    return *this;
+  } else {
+    matrix<DataType> m(m_nrow, m_ncol);
+    size_t endi = m_nrow*m_ncol;
+    DataType *p1, *p2;
+    p1=m.getDataPtr();
+    p2=getDataPtr();
+    for (size_t i=0; i<endi; i++)
+      *(p1++) = *(p2++)*rhs; 
+    m.m_temporary = true;
+    return m;
+  }
 }
 
 template<typename DataType> 
 const matrix<DataType> matrix<DataType>::operator*(const CD rhs) const {
-  matrix<DataType> m(m_nrow, m_ncol);
-  size_t endi = m_nrow*m_ncol;
-  DataType *p1, *p2;
-  p1=m.getDataPtr();
-  p2=getDataPtr();
-  for (size_t i=0; i<endi; i++)
-    *(p1++) = *(p2++)*rhs; 
-  return m;
+  if (m_temporary) {
+    (const_cast<matrix<DataType>* >(this))->operator*=(rhs);
+    return *this;
+  } else {
+    matrix<DataType> m(m_nrow, m_ncol);
+    size_t endi = m_nrow*m_ncol;
+    DataType *p1, *p2;
+    p1=m.getDataPtr();
+    p2=getDataPtr();
+    for (size_t i=0; i<endi; i++)
+      *(p1++) = *(p2++)*rhs; 
+    m.m_temporary = true;
+    return m;
+  }
 }
 
 template<typename DataType> 
@@ -637,14 +720,20 @@ matrix<DataType>& matrix<DataType>::operator*=(const matrix<DataType>& rhs) {
 template<typename DataType> 
 template<typename T> 
 const matrix<DataType> matrix<DataType>::operator/(const T rhs) const {
-  matrix<DataType> m(m_nrow, m_ncol);
-  size_t endi = m_nrow*m_ncol;
-  DataType *p1, *p2;
-  p1=m.getDataPtr();
-  p2=getDataPtr();
-  for (size_t i=0; i<endi; i++)
-    *(p1++) = *(p2++)/rhs; 
-  return m;
+  if (m_temporary) {
+    (const_cast<matrix<DataType>* >(this))->operator/=(rhs);
+    return *this;
+  } else {
+    matrix<DataType> m(m_nrow, m_ncol);
+    size_t endi = m_nrow*m_ncol;
+    DataType *p1, *p2;
+    p1=m.getDataPtr();
+    p2=getDataPtr();
+    for (size_t i=0; i<endi; i++)
+      *(p1++) = *(p2++)/rhs; 
+    m.m_temporary = true;
+    return m;
+  }
 }
 
 template<typename DataType> 
@@ -669,6 +758,7 @@ matrix<double> matrix<DataType>::real() const{
   p2=getDataPtr();
   for (size_t i=0; i<endi; i++) 
     *(p1++)=(p2++)->real;
+  m.m_temporary = true;
   return m;
 } 
 
@@ -682,11 +772,35 @@ matrix<double> matrix<DataType>::imag() const{
   p2=getDataPtr();
   for (size_t i=0; i<endi; i++) 
     *(p1++)=(p2++)->imag;
- return m;
+  m.m_temporary = true;
+  return m;
 }
 
 template<typename DataType> 
 matrix<DataType> matrix<DataType>::trans() const {
+  if (m_temporary && m_nrow == m_ncol) {
+    size_t n;
+    DataType temp;
+    DataType *p0, *p1, *p2;
+    p0=getDataPtr();
+    for (size_t j=0; j<m_ncol-1; j++) { 
+      n = j+1;
+      p1 = p0 + j*m_nrow + n;
+      p2 = p0 + j + m_ncol*n; 
+      for (size_t i=n; i<m_nrow; i++) { 
+        temp = *p1;
+        *p1 = *p2; 
+        *p2 = temp;
+        p1++;
+        p2+=m_ncol;
+      }
+    }
+    const_cast<matrix<DataType>*>(this)->resize(m_ncol, m_nrow);
+    return *this;
+  } else if (m_temporary && (m_nrow==1 || m_ncol ==1) ){
+    const_cast<matrix<DataType>*>(this)->resize(m_ncol, m_nrow);
+    return *this;
+  } else {
   matrix<DataType> m(m_ncol, m_nrow); 
   DataType *p0, *p1, *p2;
   p0=m.getDataPtr();
@@ -698,35 +812,56 @@ matrix<DataType> matrix<DataType>::trans() const {
       p1+=m_ncol;
     }
   }
+  m.m_temporary = true;
   return m;
+  }
 } 
 
 template<typename DataType> 
 matrix<DataType> matrix<DataType>::herm() const {
-  matrix<DataType> m(m_ncol, m_nrow); 
-  DataType *p0, *p1, *p2;
-  p0=m.getDataPtr();
-  p2=getDataPtr();
-  for (size_t j=0; j<m_ncol; j++) { 
-    p1 = p0 + j;
-    for (size_t i=0; i<m_nrow; i++) { 
-      *p1=mlcpp::conj(*(p2++));
-      p1+=m_ncol;
+  if (m_temporary && (m_nrow == m_ncol || m_nrow == 1 || m_ncol == 1)) {
+    conj();
+    trans();
+    return *this;
+  } else {
+    matrix<DataType> m(m_ncol, m_nrow); 
+    DataType *p0, *p1, *p2;
+    p0=m.getDataPtr();
+    p2=getDataPtr();
+    for (size_t j=0; j<m_ncol; j++) { 
+      p1 = p0 + j;
+      for (size_t i=0; i<m_nrow; i++) { 
+        *p1=mlcpp::conj(*(p2++));
+        p1+=m_ncol;
+      }
     }
+    m.m_temporary = true;
+    return m;
   }
-  return m;
 } 
 
 template<typename DataType> 
 matrix<DataType> matrix<DataType>::conj() const {
-  matrix<DataType> m(m_nrow, m_ncol); 
-  size_t endi = m_nrow*m_ncol;
-  DataType *p1, *p2;
-  p1=m.getDataPtr();
-  p2=getDataPtr();
-  for (size_t i=0; i<endi; i++) 
-      *(p1++)=mlcpp::conj(*(p2++));
-  return m;
+  if (m_temporary) {
+    size_t endi = m_nrow*m_ncol;
+    DataType *p2;
+    p2=getDataPtr();
+    for (size_t i=0; i<endi; i++) { 
+      *(p2)=mlcpp::conj(*(p2));
+      p2++;
+    }
+    return *this;
+  } else {
+    matrix<DataType> m(m_nrow, m_ncol); 
+    size_t endi = m_nrow*m_ncol;
+    DataType *p1, *p2;
+    p1=m.getDataPtr();
+    p2=getDataPtr();
+    for (size_t i=0; i<endi; i++) 
+        *(p1++)=mlcpp::conj(*(p2++));
+    m.m_temporary = true;
+    return m;
+  }
 } 
 
 template<typename DataType> 
@@ -735,7 +870,7 @@ matrix<DataType> matrix<DataType>::block(size_t r1, size_t r2,
   assert(r1<=r2 && c1<=c2);
   matrix<DataType> m(r2-r1, c2-c1);
   DataType *p1, *p2;
-  int n1, n2;
+  size_t n1, n2;
   n1 = m_nrow;
   n2 = n1-r2+r1;
   p2 = m.getDataPtr(); 
@@ -746,6 +881,7 @@ matrix<DataType> matrix<DataType>::block(size_t r1, size_t r2,
       *(p2++) = *(p1++);
     p1 += n2;
   }
+  m.m_temporary = true;
   return m;
 }
 
@@ -753,7 +889,7 @@ template<typename DataType>
 matrix<DataType> & matrix<DataType>::replace(size_t r, size_t c, 
                                             const matrix<DataType> &mt) {
   DataType *p1, *p2;
-  int n1, n2, n3, n4;
+  size_t n1, n2, n3, n4;
   n1 = m_nrow;
   p2 = mt.getDataPtr(); 
   n2 = mt.ncol();
@@ -905,14 +1041,19 @@ matrix<DataType> conj(const matrix<DataType> &m) {
 template<typename DataType> 
 const matrix<DataType> operator*(const double lhs, 
                                  const matrix<DataType> &ma) {
-  matrix<DataType> m(ma.nrow(), ma.ncol());
-  size_t endi = ma.nrow()*ma.ncol();
-  DataType *p1, *p2, *p3;
-  p1=m.getDataPtr();
-  p2=ma.getDataPtr();
-  for (size_t i=0; i<endi; i++)
-    *(p1++) = *(p2++)*lhs; 
-  return m;
+  if (ma.m_temporary) {
+    (const_cast<matrix<DataType>& >(ma)).operator*=(lhs);
+    return ma;
+  } else {
+    matrix<DataType> m(ma.nrow(), ma.ncol());
+    size_t endi = ma.nrow()*ma.ncol();
+    DataType *p1, *p2, *p3;
+    p1=m.getDataPtr();
+    p2=ma.getDataPtr();
+    for (size_t i=0; i<endi; i++)
+      *(p1++) = *(p2++)*lhs; 
+    return m;
+  }
 }
 
 /** 
@@ -921,14 +1062,19 @@ const matrix<DataType> operator*(const double lhs,
 template<typename DataType> 
 const matrix<DataType> operator*(const CD lhs, 
                                  const matrix<DataType> &ma) {
-  matrix<DataType> m(ma.nrow(), ma.ncol());
-  size_t endi = ma.nrow()*ma.ncol();
-  DataType *p1, *p2, *p3;
-  p1=m.getDataPtr();
-  p2=ma.getDataPtr();
-  for (size_t i=0; i<endi; i++)
-    *(p1++) = *(p2++)*lhs; 
-  return m;
+  if (ma.m_temporary) {
+    (const_cast<matrix<DataType>& >(ma)).operator*=(lhs);
+    return ma;
+  } else {
+    matrix<DataType> m(ma.nrow(), ma.ncol());
+    size_t endi = ma.nrow()*ma.ncol();
+    DataType *p1, *p2, *p3;
+    p1=m.getDataPtr();
+    p2=ma.getDataPtr();
+    for (size_t i=0; i<endi; i++)
+      *(p1++) = *(p2++)*lhs; 
+    return m;
+  }
 }
 
 /* stream operator overload */

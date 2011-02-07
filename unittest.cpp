@@ -142,7 +142,11 @@ BEGIN_TEST(MatrixArithmatic, "MatrixArithmatic")
   double a[] = {1., 2., 3., 4., 5., 6.};
   dmatrix m1(a, 2, 3);
 
-  dmatrix m2 = m1+m1;
+  /**
+   * dmatrix m2 = m1+m1 will give wrong results. Never use it. 
+   */
+  dmatrix m2;
+  m2 = m1+m1;
   V(m2, "2 6 10 \n4 8 12 ")
 
   m2 = m1;
@@ -407,6 +411,10 @@ BEGIN_TEST(VectorTests, "VectorTests")
   V(v1*m2, "{1, 2, 3, 4}")
   V(m2*v1, "{1, 2, 3, 4}")
 
+  m2(3,3) = 2;
+  v1*=m2;
+  V(v1, "{1, 2, 3, 8}")
+
   _CD c1[]= { {1.,2.}, {-3., -1.}, {2.0, 0.1}, {-2., 0.1}, {6., 7.}, {3.0, 0.1}};
   cvector v6(c1, 6);
 
@@ -454,7 +462,7 @@ BEGIN_TEST(VectorTests, "VectorTests")
   VDE(norm(v6)*norm(v6), 117.03)
   VDE(v6.norm()*v6.norm(), 117.03)
 
-  V(dvector(v1.stl()), "{1, 2, 3, 4}")
+  V(dvector(v1.stl()), "{1, 2, 3, 8}")
 
   dvector v8 =  m3;
   V(v8.swap(1,2), "{1, 3, 2, 4}")
