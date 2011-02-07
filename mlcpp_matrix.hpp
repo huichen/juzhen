@@ -16,6 +16,16 @@ template<typename DataType>
 class matrix {
 public:
   /**
+   * Auto pointer to resource. 
+   */
+  typename DataPtr<DataType>::Type m_data; 
+
+  /**
+   * If the matrix is temporary. 
+   */
+  bool m_temporary;
+
+  /**
    * Deconstructor. 
    */
   ~matrix() {}
@@ -317,11 +327,6 @@ protected:
    */
   size_t m_nrow;
 
-  /**
-   * Auto pointer to resource. 
-   */
-  typename DataPtr<DataType>::Type m_data; 
-
 };
 
 typedef matrix<CD> cmatrix;
@@ -329,18 +334,21 @@ typedef matrix<double> dmatrix;
 
 template<typename DataType> 
 matrix<DataType>::matrix() : m_ncol(0), m_nrow(0) {
+  m_temporary = false;
 } 
 
 template<typename DataType> 
 matrix<DataType>::matrix(size_t nr, size_t nc) : m_ncol(nc), m_nrow(nr) {
-    m_data = typename DataPtr<DataType>::Type(new DataArray<DataType>(m_ncol*m_nrow));
-  } 
+  m_data = typename DataPtr<DataType>::Type(new DataArray<DataType>(m_ncol*m_nrow));
+  m_temporary = false;
+} 
 
 template<typename DataType> 
 template<typename T> 
 matrix<DataType>::matrix(const T *data, size_t nr, size_t nc) 
   : m_ncol(nc), m_nrow(nr) {
   m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(data, nr*nc));
+  m_temporary = false;
 } 
 
 template<typename DataType> 
@@ -350,12 +358,14 @@ matrix<DataType>::matrix(const matrix<T> &m)
   m_data =typename DataPtr<DataType>::Type(
     new DataArray<DataType>(m.getDataPtr(), m.nrow()*m.ncol())
   ); 
+  m_temporary = false;
 } 
 
 template<typename DataType> 
 matrix<DataType>::matrix(const matrix<DataType> &m) 
   : m_ncol(m.ncol()), m_nrow(m.nrow()) { 
   m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(*(m.m_data)));
+  m_temporary = false;
 }
 
 template<typename DataType> 
