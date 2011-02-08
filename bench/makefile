@@ -1,12 +1,12 @@
 ifeq (${MLCPP_BLASLIB}, mkl) 
-CFLAGS_MLCPP = -I/home/chen/mlcpp.git -DUSE_MKL -lmkl_rt -liomp5 -lpthread -DNDEBUG -DMLCPP -O3
+CFLAGS_MLCPP = -I../ -DUSE_MKL -lmkl_rt -liomp5 -lpthread -DNDEBUG -DMLCPP -O3
 CC_MLCPP = g++ 
 else
-CFLAGS_MLCPP = -I/home/chen/mlcpp.git -lblas 
+CFLAGS_MLCPP = -I../ -lblas 
 CC_MLCPP = g++ 
 endif
 
-CFLAGS_EIGEN = -I/home/chen/eigen -DNDEBUG -O3 
+CFLAGS_EIGEN = -I../../eigen -DNDEBUG -O3 
 CC_EIGEN = g++ 
 
 all:
