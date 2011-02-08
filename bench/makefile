@@ -2,7 +2,7 @@ ifeq (${MLCPP_BLASLIB}, mkl)
 CFLAGS_MLCPP = -I../ -DUSE_MKL -lmkl_rt -liomp5 -lpthread -DNDEBUG -DMLCPP -O3
 CC_MLCPP = g++ 
 else
-CFLAGS_MLCPP = -I../ -lblas 
+CFLAGS_MLCPP = -I../ -lblas -DNDEBUG -DMLCPP -O3
 CC_MLCPP = g++ 
 endif
 
