@@ -409,10 +409,10 @@ matrix<DataType>::operator= (const matrix<DataType> &rhs) {
     m_rawptr = m_data->m_data;
     return *this;
   }
-  if (m_ncol*m_nrow < rhs.ncol()*rhs.nrow()) 
+  if ((m_rawptr == NULL) || m_data->m_size < rhs.ncol()*rhs.nrow()) 
     m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(*(rhs.m_data)));
   else 
-    memcpy(m_data->m_data, rhs.getDataPtr(), m_ncol*m_nrow*sizeof(DataType));
+    memcpy(m_data->m_data, rhs.getDataPtr(), rhs.ncol()*rhs.nrow()*sizeof(DataType));
   m_ncol = rhs.ncol();
   m_nrow = rhs.nrow();
   m_rawptr = m_data->m_data;
@@ -726,8 +726,7 @@ matrix<DataType>::operator*(const matrix<DataType>& rhs) const {
 
 template<typename DataType> 
 matrix<DataType>& matrix<DataType>::operator*=(const matrix<DataType>& rhs) {
-  matrix<DataType> ma = (*this)*rhs; 
-  (*this) = ma;
+  (*this) = (*this)*rhs; 
   return (*this);
 }
  
