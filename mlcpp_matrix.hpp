@@ -285,7 +285,7 @@ public:
    * sub-block starts at (r-th row, c-th column) at its upper-left corner,
    * and is replace by values from mt's (0,0) position. 
    */
-  matrix<DataType> &replace(size_t r, size_t c, const matrix<DataType> &mt);
+  const matrix<DataType> &replace(size_t r, size_t c, const matrix<DataType> &mt) const;
 
   /**
    * Return the matrix's c-th column.
@@ -315,7 +315,7 @@ public:
    * If you are linking to basic blas library only, this function is not
    * implemented yet. 
    */
-  void eigen(matrix<CD> &e, matrix<DataType> &vl, matrix<DataType> &vr);
+  void eigen(matrix<CD> &e, matrix<DataType> &vl, matrix<DataType> &vr) const;
 
   /**
    * Solve eigen system and put eigen values into e, corresponding 
@@ -324,7 +324,7 @@ public:
    * If you are linking to basic blas library only, this function is not
    * implemented yet. 
    */
-  void reigen(matrix<CD> &e, matrix<DataType> &vr);
+  void reigen(matrix<CD> &e, matrix<DataType> &vr) const;
 
   /**
    * Solve eigen system and put eigen values into e, corresponding 
@@ -333,7 +333,7 @@ public:
    * If you are linking to basic blas library only, this function is not
    * implemented yet. 
    */
-  void leigen(matrix<CD> &e, matrix<DataType> &vl);
+  void leigen(matrix<CD> &e, matrix<DataType> &vl) const;
 
 /* private data */
 protected:
@@ -470,9 +470,9 @@ DataArray<DataType>& matrix<DataType>::getDataArray() const {
 /* resizing/reshaping matrix */
 template<typename DataType> 
 void matrix<DataType>::resize(size_t nr, size_t nc) {
-  if (m_nrow*m_ncol < nc * nr) {
+  if (!m_rawptr || m_data->m_size < nc * nr) {
     typename DataPtr<DataType>::Type 
-      newData(new DataArray<DataType>(*m_data, nr*nc));
+      newData(new DataArray<DataType>(m_rawptr, nr*nc));
     m_data = newData;
     m_rawptr = m_data->m_data;
   }
@@ -881,8 +881,8 @@ matrix<DataType> matrix<DataType>::block(size_t r1, size_t r2,
 }
 
 template<typename DataType> 
-matrix<DataType> & matrix<DataType>::replace(size_t r, size_t c, 
-                                            const matrix<DataType> &mt) {
+const matrix<DataType> & matrix<DataType>::replace(size_t r, size_t c, 
+                                            const matrix<DataType> &mt) const {
   DataType *p1, *p2;
   size_t n1, n2, n3, n4;
   n1 = m_nrow;
@@ -955,7 +955,7 @@ matrix<DataType> & matrix<DataType>::swaprow(size_t r1, size_t r2) {
 /* solvers */
 template<typename DataType> 
 void matrix<DataType>::eigen(matrix<CD> &e, matrix<DataType> &vl, 
-                             matrix<DataType> &vr) {
+                             matrix<DataType> &vr) const {
   assert (m_ncol == m_nrow);
   matrix<DataType> m(*this);
 
@@ -972,7 +972,7 @@ void matrix<DataType>::eigen(matrix<CD> &e, matrix<DataType> &vl,
 } 
 
 template<typename DataType> 
-void matrix<DataType>::reigen(matrix<CD> &e, matrix<DataType> &vr) {
+void matrix<DataType>::reigen(matrix<CD> &e, matrix<DataType> &vr) const {
   assert (m_ncol == m_nrow);
   matrix<DataType> m(*this);
 
@@ -987,7 +987,7 @@ void matrix<DataType>::reigen(matrix<CD> &e, matrix<DataType> &vr) {
 } 
 
 template<typename DataType> 
-void matrix<DataType>::leigen(matrix<CD> &e, matrix<DataType> &vl) {
+void matrix<DataType>::leigen(matrix<CD> &e, matrix<DataType> &vl) const {
   assert (m_ncol == m_nrow);
   matrix<DataType> m(*this);
 
