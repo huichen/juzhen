@@ -39,7 +39,7 @@ out << counter++;\
 filename =FNAME+out.str()+ ".txt";\
 }\
 myfile.open(filename.c_str());\
-for (size_t ni=10; ni<=1024; ni+=10) {\
+for (size_t ni=10; ni<=1000; ni+=20) {\
 H1.resize(ni,ni);\
 H2.resize(ni,ni);\
 H3.resize(ni,ni);\
