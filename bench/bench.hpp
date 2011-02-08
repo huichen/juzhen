@@ -28,10 +28,6 @@ static int counter=0;
 
 #define BEGIN_BENCH(s) \
 {\
-  DEFV(1)\
-  DEFV(2)\
-  DEFV(3)\
-  DEFV(4)\
 {\
 std::stringstream out;\
 out << counter;\
