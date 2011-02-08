@@ -903,12 +903,22 @@ matrix<DataType> & matrix<DataType>::replace(size_t r, size_t c,
 
 template<typename DataType> 
 matrix<DataType> matrix<DataType>::col(size_t c) const {
- return block(0,m_nrow, c, c+1);
+ return matrix<DataType>(m_rawptr+c*m_nrow, m_nrow, 1);
 }
 
 template<typename DataType> 
 matrix<DataType> matrix<DataType>::row(size_t r) const {
- return block(r, r+1, 0, m_ncol);
+  matrix<DataType> m(1, m_ncol);
+  DataType *p1, *p2;
+  p2 = m.getDataPtr(); 
+  p1 = m_rawptr + r;
+  
+  for (size_t j=0; j<m_ncol; j++) { 
+    *(p2++) = *(p1);
+    p1 += m_nrow;
+  }
+  m.m_temporary = true;
+  return m;
 }
 
 template<typename DataType> 
