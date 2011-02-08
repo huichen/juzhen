@@ -30,7 +30,7 @@ std::stringstream out;\
 out << counter;\
 filename =out.str()+ ".plt";\
 myfile.open(filename.c_str());\
-myfile << "set term png \nset out \"" + out.str()+".png\"\nset title \"" + s + "\"\nset xlabel \"N\" \nset ylabel \"Seconds\" \nplot 'mlcpp_"+out.str() + ".txt' title 'mlcpp' using 1:2 w l, 'eigen_"+out.str() + ".txt' title 'eigen' using 1:2 w l ";\
+myfile << "set term png \nset out \"" + out.str()+".png\"\nset title \"" + s + "\"\nset xlabel \"N\" \nset ylabel \"Seconds\" \nplot 'mlcpp_"+out.str() + ".txt' using 1:2 title 'mlcpp' w l, 'eigen_"+out.str() + ".txt' 'eigen' title using 1:2 w l ";\
 myfile.close();\
 }\
 {\
