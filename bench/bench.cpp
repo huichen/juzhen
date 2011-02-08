@@ -11,16 +11,16 @@ int main() {
   std::ofstream myfile;
   std::string filename;
 
+  BEGIN_BENCH ("M1 = M2")
+    H1 = H2; 
+  END_BENCH
+
   BEGIN_BENCH ("M(i,j)")
   for (size_t j=0; j<1000000; j++) H1(3,4) = H2(5,6) + H3(7,8);
   END_BENCH
 
   BEGIN_BENCH ("M1 = s*M2")
   H1 = 3*H2;
-  END_BENCH
-
-  BEGIN_BENCH ("M1 += s*M2")
-  H1 += 3*H2;
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2*s")
@@ -51,16 +51,20 @@ int main() {
   H1 = H2*H3;
   END_BENCH
 
-  BEGIN_BENCH ("M1 = s*M2*M3 + s*M4")
+  BEGIN_BENCH ("M1 = s1*M2*M3 + s2*M4")
   H1 = 3*H2*H3 + 2*H4;
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.block + M3.block")
-  H1 = H2.block(0,0,100,100) + H3.block(0,0,100,100);
+  H1 = H2.block(0,0,50,50) + H3.block(0,0,50,50);
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.col(i)")
   H1 = H2.col(10);
+  END_BENCH
+
+  BEGIN_BENCH ("M1 = M2.row(i)")
+  H1 = H2.row(10);
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.row(i)")

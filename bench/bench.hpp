@@ -13,7 +13,9 @@
 #include <sys/time.h>
 #include <iostream>
 
-#define N 400
+#define MAXN 1400
+#define MINN 100
+#define STEPN 100 
 #define NB 10
 
 static int counter=0;
@@ -39,7 +41,8 @@ out << counter++;\
 filename =FNAME+out.str()+ ".txt";\
 }\
 myfile.open(filename.c_str());\
-for (size_t ni=100; ni<=1500; ni+=100) {\
+std::cout << "==============================" << std::endl;\
+for (size_t ni=MINN; ni<=MAXN; ni+=STEPN) {\
 H1.resize(ni,ni);\
 H2.resize(ni,ni);\
 H3.resize(ni,ni);\
@@ -58,15 +61,15 @@ myfile.close();\
 
 #ifdef MLCPP
 #define DEFV(vi) \
-cmatrix H##vi (N, N); \
-for (size_t i=0; i<N; i++) \
-for (size_t j=0; j<N; j++) \
+cmatrix H##vi (MAXN, MAXN); \
+for (size_t i=0; i<MAXN; i++) \
+for (size_t j=0; j<MAXN; j++) \
 H##vi(i,j) = 1;
 #else
 #define DEFV(vi) \
-MatrixXcd H##vi (N, N); \
-for (size_t i=0; i<N; i++) \
-for (size_t j=0; j<N; j++) \
+MatrixXcd H##vi (MAXN, MAXN); \
+for (size_t i=0; i<MAXN; i++) \
+for (size_t j=0; j<MAXN; j++) \
 H##vi(i,j) = 1;
 #endif
 

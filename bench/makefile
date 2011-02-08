@@ -12,11 +12,13 @@ CC_EIGEN = g++
 all:
 	time -p $(CC_MLCPP) bench.cpp -o mlcpp $(CFLAGS_MLCPP) 
 	time -p $(CC_EIGEN) bench.cpp -o eigen $(CFLAGS_EIGEN) 
+
+run:
 	./mlcpp
 	./eigen
 
 clean:
-	rm *.plt *.txt mlcpp eigen -rf
+	rm *.plt *.txt *.png *.tar mlcpp eigen -rf
 
 plt:
 	gnuplot *.plt
