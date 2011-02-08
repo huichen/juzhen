@@ -28,6 +28,11 @@ static int counter=0;
 
 #define BEGIN_BENCH(s) \
 {\
+  DEFV(1)\
+  DEFV(2)\
+  DEFV(3)\
+  DEFV(4)\
+{\
 std::stringstream out;\
 out << counter;\
 filename =out.str()+ ".plt";\
@@ -58,6 +63,7 @@ std::cout <<  (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000. << " s" <
 myfile << ni <<'\t' << (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000. << std::endl;\
 }\
 myfile.close();\
+}
 
 #ifdef MLCPP
 #define DEFV(vi) \

@@ -2,11 +2,6 @@
 
 int main() {
 
-  DEFV(1)
-  DEFV(2)
-  DEFV(3)
-  DEFV(4)
-
   struct timeval t1, t2;
   std::ofstream myfile;
   std::string filename;
@@ -61,10 +56,6 @@ int main() {
 
   BEGIN_BENCH ("M1 = M2.col(i)")
   H1 = H2.col(10);
-  END_BENCH
-
-  BEGIN_BENCH ("M1 = M2.row(i)")
-  H1 = H2.row(10);
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.row(i)")
