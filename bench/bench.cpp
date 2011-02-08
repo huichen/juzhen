@@ -20,11 +20,11 @@ int main() {
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.block")
-  H1 = H2.block(0,0,50,50) + H3.block(0,0,50,50);
+  for (size_t j=0; j<100; j++) H1 = H2.block(0,0,50,50);
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.col(i)")
-  H1 = H2.col(10);
+  for (size_t j=0; j<1000; j++)H1 = H2.col(10);
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.row(i)")
@@ -52,23 +52,25 @@ int main() {
   END_BENCH
 
   BEGIN_BENCH ("M1 = s*M2")
-  H1 = 3*H2;
+  H1 = 3.0*H2;
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2*s")
-  H1 = H2*3;
+  H1 = H2*3.0;
   END_BENCH
 
-  BEGIN_BENCH ("M *= s")
-  H1 *= 3;
+  BEGIN_BENCH ("M1 = M2; M1 *= s")
+  H1 = H2;
+  H1 *= 3.0;
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2/s")
-  H1 = H2/3;
+  H1 = H2/3.0;
   END_BENCH
 
-  BEGIN_BENCH ("M /= s") 
-  H1 /= 3;
+  BEGIN_BENCH ("M1 = M2; M1 /= s") 
+  H1 = H2;
+  H1 /= 3.0;
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2 + M3")
@@ -78,6 +80,7 @@ int main() {
   BEGIN_BENCH ("M1 = s1*M2 + s2*M3")
   H1 = 2*H2 + 3*H3;
   END_BENCH
+
 /*
   BEGIN_BENCH ("M1 = M2*M3")
   H1 = H2*H3;

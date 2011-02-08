@@ -15,7 +15,7 @@
 
 #define MAXN 1400
 #define MINN 100
-#define STEPN 100 
+#define STEPN 10 
 #define NB 10
 
 static int counter=0;

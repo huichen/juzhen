@@ -290,7 +290,7 @@ public:
   /**
    * Return the matrix's c-th column.
    */
-  matrix<DataType> col(size_t c) const;
+  inline matrix<DataType> col(size_t c) const;
 
   /**
    * Return the matrix's r-th row.
@@ -902,8 +902,8 @@ matrix<DataType> & matrix<DataType>::replace(size_t r, size_t c,
 }
 
 template<typename DataType> 
-matrix<DataType> matrix<DataType>::col(size_t c) const {
- return matrix<DataType>(m_rawptr+c*m_nrow, m_nrow, 1);
+inline matrix<DataType> matrix<DataType>::col(size_t c) const {
+  return matrix<DataType>(m_rawptr+c*m_nrow, m_nrow, 1);
 }
 
 template<typename DataType> 
