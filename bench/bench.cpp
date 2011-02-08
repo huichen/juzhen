@@ -32,7 +32,11 @@ int main() {
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.conj()")
+  #ifdef MLCPP
   H1 = conj(H2);
+  #else
+  H1 = H2.conjugate();
+  #endif
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.trans()")
@@ -81,7 +85,6 @@ int main() {
   H1 = 2*H2 + 3*H3;
   END_BENCH
 
-/*
   BEGIN_BENCH ("M1 = M2*M3")
   H1 = H2*H3;
   END_BENCH
@@ -89,6 +92,6 @@ int main() {
   BEGIN_BENCH ("M1 = s1*M2*M3 + s2*M4")
   H1 = 3*H2*H3 + 2*H4;
   END_BENCH
-*/
+
   return 0;
 }
