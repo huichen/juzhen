@@ -7,7 +7,7 @@ You need a package that provides CBLAS functions. I recommend optimized BLAS lib
 
 @section usage How to use mlcpp 
 
--# Set MLCPP_BLASLIB envron to mkl if you want to use MKL or GotoBlas2<br> <br> 
+-# Set MLCPP_BLASLIB envron if you want to use MKL or GotoBlas2<br> <br> 
    export MLCPP_BLASLIB=mkl<br><br> 
    or <br><br> 
    export MLCPP_BLASLIB=gotoblas2<br><br> 
