@@ -494,7 +494,7 @@ template<typename DataType>
 void matrix<DataType>::resize(size_t nr, size_t nc) {
   if (!m_rawptr || m_data->m_size < nc * nr) {
     typename DataPtr<DataType>::Type 
-      newData(new DataArray<DataType>(m_rawptr, nr*nc));
+      newData(new DataArray<DataType>(*m_data, nr*nc));
     m_data = newData;
     m_rawptr = m_data->m_data;
   }
