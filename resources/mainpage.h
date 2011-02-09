@@ -16,7 +16,7 @@ Read the \ref how_to_start page.
 
 Speed is the major concern when we design the library. The code has been extensively optimized to make sure it compares favorably to other C++ matrix libraries in terms of performance. 
 
-We have benchmarked our library against <a href="http://eigen.tuxfamily.org">Eigen</a> which provides similar functionalities. The results have shown that mlcpp performances at least equally good as Eigen in most scenarios while it runs significantly faster than Eigen in some key operations such as indexing and matrix-matrix multiplication.
+We have benchmarked our library and then compared the results with <a href="http://eigen.tuxfamily.org">Eigen</a> which provides similar functionalities. The results have shown that mlcpp performances at least equally good as Eigen in most scenarios while it runs significantly faster than Eigen in some key operations such as indexing and matrix-matrix multiplication.
 
 See the \ref benchmark page for details.
 
