@@ -2,8 +2,13 @@ ifeq (${MLCPP_BLASLIB}, mkl)
 CFLAGS = -DUSE_MKL -I./ -lmkl_rt -liomp5 -lpthread 
 CC = icc
 else
+ifeq (${MLCPP_BLASLIB}, gotoblas2) 
+CFLAGS = -I./ -lgoto2 -pthread 
+CC = g++ 
+else
 CFLAGS = -I./ -lblas 
 CC = g++ 
+endif
 endif
 
 test:
@@ -17,5 +22,5 @@ sample:
 clean:
 	rm -rf unittest example html latex
 
-document:
+doc:
 	doxygen resources/doxygen.config
