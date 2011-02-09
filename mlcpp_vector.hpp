@@ -62,7 +62,7 @@ public:
   void resize(size_t n);
 
   /**
-   * This has no effect. 
+   * Resize a vector to have nc*nr elements. 
    */
   void resize(size_t nc, size_t nr);
 
@@ -228,6 +228,7 @@ vector<DataType>::vector(const matrix<DataType> &m) {
   matrix<DataType>::m_ncol =1;
   matrix<DataType>::m_nrow = m.nrow()*m.ncol();
   matrix<DataType>::m_rawptr = matrix<DataType>::m_data->m_data;
+  matrix<DataType>::m_temporary = m.m_temporary;
 }
 
 template<typename DataType>
@@ -267,7 +268,7 @@ template<typename DataType>
 void vector<DataType>::resize(size_t n) { matrix<DataType>::resize(n,1);}
 
 template<typename DataType>
-void vector<DataType>::resize(size_t nc, size_t nr) {};
+void vector<DataType>::resize(size_t nc, size_t nr) {matrix<DataType>::resize(nc*nr,1);};
 
 template<typename DataType>
 inline size_t vector<DataType>::size() const {

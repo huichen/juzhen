@@ -379,7 +379,7 @@ BEGIN_TEST(VectorTests, "VectorTests")
   v4.resize(4);
   V(v4, "{1, 2, 3, 4}")
 
-  v4.resize(7,1);
+  v4.resize(4,1);
   V(v4, "{1, 2, 3, 4}")
 
   VDE(v4.size(), 4)
