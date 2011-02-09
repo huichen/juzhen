@@ -2,16 +2,13 @@
 
 @author Hui Chen "<usa.chen@gmail.com>" 
 
-@section prerequisite Prerequisite
-You need a package that provides CBLAS functions. I recommend optimized BLAS libraries such as GotoBLAS and Intel's Math Kernel Library. 
-
 @section download Download 
 
-Download from the <a href="https://github.com/huichen/mlcpp/tarball/master">tarball</a> or pull the source from <a href="https://github.com/huichen/mlcpp">github</a>:
+Download the <a href="https://github.com/huichen/mlcpp/tarball/master">tarball</a> or pull the source from <a href="https://github.com/huichen/mlcpp">github</a>:
 
 - git clone https://github.com/huichen/mlcpp.git
 
-@section how_to_start How to start
+@section howtostart How to start
 
 Read the \ref how_to_start page.
 
