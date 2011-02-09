@@ -17,5 +17,5 @@ sample:
 clean:
 	rm -rf unittest example html latex
 
-doc:
-	doxygen . 
+document:
+	doxygen resources/doxygen.config
