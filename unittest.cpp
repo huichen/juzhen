@@ -63,7 +63,7 @@ BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   m6 = m3;
   V(m6, "(1, 0) (4, 0) \n(2, 0) (5, 0) \n(3, 0) (6, 0) ")
 
-  cmatrix m7(m6.getDataPtr(),2,2);
+  cmatrix m7(m6.dataptr(),2,2);
   V(m7, "(1, 0) (3, 0) \n(2, 0) (4, 0) ")
 
   dmatrix m8(4,4);

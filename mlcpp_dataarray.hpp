@@ -100,12 +100,6 @@ public:
   DataType& operator[](const size_t i) const;
 
   /**
-   * Returns the pointer of raw array. This is pretty useful when calling 
-   * low level blas/lapack functions.
-   */
-  DataType * getDataPtr();
-
-  /**
    * Pointer to the raw array.
    */
   DataType * m_data;
@@ -267,10 +261,6 @@ DataType& DataArray<DataType>::operator[](const size_t i) const {
   return m_data[i];
 }
 
-template<typename DataType>
-inline DataType * DataArray<DataType>::getDataPtr() {
-  return m_data;
-}
 /////////////////////////////////////////////////////////////////////////////
 
 

@@ -245,12 +245,12 @@ vector<DataType>::vector(size_t i) : matrix<DataType>(i, 1) { }
 template<typename DataType>
 vector<DataType>::vector(const matrix<DataType> &m) {
   matrix<DataType>::m_data = 
-   typename DataPtr<DataType>::Type(new DataArray<DataType>(m.getDataPtr(), 
+   typename DataPtr<DataType>::Type(new DataArray<DataType>(m.dataptr(), 
                                                     m.nrow()*m.ncol())); 
   matrix<DataType>::m_ncol =1;
   matrix<DataType>::m_nrow = m.nrow()*m.ncol();
   matrix<DataType>::m_rawptr = matrix<DataType>::m_data->m_data;
-  matrix<DataType>::m_temporary = m.m_temporary;
+  matrix<DataType>::m_temporary = m.gettemporary();
 }
 
 template<typename DataType>
@@ -275,7 +275,7 @@ vector<DataType>::operator=(const std::vector<DataType> &v) {
   size_t s = v.size();
   resize(s);
   DataType *p1;
-  p1 = matrix<DataType>::getDataPtr();
+  p1 = matrix<DataType>::dataptr();
   for(size_t i=0; i<s; i++) *(p1++) = v[i];
   return *this;
 } 
@@ -366,8 +366,8 @@ const DataType vector<DataType>::operator* (const vector<T> &rv) {
   assert(size() == rv.size());
   DataType res = 0;
   size_t s = size();
-  DataType *p1 = matrix<DataType>::getDataPtr();
-  T *p2 = rv.getDataPtr();
+  DataType *p1 = matrix<DataType>::dataptr();
+  T *p2 = rv.dataptr();
   for(size_t i =0;i<s; i++) res+=*(p1++)*(*(p2++));
   return res;
 }
@@ -404,7 +404,7 @@ vector<DataType> vector<DataType>::trans() const {
 template<typename DataType>
 DataType vector<DataType>::sum() const {
   DataType r = 0;
-  DataType *p = matrix<DataType>::getDataPtr();
+  DataType *p = matrix<DataType>::dataptr();
   for(size_t i=0; i<size(); i++)
     r += *(p++);
   return r;
@@ -413,7 +413,7 @@ DataType vector<DataType>::sum() const {
 template<typename DataType>
 double vector<DataType>::norm() const {
   double r = 0;
-  DataType *p = matrix<DataType>::getDataPtr();
+  DataType *p = matrix<DataType>::dataptr();
   for(size_t i=0; i<size(); i++)
     r += abs2(*(p++));
   return sqrt(r);
@@ -433,7 +433,7 @@ template<typename DataType>
 DataType vector<DataType>::max() const {
   assert(size()>0);
   DataType r = (*this)(0);
-  DataType *p = matrix<DataType>::getDataPtr();
+  DataType *p = matrix<DataType>::dataptr();
   for(size_t i=0; i<size(); i++) {
     if (r < *p) r = *p; 
     p++;
@@ -465,8 +465,8 @@ vector<DataType> & vector<DataType>::insert(size_t i, vector<DataType> v) {
 
 template<typename DataType>
 vector<DataType> & vector<DataType>::sort() {
-  std::vector<DataType> v(matrix<DataType>::getDataPtr(), 
-                          matrix<DataType>::getDataPtr()+size());
+  std::vector<DataType> v(matrix<DataType>::dataptr(), 
+                          matrix<DataType>::dataptr()+size());
   std::sort(v.begin(), v.end());
   for (size_t i=0; i<v.size(); i++) (*this)[i] = v[i];
   return (*this);
@@ -474,8 +474,8 @@ vector<DataType> & vector<DataType>::sort() {
 
 template<typename DataType>
 std::vector<DataType> vector<DataType>::stl() {
-  std::vector<DataType> v(matrix<DataType>::getDataPtr(), 
-                          matrix<DataType>::getDataPtr()+size());
+  std::vector<DataType> v(matrix<DataType>::dataptr(), 
+                          matrix<DataType>::dataptr()+size());
   return v;
 }
 
@@ -549,7 +549,7 @@ DataType max(const vector<DataType> v) {
 template<typename DataType> 
 vector<DataType> sort(const vector<DataType> &v) {
   vector<DataType> v2(v.size());
-  std::vector<DataType> v1(v.getDataPtr(), v.getDataPtr()+v.size());
+  std::vector<DataType> v1(v.dataptr(), v.dataptr()+v.size());
   std::sort(v1.begin(), v1.end());
   for (size_t i=0; i<v1.size(); i++) v2[i] = v1[i];
   return v2;
@@ -562,15 +562,15 @@ template<typename DataType>
 const vector<DataType> 
 operator*(const double lhs, const vector<DataType> &ma) {
   if (ma.m_temporary) {
-    DataType *p = ma.getDataPtr();
+    DataType *p = ma.dataptr();
     size_t maxi = ma.size();
     for (size_t i=0; i<maxi; i++)
       *(p++) *= lhs; 
     return ma; 
   } else {
     vector<DataType> m(ma.size());
-    DataType *p1 = ma.getDataPtr();
-    DataType *p2 = m.getDataPtr();
+    DataType *p1 = ma.dataptr();
+    DataType *p2 = m.dataptr();
     size_t maxi = ma.size();
     for (size_t i=0; i<maxi; i++)
       *(p2++) = *(p1++)*lhs; 
@@ -585,15 +585,15 @@ template<typename DataType>
 const vector<DataType> 
 operator*(const CD lhs, const vector<DataType> &ma) {
   if (ma.m_temporary) {
-    DataType *p = ma.getDataPtr();
+    DataType *p = ma.dataptr();
     size_t maxi = ma.size();
     for (size_t i=0; i<maxi; i++)
       *(p++) *= lhs; 
     return ma; 
   } else {
     vector<DataType> m(ma.size());
-    DataType *p1 = ma.getDataPtr();
-    DataType *p2 = m.getDataPtr();
+    DataType *p1 = ma.dataptr();
+    DataType *p2 = m.dataptr();
     size_t maxi = ma.size();
     for (size_t i=0; i<maxi; i++)
       *(p2++) = *(p1++)*lhs; 

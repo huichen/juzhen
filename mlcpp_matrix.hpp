@@ -38,21 +38,6 @@ template<typename DataType>
 class matrix {
 public:
   /**
-   * Auto pointer to resource. 
-   */
-  typename DataPtr<DataType>::Type m_data; 
-
-  /**
-   * Pointer to raw array. 
-   */
-  DataType * m_rawptr; 
-
-  /**
-   * If the matrix is temporary. 
-   */
-  bool m_temporary;
-
-  /**
    * Deconstructor. 
    */
   ~matrix() {}
@@ -129,12 +114,17 @@ public:
    * Returns the pointer of raw array. This is pretty useful when calling 
    * low level blas/lapack functions.
    */
-  inline DataType * getDataPtr() const; 
+  inline DataType * dataptr() const; 
 
   /**
-   * Return the reference to the matrix's DataArray.
-   */
-  DataArray<DataType>& getDataArray() const; 
+   * Get a matrix's temporary flag.
+   */ 
+  inline bool gettemporary() const;
+
+  /**
+   * Set a matrix's temporary flag.
+   */ 
+  inline void settemporary(bool t);
 
   /**
    * Resizing or reshaping the matrix. If the resized size is larger than
@@ -357,8 +347,17 @@ public:
    */
   void leigen(matrix<CD> &e, matrix<DataType> &vl) const;
 
-/* private data */
 protected:
+  /**
+   * Pointer to raw array. 
+   */
+  DataType * m_rawptr; 
+
+  /**
+   * Auto pointer to m_rawptr. 
+   */
+  typename DataPtr<DataType>::Type m_data; 
+
   /**
    * Number of columns.
    */
@@ -368,6 +367,11 @@ protected:
    * Number of rows.
    */
   size_t m_nrow;
+
+  /**
+   * If the matrix is temporary. 
+   */
+  bool m_temporary;
 
 };
 
@@ -401,7 +405,7 @@ template<typename T>
 matrix<DataType>::matrix(const matrix<T> &m) 
   : m_ncol(m.ncol()), m_nrow(m.nrow()) { 
   m_data =typename DataPtr<DataType>::Type(
-    new DataArray<DataType>(m.getDataPtr(), m.nrow()*m.ncol())
+    new DataArray<DataType>(m.dataptr(), m.nrow()*m.ncol())
   ); 
   m_temporary = false;
   m_rawptr = m_data->m_data;
@@ -434,7 +438,7 @@ matrix<DataType>::operator= (const matrix<DataType> &rhs) {
   if ((m_rawptr == NULL) || m_data->m_size < rhs.ncol()*rhs.nrow()) 
     m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(*(rhs.m_data)));
   else 
-    memcpy(m_data->m_data, rhs.getDataPtr(), rhs.ncol()*rhs.nrow()*sizeof(DataType));
+    memcpy(m_data->m_data, rhs.dataptr(), rhs.ncol()*rhs.nrow()*sizeof(DataType));
   m_ncol = rhs.ncol();
   m_nrow = rhs.nrow();
   m_rawptr = m_data->m_data;
@@ -456,7 +460,7 @@ bool matrix<DataType>::operator== (const matrix<DataType> &rhs) {
   if (m_nrow != rhs.nrow() || m_ncol != rhs.ncol()) return false;
   size_t endi = m_ncol*m_nrow; 
   DataType *p1 = m_data->m_data;
-  DataType *p2 = rhs.getDataPtr();
+  DataType *p2 = rhs.dataptr();
   for (size_t i=0; i<endi; i++)
     if (*(p1++)!=*(p2++)) return false;
   return true;
@@ -479,14 +483,9 @@ size_t matrix<DataType>::ncol() const {
 }
 
 template<typename DataType> 
-inline DataType * matrix<DataType>::getDataPtr() const {
+inline DataType * matrix<DataType>::dataptr() const {
 //  return m_data->m_data;
   return m_rawptr;
-}
-
-template<typename DataType> 
-DataArray<DataType>& matrix<DataType>::getDataArray() const {
-  return *m_data;
 }
 
 /* resizing/reshaping matrix */
@@ -501,6 +500,16 @@ void matrix<DataType>::resize(size_t nr, size_t nc) {
   m_ncol = nc;
   m_nrow = nr;
 } 
+
+template<typename DataType>
+inline bool matrix<DataType>::gettemporary() const {
+  return m_temporary;
+}
+
+template<typename DataType>
+inline void matrix<DataType>::settemporary(bool t) {
+  m_temporary = t;
+};
 
 template<typename DataType> 
 inline void matrix<DataType>::clear() {
@@ -555,9 +564,9 @@ matrix<DataType>::operator+(const matrix<T>& rhs) const {
     matrix<DataType> m(m_nrow, m_ncol);
     size_t endi = m_nrow*m_ncol;
     DataType *p1, *p2, *p3;
-    p1=m.getDataPtr();
-    p2=getDataPtr();
-    p3=rhs.getDataPtr();
+    p1=m.dataptr();
+    p2=dataptr();
+    p3=rhs.dataptr();
     for (size_t i=0; i<endi; i++)
       *(p1++) = *(p2++) + *(p3++);
     m.m_temporary = true;
@@ -579,9 +588,9 @@ matrix<DataType>::operator+(const matrix<DataType>& rhs) const {
     matrix<DataType> m(m_nrow, m_ncol);
     size_t endi = m_nrow*m_ncol;
     DataType *p1, *p2, *p3;
-    p1=m.getDataPtr();
-    p2=getDataPtr();
-    p3=rhs.getDataPtr();
+    p1=m.dataptr();
+    p2=dataptr();
+    p3=rhs.dataptr();
     for (size_t i=0; i<endi; i++)
       *(p1++) = *(p2++) + *(p3++);
     m.m_temporary = true;
@@ -595,8 +604,8 @@ matrix<DataType>& matrix<DataType>::operator+=(const matrix<T>& rhs) {
   assert(m_ncol == rhs.ncol() && m_nrow == rhs.nrow());
   size_t endi = m_nrow*m_ncol;
   DataType *p2, *p3;
-  p2=getDataPtr();
-  p3=rhs.getDataPtr();
+  p2=dataptr();
+  p3=rhs.dataptr();
   for (size_t i=0; i<endi; i++)
     *(p2++) += *(p3++);
   return *this;
@@ -614,9 +623,9 @@ matrix<DataType>::operator-(const matrix<T>& rhs) const {
     matrix<DataType> m(m_nrow, m_ncol);
     size_t endi = m_nrow*m_ncol;
     DataType *p1, *p2, *p3;
-    p1=m.getDataPtr();
-    p2=getDataPtr();
-    p3=rhs.getDataPtr();
+    p1=m.dataptr();
+    p2=dataptr();
+    p3=rhs.dataptr();
     for (size_t i=0; i<endi; i++)
       *(p1++) = *(p2++) - *(p3++);
     m_temporary = true;
@@ -634,8 +643,8 @@ matrix<DataType>::operator-(const matrix<DataType>& rhs) const {
   } else if (rhs.m_temporary) {
     size_t endi = m_nrow*m_ncol;
     DataType *p2, *p3;
-    p2=getDataPtr();
-    p3=rhs.getDataPtr();
+    p2=dataptr();
+    p3=rhs.dataptr();
     for (size_t i=0; i<endi; i++) {
       *(p3) = *(p2++) - *(p3);
       p3++;
@@ -645,9 +654,9 @@ matrix<DataType>::operator-(const matrix<DataType>& rhs) const {
     matrix<DataType> m(m_nrow, m_ncol);
     size_t endi = m_nrow*m_ncol;
     DataType *p1, *p2, *p3;
-    p1=m.getDataPtr();
-    p2=getDataPtr();
-    p3=rhs.getDataPtr();
+    p1=m.dataptr();
+    p2=dataptr();
+    p3=rhs.dataptr();
     for (size_t i=0; i<endi; i++)
       *(p1++) = *(p2++) - *(p3++);
     m.m_temporary = true;
@@ -661,8 +670,8 @@ matrix<DataType>& matrix<DataType>::operator-=(const matrix<T>& rhs) {
   assert(m_ncol == rhs.ncol() && m_nrow == rhs.nrow());
   size_t endi = m_nrow*m_ncol;
   DataType *p2, *p3;
-  p2=getDataPtr();
-  p3=rhs.getDataPtr();
+  p2=dataptr();
+  p3=rhs.dataptr();
   for (size_t i=0; i<endi; i++)
     *(p2++) -= *(p3++);
   return *this;
@@ -677,8 +686,8 @@ const matrix<DataType> matrix<DataType>::operator*(const double rhs) const {
     matrix<DataType> m(m_nrow, m_ncol);
     size_t endi = m_nrow*m_ncol;
     DataType *p1, *p2;
-    p1=m.getDataPtr();
-    p2=getDataPtr();
+    p1=m.dataptr();
+    p2=dataptr();
     for (size_t i=0; i<endi; i++)
       *(p1++) = *(p2++)*rhs; 
     m.m_temporary = true;
@@ -695,8 +704,8 @@ const matrix<DataType> matrix<DataType>::operator*(const CD rhs) const {
     matrix<DataType> m(m_nrow, m_ncol);
     size_t endi = m_nrow*m_ncol;
     DataType *p1, *p2;
-    p1=m.getDataPtr();
-    p2=getDataPtr();
+    p1=m.dataptr();
+    p2=dataptr();
     for (size_t i=0; i<endi; i++)
       *(p1++) = *(p2++)*rhs; 
     m.m_temporary = true;
@@ -708,7 +717,7 @@ template<typename DataType>
 matrix<DataType> & matrix<DataType>::operator*=(const double rhs) {
   size_t endi = m_nrow*m_ncol;
   DataType *p2;
-  p2=getDataPtr();
+  p2=dataptr();
   for (size_t i=0; i<endi; i++)
     *(p2++) *= rhs; 
   return *this;
@@ -718,7 +727,7 @@ template<typename DataType>
 matrix<DataType> & matrix<DataType>::operator*=(const CD rhs) {
   size_t endi = m_nrow*m_ncol;
   DataType *p2;
-  p2=getDataPtr();
+  p2=dataptr();
   for (size_t i=0; i<endi; i++)
     *(p2++) *= rhs; 
   return *this;
@@ -741,7 +750,7 @@ matrix<DataType>::operator*(const matrix<DataType>& rhs) const {
   ma.resize(m,n);
 
   gemm<DataType>(CblasColMajor, CblasNoTrans, CblasNoTrans, m, n, k1, 
-    getDataPtr(), lda, rhs.getDataPtr(), ldb, ma.getDataPtr(), m);
+    dataptr(), lda, rhs.dataptr(), ldb, ma.dataptr(), m);
 
   return ma;
 } 
@@ -771,11 +780,11 @@ matrix<double> matrix<DataType>::real() const{
   size_t endi = m_nrow*m_ncol;
   double *p1;
   DataType *p2;
-  p1=m.getDataPtr();
-  p2=getDataPtr();
+  p1=m.dataptr();
+  p2=dataptr();
   for (size_t i=0; i<endi; i++) 
     *(p1++)=(p2++)->real;
-  m.m_temporary = true;
+  m.settemporary(true);
   return m;
 } 
 
@@ -785,11 +794,11 @@ matrix<double> matrix<DataType>::imag() const{
   size_t endi = m_nrow*m_ncol;
   double *p1;
   DataType *p2;
-  p1=m.getDataPtr();
-  p2=getDataPtr();
+  p1=m.dataptr();
+  p2=dataptr();
   for (size_t i=0; i<endi; i++) 
     *(p1++)=(p2++)->imag;
-  m.m_temporary = true;
+  m.settemporary(true);
   return m;
 }
 
@@ -799,7 +808,7 @@ matrix<DataType> matrix<DataType>::trans() const {
     size_t n;
     DataType temp;
     DataType *p0, *p1, *p2;
-    p0=getDataPtr();
+    p0=dataptr();
     for (size_t j=0; j<m_ncol-1; j++) { 
       n = j+1;
       p1 = p0 + j*m_nrow + n;
@@ -820,8 +829,8 @@ matrix<DataType> matrix<DataType>::trans() const {
   } else {
   matrix<DataType> m(m_ncol, m_nrow); 
   DataType *p0, *p1, *p2;
-  p0=m.getDataPtr();
-  p2=getDataPtr();
+  p0=m.dataptr();
+  p2=dataptr();
   for (size_t j=0; j<m_ncol; j++) { 
     p1 = p0 + j;
     for (size_t i=0; i<m_nrow; i++) { 
@@ -829,7 +838,7 @@ matrix<DataType> matrix<DataType>::trans() const {
       p1+=m_ncol;
     }
   }
-  m.m_temporary = true;
+  m.settemporary(true);
   return m;
   }
 } 
@@ -843,8 +852,8 @@ matrix<DataType> matrix<DataType>::herm() const {
   } else {
     matrix<DataType> m(m_ncol, m_nrow); 
     DataType *p0, *p1, *p2;
-    p0=m.getDataPtr();
-    p2=getDataPtr();
+    p0=m.dataptr();
+    p2=dataptr();
     for (size_t j=0; j<m_ncol; j++) { 
       p1 = p0 + j;
       for (size_t i=0; i<m_nrow; i++) { 
@@ -862,7 +871,7 @@ matrix<DataType> matrix<DataType>::conj() const {
   if (m_temporary) {
     size_t endi = m_nrow*m_ncol;
     DataType *p2;
-    p2=getDataPtr();
+    p2=dataptr();
     for (size_t i=0; i<endi; i++) { 
       *(p2)=mlcpp::conj(*(p2));
       p2++;
@@ -872,8 +881,8 @@ matrix<DataType> matrix<DataType>::conj() const {
     matrix<DataType> m(m_nrow, m_ncol); 
     size_t endi = m_nrow*m_ncol;
     DataType *p1, *p2;
-    p1=m.getDataPtr();
-    p2=getDataPtr();
+    p1=m.dataptr();
+    p2=dataptr();
     for (size_t i=0; i<endi; i++) 
         *(p1++)=mlcpp::conj(*(p2++));
     m.m_temporary = true;
@@ -890,7 +899,7 @@ matrix<DataType> matrix<DataType>::block(size_t r1, size_t r2,
   size_t n1, n2;
   n1 = m_nrow;
   n2 = n1-r2+r1;
-  p2 = m.getDataPtr(); 
+  p2 = m.dataptr(); 
   p1 = m_data->m_data + r1+n1*c1;
   
   for (size_t j=c1; j<c2; j++) { 
@@ -908,7 +917,7 @@ const matrix<DataType> & matrix<DataType>::replace(size_t r, size_t c,
   DataType *p1, *p2;
   size_t n1, n2, n3, n4;
   n1 = m_nrow;
-  p2 = mt.getDataPtr(); 
+  p2 = mt.dataptr(); 
   n2 = mt.ncol();
   n3 = mt.nrow();
   n4 = n1-n3;
@@ -932,7 +941,7 @@ template<typename DataType>
 matrix<DataType> matrix<DataType>::row(size_t r) const {
   matrix<DataType> m(1, m_ncol);
   DataType *p1, *p2;
-  p2 = m.getDataPtr(); 
+  p2 = m.dataptr(); 
   p1 = m_rawptr + r;
   
   for (size_t j=0; j<m_ncol; j++) { 
@@ -988,9 +997,9 @@ void matrix<DataType>::eigen(matrix<CD> &e, matrix<DataType> &vl,
   char nl = &vl? 'V': 'N';
   char nr = &vr? 'V': 'N';
 
-  geev<DataType>(nl, nr, m_ncol, m.getDataPtr(), m_ncol, 
-                 e.getDataPtr(), vl.getDataPtr(), m_ncol, 
-                 vr.getDataPtr(), m_ncol);
+  geev<DataType>(nl, nr, m_ncol, m.dataptr(), m_ncol, 
+                 e.dataptr(), vl.dataptr(), m_ncol, 
+                 vr.dataptr(), m_ncol);
 } 
 
 template<typename DataType> 
@@ -1004,8 +1013,8 @@ void matrix<DataType>::reigen(matrix<CD> &e, matrix<DataType> &vr) const {
   char nl = 'N';
   char nr = 'V';
 
-  geev<DataType>(nl, nr, m_ncol, m.getDataPtr(), m_ncol, 
-                 e.getDataPtr(), NULL, m_ncol, vr.getDataPtr(), m_ncol); 
+  geev<DataType>(nl, nr, m_ncol, m.dataptr(), m_ncol, 
+                 e.dataptr(), NULL, m_ncol, vr.dataptr(), m_ncol); 
 } 
 
 template<typename DataType> 
@@ -1019,8 +1028,8 @@ void matrix<DataType>::leigen(matrix<CD> &e, matrix<DataType> &vl) const {
   char nl = 'V';
   char nr = 'N';
 
-  geev<DataType>(nl, nr, m_ncol, m.getDataPtr(), m_ncol, 
-                 e.getDataPtr(), vl.getDataPtr(), m_ncol, NULL, m_ncol); 
+  geev<DataType>(nl, nr, m_ncol, m.dataptr(), m_ncol, 
+                 e.dataptr(), vl.dataptr(), m_ncol, NULL, m_ncol); 
 } 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1131,11 +1140,11 @@ idmatrix<DataType>::idmatrix(size_t n) {
   matrix<DataType>::m_rawptr = matrix<DataType>::m_data->m_data;
   
   size_t endi=n*n;
-  DataType *p=matrix<DataType>::getDataPtr();
+  DataType *p=matrix<DataType>::dataptr();
   for (size_t i=0; i<endi; i++) 
     *(p++) = 0;
 
-  p=matrix<DataType>::getDataPtr();
+  p=matrix<DataType>::dataptr();
   for (size_t i=0; i<n; i++) 
     *(p+i*(n+1)) = 1.;
 
