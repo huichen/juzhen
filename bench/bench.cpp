@@ -37,20 +37,20 @@ int main() {
     H1 = H2; 
   END_BENCH
 
-  BEGIN_BENCH ("M(i,j)")
-  for (size_t j=0; j<1000000; j++) H1(3,4) = H2(5,6) + H3(7,8);
+  BEGIN_BENCH ("M(i,j), 1M times")
+  for (size_t j=0; j<100000; j++) H1(3,4) = H2(5,6) + H3(7,8);
   END_BENCH
 
-  BEGIN_BENCH ("M1 = M2.block")
+  BEGIN_BENCH ("M1 = M2.block, 1K times")
   for (size_t j=0; j<100; j++) H1 = H2.block(0,0,50,50);
   END_BENCH
 
-  BEGIN_BENCH ("M1 = M2.col(i)")
-  for (size_t j=0; j<1000; j++)H1 = H2.col(10);
+  BEGIN_BENCH ("M1 = M2.col(i), 1K times")
+  for (size_t j=0; j<100; j++) H1 = H2.col(1);
   END_BENCH
 
-  BEGIN_BENCH ("M1 = M2.row(i)")
-  H1 = H2.row(10);
+  BEGIN_BENCH ("M1 = M2.row(i), 1K times")
+  for (size_t j=0; j<100; j++) H1 = H2.row(1);
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.conj()")

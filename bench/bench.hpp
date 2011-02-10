@@ -35,12 +35,14 @@
 #include <sys/time.h>
 #include <iostream>
 
-#define MAXN 1400
-#define MINN 100
-#define STEPN 10 
+#define MAXN 100
+#define MINN 2 
+#define STEPN 1
 #define NB 10
 
 static int counter=0;
+
+#define PREFIX "small_"
 
 #ifdef MLCPP 
 #define FNAME "mlcpp_"
@@ -52,7 +54,7 @@ static int counter=0;
 {\
 {\
 std::stringstream out;\
-out << counter;\
+out << PREFIX << counter;\
 filename =out.str()+ ".plt";\
 myfile.open(filename.c_str());\
 myfile << "set term png \nset out \"" + out.str()+".png\"\nset title \"" + s + "\"\nset xlabel \"N\" \nset ylabel \"Seconds\" \nplot 'mlcpp_"+out.str() + ".txt' using 1:2 title 'mlcpp' w l, 'eigen_"+out.str() + ".txt' using 1:2 title 'eigen' w l ";\
@@ -60,7 +62,7 @@ myfile.close();\
 }\
 {\
 std::stringstream out;\
-out << counter++;\
+out << PREFIX << counter++;\
 filename =FNAME+out.str()+ ".txt";\
 }\
 myfile.open(filename.c_str());\
