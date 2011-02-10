@@ -259,17 +259,6 @@ public:
   /*************************************
    *  matrix specific operations 
    ************************************/
-
-  /**
-   * Get the matrix's real part. 
-   */
-  matrix<double> real() const;
-
-  /**
-   * Get the matrix's imaginary part.  
-   */
-  matrix<double> imag() const;
-
   /**
    * Get the matrix's transposition. 
    */
@@ -327,7 +316,8 @@ public:
    * If you are linking to basic blas library only, this function is not
    * implemented yet. 
    */
-  void eigen(matrix<CD> &e, matrix<DataType> &vl, matrix<DataType> &vr) const;
+  template<typename T>
+  void eigen(matrix<complex<T> > &e, matrix<DataType> &vl, matrix<DataType> &vr) const;
 
   /**
    * Solve eigen system and put eigen values into e, corresponding 
@@ -336,7 +326,8 @@ public:
    * If you are linking to basic blas library only, this function is not
    * implemented yet. 
    */
-  void reigen(matrix<CD> &e, matrix<DataType> &vr) const;
+  template<typename T>
+  void reigen(matrix<complex<T> > &e, matrix<DataType> &vr) const;
 
   /**
    * Solve eigen system and put eigen values into e, corresponding 
@@ -345,7 +336,8 @@ public:
    * If you are linking to basic blas library only, this function is not
    * implemented yet. 
    */
-  void leigen(matrix<CD> &e, matrix<DataType> &vl) const;
+  template<typename T>
+  void leigen(matrix<complex<T> > &e, matrix<DataType> &vl) const;
 
 protected:
   /**
@@ -375,8 +367,10 @@ protected:
 
 };
 
-typedef matrix<CD> cmatrix;
+typedef matrix<float> smatrix;
 typedef matrix<double> dmatrix;
+typedef matrix<CS> cmatrix;
+typedef matrix<CD> zmatrix;
 
 template<typename DataType> 
 matrix<DataType>::matrix() : m_ncol(0), m_nrow(0) {
@@ -775,34 +769,6 @@ matrix<DataType>& matrix<DataType>::operator/=(const T rhs) {
 
 /* matrix specific operations */
 template<typename DataType> 
-matrix<double> matrix<DataType>::real() const{
-  matrix<double> m(m_nrow, m_ncol);
-  size_t endi = m_nrow*m_ncol;
-  double *p1;
-  DataType *p2;
-  p1=m.dataptr();
-  p2=dataptr();
-  for (size_t i=0; i<endi; i++) 
-    *(p1++)=(p2++)->real;
-  m.settemporary(true);
-  return m;
-} 
-
-template<typename DataType> 
-matrix<double> matrix<DataType>::imag() const{
-  matrix<double> m(m_nrow, m_ncol);
-  size_t endi = m_nrow*m_ncol;
-  double *p1;
-  DataType *p2;
-  p1=m.dataptr();
-  p2=dataptr();
-  for (size_t i=0; i<endi; i++) 
-    *(p1++)=(p2++)->imag;
-  m.settemporary(true);
-  return m;
-}
-
-template<typename DataType> 
 matrix<DataType> matrix<DataType>::trans() const {
   if (m_temporary && m_nrow == m_ncol) {
     size_t n;
@@ -985,7 +951,8 @@ matrix<DataType> & matrix<DataType>::swaprow(size_t r1, size_t r2) {
 
 /* solvers */
 template<typename DataType> 
-void matrix<DataType>::eigen(matrix<CD> &e, matrix<DataType> &vl, 
+template<typename T> 
+void matrix<DataType>::eigen(matrix<complex<T> > &e, matrix<DataType> &vl, 
                              matrix<DataType> &vr) const {
   assert (m_ncol == m_nrow);
   matrix<DataType> m(*this);
@@ -1003,7 +970,8 @@ void matrix<DataType>::eigen(matrix<CD> &e, matrix<DataType> &vl,
 } 
 
 template<typename DataType> 
-void matrix<DataType>::reigen(matrix<CD> &e, matrix<DataType> &vr) const {
+template<typename T> 
+void matrix<DataType>::reigen(matrix<complex<T> > &e, matrix<DataType> &vr) const {
   assert (m_ncol == m_nrow);
   matrix<DataType> m(*this);
 
@@ -1018,7 +986,8 @@ void matrix<DataType>::reigen(matrix<CD> &e, matrix<DataType> &vr) const {
 } 
 
 template<typename DataType> 
-void matrix<DataType>::leigen(matrix<CD> &e, matrix<DataType> &vl) const {
+template<typename T> 
+void matrix<DataType>::leigen(matrix<complex<T> > &e, matrix<DataType> &vl) const {
   assert (m_ncol == m_nrow);
   matrix<DataType> m(*this);
 
@@ -1036,16 +1005,66 @@ void matrix<DataType>::leigen(matrix<CD> &e, matrix<DataType> &vl) const {
 /** 
  * Return the real part of a matrix 
  */
-matrix<double> real(const matrix<CD> &m) {
-  return m.real();
+matrix<double> real(const matrix<CD> &ma) {
+  matrix<double> m(ma.nrow(), ma.ncol());
+  size_t endi = ma.nrow()*ma.ncol();
+  double *p1;
+  CD *p2;
+  p1=m.dataptr();
+  p2=ma.dataptr();
+  for (size_t i=0; i<endi; i++) 
+    *(p1++)=(p2++)->real;
+  m.settemporary(true);
+  return m;
 } 
 
 /** 
  * Return the imaginary part of a matrix 
  */
-matrix<double> imag(const matrix<CD> &m) {
-  return m.imag();
-}
+matrix<double> imag(const matrix<CD> &ma) {
+  matrix<double> m(ma.nrow(), ma.ncol());
+  size_t endi = ma.nrow()*ma.ncol();
+  double *p1;
+  CD *p2;
+  p1=m.dataptr();
+  p2=ma.dataptr();
+  for (size_t i=0; i<endi; i++) 
+    *(p1++)=(p2++)->imag;
+  m.settemporary(true);
+  return m;
+} 
+
+/** 
+ * Return the real part of a matrix 
+ */
+matrix<float> real(const matrix<CS> &ma) {
+  matrix<float> m(ma.nrow(), ma.ncol());
+  size_t endi = ma.nrow()*ma.ncol();
+  float *p1;
+  CS *p2;
+  p1=m.dataptr();
+  p2=ma.dataptr();
+  for (size_t i=0; i<endi; i++) 
+    *(p1++)=(p2++)->real;
+  m.settemporary(true);
+  return m;
+} 
+
+/** 
+ * Return the imaginary part of a matrix 
+ */
+matrix<float> imag(const matrix<CS> &ma) {
+  matrix<float> m(ma.nrow(), ma.ncol());
+  size_t endi = ma.nrow()*ma.ncol();
+  float *p1;
+  CS *p2;
+  p1=m.dataptr();
+  p2=ma.dataptr();
+  for (size_t i=0; i<endi; i++) 
+    *(p1++)=(p2++)->imag;
+  m.settemporary(true);
+  return m;
+} 
 
 /** 
  * Return transpose of a matrix 
@@ -1128,8 +1147,10 @@ public:
   idmatrix(size_t n);
 };
 
-typedef idmatrix<CD> cidmatrix;
-typedef idmatrix<double> didmatrix;
+typedef idmatrix<float> diag_smatrix;
+typedef idmatrix<double> diag_dmatrix;
+typedef idmatrix<CS> diag_cmatrix;
+typedef idmatrix<CD> diag_zmatrix;
 
 template<typename DataType> 
 idmatrix<DataType>::idmatrix(size_t n) {

@@ -24,133 +24,143 @@
 #define MLCPP_COMPLEX_HPP
 #include <iostream>
 
-#ifdef USE_MKL
-#include <mkl_cblas.h>
-#include <mkl_lapacke.h>
-#include <mkl.h>
-#else
-#include <cblas.h>
-#endif
-
 namespace mlcpp {
-
-#ifdef USE_MKL
-#define _CD MKL_Complex16 
-#else
-/**
- * _CD is the native complex struct that contains two double numbers, real
- * part before the imaginary part.
- */
-typedef struct { 
-  /**
-   * Real part of the complex number.
-   */
-  double real; 
-  /**
-   * Imaginary part of the complex number.
-   */
-  double imag;
-} _CD; 
-#endif
-
-#define CD ComplexDouble 
 
 /////////////////////////////////////////////////////////////////////////////
 /** 
- * _ComplexDouble supplements the native complex structure with some
+ * complex supplements the native complex structure with some
  * missing interfaces.
  */
-struct _ComplexDouble : _CD {
+template<typename T>
+struct complex {
+  /**
+   * Real part of the complex number.
+   */
+  T real; 
+  /**
+   * Imaginary part of the complex number.
+   */
+  T imag;
 
   /** 
    * Default constructor.
    */
-  _ComplexDouble() {};
+  complex() {};
 
   /** 
    * Construct a complex number from its real and imaginary part. 
    */
-  _ComplexDouble(double r, double i);
+  complex(T r, T i);
 
   /** 
    * Construct a complex number from a real number with imaginary part to be
    * zero.
    */
-  _ComplexDouble(double r);
+  complex(const T r);
 
   /**
    * Construct(copying) a complex number from another complex number.
    */
-  _ComplexDouble(_CD c);
+  template<typename T1>
+  complex(const complex<T1>& c);
 
   /**
    * Copy from a real number with imaginary part set to zero. 
    */
-  inline const struct _ComplexDouble & operator=(double r);
+  inline const struct complex & operator=(T r);
 
   /**
    * Copy from another complex number
    */
-  inline const struct _ComplexDouble & operator=(const _CD &c);
+  template<typename T1>
+  inline const struct complex & operator=(const complex<T1> &c);
 
   /**
    * Check if two complex numbers equal.
    */
-  inline bool operator==(const _CD &c);
+  template<typename T1>
+  inline bool operator==(const complex<T1> &c);
 
   /**
    * Check if a complex number equals to a real number and its imaginary part
    * is zero. 
    */
-  inline bool operator==(const double c);
+  inline bool operator==(const T c);
 
   /**
    * Check if two complex numbers are not equal.
    */
-  inline bool operator!=(const _CD &c);
+  template<typename T1>
+  inline bool operator!=(const complex<T1> &c);
 
   /**
    * Check if a complex number is not equal to a real number. It holds true
    * when the imaginary part of the complex number is not zero. 
    */
-  inline bool operator!=(const double c);
+  inline bool operator!=(const T c);
 
+  typedef T ValueType;
 };
 
-typedef struct _ComplexDouble CD;
+typedef complex<double> CD;
+typedef complex<float> CS;
 
-_ComplexDouble::_ComplexDouble(double r, double i) { real = r; imag = i;};
-_ComplexDouble::_ComplexDouble(double r) { real = r; imag =0.0;};
-_ComplexDouble::_ComplexDouble(_CD c) { real = c.real; imag =c.imag;};
+template<typename T>
+complex<T>::complex(T r, T i) { 
+  real = r; 
+  imag = i;
+}
 
-inline const CD& _ComplexDouble::operator=(double r) {
+template<typename T>
+complex<T>::complex(T r) { 
+  real = r; 
+  imag =0.0;
+}
+
+template<typename T>
+template<typename T1>
+complex<T>::complex(const complex<T1>& c) { 
+  real = c.real; 
+  imag =c.imag;
+}
+
+template<typename T>
+inline const complex<T>& complex<T>::operator=(T r) {
   real = r;
   imag = 0.0;
   return *this;
 }
 
-inline const CD& _ComplexDouble::operator=(const _CD &c) {
+template<typename T>
+template<typename T1>
+inline const complex<T>& complex<T>::operator=(const complex<T1> &c) {
   real = c.real;
   imag = c.imag;
   return *this;
 }
 
-inline bool _ComplexDouble::operator==(const _CD &c) {
+template<typename T>
+template<typename T1>
+inline bool complex<T>::operator==(const complex<T1> &c) {
   if (real == c.real && imag == c.imag) return true;
   else return false;
 }
 
-inline bool _ComplexDouble::operator==(const double c) {
+template<typename T>
+inline bool complex<T>::operator==(const T c) {
   if (real == c && imag == 0) return true;
   else return false;
 }
 
-inline bool _ComplexDouble::operator!=(const _CD &c) {
+template<typename T>
+template<typename T1>
+inline bool complex<T>::operator!=(const complex<T1> &c) {
   if (real == c.real && imag == c.imag) return false;
   else return true;
 }
 
-inline bool _ComplexDouble::operator!=(const double c) {
+template<typename T>
+inline bool complex<T>::operator!=(const T c) {
   if (real == c && imag == 0) return false;
   else return true;
 }
@@ -159,106 +169,124 @@ inline bool _ComplexDouble::operator!=(const double c) {
 
 /////////////////////////////////////////////////////////////////////////////
 
-/* complex constant */
-CD C1 (1.,0.);
-CD Ci (0.,1.);
-CD C0 (0.,0.);
-
 /* arithmatic operations */
-inline const CD operator+(const CD &a, const CD &b) {
-  CD c;
+template<typename T>
+inline const complex<T> operator+(const complex<T> &a, const complex<T> &b) {
+  complex<T> c;
   c.real = a.real + b.real; 
   c.imag = a.imag + b.imag;
   return c;
 }
 
-inline CD& operator+=(CD &a, const CD &b) {
+template<typename T>
+inline complex<T>& operator+=(complex<T> &a, const complex<T> &b) {
   a.real += b.real; 
-  a.imag += b.real;
+  a.imag += b.imag;
   return a;
 }
 
-inline const CD operator-(const CD &a, const CD &b) {
-  CD c;
+template<typename T>
+inline const complex<T> operator-(const complex<T> &a, const complex<T> &b) {
+  complex<T> c;
   c.real = a.real - b.real; 
   c.imag = a.imag - b.imag;
   return c;
 }
 
-inline CD& operator-=(CD &a, const CD &b) {
+template<typename T>
+inline complex<T>& operator-=(complex<T> &a, const complex<T> &b) {
   a.real -= b.real; 
   a.imag -= b.real;
   return a;
 }
 
-inline const CD operator*(const CD &a, const CD &b) {
-  CD c;
+template<typename T>
+inline const complex<T> operator*(const complex<T> &a, const complex<T> &b) {
+  complex<T> c;
   c.real = a.real*b.real - a.imag*b.imag; 
   c.imag = a.real*b.imag + a.imag*b.real;
   return c;
 }
 
-inline CD& operator*=(CD &a, const CD &b) {
+template<typename T, typename T1>
+inline complex<T>& operator*=(complex<T> &a, const complex<T1> &b) {
   a.real = a.real*b.real - a.imag*b.imag; 
   a.imag = a.real*b.imag + a.imag*b.real;
   return a;
 }
 
-inline const CD operator*(const CD &a, const double b) {
-  CD c;
+template<typename T, typename T1>
+inline const complex<T> operator*(const complex<T> &a, const T1 b) {
+  complex<T> c;
   c.real = a.real * b; 
   c.imag = a.imag * b;
   return c;
 }
 
-inline const CD operator*(const double b, const CD &a) {
-  CD c;
+template<typename T, typename T1>
+inline const complex<T> operator*(const T1 b, const complex<T> &a) {
+  complex<T> c;
   c.real = a.real * b; 
   c.imag = a.imag * b;
   return c;
 }
 
-inline CD& operator*=(CD &a, const double b) {
+template<typename T, typename T1>
+inline complex<T>& operator*=(complex<T> &a, const T1 b) {
   a.real = a.real * b; 
   a.imag = a.imag * b;
   return a;
 }
 
-inline const CD operator/(const CD &a, const double b) {
-  CD c;
+template<typename T, typename T1>
+inline const complex<T> operator/(const complex<T> &a, const T1 b) {
+  complex<T> c;
   c.real = a.real / b; 
   c.imag = a.imag / b;
   return c;
 }
 
-inline CD& operator/=(CD &a, const double b) {
+template<typename T, typename T1>
+inline complex<T>& operator/=(complex<T> &a, const T1 b) {
   a.real = a.real / b; 
   a.imag = a.imag / b;
   return a;
 }
 
-inline double abs2(const CD &a) {
+template<typename T>
+inline T abs2(const complex<T> &a) {
   return a.real*a.real+a.imag*a.imag;
 }
 
-inline const CD operator/(const CD &a, const CD &b) {
-  CD c;
-  double de = 1/abs2(b);
+inline double abs2(const double a) {
+  return a*a;
+}
+
+inline float abs2(const float a) {
+  return a*a;
+}
+
+template<typename T, typename T1>
+inline const complex<T> operator/(const complex<T> &a, const complex<T1> &b) {
+  complex<T> c;
+  T de = 1/abs2(b);
   c.real = de*(a.real*b.real + a.imag*b.imag);
   c.imag = de*(-a.real*b.imag + a.imag*b.real);
   return c;
 }
 
-inline CD& operator/=(CD &a, const CD &b) {
-  double de = 1/abs2(b);
-  double temp = a.real;
+template<typename T, typename T1>
+inline complex<T>& operator/=(complex<T> &a, const complex<T1> &b) {
+  T de = 1/abs2(b);
+  T temp = a.real;
   a.real = de*(a.real*b.real + a.imag*b.imag);
   a.imag = de*(-temp*b.imag + a.imag*b.real);
   return a;
 }
 
-inline const CD conj(const CD &a) {
-  CD c;
+template<typename T>
+inline const complex<T> conj(const complex<T> &a) {
+  complex<T> c;
   c.real = a.real; 
   c.imag = -a.imag;
   return c;
@@ -268,7 +296,12 @@ inline double conj(const double &a) {
   return a;
 }
 
-std::ostream& operator<< (std::ostream& out, const CD &m) {
+inline float conj(const float &a) {
+  return a;
+}
+
+template<typename T>
+std::ostream& operator<< (std::ostream& out, const complex<T> &m) {
   out << "(" << m.real << ", " << m.imag << ")";
   return out; 
 }

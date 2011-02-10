@@ -35,8 +35,7 @@ namespace mlcpp {
  * handled by auto_ptr to prevent memory leaks.
  */
 template<typename DataType> 
-class DataArray {
-public:
+struct DataArray {
   /**
    * Default constructor.
    */

@@ -37,10 +37,10 @@ BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   double a[] = {1., 2., 3., 4.};
   double b[] = {1., 2., 3., 4., 5., 6.};
 
-  dmatrix m1(a, 2, 2);
+  smatrix m1(a, 2, 2);
   V(m1, "1 3 \n2 4 ")
 
-  dmatrix m2 = m1;
+  smatrix m2 = m1;
   V(m2, "1 3 \n2 4 ")
 
   m2(0,1) = 99.;
@@ -49,10 +49,10 @@ BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   m1 = m2;
   V(m1, "1 99 \n2 4 ")
 
-  dmatrix m3(b, 3, 2);
+  smatrix m3(b, 3, 2);
   V(m3, "1 4 \n2 5 \n3 6 ")
 
-  dmatrix m4(3,3);
+  smatrix m4(3,3);
   m4 = 3;
   V(m4, "3 3 3 \n3 3 3 \n3 3 3 ")
 
@@ -66,33 +66,94 @@ BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   cmatrix m7(m6.dataptr(),2,2);
   V(m7, "(1, 0) (3, 0) \n(2, 0) (4, 0) ")
 
-  dmatrix m8(4,4);
+  smatrix m8(4,4);
   m8 = 3;
   V(m8, "3 3 3 3 \n3 3 3 3 \n3 3 3 3 \n3 3 3 3 ")
 
   m8 = m8;
   V(m8, "3 3 3 3 \n3 3 3 3 \n3 3 3 3 \n3 3 3 3 ")
 
-  dmatrix m9(3,3);
+  smatrix m9(3,3);
   m9 = 4;
   m9.clear();
   V(m9, "0 0 0 \n0 0 0 \n0 0 0 ")
 
 END_TEST(MatrixAssignment)
 
+BEGIN_TEST(MatrixElementType, "MatrixElementType")
+
+{
+  matrix<complex<double> > m1(3,3);
+  m1 = 1;
+  matrix<complex<double> > m2(3,3);
+  m2 = 1;
+  matrix<complex<double> > m3(3,3);
+  m3 = 1;
+  
+  m1 = m2*m3+m1/2;
+  V(m1, "(3.5, 0) (3.5, 0) (3.5, 0) \n(3.5, 0) (3.5, 0) (3.5, 0) \n(3.5, 0) (3.5, 0) (3.5, 0) ")
+  V(conj(m1)*herm(m1), "(36.75, 0) (36.75, 0) (36.75, 0) \n(36.75, 0) (36.75, 0) (36.75, 0) \n(36.75, 0) (36.75, 0) (36.75, 0) ")
+}
+
+{
+  matrix<complex<float> > m1(3,3);
+  m1 = 1;
+  matrix<complex<float> > m2(3,3);
+  m2 = 1;
+  matrix<complex<float> > m3(3,3);
+  m3 = 1;
+  
+  m1 = m2*m3 + m1/2.0;
+  V(m1, "(3.5, 0) (3.5, 0) (3.5, 0) \n(3.5, 0) (3.5, 0) (3.5, 0) \n(3.5, 0) (3.5, 0) (3.5, 0) ")
+  V(conj(m1)*herm(m1), "(36.75, 0) (36.75, 0) (36.75, 0) \n(36.75, 0) (36.75, 0) (36.75, 0) \n(36.75, 0) (36.75, 0) (36.75, 0) ")
+
+}
+
+{
+  matrix<double> m1(3,3);
+  m1 = 1;
+  matrix<double> m2(3,3);
+  m2 = 1;
+  matrix<double> m3(3,3);
+  m3 = 1;
+  
+  m1 = m2*m3+m1/2.0;
+  V(m1, "3.5 3.5 3.5 \n3.5 3.5 3.5 \n3.5 3.5 3.5 ")
+  V(conj(m1)*herm(m1), "36.75 36.75 36.75 \n36.75 36.75 36.75 \n36.75 36.75 36.75 ")
+}
+
+{
+  matrix<float> m1(3,3);
+  m1 = 1;
+  matrix<float> m2(3,3);
+  m2 = 1;
+  matrix<float> m3(3,3);
+  m3 = 1;
+  
+  m1 = m2*m3+m1/2.0;
+  V(m1, "3.5 3.5 3.5 \n3.5 3.5 3.5 \n3.5 3.5 3.5 ")
+  V(conj(m1)*herm(m1), "36.75 36.75 36.75 \n36.75 36.75 36.75 \n36.75 36.75 36.75 ")
+
+}
+
+
+
+
+END_TEST(MatrixElementType)
+
 BEGIN_TEST(MatrixCompare, "MatrixCompare")
 
   double a[] = {1., 2., 3., 4.};
   double b[] = {1., 2., 3., 4., 5., 6.};
 
-  dmatrix m1(a, 2, 2);
-  dmatrix m2(a, 2, 3);
+  smatrix m1(a, 2, 2);
+  smatrix m2(a, 2, 3);
   
   VB(m1==m1)
 
   VB(m1!=m2)
 
-  dmatrix m3 = m1;
+  smatrix m3 = m1;
   VB(m1==m3)
 
   m3(1, 1) = 5;
@@ -100,7 +161,7 @@ BEGIN_TEST(MatrixCompare, "MatrixCompare")
 
   cmatrix m4 = m1;
 /* 
-  It's not comparable between cmatrix and dmatrix
+  It's not comparable between cmatrix and smatrix
   VB(m4!=m1);
 */
 
@@ -108,14 +169,14 @@ BEGIN_TEST(MatrixCompare, "MatrixCompare")
   m5 = m4;
   VB(m4==m5)
 
-  m4(1,1) = (_CD){3,3};
+  m4(1,1) = CS{3,3};
   VB(m4!=m5)
 
 END_TEST(MatrixCompare)
 
 BEGIN_TEST(MatrixPrivateData, "MatrixPrivateData")
   double a[] = {1., 2., 3., 4., 5., 6.};
-  dmatrix m1(a, 2, 3);
+  smatrix m1(a, 2, 3);
 
   VDE(m1.ncol(), 3)
 
@@ -125,7 +186,7 @@ END_TEST(MatrixPrivateData)
 
 BEGIN_TEST(MatrixResize, "MatrixResize")
   double a[] = {1., 2., 3., 4., 5., 6.};
-  dmatrix m1(a, 2, 3);
+  smatrix m1(a, 2, 3);
  
   m1.resize(3,2); 
   V(m1, "1 4 \n2 5 \n3 6 ")
@@ -144,7 +205,7 @@ END_TEST(MatrixResize)
 
 BEGIN_TEST(MatrixIndex, "MatrixIndex")
   double a[] = {1., 2., 3., 4., 5., 6.};
-  dmatrix m1(a, 2, 3);
+  smatrix m1(a, 2, 3);
 
   VDE(m1(1, 1), 4) 
 
@@ -162,12 +223,12 @@ END_TEST(MatrixIndex)
 
 BEGIN_TEST(MatrixArithmatic, "MatrixArithmatic")
   double a[] = {1., 2., 3., 4., 5., 6.};
-  dmatrix m1(a, 2, 3);
+  smatrix m1(a, 2, 3);
 
   /**
-   * dmatrix m2 = m1+m1 will give wrong results. Never use it. 
+   * smatrix m2 = m1+m1 will give wrong results. Never use it. 
    */
-  dmatrix m2;
+  smatrix m2;
   m2 = m1+m1;
   V(m2, "2 6 10 \n4 8 12 ")
 
@@ -197,9 +258,9 @@ BEGIN_TEST(MatrixArithmatic, "MatrixArithmatic")
   V(m2, "1 3 5 \n2 4 6 ")
 
   double b[] = {1, 2, 3, 4};
-  dmatrix m3(b, 2, 2);
+  smatrix m3(b, 2, 2);
 
-  dmatrix m4;
+  smatrix m4;
   m4 = m3*m2;
   V(m4, "7 15 23 \n10 22 34 ")
 
@@ -207,7 +268,7 @@ BEGIN_TEST(MatrixArithmatic, "MatrixArithmatic")
   m4 *= m2;
   V(m4, "7 15 23 \n10 22 34 ")
 
-  _CD c1[]= { {1.,2.}, {-3., -1.}, {2.0, 0.1}, {-2., 0.1}, {6., 7.}, {3.0, 0.1}};
+  CS c1[]= { {1.,2.}, {-3., -1.}, {2.0, 0.1}, {-2., 0.1}, {6., 7.}, {3.0, 0.1}};
   cmatrix m5(c1, 2,3);
   V(m5, "(1, 2) (2, 0.1) (6, 7) \n(-3, -1) (-2, 0.1) (3, 0.1) ")
 
@@ -219,15 +280,13 @@ END_TEST(MatrixArithmatic)
 
 BEGIN_TEST(MatrixHermTransConj, "MatrixHermTransConj")
 
-  _CD c1[]= { {1.,2.}, {-3., -1.}, {2.0, 0.1}, {-2., 0.1}, {6., 7.}, {3.0, 0.1}};
+  CS c1[]= { {1.,2.}, {-3., -1.}, {2.0, 0.1}, {-2., 0.1}, {6., 7.}, {3.0, 0.1}};
   cmatrix m1(c1, 2,3);
   V(m1, "(1, 2) (2, 0.1) (6, 7) \n(-3, -1) (-2, 0.1) (3, 0.1) ")
 
   V(real(m1), "1 2 6 \n-3 -2 3 ")
-  V(m1.real(), "1 2 6 \n-3 -2 3 ")
 
   V(imag(m1), "2 0.1 7 \n-1 0.1 0.1 ")
-  V(m1.imag(), "2 0.1 7 \n-1 0.1 0.1 ")
 
 
   V(herm(m1), "(1, -2) (-3, 1) \n(2, -0.1) (-2, -0.1) \n(6, -7) (3, -0.1) ")
@@ -262,7 +321,7 @@ BEGIN_TEST(MatrixHermTransConj, "MatrixHermTransConj")
   V(m2.swaprow(0,1), "(-3, -1) (-2, 0.1) (3, 0.1) \n(1, 2) (2, 0.1) (6, 7) " )
 
   double a[] = {1., 2., 3., 4.};
-  dmatrix m3(a, 2, 2);
+  smatrix m3(a, 2, 2);
 
   V(m3, "1 3 \n2 4 ")
 
@@ -278,8 +337,8 @@ END_TEST(MatrixHermTransConj)
 BEGIN_TEST(MatrixBlockReplace, "MatrixBlockReplace")
   double a[] = {1., 2., 3., 4., 5., 6.};
   double b[] = {20, 30, 40, 50};
-  dmatrix m1(a, 2, 3);
-  dmatrix m2(b, 2, 2);
+  smatrix m1(a, 2, 3);
+  smatrix m2(b, 2, 2);
 
   V(m1.block(0,1,0,2), "1 3 ")
   V(m1.block(0,1,0,1), "1 ")
@@ -295,7 +354,7 @@ END_TEST(MatrixBlockReplace)
 
 BEGIN_TEST(MatrixGetRowCol, "MatrixGetRowCol")
   double a[] = {1., 2., 3., 4., 5., 6.};
-  dmatrix m1(a, 2, 3);
+  smatrix m1(a, 2, 3);
 
   V(m1.col(1), "3 \n4 ")
 
@@ -310,7 +369,7 @@ BEGIN_TEST(MatrixSolver, "MatrixSolver")
   double a[] = {1., 2., 3., 4., 5., 6., 8, 20, 33};
   dmatrix m1(a, 3, 3);
   
-  cvector v;
+  zvector v;
   dmatrix vl, vr;
 
   m1.eigen(v, vl, vr);
@@ -332,11 +391,11 @@ BEGIN_TEST(MatrixSolver, "MatrixSolver")
   V(vr, "-0.236039 -0.989503 -0.891627 \n-0.51814 0.128295 -0.421717 \n-0.82208 0.0665147 0.164791 ")
 
 /* complex */
-  _CD b[] = {{1., 1}, {2., 3.2}, {3.,4}, {4.,1}, {5.,1}, {6.,22}, {8,23}, {20,1},{33,2}};
-  cmatrix m2(b, 3, 3);
+  CD b[] = {{1., 1}, {2., 3.2}, {3.,4}, {4.,1}, {5.,1}, {6.,22}, {8,23}, {20,1},{33,2}};
+  zmatrix m2(b, 3, 3);
 
-  cvector v1;
-  cmatrix vl1, vr1;
+  zvector v1;
+  zmatrix vl1, vr1;
 
   m2.eigen(v1, vl1, vr1);
   V(v1, "{(38.6085, 15.7802), (4.08146, -2.43421), (-3.68992, -9.34598)}")
@@ -359,10 +418,10 @@ BEGIN_TEST(MatrixSolver, "MatrixSolver")
  * Tests for identity matrix
 */
 BEGIN_TEST(IdentityMatrix, "IdentityMatrix")
-  dmatrix m1 = didmatrix(3);
+  smatrix m1 = diag_smatrix(3);
   V(m1, "1 0 0 \n0 1 0 \n0 0 1 ")
 
-  cidmatrix m2(2);
+  diag_cmatrix m2(2);
   V(m2, "(1, 0) (0, 0) \n(0, 0) (1, 0) ")
 
 END_TEST(IdentityMatrix)
@@ -375,25 +434,25 @@ BEGIN_TEST(VectorTests, "VectorTests")
   double cv1[] = {1, 2, 3, 4};
   double cv2[] = {1, 3, 2, 4};
   
-  dvector v1 (cv1, 4);
-  dvector v2 (cv2, 4);
+  svector v1 (cv1, 4);
+  svector v2 (cv2, 4);
   
   double cm1[] = {1, 2, 3, 4, 5, 6};
-  dmatrix m1(cm1, 2, 3); 
+  smatrix m1(cm1, 2, 3); 
 
-  V(dvector(m1), "{1, 2, 3, 4, 5, 6}")
+  V(svector(m1), "{1, 2, 3, 4, 5, 6}")
 
-  dvector v4;
+  svector v4;
   v4 = m1;
-  V(dvector(v4), "{1, 2, 3, 4, 5, 6}")
+  V(svector(v4), "{1, 2, 3, 4, 5, 6}")
 
-  V(dvector(v1), "{1, 2, 3, 4}")
+  V(svector(v1), "{1, 2, 3, 4}")
  
-  dvector v3;
+  svector v3;
   v3 = v1;
-  V(dvector(v3), "{1, 2, 3, 4}")
+  V(svector(v3), "{1, 2, 3, 4}")
 
-  dvector vv(4);
+  svector vv(4);
   vv = 1;
   VDE(vv.size(), 4);
   V(vv, "{1, 1, 1, 1}");
@@ -406,7 +465,7 @@ BEGIN_TEST(VectorTests, "VectorTests")
 
   VDE(v4.size(), 4)
 
-  dvector v5;
+  svector v5;
   v5 = v1+v2;
   V(v5, "{2, 5, 5, 8}")
 
@@ -445,7 +504,7 @@ BEGIN_TEST(VectorTests, "VectorTests")
 
   VDE(v1*v1, 30)
   
-  dmatrix m2 = didmatrix(4);
+  smatrix m2 = diag_smatrix(4);
   V(v1*m2, "{1, 2, 3, 4}")
   V(m2*v1, "{1, 2, 3, 4}")
 
@@ -453,16 +512,14 @@ BEGIN_TEST(VectorTests, "VectorTests")
   v1*=m2;
   V(v1, "{1, 2, 3, 8}")
 
-  _CD c1[]= { {1.,2.}, {-3., -1.}, {2.0, 0.1}, {-2., 0.1}, {6., 7.}, {3.0, 0.1}};
+  CS c1[]= { {1.,2.}, {-3., -1.}, {2.0, 0.1}, {-2., 0.1}, {6., 7.}, {3.0, 0.1}};
   cvector v6(c1, 6);
 
   V(v6, "{(1, 2), (-3, -1), (2, 0.1), (-2, 0.1), (6, 7), (3, 0.1)}")
 
   V(real(v6), "{1, -3, 2, -2, 6, 3}")
-  V(v6.real(), "{1, -3, 2, -2, 6, 3}")
 
   V(imag(v6), "{2, -1, 0.1, 0.1, 7, 0.1}")
-  V(v6.imag(), "{2, -1, 0.1, 0.1, 7, 0.1}")
 
   V(trans(v6), "{(1, 2), (-3, -1), (2, 0.1), (-2, 0.1), (6, 7), (3, 0.1)}")
 
@@ -475,7 +532,7 @@ BEGIN_TEST(VectorTests, "VectorTests")
   VME(herm(v6), conj(trans(v6)))
 
   double a[] = {1., 2., 3., 4.};
-  dvector m3(a, 4);
+  svector m3(a, 4);
 
   V(m3, "{1, 2, 3, 4}")
 
@@ -497,12 +554,12 @@ BEGIN_TEST(VectorTests, "VectorTests")
   v7 = v6.herm();
   V(v7, "{(1, -2), (-3, 1), (2, -0.1), (-2, -0.1), (6, -7), (3, -0.1)}")
   
-  VDE(norm(v6)*norm(v6), 117.03)
-  VDE(v6.norm()*v6.norm(), 117.03)
+  VSE(norm(v6)*norm(v6), 117.03)
+  VSE(v6.norm()*v6.norm(), 117.03)
 
-  V(dvector(v1.stl()), "{1, 2, 3, 8}")
+  V(svector(v1.stl()), "{1, 2, 3, 8}")
 
-  dvector v8 =  m3;
+  svector v8 =  m3;
   V(v8.swap(1,2), "{1, 3, 2, 4}")
 
   v8 = m3;

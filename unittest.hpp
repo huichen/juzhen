@@ -76,6 +76,21 @@ std::cout << " passed." << std::endl; \
 }
 
 /**
+ * test if two floats equal 
+*/
+#define VSE(lhs, rhs) \
+std::cout << "Test case " << testcount++ <<":";\
+if (lhs-rhs<-1e-6 || lhs-rhs>1e-6) { \
+UnitTest::m_nfail++; \
+return_value = false;\
+std::cout << " FAILED!" << std::endl;\
+  std::cout << "  Expect " << lhs << " = " << rhs <<std::endl ; \
+} else { \
+UnitTest::m_nsucc++; \
+std::cout << " passed." << std::endl; \
+}
+
+/**
  * test if bool lhs is true 
 */
 #define VB(lhs) \

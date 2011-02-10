@@ -1,12 +1,12 @@
 ifeq (${MLCPP_BLASLIB}, mkl) 
-CFLAGS = -DUSE_MKL -I./ -lmkl_rt -liomp5 -lpthread 
-CC = icc
-else
-ifeq (${MLCPP_BLASLIB}, gotoblas2) 
-CFLAGS = -I./ -lgoto2 -pthread 
+CFLAGS = -DUSE_MKL -I./ -lmkl_rt -liomp5 -lpthread -std=c++0x
 CC = g++ 
 else
-CFLAGS = -I./ -lblas 
+ifeq (${MLCPP_BLASLIB}, gotoblas2) 
+CFLAGS = -I./ -lgoto2 -pthread -std=c++0x 
+CC = g++ 
+else
+CFLAGS = -I./ -lblas -std=c++0x 
 CC = g++ 
 endif
 endif

@@ -87,7 +87,7 @@ myfile.close();\
 
 #ifdef MLCPP
 #define DEFV(vi) \
-cmatrix H##vi (MAXN, MAXN); \
+zmatrix H##vi (MAXN, MAXN); \
 for (size_t i=0; i<MAXN; i++) \
 for (size_t j=0; j<MAXN; j++) \
 H##vi(i,j) = 1;
