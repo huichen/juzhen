@@ -21,7 +21,7 @@ You need a package that provides CBLAS functions. I recommend optimized BLAS lib
   
 The package includes a very simple example (example.cpp). There are also plenty sample usages of mlcpp in unittest.cpp file. 
 
-Mlcpp's functions are similar to those of other C++ matrix libraries such as uBlas and Eigen. Read the <a href="annotated.html">API page</a> for reference. 
+Mlcpp's functions are similar to those of other C++ matrix libraries such as MTL4 and Eigen. Read the <a href="annotated.html">API page</a> for reference. 
 
 @section notes Notes
 
