@@ -339,6 +339,8 @@ public:
   template<typename T>
   void leigen(Matrix<Complex<T> > &e, Matrix<DataType> &vl) const;
 
+  typedef std::auto_ptr<DataArray<DataType> > DataPtr;
+
 protected:
   /**
    * Pointer to raw array. 
@@ -348,7 +350,7 @@ protected:
   /**
    * Auto pointer to m_rawptr. 
    */
-  typename DataPtr<DataType>::Type m_data; 
+  DataPtr m_data; 
 
   /**
    * Number of columns.
@@ -380,7 +382,7 @@ Matrix<DataType>::Matrix() : m_ncol(0), m_nrow(0) {
 
 template<typename DataType> 
 Matrix<DataType>::Matrix(size_t nr, size_t nc) : m_ncol(nc), m_nrow(nr) {
-  m_data = typename DataPtr<DataType>::Type(new DataArray<DataType>(m_ncol*m_nrow));
+  m_data = DataPtr(new DataArray<DataType>(m_ncol*m_nrow));
   m_temporary = false;
   m_rawptr = m_data->m_data;
 } 
@@ -389,7 +391,7 @@ template<typename DataType>
 template<typename T> 
 Matrix<DataType>::Matrix(const T *data, size_t nr, size_t nc) 
   : m_ncol(nc), m_nrow(nr) {
-  m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(data, nr*nc));
+  m_data =DataPtr(new DataArray<DataType>(data, nr*nc));
   m_temporary = false;
   m_rawptr = m_data->m_data;
 } 
@@ -398,7 +400,7 @@ template<typename DataType>
 template<typename T> 
 Matrix<DataType>::Matrix(const Matrix<T> &m) 
   : m_ncol(m.ncol()), m_nrow(m.nrow()) { 
-  m_data =typename DataPtr<DataType>::Type(
+  m_data =DataPtr(
     new DataArray<DataType>(m.dataptr(), m.nrow()*m.ncol())
   ); 
   m_temporary = false;
@@ -412,7 +414,7 @@ Matrix<DataType>::Matrix(const Matrix<DataType> &m)
     m_data = (const_cast<Matrix<DataType>& >(m)).m_data;
     m_temporary = true;
   } else {
-    m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(*(m.m_data)));
+    m_data =DataPtr(new DataArray<DataType>(*(m.m_data)));
     m_temporary = false;
   }
   m_rawptr = m_data->m_data;
@@ -430,7 +432,7 @@ Matrix<DataType>::operator= (const Matrix<DataType> &rhs) {
     return *this;
   }
   if ((m_rawptr == NULL) || m_data->m_size < rhs.ncol()*rhs.nrow()) 
-    m_data =typename DataPtr<DataType>::Type(new DataArray<DataType>(*(rhs.m_data)));
+    m_data =DataPtr(new DataArray<DataType>(*(rhs.m_data)));
   else 
     memcpy(m_data->m_data, rhs.dataptr(), rhs.ncol()*rhs.nrow()*sizeof(DataType));
   m_ncol = rhs.ncol();
@@ -486,7 +488,7 @@ inline DataType * Matrix<DataType>::dataptr() const {
 template<typename DataType> 
 void Matrix<DataType>::resize(size_t nr, size_t nc) {
   if (!m_rawptr || m_data->m_size < nc * nr) {
-    typename DataPtr<DataType>::Type 
+    DataPtr 
       newData(new DataArray<DataType>(*m_data, nr*nc));
     m_data = newData;
     m_rawptr = m_data->m_data;
@@ -1207,8 +1209,7 @@ typedef IdMatrix<CD> identity_zmatrix;
 
 template<typename DataType> 
 IdMatrix<DataType>::IdMatrix(size_t n) {
-  Matrix<DataType>::m_data = 
-    typename DataPtr<DataType>::Type(new DataArray<DataType>(n*n));
+  Matrix<DataType>::m_data = typename Matrix<DataType>::DataPtr(new DataArray<DataType>(n*n));
   Matrix<DataType>::m_ncol = n;
   Matrix<DataType>::m_nrow = n;
   Matrix<DataType>::m_rawptr = Matrix<DataType>::m_data->m_data;

@@ -244,8 +244,8 @@ Vector<DataType>::Vector(size_t i) : Matrix<DataType>(i, 1) { }
 template<typename DataType>
 Vector<DataType>::Vector(const Matrix<DataType> &m) {
   Matrix<DataType>::m_data = 
-   typename DataPtr<DataType>::Type(new DataArray<DataType>(m.dataptr(), 
-                                                    m.nrow()*m.ncol())); 
+   typename Matrix<DataType>::DataPtr(new DataArray<DataType>(m.dataptr(), 
+                                      m.nrow()*m.ncol())); 
   Matrix<DataType>::m_ncol =1;
   Matrix<DataType>::m_nrow = m.nrow()*m.ncol();
   Matrix<DataType>::m_rawptr = Matrix<DataType>::m_data->m_data;

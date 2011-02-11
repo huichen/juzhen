@@ -262,21 +262,5 @@ DataType& DataArray<DataType>::operator[](const size_t i) const {
 
 /////////////////////////////////////////////////////////////////////////////
 
-
-
-/////////////////////////////////////////////////////////////////////////////
-/**
- *  DataPtr class contains the type for DataArray's auto pointer.
- */
-template<typename DataType>
-class DataPtr{
-public:
-  /**
-   *  Type is the type for DataArray's auto pointer.
-   */
-  typedef std::auto_ptr<DataArray<DataType> > Type;
-};
-/////////////////////////////////////////////////////////////////////////////
-
 }
 #endif
