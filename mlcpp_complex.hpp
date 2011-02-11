@@ -178,9 +178,22 @@ inline const Complex<T> operator+(const Complex<T> &a, const Complex<T> &b) {
 }
 
 template<typename T>
+inline const Complex<T> operator+(const Complex<T> &a, const T &b) {
+  Complex<T> c;
+  c.real = a.real + b; 
+  return c;
+}
+
+template<typename T>
 inline Complex<T>& operator+=(Complex<T> &a, const Complex<T> &b) {
   a.real += b.real; 
   a.imag += b.imag;
+  return a;
+}
+
+template<typename T>
+inline Complex<T>& operator+=(Complex<T> &a, const T &b) {
+  a.real += b; 
   return a;
 }
 
@@ -193,9 +206,22 @@ inline const Complex<T> operator-(const Complex<T> &a, const Complex<T> &b) {
 }
 
 template<typename T>
+inline const Complex<T> operator-(const Complex<T> &a, const T &b) {
+  Complex<T> c;
+  c.real = a.real - b; 
+  return c;
+}
+
+template<typename T>
 inline Complex<T>& operator-=(Complex<T> &a, const Complex<T> &b) {
   a.real -= b.real; 
   a.imag -= b.real;
+  return a;
+}
+
+template<typename T>
+inline Complex<T>& operator-=(Complex<T> &a, const T &b) {
+  a.real -= b; 
   return a;
 }
 
@@ -309,6 +335,34 @@ inline double conj(const double a) {
 }
 
 inline float conj(const float a) {
+  return a;
+}
+
+template<typename T>
+inline T real(const Complex<T> &a) {
+  return a.real;
+}
+
+template<typename T>
+inline T imag(const Complex<T> &a) {
+  return a.imag;
+}
+
+inline float real(const float a) {
+  return a;
+}
+
+template<typename T>
+inline float imag(const float a) {
+  return a;
+}
+
+inline double real(const double a) {
+  return a;
+}
+
+template<typename T>
+inline double imag(const double a) {
   return a;
 }
 

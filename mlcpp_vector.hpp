@@ -34,7 +34,8 @@ namespace mlcpp {
 /** 
  *  Vector class
  */
-template<typename DataType> class Vector : public Matrix<DataType> {
+template<typename DataType> 
+class Vector : public Matrix<DataType> {
 public:
   /**
    * Default constructor.
@@ -554,7 +555,7 @@ DataType sum(const Vector<DataType> v) {
 /**
  * Find the norm-2 of a Vector.
  */
-double norm(Vector<CD> &v)  {
+double norm(const Vector<CD> &v)  {
   double r = 0;
   CD *p = v.dataptr();
   size_t size = v.size();
@@ -563,7 +564,7 @@ double norm(Vector<CD> &v)  {
   return sqrt(r);
 }
 
-float norm(Vector<CS> &v)  {
+float norm(const Vector<CS> &v)  {
   float r = 0;
   CS *p = v.dataptr();
   size_t size = v.size();
@@ -572,7 +573,7 @@ float norm(Vector<CS> &v)  {
   return sqrt(r);
 }
 
-double norm(Vector<double> &v)  {
+double norm(const Vector<double> &v)  {
   double r = 0;
   double *p = v.dataptr();
   size_t size = v.size();
@@ -581,7 +582,7 @@ double norm(Vector<double> &v)  {
   return sqrt(r);
 }
 
-float norm(Vector<float> &v)  {
+float norm(const Vector<float> &v)  {
   double r = 0;
   float *p = v.dataptr();
   size_t size = v.size();
