@@ -43,6 +43,13 @@ BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   smatrix m2 = m1;
   V(m2, "1 3 \n2 4 ")
 
+  m2 = dmatrix(a, 2, 2);
+  V(m2, "1 3 \n2 4 ")
+
+  dmatrix mm;
+  mm = m2;
+  V(mm, "1 3 \n2 4 ")
+
   m2(0,1) = 99.;
   V(m2, "1 99 \n2 4 ")
 
@@ -83,11 +90,11 @@ END_TEST(MatrixAssignment)
 BEGIN_TEST(MatrixElementType, "MatrixElementType")
 
 {
-  matrix<complex<double> > m1(3,3);
+  zmatrix m1(3,3);
   m1 = 1;
-  matrix<complex<double> > m2(3,3);
+  zmatrix m2(3,3);
   m2 = 1;
-  matrix<complex<double> > m3(3,3);
+  zmatrix m3(3,3);
   m3 = 1;
   
   m1 = m2*m3+m1/2;
@@ -96,11 +103,11 @@ BEGIN_TEST(MatrixElementType, "MatrixElementType")
 }
 
 {
-  matrix<complex<float> > m1(3,3);
+  cmatrix m1(3,3);
   m1 = 1;
-  matrix<complex<float> > m2(3,3);
+  cmatrix m2(3,3);
   m2 = 1;
-  matrix<complex<float> > m3(3,3);
+  cmatrix m3(3,3);
   m3 = 1;
   
   m1 = m2*m3 + m1/2.0;
@@ -110,11 +117,11 @@ BEGIN_TEST(MatrixElementType, "MatrixElementType")
 }
 
 {
-  matrix<double> m1(3,3);
+  dmatrix m1(3,3);
   m1 = 1;
-  matrix<double> m2(3,3);
+  dmatrix m2(3,3);
   m2 = 1;
-  matrix<double> m3(3,3);
+  dmatrix m3(3,3);
   m3 = 1;
   
   m1 = m2*m3+m1/2.0;
@@ -123,11 +130,11 @@ BEGIN_TEST(MatrixElementType, "MatrixElementType")
 }
 
 {
-  matrix<float> m1(3,3);
+  smatrix m1(3,3);
   m1 = 1;
-  matrix<float> m2(3,3);
+  smatrix m2(3,3);
   m2 = 1;
-  matrix<float> m3(3,3);
+  smatrix m3(3,3);
   m3 = 1;
   
   m1 = m2*m3+m1/2.0;
@@ -135,8 +142,6 @@ BEGIN_TEST(MatrixElementType, "MatrixElementType")
   V(conj(m1)*herm(m1), "36.75 36.75 36.75 \n36.75 36.75 36.75 \n36.75 36.75 36.75 ")
 
 }
-
-
 
 
 END_TEST(MatrixElementType)
@@ -284,9 +289,10 @@ BEGIN_TEST(MatrixHermTransConj, "MatrixHermTransConj")
   cmatrix m1(c1, 2,3);
   V(m1, "(1, 2) (2, 0.1) (6, 7) \n(-3, -1) (-2, 0.1) (3, 0.1) ")
 
-  V(real(m1), "1 2 6 \n-3 -2 3 ")
+  V(real(real(m1)), "1 2 6 \n-3 -2 3 ")
+  V(imag(real(m1)), "0 0 0 \n0 0 0 ")
 
-  V(imag(m1), "2 0.1 7 \n-1 0.1 0.1 ")
+  V(real(imag(m1)), "2 0.1 7 \n-1 0.1 0.1 ")
 
 
   V(herm(m1), "(1, -2) (-3, 1) \n(2, -0.1) (-2, -0.1) \n(6, -7) (3, -0.1) ")
@@ -418,10 +424,10 @@ BEGIN_TEST(MatrixSolver, "MatrixSolver")
  * Tests for identity matrix
 */
 BEGIN_TEST(IdentityMatrix, "IdentityMatrix")
-  smatrix m1 = diag_smatrix(3);
+  smatrix m1 = identity_smatrix(3);
   V(m1, "1 0 0 \n0 1 0 \n0 0 1 ")
 
-  diag_cmatrix m2(2);
+  identity_cmatrix m2(2);
   V(m2, "(1, 0) (0, 0) \n(0, 0) (1, 0) ")
 
 END_TEST(IdentityMatrix)
@@ -496,15 +502,14 @@ BEGIN_TEST(VectorTests, "VectorTests")
   VDE(max(v5), 4)
   VDE(v5.max(), 4)
 
-  VDE(norm(v5)*norm(v5), 30)
-  VDE(v5.norm()*v5.norm(), 30)
+  VDE(norm(v5)*norm(v5), 30.0)
 
   VDE(sum(v5), 10)
   VDE(v5.sum(), 10)
 
   VDE(v1*v1, 30)
   
-  smatrix m2 = diag_smatrix(4);
+  smatrix m2 = identity_smatrix(4);
   V(v1*m2, "{1, 2, 3, 4}")
   V(m2*v1, "{1, 2, 3, 4}")
 
@@ -555,7 +560,6 @@ BEGIN_TEST(VectorTests, "VectorTests")
   V(v7, "{(1, -2), (-3, 1), (2, -0.1), (-2, -0.1), (6, -7), (3, -0.1)}")
   
   VSE(norm(v6)*norm(v6), 117.03)
-  VSE(v6.norm()*v6.norm(), 117.03)
 
   V(svector(v1.stl()), "{1, 2, 3, 8}")
 

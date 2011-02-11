@@ -32,345 +32,340 @@ namespace mlcpp {
 
 /////////////////////////////////////////////////////////////////////////////
 /** 
- *  vector class
+ *  Vector class
  */
-template<typename DataType> class vector : public matrix<DataType> {
+template<typename DataType> class Vector : public Matrix<DataType> {
 public:
   /**
    * Default constructor.
    */
-  vector();
+  Vector();
 
   /**
-   * Construct a vector of size i.
+   * Construct a Vector of size i.
    */
-  vector(size_t i);
+  Vector(size_t i);
 
   /**
-   * Construct a vector from a matrix's column-major raw array.
+   * Construct a Vector from a Matrix's column-major raw array.
    */
-  vector(const matrix<DataType> &m);
+  Vector(const Matrix<DataType> &m);
 
   /**
-   * Construct a vector from an array. The size of the vector will be
+   * Construct a Vector from an array. The size of the Vector will be
    * the bigger of data's size and n.
    */
   template<typename T> 
-  vector(const T *data, size_t n);
+  Vector(const T *data, size_t n);
 
   /**
-   * Construct a vector from an existing vector.
+   * Construct a Vector from an existing Vector.
    */
-  vector(const std::vector<DataType> &v);
+  Vector(const std::vector<DataType> &v);
 
   /**
-   * Copy a vector from another vector.
+   * Copy a Vector from another Vector.
    */
-  vector<DataType>& operator=(const vector<DataType> &v);
+  Vector<DataType>& operator=(const Vector<DataType> &v);
 
   /**
-   * Copy a vector from a STL vector.
+   * Copy a Vector from a STL Vector.
    */
-  vector<DataType>& operator=(const std::vector<DataType> &v);
+  Vector<DataType>& operator=(const std::vector<DataType> &v);
 
   /**
-   * Assign all elements in the vector to be rhs. 
+   * Assign all elements in the Vector to be rhs. 
    */
-  vector<DataType>& operator=(const DataType rhs);
+  Vector<DataType>& operator=(const DataType rhs);
 
   /**
-   * Resize a vector.
+   * Resize a Vector.
    */
   void resize(size_t n);
 
   /**
-   * Resize a vector to have nc*nr elements. 
+   * Resize a Vector to have nc*nr elements. 
    */
   void resize(size_t nc, size_t nr);
 
   /**
-   * Return the size of the vector.
+   * Return the size of the Vector.
    */
   inline size_t size() const;
 
   /**
-   * Add two vectors.
+   * Add two Vectors.
    */
   template<typename T> 
-  const vector<DataType> operator+(const vector<T>& rhs) const;
+  const Vector<DataType> operator+(const Vector<T>& rhs) const;
  
   /**
-   * Add two vectors.
+   * Add two Vectors.
    */
   template<typename T> 
-  vector<DataType>& operator+=(const vector<T>& rhs);
+  Vector<DataType>& operator+=(const Vector<T>& rhs);
  
   /**
-   * Subtract two vectors.
+   * Subtract two Vectors.
    */
   template<typename T> 
-  const vector<DataType> operator-(const vector<T>& rhs) const;
+  const Vector<DataType> operator-(const Vector<T>& rhs) const;
  
   /**
-   * Subtract two vectors.
+   * Subtract two Vectors.
    */
   template<typename T> 
-  vector<DataType>& operator-=(const vector<T>& rhs); 
+  Vector<DataType>& operator-=(const Vector<T>& rhs); 
 
   /**
-   * Multiply a vector with a real number. 
+   * Multiply a Vector with a real number. 
    */
-  const vector<DataType> operator*(const double rhs) const;
+  const Vector<DataType> operator*(const double rhs) const;
 
   /**
-   * Multiply a vector with a real number. 
+   * Multiply a Vector with a real number. 
    */
-  vector<DataType>& operator*=(const double rhs); 
+  Vector<DataType>& operator*=(const double rhs); 
 
   /**
-   * Multiply a vector with a complex number. 
+   * Multiply a Vector with a complex number. 
    */
-  const vector<DataType> operator*(const CD rhs) const;
+  const Vector<DataType> operator*(const CD rhs) const;
 
   /**
-   * Multiply a vector with a complex number. 
+   * Multiply a Vector with a complex number. 
    */
-  vector<DataType>& operator*=(const CD rhs);
+  Vector<DataType>& operator*=(const CD rhs);
 
   /**
-   * Multiply a vector and a matrix. The vector's size must be equal
-   * to the matrix's number of rows. 
+   * Multiply a Vector and a Matrix. The Vector's size must be equal
+   * to the Matrix's number of rows. 
    */
-  const vector<DataType> operator*(const matrix<DataType>& rhs) const;
+  const Vector<DataType> operator*(const Matrix<DataType>& rhs) const;
 
   /**
-   * Multiply a vector and a matrix. The vector's size must be equal
-   * to the matrix's number of rows. 
+   * Multiply a Vector and a Matrix. The Vector's size must be equal
+   * to the Matrix's number of rows. 
    */
-  vector<DataType>& operator*=(const matrix<DataType>& rhs);
+  Vector<DataType>& operator*=(const Matrix<DataType>& rhs);
 
   /**
-   * Dot product two vectors. 
-   */
-  template<typename T> 
-  const DataType operator* (const vector<T> &rv);
-
-  /**
-   * Divide a vector by a constant.
+   * Dot product two Vectors. 
    */
   template<typename T> 
-  const vector<DataType> operator/(const T rhs) const;
+  const DataType operator* (const Vector<T> &rv);
 
   /**
-   * Divide a vector by a constant.
+   * Divide a Vector by a constant.
    */
   template<typename T> 
-  vector<DataType>& operator/=(const T rhs); 
+  const Vector<DataType> operator/(const T rhs) const;
 
   /**
-   * Get real part of a vector.
+   * Divide a Vector by a constant.
+   */
+  template<typename T> 
+  Vector<DataType>& operator/=(const T rhs); 
+
+  /**
+   * Get real part of a Vector.
    */
   template<typename T>
-  vector<T> real() const;
+  Vector<T> real() const;
 
   /**
-   * Get imaginary part of a vector.
+   * Get imaginary part of a Vector.
    */
   template<typename T>
-  vector<T> imag() const;
+  Vector<T> imag() const;
 
   /**
-   * Get transpose of a vector (just conjugate it). 
+   * Get transpose of a Vector (just conjugate it). 
    */
-  vector<DataType> trans() const;
+  Vector<DataType> trans() const;
 
   /**
-   * Get hermitian of a vector (just conjugate it). 
+   * Get hermitian of a Vector (just conjugate it). 
    */
-  vector<DataType> herm() const;
+  Vector<DataType> herm() const;
 
   /**
-   * Get conjugate of a vector.
+   * Get conjugate of a Vector.
    */
-  vector<DataType> conj() const; 
+  Vector<DataType> conj() const; 
 
   /**
-   * Get sum of a vector's all elements.
+   * Get sum of a Vector's all elements.
    */
   DataType sum() const; 
 
   /**
-   * Get norm_2 of a vector.
-   */
-  double norm() const; 
-
-  /**
-   * Get the maximum element of a vector.
+   * Get the maximum element of a Vector.
    */
   DataType max() const; 
 
   /**
    * Swap two elements.
    */
-  vector<DataType> &swap(size_t i1, size_t i2);
+  Vector<DataType> &swap(size_t i1, size_t i2);
 
   /**
    * Return a sub-vector of [i1, i2)
    */
-  vector<DataType> block(size_t i1, size_t i2);
+  Vector<DataType> block(size_t i1, size_t i2);
 
   /**
-   * Replace the sub-vector starting at i with another vector v. 
+   * Replace the sub-vector starting at i with another Vector v. 
    */
-  vector<DataType> &insert(size_t i, vector<DataType> v);
+  Vector<DataType> &insert(size_t i, Vector<DataType> v);
 
   /**
-   * Sort a vector. This will give you error for a complex vector.
+   * Sort a Vector. This will give you error for a complex Vector.
    */
-  vector<DataType> &sort();
+  Vector<DataType> &sort();
 
   /**
-   * Get a STL vector from the vector. 
+   * Get a STL Vector from the Vector. 
    */
   std::vector<DataType> stl();
 };
 
-typedef vector<float> svector;
-typedef vector<double> dvector;
-typedef vector<CS> cvector;
-typedef vector<CD> zvector;
+typedef Vector<float> svector;
+typedef Vector<double> dvector;
+typedef Vector<CS> cvector;
+typedef Vector<CD> zvector;
 
 template<typename DataType>
-vector<DataType>::vector() : matrix<DataType>() { }
+Vector<DataType>::Vector() : Matrix<DataType>() { }
 
 template<typename DataType>
-vector<DataType>::vector(size_t i) : matrix<DataType>(i, 1) { }
+Vector<DataType>::Vector(size_t i) : Matrix<DataType>(i, 1) { }
 
 template<typename DataType>
-vector<DataType>::vector(const matrix<DataType> &m) {
-  matrix<DataType>::m_data = 
+Vector<DataType>::Vector(const Matrix<DataType> &m) {
+  Matrix<DataType>::m_data = 
    typename DataPtr<DataType>::Type(new DataArray<DataType>(m.dataptr(), 
                                                     m.nrow()*m.ncol())); 
-  matrix<DataType>::m_ncol =1;
-  matrix<DataType>::m_nrow = m.nrow()*m.ncol();
-  matrix<DataType>::m_rawptr = matrix<DataType>::m_data->m_data;
-  matrix<DataType>::m_temporary = m.gettemporary();
+  Matrix<DataType>::m_ncol =1;
+  Matrix<DataType>::m_nrow = m.nrow()*m.ncol();
+  Matrix<DataType>::m_rawptr = Matrix<DataType>::m_data->m_data;
+  Matrix<DataType>::m_temporary = m.gettemporary();
 }
 
 template<typename DataType>
 template<typename T> 
-vector<DataType>::vector(const T *data, size_t n) 
-  : matrix<DataType>(data, n, 1){ } 
+Vector<DataType>::Vector(const T *data, size_t n) 
+  : Matrix<DataType>(data, n, 1){ } 
 
 template<typename DataType>
-vector<DataType>::vector(const std::vector<DataType> &v) 
-  : matrix<DataType>(&v[0], v.size(), 1) {
+Vector<DataType>::Vector(const std::vector<DataType> &v) 
+  : Matrix<DataType>(&v[0], v.size(), 1) {
 }
 
 template<typename DataType>
-vector<DataType>& vector<DataType>::operator=(const vector<DataType> &v) { 
-  matrix<DataType>::operator=(v);
+Vector<DataType>& Vector<DataType>::operator=(const Vector<DataType> &v) { 
+  Matrix<DataType>::operator=(v);
   return *this;
 } 
 
 template<typename DataType>
-vector<DataType> & 
-vector<DataType>::operator=(const std::vector<DataType> &v) { 
+Vector<DataType> & 
+Vector<DataType>::operator=(const std::vector<DataType> &v) { 
   size_t s = v.size();
   resize(s);
   DataType *p1;
-  p1 = matrix<DataType>::dataptr();
+  p1 = Matrix<DataType>::dataptr();
   for(size_t i=0; i<s; i++) *(p1++) = v[i];
   return *this;
 } 
 
 template<typename DataType>
-vector<DataType>& vector<DataType>::operator=(const DataType rhs) {
-  matrix<DataType>::operator=(rhs);
+Vector<DataType>& Vector<DataType>::operator=(const DataType rhs) {
+  Matrix<DataType>::operator=(rhs);
   return *this;
 }
 
 template<typename DataType>
-void vector<DataType>::resize(size_t n) { matrix<DataType>::resize(n,1);}
+void Vector<DataType>::resize(size_t n) { Matrix<DataType>::resize(n,1);}
 
 template<typename DataType>
-void vector<DataType>::resize(size_t nc, size_t nr) {matrix<DataType>::resize(nc*nr,1);};
+void Vector<DataType>::resize(size_t nc, size_t nr) {Matrix<DataType>::resize(nc*nr,1);};
 
 template<typename DataType>
-inline size_t vector<DataType>::size() const {
-  return matrix<DataType>::m_nrow;
+inline size_t Vector<DataType>::size() const {
+  return Matrix<DataType>::m_nrow;
 }
 
 template<typename DataType>
 template<typename T> 
-const vector<DataType> vector<DataType>::operator+(const vector<T>& rhs) const {
-  return matrix<DataType>::operator+(rhs);
+const Vector<DataType> Vector<DataType>::operator+(const Vector<T>& rhs) const {
+  return Matrix<DataType>::operator+(rhs);
 }
 
 template<typename DataType>
 template<typename T> 
-vector<DataType>& vector<DataType>::operator+=(const vector<T>& rhs) {
-  matrix<DataType>::operator+=(rhs);
+Vector<DataType>& Vector<DataType>::operator+=(const Vector<T>& rhs) {
+  Matrix<DataType>::operator+=(rhs);
   return *this;
 }
 
 template<typename DataType>
 template<typename T> 
-const vector<DataType> 
-vector<DataType>::operator-(const vector<T>& rhs) const {
-  return matrix<DataType>::operator-(rhs);
+const Vector<DataType> 
+Vector<DataType>::operator-(const Vector<T>& rhs) const {
+  return Matrix<DataType>::operator-(rhs);
 }
 
 template<typename DataType>
 template<typename T> 
-vector<DataType>& vector<DataType>::operator-=(const vector<T>& rhs) {
-  matrix<DataType>::operator-=(rhs);
+Vector<DataType>& Vector<DataType>::operator-=(const Vector<T>& rhs) {
+  Matrix<DataType>::operator-=(rhs);
   return *this;
 }
 
 template<typename DataType>
-const vector<DataType> vector<DataType>::operator*(const double rhs) const {
-  return matrix<DataType>::operator*(rhs);
+const Vector<DataType> Vector<DataType>::operator*(const double rhs) const {
+  return Matrix<DataType>::operator*(rhs);
 }
 
 template<typename DataType>
-vector<DataType>& vector<DataType>::operator*=(const double rhs) {
-  matrix<DataType>::operator*=(rhs);
+Vector<DataType>& Vector<DataType>::operator*=(const double rhs) {
+  Matrix<DataType>::operator*=(rhs);
   return *this;
 }
 
 template<typename DataType>
-const vector<DataType> vector<DataType>::operator*(const CD rhs) const {
-  return matrix<DataType>::operator*(rhs);
+const Vector<DataType> Vector<DataType>::operator*(const CD rhs) const {
+  return Matrix<DataType>::operator*(rhs);
 }
 
 template<typename DataType>
-vector<DataType>& vector<DataType>::operator*=(const CD rhs) {
-  matrix<DataType>::operator*=(rhs);
+Vector<DataType>& Vector<DataType>::operator*=(const CD rhs) {
+  Matrix<DataType>::operator*=(rhs);
   return *this;
 }
 
 template<typename DataType>
-const vector<DataType> 
-vector<DataType>::operator*(const matrix<DataType>& rhs) const {
-  return matrix<DataType>::trans() * rhs;
+const Vector<DataType> 
+Vector<DataType>::operator*(const Matrix<DataType>& rhs) const {
+  return Matrix<DataType>::trans() * rhs;
 }
 
 template<typename DataType>
-vector<DataType>& vector<DataType>::operator*=(const matrix<DataType>& rhs) {
+Vector<DataType>& Vector<DataType>::operator*=(const Matrix<DataType>& rhs) {
   
-  matrix<DataType> m = *this;
+  Matrix<DataType> m = *this;
   (*this) = m.trans() * rhs;
   return *this;
 }
 
 template<typename DataType>
 template<typename T> 
-const DataType vector<DataType>::operator* (const vector<T> &rv) {
+const DataType Vector<DataType>::operator* (const Vector<T> &rv) {
   assert(size() == rv.size());
   DataType res = 0;
   size_t s = size();
-  DataType *p1 = matrix<DataType>::dataptr();
+  DataType *p1 = Matrix<DataType>::dataptr();
   T *p2 = rv.dataptr();
   for(size_t i =0;i<s; i++) res+=*(p1++)*(*(p2++));
   return res;
@@ -378,56 +373,47 @@ const DataType vector<DataType>::operator* (const vector<T> &rv) {
 
 template<typename DataType>
 template<typename T> 
-const vector<DataType> vector<DataType>::operator/(const T rhs) const {
-  return matrix<DataType>::operator/(rhs);
+const Vector<DataType> Vector<DataType>::operator/(const T rhs) const {
+  return Matrix<DataType>::operator/(rhs);
 }
 
 template<typename DataType>
 template<typename T> 
-vector<DataType>& vector<DataType>::operator/=(const T rhs) {
-  matrix<DataType>::operator/=(rhs);
+Vector<DataType>& Vector<DataType>::operator/=(const T rhs) {
+  Matrix<DataType>::operator/=(rhs);
   return *this;
 }
 
 template<typename DataType>
-vector<DataType> vector<DataType>::trans() const {
+Vector<DataType> Vector<DataType>::trans() const {
   return *this;
 }
 
 
 template<typename DataType>
-DataType vector<DataType>::sum() const {
+DataType Vector<DataType>::sum() const {
   DataType r = 0;
-  DataType *p = matrix<DataType>::dataptr();
+  DataType *p = Matrix<DataType>::dataptr();
   for(size_t i=0; i<size(); i++)
     r += *(p++);
   return r;
 } 
-
+ 
 template<typename DataType>
-double vector<DataType>::norm() const {
-  double r = 0;
-  DataType *p = matrix<DataType>::dataptr();
-  for(size_t i=0; i<size(); i++)
-    r += abs2(*(p++));
-  return sqrt(r);
-} 
-
-template<typename DataType>
-vector<DataType> vector<DataType>::herm() const {
-  return matrix<DataType>::conj();
+Vector<DataType> Vector<DataType>::herm() const {
+  return Matrix<DataType>::conj();
 }
 
 template<typename DataType>
-vector<DataType> vector<DataType>::conj() const {
-  return matrix<DataType>::conj();
+Vector<DataType> Vector<DataType>::conj() const {
+  return Matrix<DataType>::conj();
 }
 
 template<typename DataType>
-DataType vector<DataType>::max() const {
+DataType Vector<DataType>::max() const {
   assert(size()>0);
   DataType r = (*this)(0);
-  DataType *p = matrix<DataType>::dataptr();
+  DataType *p = Matrix<DataType>::dataptr();
   for(size_t i=0; i<size(); i++) {
     if (r < *p) r = *p; 
     p++;
@@ -436,9 +422,9 @@ DataType vector<DataType>::max() const {
 } 
 
 template<typename DataType> 
-vector<DataType> & vector<DataType>::swap(size_t i1, size_t i2) {
+Vector<DataType> & Vector<DataType>::swap(size_t i1, size_t i2) {
   assert(i1<size() && i2<size());
-  DataType *p = matrix<DataType>::m_data->m_data;
+  DataType *p = Matrix<DataType>::m_data->m_data;
   DataType temp;
   temp = p[i1];
   p[i1] = p[i2];
@@ -447,116 +433,177 @@ vector<DataType> & vector<DataType>::swap(size_t i1, size_t i2) {
 }
 
 template<typename DataType>
-vector<DataType> vector<DataType>::block(size_t i1, size_t i2) {
-  return matrix<DataType>::block(i1, i2, 0, 1);
+Vector<DataType> Vector<DataType>::block(size_t i1, size_t i2) {
+  return Matrix<DataType>::block(i1, i2, 0, 1);
 }
 
 template<typename DataType>
-vector<DataType> & vector<DataType>::insert(size_t i, vector<DataType> v) {
-  matrix<DataType>::insert(i, 0);
+Vector<DataType> & Vector<DataType>::insert(size_t i, Vector<DataType> v) {
+  Matrix<DataType>::insert(i, 0);
   return (*this);
 }
 
 template<typename DataType>
-vector<DataType> & vector<DataType>::sort() {
-  std::vector<DataType> v(matrix<DataType>::dataptr(), 
-                          matrix<DataType>::dataptr()+size());
+Vector<DataType> & Vector<DataType>::sort() {
+  std::vector<DataType> v(Matrix<DataType>::dataptr(), 
+                          Matrix<DataType>::dataptr()+size());
   std::sort(v.begin(), v.end());
   for (size_t i=0; i<v.size(); i++) (*this)[i] = v[i];
   return (*this);
 }
 
 template<typename DataType>
-std::vector<DataType> vector<DataType>::stl() {
-  std::vector<DataType> v(matrix<DataType>::dataptr(), 
-                          matrix<DataType>::dataptr()+size());
+std::vector<DataType> Vector<DataType>::stl() {
+  std::vector<DataType> v(Matrix<DataType>::dataptr(), 
+                          Matrix<DataType>::dataptr()+size());
   return v;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
- * Return the transpose of a vector.
+ * Return the transpose of a Vector.
  */
 template<typename DataType> 
-vector<DataType> trans(const vector<DataType> &v) {
+Vector<DataType> trans(const Vector<DataType> &v) {
   return v;
 }
 
 /**
- * Return the hermitian of a vector.
+ * Return the hermitian of a Vector.
  */
 template<typename DataType> 
-vector<DataType> herm(const vector<DataType> &v) {
+Vector<DataType> herm(const Vector<DataType> &v) {
   return v.herm();
 }
 
 /**
- * Return the conjugate of a vector.
+ * Return the conjugate of a Vector.
  */
 template<typename DataType> 
-vector<DataType> conj(const vector<DataType> &v) {
+Vector<DataType> conj(const Vector<DataType> &v) {
   return v.conj();
 }
 
 /**
- * Return the real part of a vector.
+ * Return the real part of a Vector.
  */
-vector<float> real(const vector<CS> &v) {
-  return real((matrix<CS>)v);
+Vector<float> real(const Vector<float> &v) {
+  return real((Matrix<float>)v);
 } 
 
 /**
- * Return the imaginary part of a vector.
+ * Return the imaginary part of a Vector.
  */
-vector<float> imag(const vector<CS> &v) {
-  return imag((matrix<CS>)v);
+Vector<float> imag(const Vector<float> &v) {
+  return imag((Matrix<float>)v);
 }
 
+
 /**
- * Return the real part of a vector.
+ * Return the real part of a Vector.
  */
-vector<double> real(const vector<CD> &v) {
-  return real((matrix<CD>)v);
+Vector<double> real(const Vector<double> &v) {
+  return real((Matrix<double>)v);
 } 
 
 /**
- * Return the imaginary part of a vector.
+ * Return the imaginary part of a Vector.
  */
-vector<double> imag(const vector<CD> &v) {
-  return imag((matrix<CD>)v);
+Vector<double> imag(const Vector<double> &v) {
+  return imag((Matrix<double>)v);
+}
+
+
+/**
+ * Return the real part of a Vector.
+ */
+Vector<float> real(const Vector<CS> &v) {
+  return real((Matrix<CS>)v);
+} 
+
+/**
+ * Return the imaginary part of a Vector.
+ */
+Vector<float> imag(const Vector<CS> &v) {
+  return imag((Matrix<CS>)v);
 }
 
 /**
- * Find the sum of a vector's all elements.
+ * Return the real part of a Vector.
+ */
+Vector<double> real(const Vector<CD> &v) {
+  return real((Matrix<CD>)v);
+} 
+
+/**
+ * Return the imaginary part of a Vector.
+ */
+Vector<double> imag(const Vector<CD> &v) {
+  return imag((Matrix<CD>)v);
+}
+
+/**
+ * Find the sum of a Vector's all elements.
  */
 template<typename DataType> 
-DataType sum(const vector<DataType> v) {
+DataType sum(const Vector<DataType> v) {
   return v.sum();
 } 
 
 /**
- * Find the norm-2 of a vector.
+ * Find the norm-2 of a Vector.
  */
-template<typename DataType> 
-double norm(const vector<DataType> v) {
-  return v.norm();
-} 
+double norm(Vector<CD> &v)  {
+  double r = 0;
+  CD *p = v.dataptr();
+  size_t size = v.size();
+  for(size_t i=0; i<size; i++)
+    r += abs2(*(p++));
+  return sqrt(r);
+}
+
+float norm(Vector<CS> &v)  {
+  float r = 0;
+  CS *p = v.dataptr();
+  size_t size = v.size();
+  for(size_t i=0; i<size; i++)
+    r += abs2(*(p++));
+  return sqrt(r);
+}
+
+double norm(Vector<double> &v)  {
+  double r = 0;
+  double *p = v.dataptr();
+  size_t size = v.size();
+  for(size_t i=0; i<size; i++)
+    r += abs2(*(p++));
+  return sqrt(r);
+}
+
+float norm(Vector<float> &v)  {
+  double r = 0;
+  float *p = v.dataptr();
+  size_t size = v.size();
+  for(size_t i=0; i<size; i++)
+    r += abs2(*(p++));
+  return sqrt(r);
+}
 
 /**
- * Find the maximum element in a vector.
+ * Find the maximum element in a Vector.
  */
 template<typename DataType> 
-DataType max(const vector<DataType> v) {
+DataType max(const Vector<DataType> v) {
   return v.max();
 } 
 
 /**
- * Sort a vector.
+ * Sort a Vector.
  */
 template<typename DataType> 
-vector<DataType> sort(const vector<DataType> &v) {
-  vector<DataType> v2(v.size());
+Vector<DataType> sort(const Vector<DataType> &v) {
+  Vector<DataType> v2(v.size());
   std::vector<DataType> v1(v.dataptr(), v.dataptr()+v.size());
   std::sort(v1.begin(), v1.end());
   for (size_t i=0; i<v1.size(); i++) v2[i] = v1[i];
@@ -564,11 +611,11 @@ vector<DataType> sort(const vector<DataType> &v) {
 }
 
 /**
- * Multiply a real number and a vector.
+ * Multiply a real number and a Vector.
  */
 template<typename DataType> 
-const vector<DataType> 
-operator*(const double lhs, const vector<DataType> &ma) {
+const Vector<DataType> 
+operator*(const double lhs, const Vector<DataType> &ma) {
   if (ma.m_temporary) {
     DataType *p = ma.dataptr();
     size_t maxi = ma.size();
@@ -576,7 +623,7 @@ operator*(const double lhs, const vector<DataType> &ma) {
       *(p++) *= lhs; 
     return ma; 
   } else {
-    vector<DataType> m(ma.size());
+    Vector<DataType> m(ma.size());
     DataType *p1 = ma.dataptr();
     DataType *p2 = m.dataptr();
     size_t maxi = ma.size();
@@ -587,11 +634,11 @@ operator*(const double lhs, const vector<DataType> &ma) {
 }
 
 /**
- * Multiply a complex number and a vector.
+ * Multiply a complex number and a Vector.
  */
 template<typename DataType> 
-const vector<DataType> 
-operator*(const CD lhs, const vector<DataType> &ma) {
+const Vector<DataType> 
+operator*(const CD lhs, const Vector<DataType> &ma) {
   if (ma.m_temporary) {
     DataType *p = ma.dataptr();
     size_t maxi = ma.size();
@@ -599,7 +646,7 @@ operator*(const CD lhs, const vector<DataType> &ma) {
       *(p++) *= lhs; 
     return ma; 
   } else {
-    vector<DataType> m(ma.size());
+    Vector<DataType> m(ma.size());
     DataType *p1 = ma.dataptr();
     DataType *p2 = m.dataptr();
     size_t maxi = ma.size();
@@ -610,26 +657,26 @@ operator*(const CD lhs, const vector<DataType> &ma) {
 }
 
 /**
- * Multiply a matrix and a vector.
+ * Multiply a Matrix and a Vector.
  */
 template<typename DataType> 
-const vector<DataType> 
-operator*(const matrix<DataType>& ma, const vector<DataType>& v) {
-  return ma*((matrix<DataType>&)v);
+const Vector<DataType> 
+operator*(const Matrix<DataType>& ma, const Vector<DataType>& v) {
+  return ma*((Matrix<DataType>&)v);
 }
 
 /**
- * Multiply a matrix and a vector.
+ * Multiply a Matrix and a Vector.
  */
 template<typename DataType> 
-vector<DataType>& 
-operator*=(matrix<DataType>& ma, const vector<DataType>& v) {
-  ma *= (matrix<DataType>&) v;
+Vector<DataType>& 
+operator*=(Matrix<DataType>& ma, const Vector<DataType>& v) {
+  ma *= (Matrix<DataType>&) v;
   return ma;
 }
 
 template<typename DataType> 
-std::ostream& operator<< (std::ostream& out, const vector<DataType> &m) {
+std::ostream& operator<< (std::ostream& out, const Vector<DataType> &m) {
   out << "{";
   for (size_t i=0; i<m.size(); i++) {
     if (i!=m.size()-1) out << m(i) << ", ";
@@ -640,11 +687,11 @@ std::ostream& operator<< (std::ostream& out, const vector<DataType> &m) {
 }
 
 /**
- * Return string form of a matrix.
+ * Return string form of a Matrix.
  */
 
 template<typename DataType> 
-std::string toString(const vector<DataType> &m) {
+std::string toString(const Vector<DataType> &m) {
   std::ostringstream out;
   out << m;
   return out.str(); 

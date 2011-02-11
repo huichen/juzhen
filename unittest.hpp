@@ -65,7 +65,7 @@ std::cout << " passed." << std::endl; \
 */
 #define VDE(lhs, rhs) \
 std::cout << "Test case " << testcount++ <<":";\
-if (lhs-rhs<-1e-7 || lhs-rhs>1e-7) { \
+if (lhs-rhs<-1e-4 || lhs-rhs>1e-4) { \
 UnitTest::m_nfail++; \
 return_value = false;\
 std::cout << " FAILED!" << std::endl;\
@@ -80,7 +80,7 @@ std::cout << " passed." << std::endl; \
 */
 #define VSE(lhs, rhs) \
 std::cout << "Test case " << testcount++ <<":";\
-if (lhs-rhs<-1e-6 || lhs-rhs>1e-6) { \
+if (lhs-rhs<-1e-4 || lhs-rhs>1e-4) { \
 UnitTest::m_nfail++; \
 return_value = false;\
 std::cout << " FAILED!" << std::endl;\
