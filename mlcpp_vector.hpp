@@ -121,40 +121,20 @@ public:
   /**
    * Multiply a Vector with a real number. 
    */
-  const Vector<DataType> operator*(const double rhs) const;
+  template<typename T>
+  const Vector<DataType> operator*(const T rhs) const;
 
   /**
    * Multiply a Vector with a real number. 
    */
-  Vector<DataType>& operator*=(const double rhs); 
-
-  /**
-   * Multiply a Vector with a complex number. 
-   */
-  const Vector<DataType> operator*(const CD rhs) const;
-
-  /**
-   * Multiply a Vector with a complex number. 
-   */
-  Vector<DataType>& operator*=(const CD rhs);
-
-  /**
-   * Multiply a Vector and a Matrix. The Vector's size must be equal
-   * to the Matrix's number of rows. 
-   */
-  const Vector<DataType> operator*(const Matrix<DataType>& rhs) const;
+  template<typename T>
+  Vector<DataType>& operator*=(const T rhs); 
 
   /**
    * Multiply a Vector and a Matrix. The Vector's size must be equal
    * to the Matrix's number of rows. 
    */
   Vector<DataType>& operator*=(const Matrix<DataType>& rhs);
-
-  /**
-   * Dot product two Vectors. 
-   */
-  template<typename T> 
-  const DataType operator* (const Vector<T> &rv);
 
   /**
    * Divide a Vector by a constant.
@@ -325,31 +305,16 @@ Vector<DataType>& Vector<DataType>::operator-=(const Vector<T>& rhs) {
 }
 
 template<typename DataType>
-const Vector<DataType> Vector<DataType>::operator*(const double rhs) const {
+template<typename T>
+const Vector<DataType> Vector<DataType>::operator*(const T rhs) const {
   return Matrix<DataType>::operator*(rhs);
 }
 
 template<typename DataType>
-Vector<DataType>& Vector<DataType>::operator*=(const double rhs) {
+template<typename T>
+Vector<DataType>& Vector<DataType>::operator*=(const T rhs) {
   Matrix<DataType>::operator*=(rhs);
   return *this;
-}
-
-template<typename DataType>
-const Vector<DataType> Vector<DataType>::operator*(const CD rhs) const {
-  return Matrix<DataType>::operator*(rhs);
-}
-
-template<typename DataType>
-Vector<DataType>& Vector<DataType>::operator*=(const CD rhs) {
-  Matrix<DataType>::operator*=(rhs);
-  return *this;
-}
-
-template<typename DataType>
-const Vector<DataType> 
-Vector<DataType>::operator*(const Matrix<DataType>& rhs) const {
-  return Matrix<DataType>::trans() * rhs;
 }
 
 template<typename DataType>
@@ -358,18 +323,6 @@ Vector<DataType>& Vector<DataType>::operator*=(const Matrix<DataType>& rhs) {
   Matrix<DataType> m = *this;
   (*this) = m.trans() * rhs;
   return *this;
-}
-
-template<typename DataType>
-template<typename T> 
-const DataType Vector<DataType>::operator* (const Vector<T> &rv) {
-  assert(size() == rv.size());
-  DataType res = 0;
-  size_t s = size();
-  DataType *p1 = Matrix<DataType>::dataptr();
-  T *p2 = rv.dataptr();
-  for(size_t i =0;i<s; i++) res+=*(p1++)*(*(p2++));
-  return res;
 }
 
 template<typename DataType>
@@ -658,11 +611,34 @@ operator*(const CD lhs, const Vector<DataType> &ma) {
 }
 
 /**
+ * Vector dot product.
+ */
+template<typename DataType> 
+const DataType operator*(const Vector<DataType>& v1, const Vector<DataType>& v2) {
+  assert(v1.size() == v2.size());
+  DataType res = 0;
+  size_t s = v1.size();
+  DataType *p1 = v1.dataptr();
+  DataType *p2 = v2.dataptr();
+  for(size_t i =0;i<s; i++) res+=*(p1++)*(*(p2++));
+  return res;
+}
+
+/**
  * Multiply a Matrix and a Vector.
  */
 template<typename DataType> 
 const Vector<DataType> 
 operator*(const Matrix<DataType>& ma, const Vector<DataType>& v) {
+  return ma*((Matrix<DataType>&)v);
+}
+
+/**
+ * Multiply a Matrix and a Vector.
+ */
+template<typename DataType> 
+const Vector<DataType> 
+operator*(const Vector<DataType>& v, const Matrix<DataType>& ma) {
   return ma*((Matrix<DataType>&)v);
 }
 
