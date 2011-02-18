@@ -291,7 +291,7 @@ public:
   /**
    * Return the Matrix's c-th column.
    */
-  inline Matrix<DataType> GetColumn(size_t c) const;
+  inline Matrix<DataType> GetCol(size_t c) const;
 
   /**
    * Return the Matrix's r-th row.
@@ -898,7 +898,7 @@ Matrix<DataType>& Matrix<DataType>::Replace(size_t r, size_t c,
 }
 
 template<typename DataType> 
-inline Matrix<DataType> Matrix<DataType>::GetColumn(size_t c) const {
+inline Matrix<DataType> Matrix<DataType>::GetCol(size_t c) const {
   return Matrix<DataType>(raw_ptr_+c*num_row_, num_row_, 1);
 }
 
