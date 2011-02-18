@@ -52,13 +52,13 @@ struct Complex {
   /** 
    * Construct a Complex number from its real and imaginary part. 
    */
-  Complex(T r, T i);
+  Complex(const T &r, const T &i);
 
   /** 
    * Construct a Complex number from a real number with imaginary part to be
    * zero.
    */
-  Complex(const T r);
+  Complex(const T &r);
 
   /**
    * Construct(copying) a Complex number from another Complex number.
@@ -69,7 +69,7 @@ struct Complex {
   /**
    * Copy from a real number with imaginary part set to zero. 
    */
-  inline const Complex<T> & operator=(T r);
+  inline const Complex<T> & operator=(const T &r);
 
   /**
    * Copy from another Complex number
@@ -87,7 +87,7 @@ struct Complex {
    * Check if a Complex number equals to a real number and its imaginary part
    * is zero. 
    */
-  inline bool operator==(const T c);
+  inline bool operator==(const T &c);
 
   /**
    * Check if two Complex numbers are not equal.
@@ -99,20 +99,20 @@ struct Complex {
    * Check if a Complex number is not equal to a real number. It holds true
    * when the imaginary part of the Complex number is not zero. 
    */
-  inline bool operator!=(const T c);
+  inline bool operator!=(const T &c);
 };
 
 typedef Complex<double> CD;
 typedef Complex<float> CS;
 
 template<typename T>
-Complex<T>::Complex(T r, T i) { 
+Complex<T>::Complex(const T &r, const T &i) { 
   real = r; 
   imag = i;
 }
 
 template<typename T>
-Complex<T>::Complex(T r) { 
+Complex<T>::Complex(const T &r) { 
   real = r; 
   imag =0.0;
 }
@@ -125,7 +125,7 @@ Complex<T>::Complex(const Complex<T1>& c) {
 }
 
 template<typename T>
-inline const Complex<T>& Complex<T>::operator=(T r) {
+inline const Complex<T>& Complex<T>::operator=(const T &r) {
   real = r;
   imag = 0.0;
   return *this;
@@ -147,7 +147,7 @@ inline bool Complex<T>::operator==(const Complex<T1> &c) {
 }
 
 template<typename T>
-inline bool Complex<T>::operator==(const T c) {
+inline bool Complex<T>::operator==(const T &c) {
   if (real == c && imag == 0) return true;
   else return false;
 }
@@ -160,7 +160,7 @@ inline bool Complex<T>::operator!=(const Complex<T1> &c) {
 }
 
 template<typename T>
-inline bool Complex<T>::operator!=(const T c) {
+inline bool Complex<T>::operator!=(const T &c) {
   if (real == c && imag == 0) return false;
   else return true;
 }
@@ -242,7 +242,7 @@ inline Complex<T>& operator*=(Complex<T> &a, const Complex<T1> &b) {
 }
 
 template<typename T, typename T1>
-inline const Complex<T> operator*(const Complex<T> &a, const T1 b) {
+inline const Complex<T> operator*(const Complex<T> &a, const T1 &b) {
   Complex<T> c;
   c.real = a.real * b; 
   c.imag = a.imag * b;
@@ -250,7 +250,7 @@ inline const Complex<T> operator*(const Complex<T> &a, const T1 b) {
 }
 
 template<typename T, typename T1>
-inline const Complex<T> operator*(const T1 b, const Complex<T> &a) {
+inline const Complex<T> operator*(const T1 &b, const Complex<T> &a) {
   Complex<T> c;
   c.real = a.real * b; 
   c.imag = a.imag * b;
@@ -258,14 +258,14 @@ inline const Complex<T> operator*(const T1 b, const Complex<T> &a) {
 }
 
 template<typename T, typename T1>
-inline Complex<T>& operator*=(Complex<T> &a, const T1 b) {
+inline Complex<T>& operator*=(Complex<T> &a, const T1 &b) {
   a.real = a.real * b; 
   a.imag = a.imag * b;
   return a;
 }
 
 template<typename T, typename T1>
-inline const Complex<T> operator/(const Complex<T> &a, const T1 b) {
+inline const Complex<T> operator/(const Complex<T> &a, const T1 &b) {
   Complex<T> c;
   c.real = a.real / b; 
   c.imag = a.imag / b;
@@ -273,7 +273,7 @@ inline const Complex<T> operator/(const Complex<T> &a, const T1 b) {
 }
 
 template<typename T, typename T1>
-inline Complex<T>& operator/=(Complex<T> &a, const T1 b) {
+inline Complex<T>& operator/=(Complex<T> &a, const T1 &b) {
   a.real = a.real / b; 
   a.imag = a.imag / b;
   return a;
@@ -284,11 +284,11 @@ inline T abs2(const Complex<T> &a) {
   return a.real*a.real+a.imag*a.imag;
 }
 
-inline double abs2(const double a) {
+inline double abs2(double a) {
   return a*a;
 }
 
-inline float abs2(const float a) {
+inline float abs2(float a) {
   return a*a;
 }
 
@@ -297,11 +297,11 @@ inline T abs(const Complex<T> &a) {
   return sqrt(a.real*a.real+a.imag*a.imag);
 }
 
-inline double abs(const double a) {
+inline double abs(double a) {
   return a>0?a:-a;
 }
 
-inline float abs(const float a) {
+inline float abs(float a) {
   return a>0?a:-a;
 }
 
@@ -331,11 +331,11 @@ inline const Complex<T> conj(const Complex<T> &a) {
   return c;
 }
 
-inline double conj(const double a) {
+inline double conj(double a) {
   return a;
 }
 
-inline float conj(const float a) {
+inline float conj(float a) {
   return a;
 }
 
@@ -349,21 +349,21 @@ inline T imag(const Complex<T> &a) {
   return a.imag;
 }
 
-inline float real(const float a) {
+inline float real(float a) {
   return a;
 }
 
 template<typename T>
-inline float imag(const float a) {
+inline float imag(float a) {
   return a;
 }
 
-inline double real(const double a) {
+inline double real(double a) {
   return a;
 }
 
 template<typename T>
-inline double imag(const double a) {
+inline double imag(double a) {
   return a;
 }
 

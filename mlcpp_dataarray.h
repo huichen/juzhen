@@ -63,26 +63,26 @@ struct DataArray {
    * is the larger of da's size and s. 
    */
   template<typename T> 
-  DataArray(const DataArray<T> &da, const size_t s);
+  DataArray(const DataArray<T> &da, size_t s);
  
   /**
    * Construct an array from another array. The size of the new array
    * is the larger of da's size and s. 
    */
-  DataArray(const DataArray<DataType> &da, const size_t s);
+  DataArray(const DataArray<DataType> &da, size_t s);
  
   /**
    * Construct an array from a raw array. The size of the new array
    * is the larger of the raw array's size and s. 
    */
   template<typename T> 
-  DataArray(const T *da, const size_t s);
+  DataArray(const T *da, size_t s);
 
   /**
    * Construct an array from a raw array. The size of the new array
    * is the larger of the raw array's size and s. 
    */
-  DataArray(const DataType *da, const size_t s);
+  DataArray(const DataType *da, size_t s);
    
   /**
    * Destructor frees allocated memory.
@@ -92,12 +92,12 @@ struct DataArray {
   /**
    * Returns the reference of ith index in the raw array.
    */
-  DataType& operator[](const size_t i); 
+  DataType& operator[](size_t i); 
  
   /**
    * Returns the reference of ith index in the raw array.
    */
-  DataType& operator[](const size_t i) const;
+  DataType& operator[](size_t i) const;
 
   /**
    * Pointer to the raw array.
@@ -166,14 +166,14 @@ DataArray<DataType>::DataArray(const DataArray<DataType> &da) {
 
 template<typename DataType>
 template<typename T> 
-DataArray<DataType>::DataArray(const DataArray<T> &da, const size_t s) {
+DataArray<DataType>::DataArray(const DataArray<T> &da, size_t s) {
   if ((&da && da.m_size>0)||s>0) {
     size_t reals;
     if (&da)  reals = da.m_size>s?da.m_size:s;
     else reals = s;
     m_data = (DataType *) malloc(reals*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "DataArray(const DataArray<T> &, const size_t) is called." << std::endl;
+  std::cout << "DataArray(const DataArray<T> &, size_t) is called." << std::endl;
 #endif
     assert (m_data);
     m_size = reals;
@@ -191,14 +191,14 @@ DataArray<DataType>::DataArray(const DataArray<T> &da, const size_t s) {
 
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataArray<DataType> &da, 
-                               const size_t s) {
+                               size_t s) {
   if ((&da && da.m_size>0)||s>0) {
     size_t reals;
     if (&da)  reals = da.m_size>s?da.m_size:s;
     else reals = s;
     m_data = (DataType *) malloc(reals*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "DataArray(const DataArray<DataType> &, const size_t) is called." << std::endl;
+  std::cout << "DataArray(const DataArray<DataType> &, size_t) is called." << std::endl;
 #endif
     assert (m_data);
     m_size = reals;
@@ -211,11 +211,11 @@ DataArray<DataType>::DataArray(const DataArray<DataType> &da,
 
 template<typename DataType>
 template<typename T> 
-DataArray<DataType>::DataArray(const T *da, const size_t s) {
+DataArray<DataType>::DataArray(const T *da, size_t s) {
   if (s > 0) {
     m_data = (DataType *) malloc(s*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "DataArray(const T *, const size_t) is called." << std::endl;
+  std::cout << "DataArray(const T *, size_t) is called." << std::endl;
 #endif
     assert (m_data);
     if (da) {
@@ -231,11 +231,11 @@ DataArray<DataType>::DataArray(const T *da, const size_t s) {
 }
 
 template<typename DataType>
-DataArray<DataType>::DataArray(const DataType *da, const size_t s) {
+DataArray<DataType>::DataArray(const DataType *da, size_t s) {
   if (s > 0) {
     m_data = (DataType *) malloc(s*sizeof(DataType));
 #ifdef PRINT_MALLOC
-  std::cout << "DataArray(const DataType *, const size_t) is called." << std::endl;
+  std::cout << "DataArray(const DataType *, size_t) is called." << std::endl;
 #endif
     assert (m_data);
     if (da) memcpy(m_data, da, s*sizeof(DataType));
@@ -252,12 +252,12 @@ DataArray<DataType>::~DataArray() {
 } 
 
 template<typename DataType>
-DataType& DataArray<DataType>::operator[](const size_t i) {
+DataType& DataArray<DataType>::operator[](size_t i) {
   return m_data[i];
 }
  
 template<typename DataType>
-DataType& DataArray<DataType>::operator[](const size_t i) const {
+DataType& DataArray<DataType>::operator[](size_t i) const {
   return m_data[i];
 }
 

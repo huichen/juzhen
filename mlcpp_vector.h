@@ -78,7 +78,7 @@ public:
   /**
    * Assign all elements in the Vector to be rhs. 
    */
-  Vector<DataType>& operator=(const DataType rhs);
+  Vector<DataType>& operator=(const DataType &rhs);
 
   /**
    * Resize a Vector.
@@ -99,7 +99,7 @@ public:
    * Add two Vectors.
    */
   template<typename T> 
-  const Vector<DataType> operator+(const Vector<T>& rhs) const;
+  Vector<DataType> operator+(const Vector<T>& rhs) const;
  
   /**
    * Add two Vectors.
@@ -111,7 +111,7 @@ public:
    * Subtract two Vectors.
    */
   template<typename T> 
-  const Vector<DataType> operator-(const Vector<T>& rhs) const;
+  Vector<DataType> operator-(const Vector<T>& rhs) const;
  
   /**
    * Subtract two Vectors.
@@ -123,13 +123,13 @@ public:
    * Multiply a Vector with a real number. 
    */
   template<typename T>
-  const Vector<DataType> operator*(const T rhs) const;
+  Vector<DataType> operator*(const T &rhs) const;
 
   /**
    * Multiply a Vector with a real number. 
    */
   template<typename T>
-  Vector<DataType>& operator*=(const T rhs); 
+  Vector<DataType>& operator*=(const T &rhs); 
 
   /**
    * Multiply a Vector and a Matrix. The Vector's size must be equal
@@ -141,13 +141,13 @@ public:
    * Divide a Vector by a constant.
    */
   template<typename T> 
-  const Vector<DataType> operator/(const T rhs) const;
+  Vector<DataType> operator/(const T &rhs) const;
 
   /**
    * Divide a Vector by a constant.
    */
   template<typename T> 
-  Vector<DataType>& operator/=(const T rhs); 
+  Vector<DataType>& operator/=(const T &rhs); 
 
   /**
    * Get real part of a Vector.
@@ -262,7 +262,7 @@ Vector<DataType>::operator=(const std::vector<DataType> &v) {
 } 
 
 template<typename DataType>
-Vector<DataType>& Vector<DataType>::operator=(const DataType rhs) {
+Vector<DataType>& Vector<DataType>::operator=(const DataType &rhs) {
   Matrix<DataType>::operator=(rhs);
   return *this;
 }
@@ -271,7 +271,9 @@ template<typename DataType>
 void Vector<DataType>::resize(size_t n) { Matrix<DataType>::resize(n,1);}
 
 template<typename DataType>
-void Vector<DataType>::resize(size_t nc, size_t nr) {Matrix<DataType>::resize(nc*nr,1);};
+void Vector<DataType>::resize(size_t nc, size_t nr) {
+  Matrix<DataType>::resize(nc*nr,1);
+}
 
 template<typename DataType>
 inline size_t Vector<DataType>::size() const {
@@ -280,7 +282,7 @@ inline size_t Vector<DataType>::size() const {
 
 template<typename DataType>
 template<typename T> 
-const Vector<DataType> Vector<DataType>::operator+(const Vector<T>& rhs) const {
+Vector<DataType> Vector<DataType>::operator+(const Vector<T>& rhs) const {
   return Matrix<DataType>::operator+(rhs);
 }
 
@@ -293,8 +295,7 @@ Vector<DataType>& Vector<DataType>::operator+=(const Vector<T>& rhs) {
 
 template<typename DataType>
 template<typename T> 
-const Vector<DataType> 
-Vector<DataType>::operator-(const Vector<T>& rhs) const {
+Vector<DataType> Vector<DataType>::operator-(const Vector<T>& rhs) const {
   return Matrix<DataType>::operator-(rhs);
 }
 
@@ -307,13 +308,13 @@ Vector<DataType>& Vector<DataType>::operator-=(const Vector<T>& rhs) {
 
 template<typename DataType>
 template<typename T>
-const Vector<DataType> Vector<DataType>::operator*(const T rhs) const {
+Vector<DataType> Vector<DataType>::operator*(const T &rhs) const {
   return Matrix<DataType>::operator*(rhs);
 }
 
 template<typename DataType>
 template<typename T>
-Vector<DataType>& Vector<DataType>::operator*=(const T rhs) {
+Vector<DataType>& Vector<DataType>::operator*=(const T &rhs) {
   Matrix<DataType>::operator*=(rhs);
   return *this;
 }
@@ -328,13 +329,13 @@ Vector<DataType>& Vector<DataType>::operator*=(const Matrix<DataType>& rhs) {
 
 template<typename DataType>
 template<typename T> 
-const Vector<DataType> Vector<DataType>::operator/(const T rhs) const {
+Vector<DataType> Vector<DataType>::operator/(const T &rhs) const {
   return Matrix<DataType>::operator/(rhs);
 }
 
 template<typename DataType>
 template<typename T> 
-Vector<DataType>& Vector<DataType>::operator/=(const T rhs) {
+Vector<DataType>& Vector<DataType>::operator/=(const T &rhs) {
   Matrix<DataType>::operator/=(rhs);
   return *this;
 }
@@ -502,7 +503,7 @@ Vector<double> imag(const Vector<CD> &v) {
  * Find the sum of a Vector's all elements.
  */
 template<typename DataType> 
-DataType sum(const Vector<DataType> v) {
+DataType sum(const Vector<DataType> &v) {
   return v.sum();
 } 
 
@@ -549,7 +550,7 @@ float norm(const Vector<float> &v)  {
  * Find the maximum element in a Vector.
  */
 template<typename DataType> 
-DataType max(const Vector<DataType> v) {
+DataType max(const Vector<DataType> &v) {
   return v.max();
 } 
 
@@ -569,8 +570,7 @@ Vector<DataType> sort(const Vector<DataType> &v) {
  * Multiply a real number and a Vector.
  */
 template<typename DataType> 
-const Vector<DataType> 
-operator*(const double lhs, const Vector<DataType> &ma) {
+Vector<DataType> operator*(double lhs, const Vector<DataType> &ma) {
   if (ma.m_temporary) {
     DataType *p = ma.dataptr();
     size_t maxi = ma.size();
@@ -592,8 +592,7 @@ operator*(const double lhs, const Vector<DataType> &ma) {
  * Multiply a complex number and a Vector.
  */
 template<typename DataType> 
-const Vector<DataType> 
-operator*(const CD lhs, const Vector<DataType> &ma) {
+Vector<DataType> operator*(const CD &lhs, const Vector<DataType> &ma) {
   if (ma.m_temporary) {
     DataType *p = ma.dataptr();
     size_t maxi = ma.size();
@@ -615,7 +614,7 @@ operator*(const CD lhs, const Vector<DataType> &ma) {
  * Vector dot product.
  */
 template<typename DataType> 
-const DataType operator*(const Vector<DataType>& v1, const Vector<DataType>& v2) {
+DataType operator*(const Vector<DataType>& v1, const Vector<DataType>& v2) {
   assert(v1.size() == v2.size());
   DataType res = 0;
   size_t s = v1.size();
@@ -629,8 +628,9 @@ const DataType operator*(const Vector<DataType>& v1, const Vector<DataType>& v2)
  * Multiply a Matrix and a Vector.
  */
 template<typename DataType> 
-const Vector<DataType> 
-operator*(const Matrix<DataType>& ma, const Vector<DataType>& v) {
+Vector<DataType> operator*(
+    const Matrix<DataType>& ma, 
+    const Vector<DataType>& v) {
   return ma*((Matrix<DataType>&)v);
 }
 
@@ -638,8 +638,9 @@ operator*(const Matrix<DataType>& ma, const Vector<DataType>& v) {
  * Multiply a Matrix and a Vector.
  */
 template<typename DataType> 
-const Vector<DataType> 
-operator*(const Vector<DataType>& v, const Matrix<DataType>& ma) {
+Vector<DataType> operator*(
+    const Vector<DataType>& v, 
+    const Matrix<DataType>& ma) {
   return ma*((Matrix<DataType>&)v);
 }
 
@@ -647,8 +648,9 @@ operator*(const Vector<DataType>& v, const Matrix<DataType>& ma) {
  * Multiply a Matrix and a Vector.
  */
 template<typename DataType> 
-Vector<DataType>& 
-operator*=(Matrix<DataType>& ma, const Vector<DataType>& v) {
+Vector<DataType>& operator*=(
+    Matrix<DataType>& ma, 
+    const Vector<DataType>& v) {
   ma *= (Matrix<DataType>&) v;
   return ma;
 }

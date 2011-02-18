@@ -82,7 +82,7 @@ public:
   /**
    * Assign all numbers in the Matrix to be rhs.
    */
-  Matrix<DataType>& operator= (const DataType rhs);
+  Matrix<DataType>& operator= (const DataType &rhs);
  
   /**
    * Check if two matrices are equal. The two matrices must have the same
@@ -180,12 +180,12 @@ public:
    * Add two matrices
    */
   template<typename T> 
-  const Matrix<DataType> operator+(const Matrix<T>& rhs) const;
+  Matrix<DataType> operator+(const Matrix<T>& rhs) const;
  
   /** 
    * Add two matrices
    */
-  const Matrix<DataType> operator+(const Matrix<DataType>& rhs) const;
+  Matrix<DataType> operator+(const Matrix<DataType>& rhs) const;
  
   /** 
    * Add one matrices upto another Matrix. 
@@ -197,12 +197,12 @@ public:
    * Subtract one Matrix and another Matrix.
    */
   template<typename T> 
-  const Matrix<DataType> operator-(const Matrix<T>& rhs) const;
+  Matrix<DataType> operator-(const Matrix<T>& rhs) const;
 
   /**
    * Subtract one Matrix and another Matrix.
    */
-  const Matrix<DataType> operator-(const Matrix<DataType>& rhs) const;
+  Matrix<DataType> operator-(const Matrix<DataType>& rhs) const;
 
   /**
    * Subtract one Matrix from another Matrix.
@@ -214,29 +214,29 @@ public:
    * Multiply each element in the Matrix by a real number and
    * get a new Matrix.
    */
-  const Matrix<DataType> operator*(const double rhs) const;
+  Matrix<DataType> operator*(double rhs) const;
 
   /**
    * Multiply each element in the Matrix by a complex number and 
    * get a new Matrix.
    */
-  const Matrix<DataType> operator*(const CD rhs) const;
+  Matrix<DataType> operator*(const CD &rhs) const;
 
   /**
    * Multiply each element in the Matrix by a real number.
    */
-  Matrix<DataType> & operator*=(const double rhs);
+  Matrix<DataType> & operator*=(double rhs);
 
   /**
    * Multiply each element in the Matrix by a complex number.
    */
-  Matrix<DataType> & operator*=(const CD rhs);
+  Matrix<DataType> & operator*=(const CD &rhs);
  
   /**
    * Multiply two matrices and get a new Matrix. Number of columns of the first
    * Matrix must equals to the number of columns of the second Matrix.
    */
-  const Matrix<DataType> operator*(const Matrix<DataType>& rhs) const;
+  Matrix<DataType> operator*(const Matrix<DataType>& rhs) const;
 
   /**
    * Multiply the Matrix with a new Matrix. Number of columns of the first
@@ -248,13 +248,13 @@ public:
    * Divide each element in the Matrix by a constant to get a new Matrix.
    */
   template<typename T> 
-  const Matrix<DataType> operator/(const T rhs) const;
+  Matrix<DataType> operator/(const T &rhs) const;
 
   /**
    * Divide each element in the Matrix by a constant.
    */
   template<typename T> 
-  Matrix<DataType>& operator/=(const T rhs);
+  Matrix<DataType>& operator/=(const T &rhs);
 
   /*************************************
    *  Matrix specific operations 
@@ -286,7 +286,7 @@ public:
    * sub-block starts at (r-th row, c-th column) at its upper-left corner,
    * and is replace by values from mt's (0,0) position. 
    */
-  const Matrix<DataType> &replace(size_t r, size_t c, const Matrix<DataType> &mt) const;
+  Matrix<DataType> &replace(size_t r, size_t c, const Matrix<DataType> &mt);
 
   /**
    * Return the Matrix's c-th column.
@@ -443,7 +443,7 @@ Matrix<DataType>::operator= (const Matrix<DataType> &rhs) {
 
 template<typename DataType> 
 Matrix<DataType>& 
-Matrix<DataType>::operator= (const DataType rhs) {
+Matrix<DataType>::operator= (const DataType &rhs) {
   size_t endi = m_ncol*m_nrow; 
   DataType *p = m_data->m_data;
   for (size_t i=0; i<endi; i++) *(p++)=rhs;
@@ -550,8 +550,7 @@ inline DataType& Matrix<DataType>::operator[](size_t i) const {
 
 template<typename DataType> 
 template<typename T> 
-const Matrix<DataType> 
-Matrix<DataType>::operator+(const Matrix<T>& rhs) const {
+Matrix<DataType> Matrix<DataType>::operator+(const Matrix<T>& rhs) const {
   assert(m_ncol == rhs.ncol() && m_nrow == rhs.nrow());
   if (m_temporary) {
     (const_cast<Matrix<DataType>* >(this))->operator+=(rhs);
@@ -571,8 +570,8 @@ Matrix<DataType>::operator+(const Matrix<T>& rhs) const {
 }
 
 template<typename DataType> 
-const Matrix<DataType> 
-Matrix<DataType>::operator+(const Matrix<DataType>& rhs) const {
+Matrix<DataType> Matrix<DataType>::operator+(
+    const Matrix<DataType>& rhs) const {
   assert(m_ncol == rhs.ncol() && m_nrow == rhs.nrow());
   if (m_temporary) {
     (const_cast<Matrix<DataType>* >(this))->operator+=(rhs);
@@ -609,8 +608,7 @@ Matrix<DataType>& Matrix<DataType>::operator+=(const Matrix<T>& rhs) {
 
 template<typename DataType> 
 template<typename T>
-const Matrix<DataType> 
-Matrix<DataType>::operator-(const Matrix<T>& rhs) const {
+Matrix<DataType> Matrix<DataType>::operator-(const Matrix<T>& rhs) const {
   assert(m_ncol == rhs.ncol() && m_nrow == rhs.nrow());
   if (m_temporary) {
     (const_cast<Matrix<DataType>* >(this))->operator-=(rhs);
@@ -630,8 +628,7 @@ Matrix<DataType>::operator-(const Matrix<T>& rhs) const {
 }
 
 template<typename DataType> 
-const Matrix<DataType> 
-Matrix<DataType>::operator-(const Matrix<DataType>& rhs) const {
+Matrix<DataType> Matrix<DataType>::operator-(const Matrix<DataType>& rhs) const {
   assert(m_ncol == rhs.ncol() && m_nrow == rhs.nrow());
   if (m_temporary) {
     (const_cast<Matrix<DataType>* >(this))->operator-=(rhs);
@@ -674,7 +671,7 @@ Matrix<DataType>& Matrix<DataType>::operator-=(const Matrix<T>& rhs) {
 }
 
 template<typename DataType> 
-const Matrix<DataType> Matrix<DataType>::operator*(const double rhs) const {
+Matrix<DataType> Matrix<DataType>::operator*(double rhs) const {
   if (m_temporary) {
     (const_cast<Matrix<DataType>* >(this))->operator*=(rhs);
     return *this;
@@ -692,7 +689,7 @@ const Matrix<DataType> Matrix<DataType>::operator*(const double rhs) const {
 }
 
 template<typename DataType> 
-const Matrix<DataType> Matrix<DataType>::operator*(const CD rhs) const {
+Matrix<DataType> Matrix<DataType>::operator*(const CD &rhs) const {
   if (m_temporary) {
     (const_cast<Matrix<DataType>* >(this))->operator*=(rhs);
     return *this;
@@ -710,7 +707,7 @@ const Matrix<DataType> Matrix<DataType>::operator*(const CD rhs) const {
 }
 
 template<typename DataType> 
-Matrix<DataType> & Matrix<DataType>::operator*=(const double rhs) {
+Matrix<DataType> & Matrix<DataType>::operator*=(double rhs) {
   size_t endi = m_nrow*m_ncol;
   DataType *p2;
   p2=dataptr();
@@ -720,7 +717,7 @@ Matrix<DataType> & Matrix<DataType>::operator*=(const double rhs) {
 }
 
 template<typename DataType> 
-Matrix<DataType> & Matrix<DataType>::operator*=(const CD rhs) {
+Matrix<DataType> & Matrix<DataType>::operator*=(const CD &rhs) {
   size_t endi = m_nrow*m_ncol;
   DataType *p2;
   p2=dataptr();
@@ -730,8 +727,8 @@ Matrix<DataType> & Matrix<DataType>::operator*=(const CD rhs) {
 }
  
 template<typename DataType> 
-const Matrix<DataType> 
-Matrix<DataType>::operator*(const Matrix<DataType>& rhs) const {
+Matrix<DataType> Matrix<DataType>::operator*(
+    const Matrix<DataType>& rhs) const {
   assert (m_ncol == rhs.nrow());
   size_t m,n,k1,k2,lda,ldb;
   m = m_nrow;
@@ -759,13 +756,13 @@ Matrix<DataType>& Matrix<DataType>::operator*=(const Matrix<DataType>& rhs) {
  
 template<typename DataType> 
 template<typename T> 
-const Matrix<DataType> Matrix<DataType>::operator/(const T rhs) const {
+Matrix<DataType> Matrix<DataType>::operator/(const T &rhs) const {
   return operator*(1.0/rhs);
 }
 
 template<typename DataType> 
 template<typename T> 
-Matrix<DataType>& Matrix<DataType>::operator/=(const T rhs) {
+Matrix<DataType>& Matrix<DataType>::operator/=(const T &rhs) {
   return operator*=(1.0/rhs);
 }
 
@@ -880,8 +877,8 @@ Matrix<DataType> Matrix<DataType>::block(size_t r1, size_t r2,
 }
 
 template<typename DataType> 
-const Matrix<DataType> & Matrix<DataType>::replace(size_t r, size_t c, 
-                                            const Matrix<DataType> &mt) const {
+Matrix<DataType>& Matrix<DataType>::replace(size_t r, size_t c, 
+                                            const Matrix<DataType> &mt) {
   DataType *p1, *p2;
   size_t n1, n2, n3, n4;
   n1 = m_nrow;
@@ -1149,7 +1146,7 @@ Matrix<DataType> conj(const Matrix<DataType> &m) {
  * Multiply a double number and a Matrix
  */
 template<typename DataType> 
-inline const Matrix<DataType> operator*(const double lhs, 
+inline Matrix<DataType> operator*(double lhs, 
                                  const Matrix<DataType> &ma) {
   return ma*lhs;
 }
@@ -1158,7 +1155,7 @@ inline const Matrix<DataType> operator*(const double lhs,
  * Multiply a complex number and a Matrix
  */
 template<typename DataType> 
-inline const Matrix<DataType> operator*(const CD lhs, 
+inline Matrix<DataType> operator*(const CD &lhs, 
                                  const Matrix<DataType> &ma) {
   return ma*lhs;
 }
