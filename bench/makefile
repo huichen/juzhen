@@ -15,8 +15,8 @@ CFLAGS_EIGEN = -I../../eigen -DNDEBUG -O3 -msse2
 CC_EIGEN = g++ 
 
 all:
-	time -p $(CC_MLCPP) bench.cpp -o mlcpp $(CFLAGS_MLCPP) 
-	time -p $(CC_EIGEN) bench.cpp -o eigen $(CFLAGS_EIGEN) 
+	time -p $(CC_MLCPP) bench.cc -o mlcpp $(CFLAGS_MLCPP) 
+	time -p $(CC_EIGEN) bench.cc -o eigen $(CFLAGS_EIGEN) 
 
 run:
 	./mlcpp

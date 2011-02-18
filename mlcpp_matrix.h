@@ -20,13 +20,13 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_MATRIX_HPP
-#define MLCPP_MATRIX_HPP
-#include <mlcpp_complex.hpp>
-#include <mlcpp_dataarray.hpp>
+#ifndef MLCPP_MATRIX_H_
+#define MLCPP_MATRIX_H_
+#include <mlcpp_complex.h>
+#include <mlcpp_dataarray.h>
 #include <sstream>
 
-#include <mlcpp_wrapper.hpp>
+#include <mlcpp_adaptor.h>
 
 namespace mlcpp {
 

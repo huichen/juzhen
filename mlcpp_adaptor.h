@@ -20,26 +20,13 @@
 +---------------------------------------------------------------------------+
 */
 
-#include <mlcpp.hpp>
-#define N 90
-using namespace mlcpp;
-
-int main() {
-  /* matrix of complex<float> */
-  cmatrix H(N, N);
-  for (int i=0; i<N; i++) 
-    if (i<N/3 || i>=2*N/3) H(i, i) = 1000;
-    else H(i, i) = 0;
-  for (int i=0; i<N-1; i++) H(i, i+1) = H(i+1, i) = -1;
+#ifndef MLCPP_ADAPTOR_H_
+#define MLCPP_ADAPTOR_H_
 
 #ifdef USE_MKL
-  /* vector of complex<float> */
-  cvector energy;
-  /* matrix of complex<float> */
-  cmatrix wave;
-  H.reigen(energy, wave);
-
-  std::cout << "energy= " << sort(real(energy)) << std::endl;
+#include <mlcpp_adaptor_mkl.h>
+#else
+#include <mlcpp_adaptor_blas.h>
 #endif
-  return 0;
-}
+
+#endif

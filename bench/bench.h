@@ -20,11 +20,11 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef BENCH_HPP
-#define BENCH_HPP
+#ifndef MLCPP_BENCH_BENCH_H_
+#define MLCPP_BENCH_BENCH_H_
 
 #ifdef MLCPP
-#include <mlcpp.hpp>
+#include <mlcpp.h>
 #else
 #include <Eigen/Dense>
 #endif

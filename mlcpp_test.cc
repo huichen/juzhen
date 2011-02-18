@@ -21,8 +21,8 @@
 */
 
 #include <iostream>
-#include <mlcpp.hpp>
-#include <unittest.hpp>
+#include <mlcpp.h>
+#include <mlcpp_test.h>
 #include <vector>
 #include <sstream>
 

@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_WRAPPER_BLAS_HPP
-#define MLCPP_WRAPPER_BLAS_HPP
+#ifndef MLCPP_ADAPTOR_BLAS_H_
+#define MLCPP_ADAPTOR_BLAS_H_
 #include <cblas.h>
 #include <assert.h>
 

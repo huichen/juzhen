@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_DATAARRAY_HPP
-#define MLCPP_DATAARRAY_HPP
+#ifndef MLCPP_DATAARRAY_H_
+#define MLCPP_DATAARRAY_H_
 #include <string.h>
 #include <assert.h>
 #include <memory>

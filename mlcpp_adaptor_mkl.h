@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_WRAPPER_MKL_HPP
-#define MLCPP_WRAPPER_MKL_HPP
+#ifndef MLCPP_ADAPTOR_MKL_H_
+#define MLCPP_ADAPTOR_MKL_H_
 #include <mkl_cblas.h>
 #include <mkl_lapacke.h>
 #include <mkl.h>

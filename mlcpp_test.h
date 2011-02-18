@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef UNITTEST_HPP
-#define UNITTEST_HPP
+#ifndef MLCPP_TEST_H_
+#define MLCPP_TEST_H_
 #include <vector>
 #include <typeinfo>
 #include <string>

@@ -20,17 +20,26 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_HPP
-#define MLCPP_HPP
-#include <mlcpp_complex.hpp>
-#include <mlcpp_wrapper.hpp>
-#include <mlcpp_dataarray.hpp>
-#include <mlcpp_matrix.hpp>
-#include <mlcpp_vector.hpp>
-#include <assert.h>
+#include <mlcpp.h>
+#define N 90
+using namespace mlcpp;
 
+int main() {
+  /* matrix of complex<float> */
+  cmatrix H(N, N);
+  for (int i=0; i<N; i++) 
+    if (i<N/3 || i>=2*N/3) H(i, i) = 1000;
+    else H(i, i) = 0;
+  for (int i=0; i<N-1; i++) H(i, i+1) = H(i+1, i) = -1;
 
-namespace mlcpp {
+#ifdef USE_MKL
+  /* vector of complex<float> */
+  cvector energy;
+  /* matrix of complex<float> */
+  cmatrix wave;
+  H.reigen(energy, wave);
 
-}
+  std::cout << "energy= " << sort(real(energy)) << std::endl;
 #endif
+  return 0;
+}

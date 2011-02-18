@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_COMPLEX_HPP
-#define MLCPP_COMPLEX_HPP
+#ifndef MLCPP_COMPLEX_H_
+#define MLCPP_COMPLEX_H_
 #include <iostream>
 #include <math.h>
 

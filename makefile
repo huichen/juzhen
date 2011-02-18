@@ -12,11 +12,11 @@ endif
 endif
 
 test:
-	$(CC) unittest.cpp -o unittest $(CFLAGS) -g
+	$(CC) mlcpp_test.cc -o unittest $(CFLAGS) -g
 	./unittest
 
 sample:
-	$(CC) example.cpp -o example $(CFLAGS) -O3 -DNDEBUG 
+	$(CC) example.cc -o example $(CFLAGS) -O3 -DNDEBUG 
 	./example
 
 clean:

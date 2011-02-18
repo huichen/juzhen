@@ -20,13 +20,17 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_WRAPPER
-#define MLCPP_WRAPPER
+#ifndef MLCPP_H_
+#define MLCPP_H_
+#include <mlcpp_complex.h>
+#include <mlcpp_adaptor.h>
+#include <mlcpp_dataarray.h>
+#include <mlcpp_matrix.h>
+#include <mlcpp_vector.h>
+#include <assert.h>
 
-#ifdef USE_MKL
-#include <mlcpp_wrapper_mkl.hpp>
-#else
-#include <mlcpp_wrapper_blas.hpp>
-#endif
 
+namespace mlcpp {
+
+}
 #endif

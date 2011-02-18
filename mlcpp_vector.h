@@ -20,10 +20,10 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_VECTOR_HPP
-#define MLCPP_VECTOR_HPP
+#ifndef MLCPP_VECTOR_H_
+#define MLCPP_VECTOR_H_
 
-#include <mlcpp_matrix.hpp>
+#include <mlcpp_matrix.h>
 #include <algorithm>
 #include <vector>
 #include <math.h>
