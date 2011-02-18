@@ -22,10 +22,11 @@
 
 #ifndef MLCPP_DATAARRAY_H_
 #define MLCPP_DATAARRAY_H_
-#include <string.h>
-#include <assert.h>
-#include <memory>
 #include <stdlib.h>
+#include <string.h>
+
+#include <memory>
+#include <assert.h>
 
 namespace mlcpp {
 

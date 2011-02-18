@@ -22,11 +22,12 @@
 
 #ifndef MLCPP_VECTOR_H_
 #define MLCPP_VECTOR_H_
+#include <math.h>
 
-#include <mlcpp_matrix.h>
 #include <algorithm>
 #include <vector>
-#include <math.h>
+
+#include "mlcpp_matrix.h"
 
 namespace mlcpp {
 

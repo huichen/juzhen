@@ -22,13 +22,13 @@
 
 #ifndef MLCPP_H_
 #define MLCPP_H_
-#include <mlcpp_complex.h>
-#include <mlcpp_adaptor.h>
-#include <mlcpp_dataarray.h>
-#include <mlcpp_matrix.h>
-#include <mlcpp_vector.h>
 #include <assert.h>
 
+#include "mlcpp_complex.h"
+#include "mlcpp_adaptor.h"
+#include "mlcpp_dataarray.h"
+#include "mlcpp_matrix.h"
+#include "mlcpp_vector.h"
 
 namespace mlcpp {
 

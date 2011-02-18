@@ -22,8 +22,9 @@
 
 #ifndef MLCPP_COMPLEX_H_
 #define MLCPP_COMPLEX_H_
-#include <iostream>
 #include <math.h>
+
+#include <iostream>
 
 namespace mlcpp {
 

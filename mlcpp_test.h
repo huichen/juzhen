@@ -22,8 +22,8 @@
 
 #ifndef MLCPP_TEST_H_
 #define MLCPP_TEST_H_
+#include <iostream>
 #include <vector>
-#include <typeinfo>
 #include <string>
 
 /**
@@ -187,7 +187,7 @@ void UnitTest::Run() {
     UnitTest::m_tests[i]->Run();
   std::cout << "======================================================================" << std::endl; \
   std::cout << "Total unit tests: " << UnitTest::m_nsucc + UnitTest::m_nfail << std::endl; 
-  std::cout << "Successful: " << UnitTest::m_nsucc<< std::endl; 
+  std::cout << "Successful: " << UnitTest::m_nsucc << std::endl; 
   std::cout << "Failed: " << UnitTest::m_nfail << std::endl; 
 } 
 

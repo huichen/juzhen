@@ -22,11 +22,11 @@
 
 #ifndef MLCPP_MATRIX_H_
 #define MLCPP_MATRIX_H_
-#include <mlcpp_complex.h>
-#include <mlcpp_dataarray.h>
 #include <sstream>
 
-#include <mlcpp_adaptor.h>
+#include "mlcpp_complex.h"
+#include "mlcpp_dataarray.h"
+#include "mlcpp_adaptor.h"
 
 namespace mlcpp {
 

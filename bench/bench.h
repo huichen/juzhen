@@ -23,17 +23,18 @@
 #ifndef MLCPP_BENCH_BENCH_H_
 #define MLCPP_BENCH_BENCH_H_
 
+#include <sys/time.h>
+#include <string.h>
+
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
 #ifdef MLCPP
 #include <mlcpp.h>
 #else
 #include <Eigen/Dense>
 #endif
-
-#include <fstream>
-#include <string.h>
-#include <sstream>
-#include <sys/time.h>
-#include <iostream>
 
 #define MAXN 100
 #define MINN 2 

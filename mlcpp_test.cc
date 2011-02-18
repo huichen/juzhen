@@ -20,11 +20,13 @@
 +---------------------------------------------------------------------------+
 */
 
+#include "mlcpp_test.h"
+
 #include <iostream>
-#include <mlcpp.h>
-#include <mlcpp_test.h>
 #include <vector>
 #include <sstream>
+
+#include <mlcpp.h>
 
 using namespace mlcpp;
 
