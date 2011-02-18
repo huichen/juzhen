@@ -22,6 +22,9 @@
 
 #include "bench.h"
 
+using std::ofstream;
+using std::string;
+
 int main() {
 
   DEFV(1)
@@ -30,8 +33,8 @@ int main() {
   DEFV(4)
 
   struct timeval t1, t2;
-  std::ofstream myfile;
-  std::string filename;
+  ofstream myfile;
+  string filename;
 
   BEGIN_BENCH ("M1 = M2")
     H1 = H2; 

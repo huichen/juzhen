@@ -51,10 +51,14 @@ static int counter=0;
 #define FNAME "eigen_"
 #endif
 
+using std::stringstream;
+using std::cout;
+using std::endl;
+
 #define BEGIN_BENCH(s) \
 {\
 {\
-std::stringstream out;\
+stringstream out;\
 out << PREFIX << counter;\
 filename =out.str()+ ".plt";\
 myfile.open(filename.c_str());\
@@ -62,26 +66,26 @@ myfile << "set term png \nset out \"" + out.str()+".png\"\nset title \"" + s + "
 myfile.close();\
 }\
 {\
-std::stringstream out;\
+stringstream out;\
 out << PREFIX << counter++;\
 filename =FNAME+out.str()+ ".txt";\
 }\
 myfile.open(filename.c_str());\
-std::cout << "==============================" << std::endl;\
+cout << "==============================" << endl;\
 for (size_t ni=MINN; ni<=MAXN; ni+=STEPN) {\
 H1.resize(ni,ni);\
 H2.resize(ni,ni);\
 H3.resize(ni,ni);\
 H4.resize(ni,ni);\
 gettimeofday(&t1, NULL);\
-std::cout << s << '\t'; \
+cout << s << '\t'; \
 for(size_t i=0; i<NB; i++) {
 
 #define END_BENCH \
 }\
 gettimeofday(&t2, NULL); \
-std::cout <<  (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000. << " s" << std::endl; \
-myfile << ni <<'\t' << (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000. << std::endl;\
+cout <<  (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000. << " s" << endl; \
+myfile << ni <<'\t' << (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000. << endl;\
 }\
 myfile.close();\
 }
@@ -102,9 +106,9 @@ H##vi(i,j) = 1;
 
 
 #ifdef MLCPP
-using namespace mlcpp;
+using mlcpp::zmatrix;
 #else
-using namespace Eigen;
+using Eigen::MatrixXcd;
 #endif
 
 

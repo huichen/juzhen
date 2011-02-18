@@ -28,7 +28,23 @@
 
 #include <mlcpp.h>
 
-using namespace mlcpp;
+using mlcpp::CS;
+using mlcpp::CD;
+
+using mlcpp::smatrix;
+using mlcpp::dmatrix;
+using mlcpp::cmatrix;
+using mlcpp::zmatrix;
+
+using mlcpp::identity_smatrix;
+using mlcpp::identity_dmatrix;
+using mlcpp::identity_cmatrix;
+using mlcpp::identity_zmatrix;
+
+using mlcpp::svector;
+using mlcpp::dvector;
+using mlcpp::cvector;
+using mlcpp::zvector;
 
 int main() {
 

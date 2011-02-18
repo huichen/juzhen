@@ -22,7 +22,8 @@
 
 #include <mlcpp.h>
 #define N 90
-using namespace mlcpp;
+using mlcpp::cvector;
+using mlcpp::cmatrix;
 
 int main() {
   /* matrix of complex<float> */
