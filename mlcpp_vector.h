@@ -177,14 +177,14 @@ public:
   Vector<DataType> Conjugate() const; 
 
   /**
-   * Get sum of a Vector's all elements.
+   * Get Sum of a Vector's all elements.
    */
-  DataType sum() const; 
+  DataType Sum() const; 
 
   /**
    * Get the maximum element of a Vector.
    */
-  DataType max() const; 
+  DataType Max() const; 
 
   /**
    * Swap two elements.
@@ -204,12 +204,12 @@ public:
   /**
    * Sort a Vector. This will give you error for a complex Vector.
    */
-  Vector<DataType> &sort();
+  Vector<DataType> &Sort();
 
   /**
    * Get a STL Vector from the Vector. 
    */
-  std::vector<DataType> stl();
+  std::vector<DataType> STL();
 };
 
 typedef Vector<float> svector;
@@ -347,7 +347,7 @@ Vector<DataType> Vector<DataType>::Transpose() const {
 
 
 template<typename DataType>
-DataType Vector<DataType>::sum() const {
+DataType Vector<DataType>::Sum() const {
   DataType r = 0;
   DataType *p = Matrix<DataType>::raw_ptr();
   for(size_t i=0; i<size(); i++)
@@ -366,7 +366,7 @@ Vector<DataType> Vector<DataType>::Conjugate() const {
 }
 
 template<typename DataType>
-DataType Vector<DataType>::max() const {
+DataType Vector<DataType>::Max() const {
   assert(size()>0);
   DataType r = (*this)(0);
   DataType *p = Matrix<DataType>::raw_ptr();
@@ -400,7 +400,7 @@ Vector<DataType> & Vector<DataType>::Insert(size_t i, Vector<DataType> v) {
 }
 
 template<typename DataType>
-Vector<DataType> & Vector<DataType>::sort() {
+Vector<DataType> & Vector<DataType>::Sort() {
   std::vector<DataType> v(Matrix<DataType>::raw_ptr(), 
                           Matrix<DataType>::raw_ptr()+size());
   std::sort(v.begin(), v.end());
@@ -409,7 +409,7 @@ Vector<DataType> & Vector<DataType>::sort() {
 }
 
 template<typename DataType>
-std::vector<DataType> Vector<DataType>::stl() {
+std::vector<DataType> Vector<DataType>::STL() {
   std::vector<DataType> v(Matrix<DataType>::raw_ptr(), 
                           Matrix<DataType>::raw_ptr()+size());
   return v;
@@ -500,11 +500,11 @@ Vector<double> Imag(const Vector<CD> &v) {
 }
 
 /**
- * Find the sum of a Vector's all elements.
+ * Find the Sum of a Vector's all elements.
  */
 template<typename DataType> 
-DataType sum(const Vector<DataType> &v) {
-  return v.sum();
+DataType Sum(const Vector<DataType> &v) {
+  return v.Sum();
 } 
 
 /**
@@ -550,15 +550,15 @@ float norm(const Vector<float> &v)  {
  * Find the maximum element in a Vector.
  */
 template<typename DataType> 
-DataType max(const Vector<DataType> &v) {
-  return v.max();
+DataType Max(const Vector<DataType> &v) {
+  return v.Max();
 } 
 
 /**
  * Sort a Vector.
  */
 template<typename DataType> 
-Vector<DataType> sort(const Vector<DataType> &v) {
+Vector<DataType> Sort(const Vector<DataType> &v) {
   Vector<DataType> v2(v.size());
   std::vector<DataType> v1(v.raw_ptr(), v.raw_ptr()+v.size());
   std::sort(v1.begin(), v1.end());

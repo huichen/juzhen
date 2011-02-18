@@ -517,13 +517,13 @@ BEGIN_TEST(VectorTests, "VectorTests")
   v5 /= 2;
   V(v5, "{1, 2, 3, 4}")
 
-  VDE(max(v5), 4)
-  VDE(v5.max(), 4)
+  VDE(Max(v5), 4)
+  VDE(v5.Max(), 4)
 
   VDE(norm(v5)*norm(v5), 30.0)
 
-  VDE(sum(v5), 10)
-  VDE(v5.sum(), 10)
+  VDE(Sum(v5), 10)
+  VDE(v5.Sum(), 10)
 
   VDE(v1*v1, 30)
   
@@ -579,7 +579,7 @@ BEGIN_TEST(VectorTests, "VectorTests")
   
   VSE(norm(v6)*norm(v6), 117.03)
 
-  V(svector(v1.stl()), "{1, 2, 3, 8}")
+  V(svector(v1.STL()), "{1, 2, 3, 8}")
 
   svector v8 =  m3;
   V(v8.Swap(1,2), "{1, 3, 2, 4}")
