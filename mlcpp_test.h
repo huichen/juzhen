@@ -34,13 +34,13 @@
   out.str(""); \
   out << lhs; \
   if (out.str()!=std::string(rhs)) { \
-  UnitTest::m_nfail++; \
+  UnitTest::num_fail_++; \
   return_value = false;\
   std::cout << " FAILED!" << std::endl;\
-  std::cout << "  Expect " << "[" << serialize(rhs) << "]" << std::endl; \
-  std::cout << "  Got    " << "[" << serialize(toString(lhs)) << "]" << std::endl; \
+  std::cout << "  Expect " << "[" << Serialize(rhs) << "]" << std::endl; \
+  std::cout << "  Got    " << "[" << Serialize(OutputToString(lhs)) << "]" << std::endl; \
   } else { \
-  UnitTest::m_nsucc++; \
+  UnitTest::num_success_++; \
   std::cout << " passed." << std::endl; \
   }
 
@@ -50,13 +50,13 @@
 #define VME(lhs, rhs) \
 std::cout << "Test case " << testcount++ <<":";\
 if (lhs!=rhs) { \
-UnitTest::m_nfail++; \
+UnitTest::num_fail_++; \
 return_value = false;\
 std::cout << " FAILED!" << std::endl;\
-  std::cout << "  Expect " << "[" << serialize(toString(lhs)) << "]" << std::endl; \
-  std::cout << "       = ["<< serialize(toString(rhs)) <<"]" <<std::endl ; \
+  std::cout << "  Expect " << "[" << Serialize(OutputToString(lhs)) << "]" << std::endl; \
+  std::cout << "       = ["<< Serialize(OutputToString(rhs)) <<"]" <<std::endl ; \
 } else { \
-UnitTest::m_nsucc++; \
+UnitTest::num_success_++; \
 std::cout << " passed." << std::endl; \
 }
 
@@ -66,12 +66,12 @@ std::cout << " passed." << std::endl; \
 #define VDE(lhs, rhs) \
 std::cout << "Test case " << testcount++ <<":";\
 if (lhs-rhs<-1e-4 || lhs-rhs>1e-4) { \
-UnitTest::m_nfail++; \
+UnitTest::num_fail_++; \
 return_value = false;\
 std::cout << " FAILED!" << std::endl;\
   std::cout << "  Expect " << lhs << " = " << rhs <<std::endl ; \
 } else { \
-UnitTest::m_nsucc++; \
+UnitTest::num_success_++; \
 std::cout << " passed." << std::endl; \
 }
 
@@ -81,12 +81,12 @@ std::cout << " passed." << std::endl; \
 #define VSE(lhs, rhs) \
 std::cout << "Test case " << testcount++ <<":";\
 if (lhs-rhs<-1e-4 || lhs-rhs>1e-4) { \
-UnitTest::m_nfail++; \
+UnitTest::num_fail_++; \
 return_value = false;\
 std::cout << " FAILED!" << std::endl;\
   std::cout << "  Expect " << lhs << " = " << rhs <<std::endl ; \
 } else { \
-UnitTest::m_nsucc++; \
+UnitTest::num_success_++; \
 std::cout << " passed." << std::endl; \
 }
 
@@ -96,12 +96,12 @@ std::cout << " passed." << std::endl; \
 #define VB(lhs) \
 std::cout << "Test case " << testcount++ <<":";\
 if (!(lhs)) { \
-UnitTest::m_nfail++; \
+UnitTest::num_fail_++; \
 return_value = false;\
 std::cout << " FAILED!" << std::endl;\
   std::cout << "  Expect true." << std::endl; \
 } else { \
-UnitTest::m_nsucc++; \
+UnitTest::num_success_++; \
 std::cout << " passed." << std::endl; \
 }
 
@@ -167,54 +167,53 @@ public:
   /**
    * Number of failed tests.
    */
-  static int m_nfail;
+  static int num_fail_;
 
   /**
    * Number of successful tests.
    */
-  static int m_nsucc;
+  static int num_success_;
 
 private:
 
   /**
    * Vector that contains all tests.
    */
-  static std::vector<TestFunction*> m_tests; 
+  static std::vector<TestFunction*> tests_; 
 };
 
 void UnitTest::Run() {
-  for(size_t i=0; i<UnitTest::m_tests.size(); i++)
-    UnitTest::m_tests[i]->Run();
+  for(size_t i=0; i<UnitTest::tests_.size(); i++)
+    UnitTest::tests_[i]->Run();
   std::cout << "======================================================================" << std::endl; \
-  std::cout << "Total unit tests: " << UnitTest::m_nsucc + UnitTest::m_nfail << std::endl; 
-  std::cout << "Successful: " << UnitTest::m_nsucc << std::endl; 
-  std::cout << "Failed: " << UnitTest::m_nfail << std::endl; 
+  std::cout << "Total unit tests: " << UnitTest::num_success_ + UnitTest::num_fail_ << std::endl; 
+  std::cout << "Successful: " << UnitTest::num_success_ << std::endl; 
+  std::cout << "Failed: " << UnitTest::num_fail_ << std::endl; 
 } 
 
 void UnitTest::AddTest(TestFunction *t) {
-  UnitTest::m_tests.push_back(t);
+  UnitTest::tests_.push_back(t);
 }
 
 
 /**
  * initialize static member
 */
-std::vector<TestFunction*> UnitTest::m_tests;
-int UnitTest::m_nfail = 0; 
-int UnitTest::m_nsucc = 0; 
+std::vector<TestFunction*> UnitTest::tests_;
+int UnitTest::num_fail_ = 0; 
+int UnitTest::num_success_ = 0; 
 
 /////////////////////////////////////////////////////////////////////////////
 
 /**
  * replacing '\n' with "\\n" in a string for easy readable output
 */
-std::string serialize(std::string s) {
+std::string Serialize(std::string s) {
   std::string os;
   for (size_t i=0; i<s.size(); i++)
     if (s[i]=='\n') os.append("\\n");
     else os.append(s.begin()+i, s.begin()+i+1); 
   return os;
 }
-
 
 #endif

@@ -45,36 +45,48 @@ int main() {
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.block, 1K times")
+  #ifdef MLCPP
+  for (size_t j=0; j<100; j++) H1 = H2.Block(0,0,50,50);
+  #else
   for (size_t j=0; j<100; j++) H1 = H2.block(0,0,50,50);
+  #endif
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.col(i), 1K times")
+  #ifdef MLCPP
+  for (size_t j=0; j<100; j++) H1 = H2.GetColumn(1);
+  #else
   for (size_t j=0; j<100; j++) H1 = H2.col(1);
+  #endif
   END_BENCH
 
   BEGIN_BENCH ("M1 = M2.row(i), 1K times")
+  #ifdef MLCPP
+  for (size_t j=0; j<100; j++) H1 = H2.GetRow(1);
+  #else
   for (size_t j=0; j<100; j++) H1 = H2.row(1);
+  #endif
   END_BENCH
 
-  BEGIN_BENCH ("M1 = M2.conj()")
+  BEGIN_BENCH ("M1 = M2.Conjugate()")
   #ifdef MLCPP
-  H1 = conj(H2);
+  H1 = Conjugate(H2);
   #else
   H1 = H2.conjugate();
   #endif
   END_BENCH
 
-  BEGIN_BENCH ("M1 = M2.trans()")
+  BEGIN_BENCH ("M1 = M2.Transpose()")
   #ifdef MLCPP
-  H1 = trans(H2);
+  H1 = Transpose(H2);
   #else
   H1 = H2.transpose();
   #endif
   END_BENCH
 
-  BEGIN_BENCH ("M1 = M2.herm()")
+  BEGIN_BENCH ("M1 = M2.Adjoint()")
   #ifdef MLCPP
-  H1 = herm(H2);
+  H1 = Adjoint(H2);
   #else
   H1 = H2.adjoint();
   #endif

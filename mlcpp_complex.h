@@ -324,18 +324,18 @@ inline Complex<T>& operator/=(Complex<T> &a, const Complex<T1> &b) {
 }
 
 template<typename T>
-inline const Complex<T> conj(const Complex<T> &a) {
+inline const Complex<T> Conjugate(const Complex<T> &a) {
   Complex<T> c;
   c.real = a.real; 
   c.imag = -a.imag;
   return c;
 }
 
-inline double conj(double a) {
+inline double Conjugate(double a) {
   return a;
 }
 
-inline float conj(float a) {
+inline float Conjugate(float a) {
   return a;
 }
 

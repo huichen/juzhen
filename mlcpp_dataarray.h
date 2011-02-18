@@ -102,110 +102,110 @@ struct DataArray {
   /**
    * Pointer to the raw array.
    */
-  DataType * m_data;
+  DataType * data_ptr;
 
   /**
    * Length of the raw array. It's a actual number of total items in the array.
    */
-  size_t m_size;
+  size_t size;
 };
 
 template<typename DataType>
 DataArray<DataType>::DataArray() {
-  m_data = NULL;
-  m_size = 0;
+  data_ptr = NULL;
+  size = 0;
 }
 
 template<typename DataType>
 DataArray<DataType>::DataArray(size_t s) {
-  m_data = (DataType *) malloc(s*sizeof(DataType));
+  data_ptr = (DataType *) malloc(s*sizeof(DataType));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(size_t) is called." << std::endl;
 #endif
-  assert (m_data);
-  m_size = s;
+  assert (data_ptr);
+  size = s;
 }
 
 template<typename DataType>
 template<typename T> 
 DataArray<DataType>::DataArray(const DataArray<T> &da) {
-  if (&da && da.m_size >0) {
-    m_data = (DataType *) malloc(da.m_size*sizeof(DataType));
+  if (&da && da.size >0) {
+    data_ptr = (DataType *) malloc(da.size*sizeof(DataType));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const DataArray<T> &) is called." << std::endl;
 #endif
-    assert (m_data);
-    m_size = da.m_size;
-    if (da.m_data) {
-      DataType *p1 = m_data;
-      T *p2 = da.m_data;
-      size_t s = da.m_size;
+    assert (data_ptr);
+    size = da.size;
+    if (da.data_ptr) {
+      DataType *p1 = data_ptr;
+      T *p2 = da.data_ptr;
+      size_t s = da.size;
       for(size_t i=0; i< s; i++) *(p1++) = *(p2++); 
     }
   } else {
-    m_size = 0;
-    m_data = NULL;
+    size = 0;
+    data_ptr = NULL;
   }
 }
 
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataArray<DataType> &da) {
-  if (&da && da.m_size >0) {
-    m_data = (DataType *) malloc(da.m_size*sizeof(DataType));
+  if (&da && da.size >0) {
+    data_ptr = (DataType *) malloc(da.size*sizeof(DataType));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const DataArray<DataType> &) is called." << std::endl;
 #endif
-    assert (m_data);
-    m_size = da.m_size;
-    if (da.m_data) memcpy(m_data, da.m_data, da.m_size*sizeof(DataType));
+    assert (data_ptr);
+    size = da.size;
+    if (da.data_ptr) memcpy(data_ptr, da.data_ptr, da.size*sizeof(DataType));
   } else {
-    m_size = 0;
-    m_data = NULL;
+    size = 0;
+    data_ptr = NULL;
   }
 }
 
 template<typename DataType>
 template<typename T> 
 DataArray<DataType>::DataArray(const DataArray<T> &da, size_t s) {
-  if ((&da && da.m_size>0)||s>0) {
+  if ((&da && da.size>0)||s>0) {
     size_t reals;
-    if (&da)  reals = da.m_size>s?da.m_size:s;
+    if (&da)  reals = da.size>s?da.size:s;
     else reals = s;
-    m_data = (DataType *) malloc(reals*sizeof(DataType));
+    data_ptr = (DataType *) malloc(reals*sizeof(DataType));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const DataArray<T> &, size_t) is called." << std::endl;
 #endif
-    assert (m_data);
-    m_size = reals;
-    if (&da && da.m_data) {
-      DataType *p1 = m_data;
-      T *p2 = da.m_data;
-      size_t s1 = da.m_size;
+    assert (data_ptr);
+    size = reals;
+    if (&da && da.data_ptr) {
+      DataType *p1 = data_ptr;
+      T *p2 = da.data_ptr;
+      size_t s1 = da.size;
       for(size_t i=0; i< s1; i++) *(p1++) = *(p2++); 
     }
   } else {
-    m_size = 0;
-    m_data = NULL;
+    size = 0;
+    data_ptr = NULL;
   }
 }
 
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataArray<DataType> &da, 
                                size_t s) {
-  if ((&da && da.m_size>0)||s>0) {
+  if ((&da && da.size>0)||s>0) {
     size_t reals;
-    if (&da)  reals = da.m_size>s?da.m_size:s;
+    if (&da)  reals = da.size>s?da.size:s;
     else reals = s;
-    m_data = (DataType *) malloc(reals*sizeof(DataType));
+    data_ptr = (DataType *) malloc(reals*sizeof(DataType));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const DataArray<DataType> &, size_t) is called." << std::endl;
 #endif
-    assert (m_data);
-    m_size = reals;
-    if (&da && da.m_data) memcpy(m_data, da.m_data, da.m_size*sizeof(DataType));
+    assert (data_ptr);
+    size = reals;
+    if (&da && da.data_ptr) memcpy(data_ptr, da.data_ptr, da.size*sizeof(DataType));
   } else {
-    m_size = 0;
-    m_data = NULL;
+    size = 0;
+    data_ptr = NULL;
   }
 }
 
@@ -213,52 +213,52 @@ template<typename DataType>
 template<typename T> 
 DataArray<DataType>::DataArray(const T *da, size_t s) {
   if (s > 0) {
-    m_data = (DataType *) malloc(s*sizeof(DataType));
+    data_ptr = (DataType *) malloc(s*sizeof(DataType));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const T *, size_t) is called." << std::endl;
 #endif
-    assert (m_data);
+    assert (data_ptr);
     if (da) {
-      DataType *p1 = m_data;
+      DataType *p1 = data_ptr;
       const T *p2 = da;
       for(size_t i=0; i<s; i++) *(p1++) = *(p2++); 
     }
-    m_size = s;
+    size = s;
   } else { 
-    m_size = 0;
-    m_data = NULL;
+    size = 0;
+    data_ptr = NULL;
   }
 }
 
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataType *da, size_t s) {
   if (s > 0) {
-    m_data = (DataType *) malloc(s*sizeof(DataType));
+    data_ptr = (DataType *) malloc(s*sizeof(DataType));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const DataType *, size_t) is called." << std::endl;
 #endif
-    assert (m_data);
-    if (da) memcpy(m_data, da, s*sizeof(DataType));
-    m_size = s;
+    assert (data_ptr);
+    if (da) memcpy(data_ptr, da, s*sizeof(DataType));
+    size = s;
   } else { 
-    m_size = 0;
-    m_data = NULL;
+    size = 0;
+    data_ptr = NULL;
   } 
 }
  
 template<typename DataType>
 DataArray<DataType>::~DataArray() {
-  if (m_data) free(m_data);
+  if (data_ptr) free(data_ptr);
 } 
 
 template<typename DataType>
 DataType& DataArray<DataType>::operator[](size_t i) {
-  return m_data[i];
+  return data_ptr[i];
 }
  
 template<typename DataType>
 DataType& DataArray<DataType>::operator[](size_t i) const {
-  return m_data[i];
+  return data_ptr[i];
 }
 
 /////////////////////////////////////////////////////////////////////////////

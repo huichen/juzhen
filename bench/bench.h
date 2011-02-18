@@ -55,6 +55,12 @@ using std::stringstream;
 using std::cout;
 using std::endl;
 
+#ifdef MLCPP 
+#define RESIZE_MATRIX H1.Resize(ni,ni); H2.Resize(ni,ni); H3.Resize(ni,ni); H4.Resize(ni,ni);
+#else
+#define RESIZE_MATRIX H1.resize(ni,ni); H2.resize(ni,ni); H3.resize(ni,ni); H4.resize(ni,ni);
+#endif
+
 #define BEGIN_BENCH(s) \
 {\
 {\
@@ -73,10 +79,7 @@ filename =FNAME+out.str()+ ".txt";\
 myfile.open(filename.c_str());\
 cout << "==============================" << endl;\
 for (size_t ni=MINN; ni<=MAXN; ni+=STEPN) {\
-H1.resize(ni,ni);\
-H2.resize(ni,ni);\
-H3.resize(ni,ni);\
-H4.resize(ni,ni);\
+RESIZE_MATRIX; \
 gettimeofday(&t1, NULL);\
 cout << s << '\t'; \
 for(size_t i=0; i<NB; i++) {
