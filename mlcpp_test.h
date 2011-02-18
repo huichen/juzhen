@@ -138,7 +138,7 @@ UnitTest::AddTest(&s_TestFunction_##test) ;
  * Functor class. All unit tests must be derived from it. 
  */
 class TestFunction {
-public:
+ public:
   /**
    * Unit test needs to overload this virtual function, which is defined by
    * the macros BEGIN_TEST and END_TEST automatically.
@@ -153,7 +153,7 @@ public:
  * UnitTest maintains all unit tests. 
  */
 class UnitTest {
-public:
+ public:
   /**
    * Run all unit tests.
    */
@@ -174,7 +174,7 @@ public:
    */
   static int num_success_;
 
-private:
+ private:
 
   /**
    * Vector that contains all tests.

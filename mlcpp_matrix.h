@@ -36,7 +36,7 @@ namespace mlcpp {
  */
 template<typename DataType> 
 class Matrix {
-public:
+ public:
   /**
    * Deconstructor. 
    */
@@ -341,7 +341,7 @@ public:
 
   typedef std::auto_ptr<DataArray<DataType> > DataPtr;
 
-protected:
+ protected:
   /**
    * Pointer to raw array. 
    */
@@ -1192,7 +1192,7 @@ std::string OutputToString(const Matrix<DataType> &m) {
  */
 template<typename DataType> 
 class IdentityMatrix : public Matrix<DataType> {
-public:
+ public:
   /**
    * Construct an identity Matrix of n x n. 
    */

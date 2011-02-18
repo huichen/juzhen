@@ -37,7 +37,7 @@ namespace mlcpp {
  */
 template<typename DataType> 
 class Vector : public Matrix<DataType> {
-public:
+ public:
   /**
    * Default constructor.
    */
