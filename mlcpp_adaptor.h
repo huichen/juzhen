@@ -29,4 +29,4 @@
 #include "mlcpp_adaptor_blas.h"
 #endif
 
-#endif
+#endif  // MLCPP_ADAPTOR_H_

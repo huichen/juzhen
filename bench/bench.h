@@ -19,9 +19,8 @@
 |                                                                           |
 +---------------------------------------------------------------------------+
 */
-
-#ifndef MLCPP_BENCH_BENCH_H_
-#define MLCPP_BENCH_BENCH_H_
+#ifndef BENCH_BENCH_H_
+#define BENCH_BENCH_H_
 
 #include <sys/time.h>
 #include <string.h>
@@ -37,15 +36,15 @@
 #endif
 
 #define MAXN 100
-#define MINN 2 
+#define MINN 2
 #define STEPN 1
 #define NB 10
 
-static int counter=0;
+static int counter = 0;
 
 #define PREFIX "small_"
 
-#ifdef MLCPP 
+#ifdef MLCPP
 #define FNAME "mlcpp_"
 #else
 #define FNAME "eigen_"
@@ -55,10 +54,16 @@ using std::stringstream;
 using std::cout;
 using std::endl;
 
-#ifdef MLCPP 
-#define RESIZE_MATRIX H1.Resize(ni,ni); H2.Resize(ni,ni); H3.Resize(ni,ni); H4.Resize(ni,ni);
+#ifdef MLCPP
+#define RESIZE_MATRIX H1.Resize(ni, ni); \
+H2.Resize(ni, ni); \
+H3.Resize(ni, ni); \
+H4.Resize(ni, ni);
 #else
-#define RESIZE_MATRIX H1.resize(ni,ni); H2.resize(ni,ni); H3.resize(ni,ni); H4.resize(ni,ni);
+#define RESIZE_MATRIX H1.resize(ni, ni); \
+H2.resize(ni, ni); \
+H3.resize(ni, ni); \
+H4.resize(ni, ni);
 #endif
 
 #define BEGIN_BENCH(s) \
@@ -68,7 +73,10 @@ stringstream out;\
 out << PREFIX << counter;\
 filename =out.str()+ ".plt";\
 myfile.open(filename.c_str());\
-myfile << "set term png \nset out \"" + out.str()+".png\"\nset title \"" + s + "\"\nset xlabel \"N\" \nset ylabel \"Seconds\" \nplot 'mlcpp_"+out.str() + ".txt' using 1:2 title 'mlcpp' w l, 'eigen_"+out.str() + ".txt' using 1:2 title 'eigen' w l ";\
+myfile << "set term png \nset out \"" + out.str()+".png\"\nset title \"" \
++ s + "\"\nset xlabel \"N\" \nset ylabel \"Seconds\" \nplot 'mlcpp_"\
++ out.str() + ".txt' using 1:2 title 'mlcpp' w l, 'eigen_" + out.str()\
++ ".txt' using 1:2 title 'eigen' w l ";\
 myfile.close();\
 }\
 {\
@@ -78,33 +86,33 @@ filename =FNAME+out.str()+ ".txt";\
 }\
 myfile.open(filename.c_str());\
 cout << "==============================" << endl;\
-for (size_t ni=MINN; ni<=MAXN; ni+=STEPN) {\
+for (size_t ni = MINN; ni <= MAXN; ni += STEPN) {\
 RESIZE_MATRIX; \
 gettimeofday(&t1, NULL);\
 cout << s << '\t'; \
-for(size_t i=0; i<NB; i++) {
-
+for(size_t i = 0; i < NB; i++) {
 #define END_BENCH \
 }\
 gettimeofday(&t2, NULL); \
-cout <<  (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000. << " s" << endl; \
-myfile << ni <<'\t' << (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000. << endl;\
+cout <<  (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000. \
+<< " s" << endl; myfile << ni <<'\t' << (t2.tv_sec-t1.tv_sec) \
++ (t2.tv_usec-t1.tv_usec)/1000000. << endl;\
 }\
 myfile.close();\
 }
 
 #ifdef MLCPP
 #define DEFV(vi) \
-zmatrix H##vi (MAXN, MAXN); \
-for (size_t i=0; i<MAXN; i++) \
-for (size_t j=0; j<MAXN; j++) \
-H##vi(i,j) = 1;
+zmatrix H##vi(MAXN, MAXN); \
+for (size_t i = 0; i < MAXN; i++) \
+for (size_t j = 0; j < MAXN; j++) \
+H##vi(i, j) = 1;
 #else
 #define DEFV(vi) \
-MatrixXcd H##vi (MAXN, MAXN); \
-for (size_t i=0; i<MAXN; i++) \
-for (size_t j=0; j<MAXN; j++) \
-H##vi(i,j) = 1;
+MatrixXcd H##vi(MAXN, MAXN); \
+for (size_t i = 0; i < MAXN; i++) \
+for (size_t j = 0; j < MAXN; j++) \
+H##vi(i, j) = 1;
 #endif
 
 
@@ -114,5 +122,4 @@ using mlcpp::zmatrix;
 using Eigen::MatrixXcd;
 #endif
 
-
-#endif
+#endif  // BENCH_BENCH_H_

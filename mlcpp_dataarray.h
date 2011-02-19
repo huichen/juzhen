@@ -24,18 +24,18 @@
 #define MLCPP_DATAARRAY_H_
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include <memory>
-#include <assert.h>
 
 namespace mlcpp {
 
 /////////////////////////////////////////////////////////////////////////////
-/** 
- * DataArray is a wrapper for raw array. The resources are stored in and 
+/**
+ * DataArray is a wrapper for raw array. The resources are stored in and
  * handled by auto_ptr to prevent memory leaks.
  */
-template<typename DataType> 
+template<typename DataType>
 struct DataArray {
   /**
    * Default constructor.
@@ -43,57 +43,57 @@ struct DataArray {
   DataArray();
 
   /**
-   * Construct an array of size s. 
+   * Construct an array of size s.
    */
   DataArray(size_t s);
- 
+
   /**
-   * Construct an array from another array.  
+   * Construct an array from another array.
    */
-  template<typename T> 
+  template<typename T>
   DataArray(const DataArray<T> &da);
- 
+
   /**
-   * Construct an array from another array. 
+   * Construct an array from another array.
    */
   DataArray(const DataArray<DataType> &da);
- 
+
   /**
    * Construct an array from another array. The size of the new array
-   * is the larger of da's size and s. 
+   * is the larger of da's size and s.
    */
-  template<typename T> 
+  template<typename T>
   DataArray(const DataArray<T> &da, size_t s);
- 
+
   /**
    * Construct an array from another array. The size of the new array
-   * is the larger of da's size and s. 
+   * is the larger of da's size and s.
    */
   DataArray(const DataArray<DataType> &da, size_t s);
- 
+
   /**
    * Construct an array from a raw array. The size of the new array
-   * is the larger of the raw array's size and s. 
+   * is the larger of the raw array's size and s.
    */
-  template<typename T> 
+  template<typename T>
   DataArray(const T *da, size_t s);
 
   /**
    * Construct an array from a raw array. The size of the new array
-   * is the larger of the raw array's size and s. 
+   * is the larger of the raw array's size and s.
    */
   DataArray(const DataType *da, size_t s);
-   
+
   /**
    * Destructor frees allocated memory.
    */
   ~DataArray();
- 
+
   /**
    * Returns the reference of ith index in the raw array.
    */
-  DataType& operator[](size_t i); 
- 
+  DataType& operator[](size_t i);
+
   /**
    * Returns the reference of ith index in the raw array.
    */
@@ -118,29 +118,29 @@ DataArray<DataType>::DataArray() {
 
 template<typename DataType>
 DataArray<DataType>::DataArray(size_t s) {
-  data_ptr = (DataType *) malloc(s*sizeof(DataType));
+  data_ptr = reinterpret_cast<DataType *>(malloc(s*sizeof(DataType)));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(size_t) is called." << std::endl;
 #endif
-  assert (data_ptr);
+  assert(data_ptr);
   size = s;
 }
 
 template<typename DataType>
-template<typename T> 
+template<typename T>
 DataArray<DataType>::DataArray(const DataArray<T> &da) {
   if (&da && da.size >0) {
-    data_ptr = (DataType *) malloc(da.size*sizeof(DataType));
+    data_ptr = reinterpret_cast<DataType *>(malloc(da.size*sizeof(DataType)));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const DataArray<T> &) is called." << std::endl;
 #endif
-    assert (data_ptr);
+    assert(data_ptr);
     size = da.size;
     if (da.data_ptr) {
       DataType *p1 = data_ptr;
       T *p2 = da.data_ptr;
       size_t s = da.size;
-      for(size_t i=0; i< s; i++) *(p1++) = *(p2++); 
+      for (size_t i = 0; i < s; i++) *(p1++) = *(p2++);
     }
   } else {
     size = 0;
@@ -151,11 +151,11 @@ DataArray<DataType>::DataArray(const DataArray<T> &da) {
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataArray<DataType> &da) {
   if (&da && da.size >0) {
-    data_ptr = (DataType *) malloc(da.size*sizeof(DataType));
+    data_ptr = reinterpret_cast<DataType *>(malloc(da.size*sizeof(DataType)));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const DataArray<DataType> &) is called." << std::endl;
 #endif
-    assert (data_ptr);
+    assert(data_ptr);
     size = da.size;
     if (da.data_ptr) memcpy(data_ptr, da.data_ptr, da.size*sizeof(DataType));
   } else {
@@ -165,23 +165,26 @@ DataArray<DataType>::DataArray(const DataArray<DataType> &da) {
 }
 
 template<typename DataType>
-template<typename T> 
+template<typename T>
 DataArray<DataType>::DataArray(const DataArray<T> &da, size_t s) {
   if ((&da && da.size>0)||s>0) {
     size_t reals;
-    if (&da)  reals = da.size>s?da.size:s;
-    else reals = s;
-    data_ptr = (DataType *) malloc(reals*sizeof(DataType));
+    if (&da)
+      reals = da.size>s?da.size:s;
+    else
+      reals = s;
+    data_ptr = reinterpret_cast<DataType *>(malloc(reals*sizeof(DataType)));
 #ifdef PRINT_MALLOC
-  std::cout << "DataArray(const DataArray<T> &, size_t) is called." << std::endl;
+  std::cout << "DataArray(const DataArray<T> &, size_t) is called."
+            << std::endl;
 #endif
-    assert (data_ptr);
+    assert(data_ptr);
     size = reals;
     if (&da && da.data_ptr) {
       DataType *p1 = data_ptr;
       T *p2 = da.data_ptr;
       size_t s1 = da.size;
-      for(size_t i=0; i< s1; i++) *(p1++) = *(p2++); 
+      for (size_t i = 0; i < s1; i++) *(p1++) = *(p2++);
     }
   } else {
     size = 0;
@@ -190,19 +193,24 @@ DataArray<DataType>::DataArray(const DataArray<T> &da, size_t s) {
 }
 
 template<typename DataType>
-DataArray<DataType>::DataArray(const DataArray<DataType> &da, 
+DataArray<DataType>::DataArray(const DataArray<DataType> &da,
                                size_t s) {
   if ((&da && da.size>0)||s>0) {
     size_t reals;
-    if (&da)  reals = da.size>s?da.size:s;
-    else reals = s;
-    data_ptr = (DataType *) malloc(reals*sizeof(DataType));
+    if (&da)
+      reals = da.size>s?da.size:s;
+    else
+      reals = s;
+    data_ptr = reinterpret_cast<DataType *>(malloc(reals*sizeof(DataType)));
 #ifdef PRINT_MALLOC
-  std::cout << "DataArray(const DataArray<DataType> &, size_t) is called." << std::endl;
+  std::cout << "DataArray(const DataArray<DataType> &, size_t) is called."
+            << std::endl;
 #endif
-    assert (data_ptr);
+    assert(data_ptr);
     size = reals;
-    if (&da && da.data_ptr) memcpy(data_ptr, da.data_ptr, da.size*sizeof(DataType));
+    if (&da && da.data_ptr) memcpy(data_ptr,
+                                   da.data_ptr,
+                                   da.size*sizeof(DataType));
   } else {
     size = 0;
     data_ptr = NULL;
@@ -210,21 +218,21 @@ DataArray<DataType>::DataArray(const DataArray<DataType> &da,
 }
 
 template<typename DataType>
-template<typename T> 
+template<typename T>
 DataArray<DataType>::DataArray(const T *da, size_t s) {
   if (s > 0) {
-    data_ptr = (DataType *) malloc(s*sizeof(DataType));
+    data_ptr = reinterpret_cast<DataType *>(malloc(s*sizeof(DataType)));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const T *, size_t) is called." << std::endl;
 #endif
-    assert (data_ptr);
+    assert(data_ptr);
     if (da) {
       DataType *p1 = data_ptr;
       const T *p2 = da;
-      for(size_t i=0; i<s; i++) *(p1++) = *(p2++); 
+      for (size_t i = 0; i < s; i++) *(p1++) = *(p2++);
     }
     size = s;
-  } else { 
+  } else {
     size = 0;
     data_ptr = NULL;
   }
@@ -233,35 +241,33 @@ DataArray<DataType>::DataArray(const T *da, size_t s) {
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataType *da, size_t s) {
   if (s > 0) {
-    data_ptr = (DataType *) malloc(s*sizeof(DataType));
+    data_ptr = reinterpret_cast<DataType *>(malloc(s*sizeof(DataType)));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const DataType *, size_t) is called." << std::endl;
 #endif
-    assert (data_ptr);
+    assert(data_ptr);
     if (da) memcpy(data_ptr, da, s*sizeof(DataType));
     size = s;
-  } else { 
+  } else {
     size = 0;
     data_ptr = NULL;
-  } 
+  }
 }
- 
+
 template<typename DataType>
 DataArray<DataType>::~DataArray() {
   if (data_ptr) free(data_ptr);
-} 
+}
 
 template<typename DataType>
 DataType& DataArray<DataType>::operator[](size_t i) {
   return data_ptr[i];
 }
- 
+
 template<typename DataType>
 DataType& DataArray<DataType>::operator[](size_t i) const {
   return data_ptr[i];
 }
-
 /////////////////////////////////////////////////////////////////////////////
-
 }
-#endif
+#endif  // MLCPP_DATAARRAY_H_

@@ -31,6 +31,5 @@
 #include "mlcpp_vector.h"
 
 namespace mlcpp {
-
 }
-#endif
+#endif  // MLCPP_H_
