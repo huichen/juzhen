@@ -23,11 +23,7 @@
 #define BENCH_BENCH_H_
 
 #include <sys/time.h>
-#include <string.h>
-
-#include <fstream>
-#include <sstream>
-#include <iostream>
+#include <stdio.h>
 
 #ifdef MLCPP
 #include <mlcpp.h>
@@ -50,10 +46,6 @@ static int counter = 0;
 #define FNAME "eigen_"
 #endif
 
-using std::stringstream;
-using std::cout;
-using std::endl;
-
 #ifdef MLCPP
 #define RESIZE_MATRIX H1.Resize(ni, ni); \
 H2.Resize(ni, ni); \
@@ -69,36 +61,43 @@ H4.resize(ni, ni);
 #define BEGIN_BENCH(s) \
 {\
 {\
-stringstream out;\
-out << PREFIX << counter;\
-filename =out.str()+ ".plt";\
-myfile.open(filename.c_str());\
-myfile << "set term png \nset out \"" + out.str()+".png\"\nset title \"" \
-+ s + "\"\nset xlabel \"N\" \nset ylabel \"Seconds\" \nplot 'mlcpp_"\
-+ out.str() + ".txt' using 1:2 title 'mlcpp' w l, 'eigen_" + out.str()\
-+ ".txt' using 1:2 title 'eigen' w l ";\
-myfile.close();\
+char out[100];\
+snprintf(out, sizeof(out), "%s%d", PREFIX, counter);\
+snprintf(filename, sizeof(filename), "%s.plt", out);\
+myfile = fopen(filename, "w");\
+char output_string[1000];\
+snprintf(output_string, sizeof(output_string), \
+"set term png\n"\
+"set out \"%s.png\"\n"\
+"set title \"%s\"\n"\
+"set xlabel \"N\"\n"\
+"set ylabel \"Seconds\"\n"\
+"plot 'mlcpp_%s.txt' using 1:2 title 'mlcpp' w l, "\
+"'eigen_%s.txt' using 1:2 title 'eigen' w l ", \
+    out, s, out, out);\
+fprintf(myfile, "%s", output_string);\
+fclose(myfile);\
 }\
 {\
-stringstream out;\
-out << PREFIX << counter++;\
-filename =FNAME+out.str()+ ".txt";\
+char out[100];\
+snprintf(out, sizeof(out), "%s%d", PREFIX, counter++);\
+snprintf(filename, sizeof(filename), "%s%s.plt", FNAME, out);\
 }\
-myfile.open(filename.c_str());\
-cout << "==============================" << endl;\
+myfile = fopen(filename, "w");\
+printf("==============================\n");\
 for (size_t ni = MINN; ni <= MAXN; ni += STEPN) {\
 RESIZE_MATRIX; \
 gettimeofday(&t1, NULL);\
-cout << s << '\t'; \
+printf("%s\t", s);\
 for(size_t i = 0; i < NB; i++) {
 #define END_BENCH \
 }\
 gettimeofday(&t2, NULL); \
-cout <<  (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000. \
-<< " s" << endl; myfile << ni <<'\t' << (t2.tv_sec-t1.tv_sec) \
-+ (t2.tv_usec-t1.tv_usec)/1000000. << endl;\
+printf("%f s\n", (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000.);\
+fprintf(myfile, "%zu\t%f\n", ni, (t2.tv_sec-t1.tv_sec) \
+                                 + (t2.tv_usec-t1.tv_usec)/1000000.);\
 }\
-myfile.close();\
+fclose(myfile);\
 }
 
 #ifdef MLCPP
