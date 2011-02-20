@@ -16,9 +16,9 @@ You need a package that provides CBLAS functions. I recommend optimized BLAS lib
    make <br><br> 
 -# Include mlcpp.h in your source file and add '-Imlcpp_source_dir' to your compiler flags. <br><br> 
    Use '-DUSE_MKL' if you want to link against MKL.<br><br> 
--# Generate document: 
-   cd doc; make
-   The document will be generated under doc/document folder.
+-# Generate document: <br><br> 
+   cd doc; make <br><br>
+   The document will be generated under doc/document folder. <br><br>
 
 @section example Examples
   
