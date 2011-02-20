@@ -19,8 +19,8 @@
 |                                                                           |
 +---------------------------------------------------------------------------+
 */
-#ifndef BENCH_BENCH_H_
-#define BENCH_BENCH_H_
+#ifndef BENCHMARK_BENCHMARK_H_
+#define BENCHMARK_BENCHMARK_H_
 
 #include <sys/time.h>
 #include <stdio.h>
@@ -121,4 +121,4 @@ using mlcpp::zmatrix;
 using Eigen::MatrixXcd;
 #endif
 
-#endif  // BENCH_BENCH_H_
+#endif  // BENCHMARK_BENCHMARK_H_
