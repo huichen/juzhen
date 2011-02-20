@@ -19,7 +19,6 @@
 |                                                                           |
 +---------------------------------------------------------------------------+
 */
-
 #include <mlcpp.h>
 #define N 90
 using mlcpp::cvector;
@@ -40,9 +39,9 @@ int main() {
   cvector energy;
   /* matrix of complex<float> */
   cmatrix wave;
-  H.reigen(energy, wave);
+  H.RightEigenSolver(energy, wave);
 
-  std::cout << "energy= " << sort(real(energy)) << std::endl;
+  std::cout << "energy= " << Sort(Real(energy)) << std::endl;
 #endif
   return 0;
 }

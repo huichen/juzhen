@@ -19,7 +19,7 @@
 |                                                                           |
 +---------------------------------------------------------------------------+
 */
-#include "bench.h"  // NOLINT
+#include "benchmark.h"  // NOLINT
 
 int main() {
   DEFV(1)
