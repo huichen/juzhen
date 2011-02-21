@@ -1,2 +1,2 @@
 all:
-	doxygen doxygen.config
+	doxygen Doxyfile.in 
