@@ -20,9 +20,9 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_TEST_H_
+#ifndef MLCPP_TEST_H_  // NOLINT
 #define MLCPP_TEST_H_
-#include <iostream>
+#include <iostream>  // NOLINT stream is a much more convenient choice here
 #include <vector>
 #include <string>
 
@@ -114,7 +114,7 @@ std::cout << " passed." << std::endl; \
 */
 #define BEGIN_TEST(test, classname)  \
 class test : public TestFunction { \
- public: \
+  public: \
   std::string m_name; \
   test() : m_name(classname) {} \
   virtual void Run() { \
@@ -144,6 +144,7 @@ UnitTest::AddTest(&s_TestFunction_##test);
  */
 class TestFunction {
  public:
+  virtual ~TestFunction() {}
   /**
    * Unit test needs to overload this virtual function, which is defined by
    * the macros BEGIN_TEST and END_TEST automatically.
@@ -225,4 +226,4 @@ std::string Serialize(std::string s) {
       os.append(s.begin()+i, s.begin()+i+1);
   return os;
 }
-#endif  // MLCPP_TEST_H_
+#endif  // MLCPP_TEST_H_  // NOLINT
