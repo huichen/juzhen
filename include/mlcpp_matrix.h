@@ -20,7 +20,7 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_MATRIX_H_
+#ifndef MLCPP_MATRIX_H_  // NOLINT
 #define MLCPP_MATRIX_H_
 #include <sstream>
 #include <string>
@@ -68,12 +68,12 @@ class Matrix {
    * Construct from another Matrix. All numbers are copied.
    */
   template<typename T>
-  Matrix(const Matrix<T> &m);
+  Matrix(const Matrix<T> &m);  // NOLINT
 
   /**
    * Construct from another Matrix. All numbers are copied.
    */
-  Matrix(const Matrix<DataType> &m);
+  explicit Matrix(const Matrix<DataType> &m);
 
   /**
    * Copy from another Matrix. New memory is allocated if it's necessary.
@@ -331,7 +331,9 @@ class Matrix {
    * implemented yet.
    */
   template<typename T>
-  void RightEigenSolver(Matrix<Complex<T> > &e, Matrix<DataType> &vr) const;
+  void RightEigenSolver(
+      Matrix<Complex<T> > &e,
+      Matrix<DataType> &vr) const;
 
   /**
    * Solve eigen system and put eigen values into e, corresponding
@@ -341,7 +343,9 @@ class Matrix {
    * implemented yet.
    */
   template<typename T>
-  void LeftEigenSolver(Matrix<Complex<T> > &e, Matrix<DataType> &vl) const;
+  void LeftEigenSolver(
+      Matrix<Complex<T> > &e,
+      Matrix<DataType> &vl) const;
 
   typedef std::auto_ptr<DataArray<DataType> > DataPtr;
 
@@ -956,8 +960,10 @@ Matrix<DataType> & Matrix<DataType>::SwapRow(size_t r1, size_t r2) {
 /* solvers */
 template<typename DataType>
 template<typename T>
-void Matrix<DataType>::EigenSolver(Matrix<Complex<T> > &e, Matrix<DataType> &vl,
-                             Matrix<DataType> &vr) const {
+void Matrix<DataType>::EigenSolver(
+    Matrix<Complex<T> > &e,
+    Matrix<DataType> &vl,
+    Matrix<DataType> &vr) const {
   assert(num_col_ == num_row_);
   Matrix<DataType> m(*this);
 
@@ -1205,7 +1211,7 @@ class IdentityMatrix : public Matrix<DataType> {
   /**
    * Construct an identity Matrix of n x n.
    */
-  IdentityMatrix(size_t n);
+  explicit IdentityMatrix(size_t n);
 };
 
 typedef IdentityMatrix<float> identity_smatrix;
@@ -1232,4 +1238,4 @@ IdentityMatrix<DataType>::IdentityMatrix(size_t n) {
 }
 /////////////////////////////////////////////////////////////////////////////
 }
-#endif  // MLCPP_MATRIX_H_
+#endif  // MLCPP_MATRIX_H_  // NOLINT

@@ -20,7 +20,7 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_ADAPTOR_H_
+#ifndef MLCPP_ADAPTOR_H_  // NOLINT
 #define MLCPP_ADAPTOR_H_
 
 #ifdef USE_MKL
@@ -29,4 +29,4 @@
 #include "mlcpp_adaptor_blas.h"
 #endif
 
-#endif  // MLCPP_ADAPTOR_H_
+#endif  // MLCPP_ADAPTOR_H_  // NOLINT

@@ -20,7 +20,7 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_H_
+#ifndef MLCPP_H_  // NOLINT
 #define MLCPP_H_
 #include <assert.h>
 
@@ -32,4 +32,4 @@
 
 namespace mlcpp {
 }
-#endif  // MLCPP_H_
+#endif  // MLCPP_H_  // NOLINT

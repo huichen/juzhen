@@ -20,7 +20,7 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_VECTOR_H_
+#ifndef MLCPP_VECTOR_H_  // NOLINT
 #define MLCPP_VECTOR_H_
 #include <math.h>
 
@@ -47,12 +47,12 @@ class Vector : public Matrix<DataType> {
   /**
    * Construct a Vector of size i.
    */
-  Vector(size_t i);
+  explicit Vector(size_t i);
 
   /**
    * Construct a Vector from a Matrix's column-major raw array.
    */
-  Vector(const Matrix<DataType> &m);
+  Vector(const Matrix<DataType> &m);  // NOLINT
 
   /**
    * Construct a Vector from an array. The size of the Vector will be
@@ -64,7 +64,7 @@ class Vector : public Matrix<DataType> {
   /**
    * Construct a Vector from an existing Vector.
    */
-  Vector(const std::vector<DataType> &v);
+  explicit Vector(const std::vector<DataType> &v);
 
   /**
    * Copy a Vector from another Vector.
@@ -682,4 +682,4 @@ std::string OutputToString(const Vector<DataType> &m) {
 }
 }
 /////////////////////////////////////////////////////////////////////////////
-#endif  // MLCPP_VECTOR_H_
+#endif  // MLCPP_VECTOR_H_  // NOLINT

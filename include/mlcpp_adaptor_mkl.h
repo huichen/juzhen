@@ -20,7 +20,7 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_ADAPTOR_MKL_H_
+#ifndef MLCPP_ADAPTOR_MKL_H_  // NOLINT
 #define MLCPP_ADAPTOR_MKL_H_
 #include <assert.h>
 
@@ -97,8 +97,8 @@ int geev<float, CS>(
   char nl, char nr, const MKL_INT n,
   float *a, const MKL_INT lda, CS * w, float *vl, const MKL_INT ldvl,
   float *vr, const MKL_INT ldvr) {
-  float *wr = reinterpret_cast<float *>(malloc(sizeof(float)*n));
-  float *wi = reinterpret_cast<float *>(malloc(sizeof(float)*n));
+  float *wr = reinterpret_cast<float *>(malloc(sizeof(float)*n));  // NOLINT
+  float *wi = reinterpret_cast<float *>(malloc(sizeof(float)*n));  // NOLINT
   assert(wr);
   assert(wi);
   int res = LAPACKE_sgeev(LAPACK_COL_MAJOR, nl, nr, n,
@@ -114,8 +114,8 @@ int geev<double, CD>(
   char nl, char nr, const MKL_INT n,
   double *a, const MKL_INT lda, CD * w, double *vl, const MKL_INT ldvl,
   double *vr, const MKL_INT ldvr) {
-  double *wr = reinterpret_cast<double *>(malloc(sizeof(double)*n));
-  double *wi = reinterpret_cast<double *>(malloc(sizeof(double)*n));
+  double *wr = reinterpret_cast<double *>(malloc(sizeof(double)*n));  // NOLINT
+  double *wi = reinterpret_cast<double *>(malloc(sizeof(double)*n));  // NOLINT
   assert(wr);
   assert(wi);
   int res = LAPACKE_dgeev(LAPACK_COL_MAJOR, nl, nr, n,
@@ -153,5 +153,6 @@ int geev<CD, CD>(
 };
 }
 
-#endif  // MLCPP_ADAPTOR_MKL_H_
+#endif  // MLCPP_ADAPTOR_MKL_H_  // NOLINT
+
 

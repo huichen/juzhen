@@ -20,7 +20,7 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_ADAPTOR_BLAS_H_
+#ifndef MLCPP_ADAPTOR_BLAS_H_  // NOLINT
 #define MLCPP_ADAPTOR_BLAS_H_
 #include <assert.h>
 
@@ -91,5 +91,5 @@ int geev(
 };
 }
 
-#endif  // MLCPP_ADAPTOR_BLAS_H_
+#endif  // MLCPP_ADAPTOR_BLAS_H_  // NOLINT
 

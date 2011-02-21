@@ -20,11 +20,11 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_COMPLEX_H_
+#ifndef MLCPP_COMPLEX_H_  // NOLINT
 #define MLCPP_COMPLEX_H_
 #include <math.h>
 
-#include <iostream>
+#include <iostream>  // NOLINT string fuctions are provided for compatibility
 
 namespace mlcpp {
 
@@ -58,13 +58,13 @@ struct Complex {
    * Construct a Complex number from a real number with imaginary part to be
    * zero.
    */
-  Complex(const T &r);
+  Complex(const T &r);  // NOLINT
 
   /**
    * Construct(copying) a Complex number from another Complex number.
    */
   template<typename T1>
-  Complex(const Complex<T1>& c);
+  Complex(const Complex<T1>& c);  // NOLINT
 
   /**
    * Copy from a real number with imaginary part set to zero.
@@ -382,5 +382,5 @@ std::ostream& operator<< (std::ostream& out, const Complex<T> &m) {
 }
 /////////////////////////////////////////////////////////////////////////////
 }
-#endif  // MLCPP_COMPLEX_H_
+#endif  // MLCPP_COMPLEX_H_  // NOLINT
 
