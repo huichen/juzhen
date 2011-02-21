@@ -39,11 +39,6 @@ template<typename DataType>
 class Matrix {
  public:
   /**
-   * Deconstructor.
-   */
-  ~Matrix() {}
-
-  /**
    * Default constructor.
    */
   Matrix();
@@ -74,6 +69,11 @@ class Matrix {
    * Construct from another Matrix. All numbers are copied.
    */
   explicit Matrix(const Matrix<DataType> &m);
+
+  /**
+   * Deconstructor.
+   */
+  ~Matrix() {}
 
   /**
    * Copy from another Matrix. New memory is allocated if it's necessary.
@@ -398,7 +398,7 @@ template<typename DataType>
 template<typename T>
 Matrix<DataType>::Matrix(const T *data, size_t nr, size_t nc)
   : num_col_(nc), num_row_(nr) {
-  data_ptr_ =DataPtr(new DataArray<DataType>(data, nr*nc));
+  data_ptr_ = DataPtr(new DataArray<DataType>(data, nr*nc));
   temporary_ = false;
   raw_ptr_ = data_ptr_->data_ptr;
 }
@@ -407,7 +407,7 @@ template<typename DataType>
 template<typename T>
 Matrix<DataType>::Matrix(const Matrix<T> &m)
   : num_col_(m.num_col()), num_row_(m.num_row()) {
-  data_ptr_ =DataPtr(
+  data_ptr_ = DataPtr(
       new DataArray<DataType>(m.raw_ptr(), m.num_row()*m.num_col()));
   temporary_ = false;
   raw_ptr_ = data_ptr_->data_ptr;
@@ -416,11 +416,11 @@ Matrix<DataType>::Matrix(const Matrix<T> &m)
 template<typename DataType>
 Matrix<DataType>::Matrix(const Matrix<DataType> &m)
   : num_col_(m.num_col()), num_row_(m.num_row()) {
-  if (m.temporary_) {
+  if (m.temporary()) {
     data_ptr_ = (const_cast<Matrix<DataType>& >(m)).data_ptr_;
     temporary_ = true;
   } else {
-    data_ptr_ =DataPtr(new DataArray<DataType>(*(m.data_ptr_)));
+    data_ptr_ = DataPtr(new DataArray<DataType>(*(m.data_ptr_)));
     temporary_ = false;
   }
   raw_ptr_ = data_ptr_->data_ptr;
