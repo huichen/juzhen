@@ -69,17 +69,17 @@ class Vector : public Matrix<DataType> {
   /**
    * Copy a Vector from another Vector.
    */
-  Vector<DataType>& operator=(const Vector<DataType> &v);
+  Vector<DataType> &operator=(const Vector<DataType> &v);
 
   /**
    * Copy a Vector from a STL Vector.
    */
-  Vector<DataType>& operator=(const std::vector<DataType> &v);
+  Vector<DataType> &operator=(const std::vector<DataType> &v);
 
   /**
    * Assign all elements in the Vector to be rhs.
    */
-  Vector<DataType>& operator=(const DataType &rhs);
+  Vector<DataType> &operator=(const DataType &rhs);
 
   /**
    * Resize a Vector.
@@ -100,25 +100,25 @@ class Vector : public Matrix<DataType> {
    * Add two Vectors.
    */
   template<typename T>
-  Vector<DataType> operator+(const Vector<T>& rhs) const;
+  Vector<DataType> operator+(const Vector<T> &rhs) const;
 
   /**
    * Add two Vectors.
    */
   template<typename T>
-  Vector<DataType>& operator+=(const Vector<T>& rhs);
+  Vector<DataType> &operator+=(const Vector<T> &rhs);
 
   /**
    * Subtract two Vectors.
    */
   template<typename T>
-  Vector<DataType> operator-(const Vector<T>& rhs) const;
+  Vector<DataType> operator-(const Vector<T> &rhs) const;
 
   /**
    * Subtract two Vectors.
    */
   template<typename T>
-  Vector<DataType>& operator-=(const Vector<T>& rhs);
+  Vector<DataType> &operator-=(const Vector<T> &rhs);
 
   /**
    * Multiply a Vector with a real number.
@@ -130,13 +130,13 @@ class Vector : public Matrix<DataType> {
    * Multiply a Vector with a real number.
    */
   template<typename T>
-  Vector<DataType>& operator*=(const T &rhs);
+  Vector<DataType> &operator*=(const T &rhs);
 
   /**
    * Multiply a Vector and a Matrix. The Vector's size must be equal
    * to the Matrix's number of rows.
    */
-  Vector<DataType>& operator*=(const Matrix<DataType>& rhs);
+  Vector<DataType> &operator*=(const Matrix<DataType> &rhs);
 
   /**
    * Divide a Vector by a constant.
@@ -148,7 +148,7 @@ class Vector : public Matrix<DataType> {
    * Divide a Vector by a constant.
    */
   template<typename T>
-  Vector<DataType>& operator/=(const T &rhs);
+  Vector<DataType> &operator/=(const T &rhs);
 
   /**
    * Get real part of a Vector.
@@ -246,14 +246,14 @@ Vector<DataType>::Vector(const std::vector<DataType> &v)
 }
 
 template<typename DataType>
-Vector<DataType>& Vector<DataType>::operator=(const Vector<DataType> &v) {
+Vector<DataType> &Vector<DataType>::operator=(const Vector<DataType> &v) {
   Matrix<DataType>::operator=(v);
   return *this;
 }
 
 template<typename DataType>
-Vector<DataType> &
-Vector<DataType>::operator=(const std::vector<DataType> &v) {
+Vector<DataType> &Vector<DataType>::operator=(
+    const std::vector<DataType> &v) {
   size_t s = v.size();
   Resize(s);
   DataType *p1;
@@ -263,7 +263,7 @@ Vector<DataType>::operator=(const std::vector<DataType> &v) {
 }
 
 template<typename DataType>
-Vector<DataType>& Vector<DataType>::operator=(const DataType &rhs) {
+Vector<DataType> &Vector<DataType>::operator=(const DataType &rhs) {
   Matrix<DataType>::operator=(rhs);
   return *this;
 }
@@ -285,26 +285,26 @@ inline size_t Vector<DataType>::size() const {
 
 template<typename DataType>
 template<typename T>
-Vector<DataType> Vector<DataType>::operator+(const Vector<T>& rhs) const {
+Vector<DataType> Vector<DataType>::operator+(const Vector<T> &rhs) const {
   return Matrix<DataType>::operator+(rhs);
 }
 
 template<typename DataType>
 template<typename T>
-Vector<DataType>& Vector<DataType>::operator+=(const Vector<T>& rhs) {
+Vector<DataType> &Vector<DataType>::operator+=(const Vector<T> &rhs) {
   Matrix<DataType>::operator+=(rhs);
   return *this;
 }
 
 template<typename DataType>
 template<typename T>
-Vector<DataType> Vector<DataType>::operator-(const Vector<T>& rhs) const {
+Vector<DataType> Vector<DataType>::operator-(const Vector<T> &rhs) const {
   return Matrix<DataType>::operator-(rhs);
 }
 
 template<typename DataType>
 template<typename T>
-Vector<DataType>& Vector<DataType>::operator-=(const Vector<T>& rhs) {
+Vector<DataType> &Vector<DataType>::operator-=(const Vector<T> &rhs) {
   Matrix<DataType>::operator-=(rhs);
   return *this;
 }
@@ -317,13 +317,13 @@ Vector<DataType> Vector<DataType>::operator*(const T &rhs) const {
 
 template<typename DataType>
 template<typename T>
-Vector<DataType>& Vector<DataType>::operator*=(const T &rhs) {
+Vector<DataType> &Vector<DataType>::operator*=(const T &rhs) {
   Matrix<DataType>::operator*=(rhs);
   return *this;
 }
 
 template<typename DataType>
-Vector<DataType>& Vector<DataType>::operator*=(const Matrix<DataType>& rhs) {
+Vector<DataType> &Vector<DataType>::operator*=(const Matrix<DataType> &rhs) {
   Matrix<DataType> m = *this;
   (*this) = m.Transpose() * rhs;
   return *this;
@@ -337,7 +337,7 @@ Vector<DataType> Vector<DataType>::operator/(const T &rhs) const {
 
 template<typename DataType>
 template<typename T>
-Vector<DataType>& Vector<DataType>::operator/=(const T &rhs) {
+Vector<DataType> &Vector<DataType>::operator/=(const T &rhs) {
   Matrix<DataType>::operator/=(rhs);
   return *this;
 }
@@ -380,7 +380,7 @@ DataType Vector<DataType>::Max() const {
 }
 
 template<typename DataType>
-Vector<DataType> & Vector<DataType>::Swap(size_t i1, size_t i2) {
+Vector<DataType> &Vector<DataType>::Swap(size_t i1, size_t i2) {
   assert(i1 < size() && i2 < size());
   DataType *p = Matrix<DataType>::data_ptr_->data_ptr;
   DataType temp;
@@ -396,13 +396,13 @@ Vector<DataType> Vector<DataType>::Block(size_t i1, size_t i2) {
 }
 
 template<typename DataType>
-Vector<DataType> & Vector<DataType>::Insert(size_t i, Vector<DataType> v) {
+Vector<DataType> &Vector<DataType>::Insert(size_t i, Vector<DataType> v) {
   Matrix<DataType>::Insert(i, 0);
   return (*this);
 }
 
 template<typename DataType>
-Vector<DataType> & Vector<DataType>::Sort() {
+Vector<DataType> &Vector<DataType>::Sort() {
   std::vector<DataType> v(Matrix<DataType>::raw_ptr(),
                           Matrix<DataType>::raw_ptr()+size());
   std::sort(v.begin(), v.end());
@@ -616,7 +616,7 @@ Vector<DataType> operator*(const CD &lhs, const Vector<DataType> &ma) {
  * Vector dot product.
  */
 template<typename DataType>
-DataType operator*(const Vector<DataType>& v1, const Vector<DataType>& v2) {
+DataType operator*(const Vector<DataType> &v1, const Vector<DataType> &v2) {
   assert(v1.size() == v2.size());
   DataType res = 0;
   size_t s = v1.size();
@@ -631,8 +631,8 @@ DataType operator*(const Vector<DataType>& v1, const Vector<DataType>& v2) {
  */
 template<typename DataType>
 Vector<DataType> operator*(
-    const Matrix<DataType>& ma,
-    const Vector<DataType>& v) {
+    const Matrix<DataType> &ma,
+    const Vector<DataType> &v) {
   return ma*((Matrix<DataType>&)v);
 }
 
@@ -641,8 +641,8 @@ Vector<DataType> operator*(
  */
 template<typename DataType>
 Vector<DataType> operator*(
-    const Vector<DataType>& v,
-    const Matrix<DataType>& ma) {
+    const Vector<DataType> &v,
+    const Matrix<DataType> &ma) {
   return ma*((Matrix<DataType>&)v);
 }
 
@@ -650,15 +650,15 @@ Vector<DataType> operator*(
  * Multiply a Matrix and a Vector.
  */
 template<typename DataType>
-Vector<DataType>& operator*=(
-    Matrix<DataType>& ma,
-    const Vector<DataType>& v) {
+Vector<DataType> &operator*=(
+    Matrix<DataType> &ma,
+    const Vector<DataType> &v) {
   ma *= (Matrix<DataType>&) v;
   return ma;
 }
 
 template<typename DataType>
-std::ostream& operator<< (std::ostream& out, const Vector<DataType> &m) {
+std::ostream &operator<< (std::ostream &out, const Vector<DataType> &m) {
   out << "{";
   for (size_t i = 0; i < m.size(); i++) {
     if (i != m.size()-1)

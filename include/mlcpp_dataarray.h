@@ -92,17 +92,17 @@ struct DataArray {
   /**
    * Returns the reference of ith index in the raw array.
    */
-  DataType& operator[](size_t i);
+  DataType &operator[](size_t i);
 
   /**
    * Returns the reference of ith index in the raw array.
    */
-  DataType& operator[](size_t i) const;
+  DataType &operator[](size_t i) const;
 
   /**
    * Pointer to the raw array.
    */
-  DataType * data_ptr;
+  DataType *data_ptr;
 
   /**
    * Length of the raw array. It's a actual number of total items in the array.
@@ -129,7 +129,7 @@ DataArray<DataType>::DataArray(size_t s) {
 template<typename DataType>
 template<typename T>
 DataArray<DataType>::DataArray(const DataArray<T> &da) {
-  if (&da && da.size >0) {
+  if (&da && da.size > 0) {
     data_ptr = reinterpret_cast<DataType *>(malloc(da.size*sizeof(DataType)));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const DataArray<T> &) is called." << std::endl;
@@ -150,7 +150,7 @@ DataArray<DataType>::DataArray(const DataArray<T> &da) {
 
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataArray<DataType> &da) {
-  if (&da && da.size >0) {
+  if (&da && da.size > 0) {
     data_ptr = reinterpret_cast<DataType *>(malloc(da.size*sizeof(DataType)));
 #ifdef PRINT_MALLOC
   std::cout << "DataArray(const DataArray<DataType> &) is called." << std::endl;
@@ -167,10 +167,10 @@ DataArray<DataType>::DataArray(const DataArray<DataType> &da) {
 template<typename DataType>
 template<typename T>
 DataArray<DataType>::DataArray(const DataArray<T> &da, size_t s) {
-  if ((&da && da.size>0)||s>0) {
+  if ((&da && da.size > 0) || s > 0) {
     size_t reals;
     if (&da)
-      reals = da.size>s?da.size:s;
+      reals = da.size > s ? da.size : s;
     else
       reals = s;
     data_ptr = reinterpret_cast<DataType *>(malloc(reals*sizeof(DataType)));
@@ -195,10 +195,10 @@ DataArray<DataType>::DataArray(const DataArray<T> &da, size_t s) {
 template<typename DataType>
 DataArray<DataType>::DataArray(const DataArray<DataType> &da,
                                size_t s) {
-  if ((&da && da.size>0)||s>0) {
+  if ((&da && da.size > 0) || s > 0) {
     size_t reals;
     if (&da)
-      reals = da.size>s?da.size:s;
+      reals = da.size > s ? da.size : s;
     else
       reals = s;
     data_ptr = reinterpret_cast<DataType *>(malloc(reals*sizeof(DataType)));
@@ -260,12 +260,12 @@ DataArray<DataType>::~DataArray() {
 }
 
 template<typename DataType>
-DataType& DataArray<DataType>::operator[](size_t i) {
+DataType &DataArray<DataType>::operator[](size_t i) {
   return data_ptr[i];
 }
 
 template<typename DataType>
-DataType& DataArray<DataType>::operator[](size_t i) const {
+DataType &DataArray<DataType>::operator[](size_t i) const {
   return data_ptr[i];
 }
 /////////////////////////////////////////////////////////////////////////////

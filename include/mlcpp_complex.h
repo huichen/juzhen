@@ -36,15 +36,6 @@ namespace mlcpp {
 template<typename T>
 struct Complex {
   /**
-   * Real part of the complex number.
-   */
-  T real;
-  /**
-   * Imaginary part of the complex number.
-   */
-  T imag;
-
-  /**
    * Default constructor.
    */
   Complex() {}
@@ -64,18 +55,23 @@ struct Complex {
    * Construct(copying) a Complex number from another Complex number.
    */
   template<typename T1>
-  Complex(const Complex<T1>& c);  // NOLINT
+  Complex(const Complex<T1> &c);  // NOLINT
+
+  /**
+   * Destructor.
+   */
+  ~Complex() {}
 
   /**
    * Copy from a real number with imaginary part set to zero.
    */
-  inline const Complex<T> & operator=(const T &r);
+  inline const Complex<T> &operator=(const T &r);
 
   /**
    * Copy from another Complex number
    */
   template<typename T1>
-  inline const Complex<T> & operator=(const Complex<T1> &c);
+  inline const Complex<T> &operator=(const Complex<T1> &c);
 
   /**
    * Check if two Complex numbers equal.
@@ -100,6 +96,16 @@ struct Complex {
    * when the imaginary part of the Complex number is not zero.
    */
   inline bool operator!=(const T &c);
+
+  /**
+   * Real part of the complex number.
+   */
+  T real;
+
+  /**
+   * Imaginary part of the complex number.
+   */
+  T imag;
 };
 
 typedef Complex<double> CD;
@@ -114,14 +120,14 @@ Complex<T>::Complex(const T &r, const T &i) {
 template<typename T>
 Complex<T>::Complex(const T &r) {
   real = r;
-  imag =0.0;
+  imag = 0.0;
 }
 
 template<typename T>
 template<typename T1>
-Complex<T>::Complex(const Complex<T1>& c) {
+Complex<T>::Complex(const Complex<T1> &c) {
   real = c.real;
-  imag =c.imag;
+  imag = c.imag;
 }
 
 template<typename T>
@@ -194,7 +200,7 @@ inline const Complex<T> operator+(const Complex<T> &a, const T &b) {
 }
 
 template<typename T>
-inline Complex<T>& operator+=(Complex<T> &a, const Complex<T> &b) {
+inline Complex<T> &operator+=(Complex<T> &a, const Complex<T> &b) {
   a.real += b.real;
   a.imag += b.imag;
   return a;
@@ -237,15 +243,15 @@ inline Complex<T>& operator-=(Complex<T> &a, const T &b) {
 template<typename T>
 inline const Complex<T> operator*(const Complex<T> &a, const Complex<T> &b) {
   Complex<T> c;
-  c.real = a.real*b.real - a.imag*b.imag;
-  c.imag = a.real*b.imag + a.imag*b.real;
+  c.real = a.real * b.real - a.imag * b.imag;
+  c.imag = a.real * b.imag + a.imag * b.real;
   return c;
 }
 
 template<typename T, typename T1>
-inline Complex<T>& operator*=(Complex<T> &a, const Complex<T1> &b) {
-  a.real = a.real*b.real - a.imag*b.imag;
-  a.imag = a.real*b.imag + a.imag*b.real;
+inline Complex<T> &operator*=(Complex<T> &a, const Complex<T1> &b) {
+  a.real = a.real * b.real - a.imag * b.imag;
+  a.imag = a.real * b.imag + a.imag * b.real;
   return a;
 }
 
@@ -266,7 +272,7 @@ inline const Complex<T> operator*(const T1 &b, const Complex<T> &a) {
 }
 
 template<typename T, typename T1>
-inline Complex<T>& operator*=(Complex<T> &a, const T1 &b) {
+inline Complex<T> &operator*=(Complex<T> &a, const T1 &b) {
   a.real = a.real * b;
   a.imag = a.imag * b;
   return a;
@@ -289,45 +295,45 @@ inline Complex<T>& operator/=(Complex<T> &a, const T1 &b) {
 
 template<typename T>
 inline T abs2(const Complex<T> &a) {
-  return a.real*a.real+a.imag*a.imag;
+  return a.real * a.real + a.imag * a.imag;
 }
 
 inline double abs2(double a) {
-  return a*a;
+  return a * a;
 }
 
 inline float abs2(float a) {
-  return a*a;
+  return a * a;
 }
 
 template<typename T>
 inline T abs(const Complex<T> &a) {
-  return sqrt(a.real*a.real+a.imag*a.imag);
+  return sqrt(a.real * a.real + a.imag * a.imag);
 }
 
 inline double abs(double a) {
-  return a>0?a:-a;
+  return a > 0 ? a : -a;
 }
 
 inline float abs(float a) {
-  return a>0?a:-a;
+  return a > 0 ? a : -a;
 }
 
 template<typename T, typename T1>
 inline const Complex<T> operator/(const Complex<T> &a, const Complex<T1> &b) {
   Complex<T> c;
-  T de = 1/abs2(b);
-  c.real = de*(a.real*b.real + a.imag*b.imag);
-  c.imag = de*(-a.real*b.imag + a.imag*b.real);
+  T de = 1 / abs2(b);
+  c.real = de * (a.real * b.real + a.imag * b.imag);
+  c.imag = de * (-a.real * b.imag + a.imag * b.real);
   return c;
 }
 
 template<typename T, typename T1>
-inline Complex<T>& operator/=(Complex<T> &a, const Complex<T1> &b) {
-  T de = 1/abs2(b);
+inline Complex<T> &operator/=(Complex<T> &a, const Complex<T1> &b) {
+  T de = 1 / abs2(b);
   T temp = a.real;
-  a.real = de*(a.real*b.real + a.imag*b.imag);
-  a.imag = de*(-temp*b.imag + a.imag*b.real);
+  a.real = de * (a.real * b.real + a.imag * b.imag);
+  a.imag = de * (-temp * b.imag + a.imag * b.real);
   return a;
 }
 
@@ -376,7 +382,7 @@ inline double imag(double a) {
 }
 
 template<typename T>
-std::ostream& operator<< (std::ostream& out, const Complex<T> &m) {
+std::ostream &operator<< (std::ostream &out, const Complex<T> &m) {
   out << "(" << m.real << ", " << m.imag << ")";
   return out;
 }
