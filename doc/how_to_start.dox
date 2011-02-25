@@ -28,9 +28,13 @@ Mlcpp's functions are similar to those of other C++ matrix libraries such as MTL
 
 @section notes Notes
 
--# Following functions only compile with MKL: <b>matrix::eigen</b>, <b>matrix::leigen</b>, <b>matrix::reigen</b> <br><br> 
--# matrix::dataptr() returns column-major raw pointer for low-level BLAS/LAPACK functions.<br><br> 
--# Avoid declaring a matrix or a vector using copy constructor. It will fail. 
+-# Eigen solver functions are available only when compiled with MKL: <b>Matrix::EigenSolver</b>, <b>Matrix::LeftEigenSolver</b>, <b>Matrix::RightEigenSolver</b> <br><br> 
+-# <b>matrix::dataptr()</b> returns column-major raw pointer for low-level BLAS/LAPACK functions.<br><br> 
+-# Avoid declaring a matrix or a vector from an expression using copy constructor, i.e., <br><br>
+   Matrix<double> m1(m2 + m3);  // This is NOT allowed.<br><br>
+   Matrix<double> m1 = m2 + m3;  // This is NOT allowed.<br><br>
+   Matrix<double> m1(m2);  // Allowed.<br><br>
+   Matrix<double> m1 = m2;  // Allowed.<br><br>
 
 *
 */
