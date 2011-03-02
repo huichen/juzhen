@@ -18,4 +18,4 @@ all:
 	python test.py
 	
 clean:
-	rm *.o *.so mlpy*.py* *_wrap* -rf
+	rm *.o mlpy*.pyc *_wrap* -rf
