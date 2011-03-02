@@ -1,8 +1,3 @@
-%{
-#include <mlcpp.h>
-typedef mlcpp::Complex<double> Complex; 
-%}
-
 struct Complex {
   Complex();
   Complex(const double r);
@@ -54,19 +49,15 @@ struct Complex {
       return *$self / a;
     }
 
+    Complex conj() {
+      return Conjugate(*$self);
+    }
+
+    double abs() {
+      return abs(*$self);
+    }
   }
 
   double real;
   double imag;
 }; 
-
-
-Complex Conjugate(const Complex &c);
-
-double abs(const Complex &a);
-
-double abs2(const Complex &a);
-
-double real(const Complex &a);
-
-double imag(const Complex &a);
