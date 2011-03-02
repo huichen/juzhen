@@ -1,0 +1,18 @@
+/** 
+\page python Matrix Library for Python (mlpy) 
+
+@section compile Compile Python module 
+
+-# cd python <br> <br> 
+-# make <br> <br> 
+
+mlpy module is generated as a shared library _mlpy.so and Python package declaration mlpy.py.
+
+@section use_mlpy How to use mlpy module
+
+There are examples in test.py:
+
+
+
+*
+*/
