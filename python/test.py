@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from mlpy import Complex, Matrix, CMatrix
+from mlpy import Complex, Matrix, CMatrix, Vector, CVector
 
 print "========= Test Complex ========="
 a = Complex(3, 4)
@@ -30,20 +30,20 @@ print "a / 3 = ", a / 3
 
 print "========= Test Matrix ========="
 a = Matrix(3, 3)
-a.Clear()
+a.clear()
 for i in range(0, 3):
   for j in range(0, 3):
-    a.Set(i, j, i*j+1)
+    a.set(i, j, i*j+1)
 print "a = "
 print a
 print
 
-print "a.Get(1, 1) = "
-print a.Get(1, 1)
+print "a.get(1, 1) = "
+print a.get(1, 1)
 print
 
-b = a.Copy();
-b.Set(1, 1, 3)
+b = a.copy();
+b.set(1, 1, 3)
 print "b = "
 print b
 print
@@ -68,53 +68,53 @@ print "a / 3 = "
 print a / 3 
 print 
 
-print "a.GetCol(2) = "
-print a.GetCol(2)
+print "a.get_col(2) = "
+print a.get_col(2)
 print
 
-print "a.GetRow(1) = "
-print a.GetRow(1)
+print "a.get_row(1) = "
+print a.get_row(1)
 print
 
-print "a.Block(1, 3, 0, 2) = "
-print a.Block(1, 3, 0, 2)
+print "a.block(1, 3, 0, 2) = "
+print a.block(1, 3, 0, 2)
 print
 
 c = Matrix(2, 2)
-c.Clear()
-print "a.Replace(1, 0, c) = "
-print a.Replace(1, 0, c)
+c.clear()
+print "a.replace(1, 0, c) = "
+print a.replace(1, 0, c)
 print
 
-print "a.SwapCol(0, 1) = "
-print a.SwapCol(0, 1)
+print "a.swap_col(0, 1) = "
+print a.swap_col(0, 1)
 print
 
-print "a.SwapRow(0, 1) = "
-print a.SwapRow(0, 1)
+print "a.swap_row(0, 1) = "
+print a.swap_row(0, 1)
 print
 
-print "a.Resize(2, 2); a = "
-a.Resize(2, 2)
+print "a.resize(2, 2); a = "
+a.resize(2, 2)
 print a
 print
 
 print "========= Test CMatrix ========="
 a = CMatrix(3, 3)
-a.Clear()
+a.clear()
 for i in range(0, 3):
   for j in range(0, 3):
-    a.Set(i, j, i*j+1)
+    a.set(i, j, i*j+1)
 print "a = "
 print a
 print
 
-print "a.Get(1, 1) = "
-print a.Get(1, 1)
+print "a.get(1, 1) = "
+print a.get(1, 1)
 print
 
-b = a.Copy();
-b.Set(1, 1, 3)
+b = a.copy();
+b.set(1, 1, 3)
 print "b = "
 print b
 print
@@ -139,3 +139,112 @@ print "a / 3 = "
 print a / 3 
 print 
 
+print "a.real() = "
+print a.real() 
+print 
+
+print "a.imag() = "
+print a.imag() 
+print 
+
+print "========= Test Vector ========="
+a = Vector(6)
+a.clear()
+for i in range(0, 6):
+    a.set(i, i)
+print "a = "
+print a
+print
+
+print "a.get(1) = "
+print a.get(1)
+print
+
+b = a.copy();
+b.set(1, 3)
+print "b = "
+print b
+print
+
+print "a + b = "
+print a + b
+print 
+
+print "a - b = "
+print a - b
+print 
+
+print "a * b = "
+print a * b
+print 
+
+print "a * 3 = "
+print a * 3 
+print 
+
+print "a / 3 = "
+print a / 3 
+print 
+
+print "a.sum() = "
+print a.sum()
+print 
+
+print "a.max() = "
+print a.max()
+print 
+
+print "a.norm() = "
+print a.norm()
+print 
+
+print "b.sort() = "
+print b.sort()
+print 
+
+print "========= Test CVector ========="
+a = CVector(6)
+a.clear()
+for i in range(0, 6):
+    a.set(i, i)
+print "a = "
+print a
+print
+
+print "a.get(1) = "
+print a.get(1)
+print
+
+b = a.copy();
+b.set(1, 3)
+print "b = "
+print b
+print
+
+print "a + b = "
+print a + b
+print 
+
+print "a - b = "
+print a - b
+print 
+
+print "a * b = "
+print a * b
+print 
+
+print "a * 3 = "
+print a * 3 
+print 
+
+print "a / 3 = "
+print a / 3 
+print 
+
+print "a.sum() = "
+print a.sum()
+print 
+
+print "a.norm() = "
+print a.norm()
+print 

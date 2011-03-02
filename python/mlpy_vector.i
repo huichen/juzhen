@@ -1,0 +1,204 @@
+%rename(conj) CVector::Conjugate;
+%rename(adj) CVector::Adjoint;
+%rename(trans) CVector::Transpose;
+%rename(sum) CVector::Sum;
+%rename(max) CVector::Max;
+%rename(sort) CVector::Sort;
+%rename(resize) CVector::Resize;
+%rename(clear) CVector::Clear;
+%rename(block) CVector::Block;
+%rename(replace) CVector::Replace;
+%rename(swap) CVector::Swap;
+
+%rename(conj) Vector::Conjugate;
+%rename(adj) Vector::Adjoint;
+%rename(trans) Vector::Transpose;
+%rename(sum) Vector::Sum;
+%rename(max) Vector::Max;
+%rename(sort) Vector::Sort;
+%rename(resize) Vector::Resize;
+%rename(clear) Vector::Clear;
+%rename(block) Vector::Block;
+%rename(replace) Vector::Replace;
+%rename(swap) Vector::Swap;
+
+class CVector {
+ public:
+  CVector();
+  CVector(int);
+  CVector(const CVector &);
+  ~CVector();
+
+  bool operator==(const CVector &);
+  bool operator!=(const CVector &);
+
+  int size();
+
+  void Resize(int);
+  void Clear();
+
+  CVector Conjugate();
+  CVector Transpose();
+  CVector Adjoint();
+
+  Complex Sum();
+
+  CVector Block(int, int);
+  CVector &Replace(int, const CVector &);
+
+  CVector &Swap(int, int);
+
+  %extend {
+    char *__str__() {
+      static char temp[1024];
+      snprintf(temp, 1024, "%s", OutputToString(*$self).c_str());
+      return temp;
+    }
+
+    Complex &__getitem__(unsigned int i) {
+      return $self->operator[](i);
+    }
+
+    CVector copy() {
+      return *$self;
+    }
+
+    void set(int r, double d) {
+      $self->operator()(r) = d;
+    }
+
+    void set(int r, Complex d) {
+      $self->operator()(r) = d;
+    }
+
+    Complex get(int r) {
+      return $self->operator()(r);
+    }
+
+    CVector __add__(const CVector &a) {
+      return (*$self) + a;
+    }
+
+    CVector __sub__(const CVector &a) {
+      return (*$self) - a;
+    }
+
+    Complex __mul__(const CVector &a) {
+      return (*$self) * a;
+    }
+
+    CVector __mul__(double a) {
+      return (*$self) * a;
+    }
+
+    CVector __mul__(Complex &a) {
+      return $self->operator*(a);
+    }
+
+    CVector __div__(double a) {
+      return (*$self) / a;
+    }
+
+    CVector __div__(Complex &a) {
+      return (*$self) / a;
+    }
+
+    double norm() {
+      return norm(*$self);
+    }
+
+    Vector real() {
+      return Real(*$self);
+    }
+
+    Vector imag() {
+      return Imag(*$self);
+    }
+  }
+}; 
+
+class Vector {
+ public:
+  Vector();
+  Vector(int);
+  Vector(const Vector &);
+  ~Vector();
+
+  bool operator==(const Vector &);
+  bool operator!=(const Vector &);
+
+  int size();
+
+  void Resize(int);
+  void Clear();
+
+  Vector Conjugate();
+  Vector Transpose();
+  Vector Adjoint();
+
+  double Sum();
+  double Max();
+  Vector &Sort(); 
+
+  Vector Block(int, int);
+  Vector &Replace(int, const Vector &);
+
+  Vector &Swap(int, int);
+
+  %extend {
+    char *__str__() {
+      static char temp[1024];
+      snprintf(temp, 1024, "%s", OutputToString(*$self).c_str());
+      return temp;
+    }
+
+    double &__getitem__(unsigned int i) {
+      return $self->operator[](i);
+    }
+
+    Vector copy() {
+      return *$self;
+    }
+
+    void set(int r, double d) {
+      $self->operator()(r) = d;
+    }
+
+    double get(int r) {
+      return $self->operator()(r);
+    }
+
+    Vector __add__(const Vector &a) {
+      return (*$self) + a;
+    }
+
+    Vector __sub__(const Vector &a) {
+      return (*$self) - a;
+    }
+
+    double __mul__(const Vector &a) {
+      return (*$self) * a;
+    }
+
+    Vector __mul__(double a) {
+      return (*$self) * a;
+    }
+
+    Vector __div__(double a) {
+      return (*$self) / a;
+    }
+
+    double norm() {
+      return norm(*$self);
+    }
+
+    Vector real() {
+      return Real(*$self);
+    }
+
+    Vector imag() {
+      return Imag(*$self);
+    }
+  }
+}; 
+

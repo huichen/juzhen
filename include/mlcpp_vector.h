@@ -200,7 +200,7 @@ class Vector : public Matrix<DataType> {
   /**
    * Replace the sub-vector starting at i with another Vector v.
    */
-  Vector<DataType> &Insert(size_t i, Vector<DataType> v);
+  Vector<DataType> &Replace(size_t i, const Vector<DataType> &v);
 
   /**
    * Sort a Vector. This will give you error for a complex Vector.
@@ -396,8 +396,11 @@ Vector<DataType> Vector<DataType>::Block(size_t i1, size_t i2) {
 }
 
 template<typename DataType>
-Vector<DataType> &Vector<DataType>::Insert(size_t i, Vector<DataType> v) {
-  Matrix<DataType>::Insert(i, 0);
+Vector<DataType> &Vector<DataType>::Replace(size_t i,
+    const Vector<DataType> &v) {
+  size_t s = size();
+  for (size_t j = i, k = 0; j < s; j++, k++) 
+    (*this)[j] = v[k];
   return (*this);
 }
 
