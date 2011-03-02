@@ -81,7 +81,7 @@ fclose(myfile);\
 {\
 char out[100];\
 snprintf(out, sizeof(out), "%s%d", PREFIX, counter++);\
-snprintf(filename, sizeof(filename), "%s%s.plt", FNAME, out);\
+snprintf(filename, sizeof(filename), "%s%s.txt", FNAME, out);\
 }\
 myfile = fopen(filename, "w");\
 printf("==============================\n");\
