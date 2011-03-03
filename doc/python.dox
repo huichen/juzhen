@@ -6,11 +6,11 @@
 -# cd python <br>
 -# make <br> 
 
-Two files are generated: _mlpy.so (shared library) and mlpy.py (package declaration). Copy them to the folder you want to import mlpy from.
+Two files are generated from SWIG: _mlpy.so (shared library) and mlpy.py (package declaration). Copy them to the folder you want to import mlpy from.
 
 @section use_mlpy How to use mlpy module
 
-Five classes are defined:
+Five classes are available:
 
 <b>\ref complex</b> (complex number)<br>
 <b>\ref matrix</b> (real and complex double precision matrix)<br>

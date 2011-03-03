@@ -14,7 +14,7 @@ Read the \ref how_to_start page.
 
 @section python_interface Python Interface 
 
-A Python interface (mlpy) is available (generated from SWIG). See \ref python for details. 
+A Python interface is available (generated from SWIG). See \ref python for details. 
 
 @section benchmarks Benchmarks
 
