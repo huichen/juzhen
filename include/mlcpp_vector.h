@@ -399,7 +399,7 @@ template<typename DataType>
 Vector<DataType> &Vector<DataType>::Replace(size_t i,
     const Vector<DataType> &v) {
   size_t s = size();
-  for (size_t j = i, k = 0; j < s; j++, k++) 
+  for (size_t j = i, k = 0; j < s; j++, k++)
     (*this)[j] = v[k];
   return (*this);
 }
