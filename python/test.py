@@ -213,10 +213,23 @@ a = Vector(6)
 
 # Set zero to all elements of a
 a.clear()
+
+# Set 3 to all elements
+a.set(3)
+print "a = "
+print a
+print
+
+# Set elements
 for i in range(0, 6):
     a.set(i, i)
 print "a = "
 print a
+print
+
+# Get size of a vector
+print "a.size() = "
+print a.size()
 print
 
 # Get element 1 
