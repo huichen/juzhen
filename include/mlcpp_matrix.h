@@ -74,7 +74,7 @@ class Matrix {
   /**
    * Construct from another Matrix. All numbers are copied.
    */
-  explicit Matrix(const Matrix<DataType> &m);
+  Matrix(const Matrix<DataType> &m);
 
   /**
    * Destructor.
@@ -1119,7 +1119,7 @@ class IdentityMatrix : public Matrix<DataType> {
   /**
    * Construct an identity Matrix of n x n.
    */
-  explicit IdentityMatrix(size_t n);
+  IdentityMatrix(size_t n);
 };
 
 typedef IdentityMatrix<float> identity_smatrix;

@@ -45,18 +45,18 @@ struct DataArray {
   /**
    * Construct an array of size s.
    */
-  explicit DataArray(size_t s);
+  DataArray(size_t s);
 
   /**
    * Construct an array from another array.
    */
   template<typename T>
-  explicit DataArray(const DataArray<T> &da);
+  DataArray(const DataArray<T> &da);
 
   /**
    * Construct an array from another array.
    */
-  explicit DataArray(const DataArray<DataType> &da);
+  DataArray(const DataArray<DataType> &da);
 
   /**
    * Construct an array from another array. The size of the new array

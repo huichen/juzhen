@@ -47,7 +47,7 @@ class Vector : public Matrix<DataType> {
   /**
    * Construct a Vector of size i.
    */
-  explicit Vector(size_t i);
+  Vector(size_t i);
 
   /**
    * Construct a Vector from a Matrix's column-major raw array.
@@ -64,7 +64,7 @@ class Vector : public Matrix<DataType> {
   /**
    * Construct a Vector from an existing Vector.
    */
-  explicit Vector(const std::vector<DataType> &v);
+  Vector(const std::vector<DataType> &v);
 
   /**
    * Copy a Vector from another Vector.
