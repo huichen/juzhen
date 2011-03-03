@@ -1,5 +1,5 @@
 ifeq (${MLCPP_BLASLIB}, mkl) 
-CFLAGS = -DUSE_MKL -I../include -lmkl_rt -liomp5 -lpthread -std=c++0x -O3 -msse2 -DNDEBUG
+CFLAGS = -DUSE_MKL -I../include -lmkl_rt -liomp5 -lpthread -lmkl_intel_thread -lmkl_core -std=c++0x -O3 -msse2 -DNDEBUG
 CC = g++ 
 else
 ifeq (${MLCPP_BLASLIB}, gotoblas2) 
@@ -15,7 +15,10 @@ all:
 	swig -c++ -python mlpy.i
 	$(CC) -c -fpic mlpy_wrap.cxx -I/usr/include/python2.6/ $(CFLAGS)
 	$(CC) -shared mlpy_wrap.o -o _mlpy.so $(CFLAGS)
-	python test.py
+	python test.py > output
 	
 clean:
 	rm *.o mlpy*.pyc *_wrap* -rf
+
+distclean: clean
+	rm *.so mlpy.py -rf
