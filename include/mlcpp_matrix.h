@@ -84,24 +84,24 @@ class Matrix {
   /**
    * Copy from another Matrix. New memory is allocated if it's necessary.
    */
-  Matrix<DataType> &operator= (const Matrix<DataType> &rhs);
+  Matrix<DataType> &operator=(const Matrix<DataType> &rhs);
 
   /**
    * Assign all numbers in the Matrix to be rhs.
    */
-  Matrix<DataType> &operator= (const DataType &rhs);
+  Matrix<DataType> &Set(const DataType &rhs);
 
   /**
    * Check if two matrices are equal. The two matrices must have the same
    * numbers of rows and columns if it returns true.
    */
-  bool operator== (const Matrix<DataType> &rhs);
+  bool operator==(const Matrix<DataType> &rhs);
 
   /**
    * Check if two matrices are not equal. Returns false if the two matrices
    * have different numbers of rows or columns.
    */
-  bool operator!= (const Matrix<DataType> &rhs);
+  bool operator!=(const Matrix<DataType> &rhs);
 
   /***********************************************
    *  interface to private data
@@ -121,7 +121,7 @@ class Matrix {
    * Returns the pointer of raw array. This is pretty useful when calling
    * low level blas/lapack functions.
    */
-  inline DataType * raw_ptr() const;
+  inline DataType *raw_ptr() const;
 
   /**
    * Get a Matrix's temporary flag.
@@ -416,7 +416,7 @@ Matrix<DataType> &Matrix<DataType>::operator=(
 }
 
 template<typename DataType>
-Matrix<DataType> &Matrix<DataType>::operator=(
+Matrix<DataType> &Matrix<DataType>::Set(
     const DataType &rhs) {
   size_t endi = num_col_*num_row_;
   DataType *p = data_ptr_->data_ptr;

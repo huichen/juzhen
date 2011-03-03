@@ -77,7 +77,7 @@ class Matrix {
     }
 
     Matrix &set(double d) {
-      $self->operator=(d);
+      $self->Set(d);
       return *$self;
     }
 
@@ -188,12 +188,12 @@ class CMatrix {
     }
 
     CMatrix &set(Complex &d) {
-      $self->operator=(d);
+      $self->Set(d);
       return *$self;
     }
 
     CMatrix &set(double d) {
-      $self->operator=(d);
+      $self->Set(d);
       return *$self;
     }
 

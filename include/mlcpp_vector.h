@@ -79,7 +79,7 @@ class Vector : public Matrix<DataType> {
   /**
    * Assign all elements in the Vector to be rhs.
    */
-  Vector<DataType> &operator=(const DataType &rhs);
+  Vector<DataType> &Set(const DataType &rhs);
 
   /**
    * Resize a Vector.
@@ -263,8 +263,8 @@ Vector<DataType> &Vector<DataType>::operator=(
 }
 
 template<typename DataType>
-Vector<DataType> &Vector<DataType>::operator=(const DataType &rhs) {
-  Matrix<DataType>::operator=(rhs);
+Vector<DataType> &Vector<DataType>::Set(const DataType &rhs) {
+  Matrix<DataType>::Set(rhs);
   return *this;
 }
 

@@ -73,7 +73,7 @@ class Vector {
     }
 
     Vector &set(double d) {
-      $self->operator=(d);
+      $self->Set(d);
       return *$self;
     }
 
@@ -173,12 +173,12 @@ class CVector {
     }
 
     CVector &set(double d) {
-      $self->operator=(d);
+      $self->Set(d);
       return *$self;
     }
 
     CVector &set(Complex &d) {
-      $self->operator=(d);
+      $self->Set(d);
       return *$self;
     }
 

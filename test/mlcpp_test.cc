@@ -79,7 +79,7 @@ BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   V(m3, "1 4 \n2 5 \n3 6 ")
 
   smatrix m4(3, 3);
-  m4 = 3;
+  m4.Set(3);
   V(m4, "3 3 3 \n3 3 3 \n3 3 3 ")
 
   cmatrix m5 = m3;
@@ -93,14 +93,14 @@ BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   V(m7, "(1, 0) (3, 0) \n(2, 0) (4, 0) ")
 
   smatrix m8(4, 4);
-  m8 = 3;
+  m8.Set(3);
   V(m8, "3 3 3 3 \n3 3 3 3 \n3 3 3 3 \n3 3 3 3 ")
 
   m8 = m8;
   V(m8, "3 3 3 3 \n3 3 3 3 \n3 3 3 3 \n3 3 3 3 ")
 
   smatrix m9(3, 3);
-  m9 = 4;
+  m9.Set(4);
   m9.Clear();
   V(m9, "0 0 0 \n0 0 0 \n0 0 0 ")
 
@@ -110,11 +110,11 @@ BEGIN_TEST(MatrixElementType, "MatrixElementType")
 
 {
   zmatrix m1(3, 3);
-  m1 = 1;
+  m1.Set(1);
   zmatrix m2(3, 3);
-  m2 = 1;
+  m2.Set(1);
   zmatrix m3(3, 3);
-  m3 = 1;
+  m3.Set(1);
 
   m1 = m2*m3+m1/2;
   V(m1, "(3.5, 0) (3.5, 0) (3.5, 0) \n(3.5, 0) (3.5, 0) (3.5, 0) \n(3.5, 0) (3.5, 0) (3.5, 0) ")
@@ -123,11 +123,11 @@ BEGIN_TEST(MatrixElementType, "MatrixElementType")
 
 {
   cmatrix m1(3, 3);
-  m1 = 1;
+  m1.Set(1);
   cmatrix m2(3, 3);
-  m2 = 1;
+  m2.Set(1);
   cmatrix m3(3, 3);
-  m3 = 1;
+  m3.Set(1);
 
   m1 = m2*m3 + m1/2.0;
   V(m1, "(3.5, 0) (3.5, 0) (3.5, 0) \n(3.5, 0) (3.5, 0) (3.5, 0) \n(3.5, 0) (3.5, 0) (3.5, 0) ")
@@ -137,11 +137,11 @@ BEGIN_TEST(MatrixElementType, "MatrixElementType")
 
 {
   dmatrix m1(3, 3);
-  m1 = 1;
+  m1.Set(1);
   dmatrix m2(3, 3);
-  m2 = 1;
+  m2.Set(1);
   dmatrix m3(3, 3);
-  m3 = 1;
+  m3.Set(1);
 
   m1 = m2*m3+m1/2.0;
   V(m1, "3.5 3.5 3.5 \n3.5 3.5 3.5 \n3.5 3.5 3.5 ")
@@ -150,11 +150,11 @@ BEGIN_TEST(MatrixElementType, "MatrixElementType")
 
 {
   smatrix m1(3, 3);
-  m1 = 1;
+  m1.Set(1);
   smatrix m2(3, 3);
-  m2 = 1;
+  m2.Set(1);
   smatrix m3(3, 3);
-  m3 = 1;
+  m3.Set(1);
 
   m1 = m2*m3+m1/2.0;
   V(m1, "3.5 3.5 3.5 \n3.5 3.5 3.5 \n3.5 3.5 3.5 ")
@@ -478,7 +478,7 @@ BEGIN_TEST(VectorTests, "VectorTests")
   V(svector(v3), "{1, 2, 3, 4}")
 
   svector vv(4);
-  vv = 1;
+  vv.Set(1);
   VDE(vv.size(), 4);
   V(vv, "{1, 1, 1, 1}");
 
