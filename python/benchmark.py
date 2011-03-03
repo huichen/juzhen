@@ -30,6 +30,9 @@ def worker_mlpy(n):
   return t1 - t0
 
 print "Rank\tmlpy(s)\t\tnumpy(s)"
+f = open("benchmark.txt", "w")
 for i in range(min_rank, max_rank, step_rank):
   print '%d\t%6f\t%6f' % (i, worker_mlpy(i), worker_numpy(i))
+  f.write('%d\t%6f\t%6f\n' % (i, worker_mlpy(i), worker_numpy(i)))
+f.close()
 

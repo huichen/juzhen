@@ -21,4 +21,11 @@ clean:
 	rm *.o mlpy*.pyc *_wrap* -rf
 
 distclean: clean
-	rm *.so mlpy.py -rf
+	rm *.so mlpy.py *.txt *.png -rf
+
+bench: _mlpy.so mlpy.py benchmark.py
+	./benchmark.py
+
+plt: benchmark.txt benchmark.plt
+	gnuplot benchmark.plt	
+	

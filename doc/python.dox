@@ -8,6 +8,12 @@
 
 Two files are generated from SWIG: _mlpy.so (shared library) and mlpy.py (package declaration). Copy them to the folder you want to import mlpy from.
 
+@section mlpy_performance Performance 
+
+Mlpy's performance is close to the C++ version for large matrices/vectors. When compiled with MKL, it's about 7x faster than Numpy in matrix multiplication.
+
+\image html benchmark_mlpy.png
+
 @section use_mlpy How to use mlpy module
 
 Five classes are available:
