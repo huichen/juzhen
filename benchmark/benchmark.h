@@ -25,6 +25,8 @@
 #include <sys/time.h>
 #include <stdio.h>
 
+#include <string>
+
 #ifdef MLCPP
 #include <mlcpp.h>
 #else
@@ -37,6 +39,35 @@
 #define NB 10
 
 static int counter = 0;
+
+/**
+ * Return number of digits of a given integer.
+ */
+int NumDigits(int input) {
+  int i = 0;
+  while (input) {
+    i++;
+    input /= 10;
+  }
+  return i;
+}
+
+const int num_digits = NumDigits((MAXN - MINN) / STEPN + 1);
+
+/**
+ * Convert an integer to a string and fill all prefix spaces with zero.
+ * Example:
+ * FixedLengthInteger(3, 1) returns "001"
+ * FixedLengthInteger(3, 34) returns "034"
+ */
+std::string FixedLengthInteger(int num_digits, int input) {
+  std::string target = "";
+  for (int i = 0; i < num_digits; i++) {
+    target = static_cast<char>(input % 10 + '0') + target;
+    input = input / 10;
+  }
+  return target;
+}
 
 #define PREFIX "small_"
 
@@ -62,7 +93,8 @@ H4.resize(ni, ni);
 {\
 {\
 char out[100];\
-snprintf(out, sizeof(out), "%s%d", PREFIX, counter);\
+snprintf(out, sizeof(out), "%s%s", PREFIX,\
+    FixedLengthInteger(num_digits, counter).c_str());\
 snprintf(filename, sizeof(filename), "%s.plt", out);\
 myfile = fopen(filename, "w");\
 char output_string[1000];\
@@ -80,7 +112,8 @@ fclose(myfile);\
 }\
 {\
 char out[100];\
-snprintf(out, sizeof(out), "%s%d", PREFIX, counter++);\
+snprintf(out, sizeof(out), "%s%s", PREFIX,\
+    FixedLengthInteger(num_digits, counter++).c_str());\
 snprintf(filename, sizeof(filename), "%s%s.txt", FNAME, out);\
 }\
 myfile = fopen(filename, "w");\
