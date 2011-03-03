@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from mlpy import Complex, Matrix, CMatrix, Vector, CVector
+from mlpy import Complex, Matrix, CMatrix, Identity, CIdentity, Vector, CVector
 
 print "========= Test Complex ========="
 # a = 3 + 4i
@@ -52,8 +52,23 @@ print "========= Test Matrix ========="
 # 
 a = Matrix(3, 3)
 
+# Number of rows and columns
+print "a.num_row() = ", a.num_row()
+print "a.num_col() = ", a.num_col()
+
 # Set zero to a's elements
 a.clear()
+
+# Set 3 to all elements
+a.set(3)
+print "a.set(3); a = "
+print a
+print
+
+# 7 x 7 identity matrix
+print "Identity(7) = "
+print Identity(7)
+print
 
 for i in range(0, 3):
   for j in range(0, 3):
@@ -264,6 +279,14 @@ print
 
 print "a / 3 = "
 print a / 3 
+print 
+
+print "a * Identity(6) = "
+print a * Identity(6)
+print 
+
+print "Identity(6) * a= "
+print Identity(6) * a
 print 
 
 # Sum of all elements

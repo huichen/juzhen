@@ -22,7 +22,6 @@
 %rename(replace) CVector::Replace;
 %rename(swap) CVector::Swap;
 
-
 class Vector {
  public:
   Vector();
@@ -68,12 +67,14 @@ class Vector {
       return *$self;
     }
 
-    void set(int r, double d) {
+    Vector &set(int r, double d) {
       $self->operator()(r) = d;
+      return *$self;
     }
 
-    void set(double d) {
+    Vector &set(double d) {
       $self->operator=(d);
+      return *$self;
     }
 
     double get(int r) {
@@ -161,20 +162,24 @@ class CVector {
       return *$self;
     }
 
-    void set(int r, double d) {
+    CVector &set(int r, double d) {
       $self->operator()(r) = d;
+      return *$self;
     }
 
-    void set(int r, Complex d) {
+    CVector &set(int r, Complex d) {
       $self->operator()(r) = d;
+      return *$self;
     }
 
-    void set(double d) {
+    CVector &set(double d) {
       $self->operator=(d);
+      return *$self;
     }
 
-    void set(Complex &d) {
+    CVector &set(Complex &d) {
       $self->operator=(d);
+      return *$self;
     }
 
     Complex get(int r) {
