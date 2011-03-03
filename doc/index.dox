@@ -12,6 +12,10 @@ Download the <a href="https://github.com/huichen/mlcpp/tarball/master">tarball</
 
 Read the \ref how_to_start page.
 
+@section python_interface Python Interface 
+
+A Python interface (mlpy) is available (generated from SWIG). See \ref python for details. 
+
 @section benchmarks Benchmarks
 
 Speed is the major concern when we design the library. The code has been extensively optimized to make sure it compares favorably to other C++ matrix libraries in terms of speed. 
