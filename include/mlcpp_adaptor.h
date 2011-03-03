@@ -24,9 +24,9 @@
 #define MLCPP_ADAPTOR_H_
 
 #ifdef USE_MKL
-#include "mlcpp_adaptor_mkl.h"
+#include "adaptor/mlcpp_adaptor_mkl.h"
 #else
-#include "mlcpp_adaptor_blas.h"
+#include "adaptor/mlcpp_adaptor_blas.h"
 #endif
 
 #endif  // MLCPP_ADAPTOR_H_  // NOLINT

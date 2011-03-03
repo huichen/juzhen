@@ -315,44 +315,6 @@ class Matrix {
    */
   Matrix<DataType> &SwapRow(size_t r1, size_t r2);
 
-  /**
-   * Solve eigen system and put eigen values into e, corresponding
-   * left-eigen vectors into vl and corresponding right-eigen vectors
-   * into vr. vl and vr will be square matrices.
-   *
-   * If you are linking to basic blas library only, this function is not
-   * implemented yet.
-   */
-  template<typename T>
-  void EigenSolver(
-      Matrix<Complex<T> > &e,
-      Matrix<DataType> &vl,
-      Matrix<DataType> &vr) const;
-
-  /**
-   * Solve eigen system and put eigen values into e, corresponding
-   * left-eigen vectors into vl. vl will be square Matrix.
-   *
-   * If you are linking to basic blas library only, this function is not
-   * implemented yet.
-   */
-  template<typename T>
-  void RightEigenSolver(
-      Matrix<Complex<T> > &e,
-      Matrix<DataType> &vr) const;
-
-  /**
-   * Solve eigen system and put eigen values into e, corresponding
-   * right-eigen vectors into vr. vr will be square Matrix.
-   *
-   * If you are linking to basic blas library only, this function is not
-   * implemented yet.
-   */
-  template<typename T>
-  void LeftEigenSolver(
-      Matrix<Complex<T> > &e,
-      Matrix<DataType> &vl) const;
-
  protected:
   /**
    * Pointer to raw array.
@@ -959,64 +921,6 @@ Matrix<DataType> &Matrix<DataType>::SwapRow(size_t r1, size_t r2) {
   }
 
   return *this;
-}
-
-/* solvers */
-template<typename DataType>
-template<typename T>
-void Matrix<DataType>::EigenSolver(
-    Matrix<Complex<T> > &e,
-    Matrix<DataType> &vl,
-    Matrix<DataType> &vr) const {
-  assert(num_col_ == num_row_);
-  Matrix<DataType> m(*this);
-
-  vl.Resize(num_col_, num_col_);
-  vr.Resize(num_col_, num_col_);
-  e.Resize(num_col_, 1);
-
-  char nl = &vl ? 'V' : 'N';
-  char nr = &vr ? 'V' : 'N';
-
-  geev<DataType>(nl, nr, num_col_, m.raw_ptr(), num_col_,
-                 e.raw_ptr(), vl.raw_ptr(), num_col_,
-                 vr.raw_ptr(), num_col_);
-}
-
-template<typename DataType>
-template<typename T>
-void Matrix<DataType>::RightEigenSolver(
-    Matrix<Complex<T> > &e,
-    Matrix<DataType> &vr) const {
-  assert(num_col_ == num_row_);
-  Matrix<DataType> m(*this);
-
-  vr.Resize(num_col_, num_col_);
-  e.Resize(num_col_, 1);
-
-  char nl = 'N';
-  char nr = 'V';
-
-  geev<DataType>(nl, nr, num_col_, m.raw_ptr(), num_col_,
-                 e.raw_ptr(), NULL, num_col_, vr.raw_ptr(), num_col_);
-}
-
-template<typename DataType>
-template<typename T>
-void Matrix<DataType>::LeftEigenSolver(
-    Matrix<Complex<T> > &e,
-    Matrix<DataType> &vl) const {
-  assert(num_col_ == num_row_);
-  Matrix<DataType> m(*this);
-
-  vl.Resize(num_col_, num_col_);
-  e.Resize(num_col_, 1);
-
-  char nl = 'V';
-  char nr = 'N';
-
-  geev<DataType>(nl, nr, num_col_, m.raw_ptr(), num_col_,
-                 e.raw_ptr(), vl.raw_ptr(), num_col_, NULL, num_col_);
 }
 /////////////////////////////////////////////////////////////////////////////
 

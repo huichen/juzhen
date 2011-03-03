@@ -19,31 +19,11 @@
 |                                                                           |
 +---------------------------------------------------------------------------+
 */
-#include <mlcpp.h>
-#include <mlcpp_solver.h>
 
-#define N 90
-using mlcpp::cvector;
-using mlcpp::cmatrix;
+#ifndef MLCPP_SOLVER_H_  // NOLINT
+#define MLCPP_SOLVER_H_
 
-int main() {
-  /* matrix of complex<float> */
-  cmatrix H(N, N);
-  for (int i = 0; i < N; i++)
-    if (i < N/3 || i >= 2*N/3)
-      H(i, i) = 1000;
-    else
-      H(i, i) = 0;
-  for (int i = 0; i < N-1; i++) H(i, i+1) = H(i+1, i) = -1;
+#include "mlcpp.h"
+#include "solver/mlcpp_solver_eigen.h"
 
-#ifdef USE_MKL
-  /* vector of complex<float> */
-  cvector energy;
-  /* matrix of complex<float> */
-  cmatrix wave;
-  RightEigenSolver(H, energy, wave);
-
-  std::cout << "energy= " << Sort(Real(energy)) << std::endl;
-#endif
-  return 0;
-}
+#endif  // MLCPP_SOLVER_H_  // NOLINT
