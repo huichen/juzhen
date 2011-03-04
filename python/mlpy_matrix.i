@@ -120,6 +120,26 @@ class Matrix {
     Matrix imag() {
       return Imag(*$self);
     }
+
+    Matrix inverse() {
+      return Inverse(*$self);
+    }
+
+    Matrix linear_solver(const Matrix &b) {
+      return LinearSolver(*$self, b);
+    }
+
+    void eigen(CMatrix &e, Matrix &vl, Matrix &vr) {
+      EigenSolver(*$self, e, vl, vr);
+    }
+
+    void left_eigen(CMatrix &e, Matrix &vl) {
+      LeftEigenSolver(*$self, e, vl);
+    }
+
+    void right_eigen(CMatrix &e, Matrix &vr) {
+      RightEigenSolver(*$self, e, vr);
+    }
   }
 }; 
 
@@ -243,6 +263,26 @@ class CMatrix {
 
     Matrix imag() {
       return Imag(*$self);
+    }
+    
+    CMatrix inverse() {
+      return Inverse(*$self);
+    }
+
+    CMatrix linear_solver(const CMatrix &b) {
+      return LinearSolver(*$self, b);
+    }
+
+    void eigen(CMatrix &e,CMatrix &vl,CMatrix &vr) {
+      EigenSolver(*$self, e, vl, vr);
+    }
+
+    void left_eigen(CMatrix &e,CMatrix &vl) {
+      LeftEigenSolver(*$self, e, vl);
+    }
+
+    void right_eigen(CMatrix &e,CMatrix &vr) {
+      RightEigenSolver(*$self, e, vr);
     }
 }
 }; 

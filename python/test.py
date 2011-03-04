@@ -375,3 +375,29 @@ print "a.imag() = "
 print a.imag()
 print
 
+print "========= Test Matrix Solver ========="
+
+a = Identity(3)
+print "a.inverse() = "
+print a.inverse()
+print
+
+b = Matrix(3, 3)
+b.set(10)
+print "a.linear_solver(b) = "
+print a.linear_solver(b)
+print
+
+a.set(1, 2, 3)
+a.set(0, 1, 7)
+a.set(2, 0, 7)
+e = CMatrix(3, 3)
+vr = Matrix(3, 3)
+a.right_eigen(e, vr);
+print "a.right_eigen(e, vr); e = "
+print e 
+print
+print "vr = "
+print vr 
+print
+
