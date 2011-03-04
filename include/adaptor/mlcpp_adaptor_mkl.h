@@ -151,6 +151,55 @@ int geev<CD, CD>(
       reinterpret_cast<MKL_Complex16 *>(vl), ldvl,
       reinterpret_cast<MKL_Complex16 *>(vr), ldvr);
 }
+
+/*
+ * Linear solver
+ */
+template<typename T>
+int gesv(
+    const MKL_INT n, const MKL_INT nrhs,
+    T *a, const MKL_INT lda, T *b, const MKL_INT ldb) {
+  assert(0);  // always fails
 }
 
+template<>
+int gesv<float>(
+    const MKL_INT n, const MKL_INT nrhs,
+    float *a, const MKL_INT lda, float *b, const MKL_INT ldb) {
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
+  LAPACKE_sgesv(LAPACK_COL_MAJOR, n, nrhs, a, lda, ipiv, b, ldb);
+  free (ipiv);
+}
+
+template<>
+int gesv<double>(
+    const MKL_INT n, const MKL_INT nrhs,
+    double *a, const MKL_INT lda, double *b, const MKL_INT ldb) {
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
+  LAPACKE_dgesv(LAPACK_COL_MAJOR, n, nrhs, a, lda, ipiv, b, ldb);
+  free (ipiv);
+}
+
+template<>
+int gesv<CS>(
+    const MKL_INT n, const MKL_INT nrhs,
+    CS *a, const MKL_INT lda, CS *b, const MKL_INT ldb) {
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
+  LAPACKE_cgesv(LAPACK_COL_MAJOR, n, nrhs,
+      reinterpret_cast<MKL_Complex8 *>(a), lda, ipiv,
+      reinterpret_cast<MKL_Complex8 *>(b), ldb);
+  free (ipiv);
+}
+
+template<>
+int gesv<CD>(
+    const MKL_INT n, const MKL_INT nrhs,
+    CD *a, const MKL_INT lda, CD *b, const MKL_INT ldb) {
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
+  LAPACKE_zgesv(LAPACK_COL_MAJOR, n, nrhs,
+      reinterpret_cast<MKL_Complex16 *>(a), lda, ipiv,
+      reinterpret_cast<MKL_Complex16 *>(b), ldb);
+  free (ipiv);
+}
+}
 #endif  // MLCPP_ADAPTOR_MKL_H_  // NOLINT
