@@ -446,36 +446,50 @@ BEGIN_TEST(MatrixLinearSolver, "MatrixLinearSolver")
 
   smatrix m11(a, 3, 3);
   smatrix m12(b, 3, 3);
-  smatrix m13;
 
-  LinearSolver(m11, m12, m13);
-  V(m13, "29 -71.6667 400 \n-3 9.66667 -40 \n-2 5 -29 ");
+  V(LinearSolver(m11, m12), "29 -71.6667 400 \n-3 9.66667 -40 \n-2 5 -29 ");
 
   // double type
   dmatrix m21(a, 3, 3);
   dmatrix m22(b, 3, 3);
-  dmatrix m23;
 
-  LinearSolver(m21, m22, m23);
-  V(m23, "29 -71.6667 400 \n-3 9.66667 -40 \n-2 5 -29 ");
+  V(LinearSolver(m21, m22), "29 -71.6667 400 \n-3 9.66667 -40 \n-2 5 -29 ");
 
   // single complex type
   cmatrix m31(a, 3, 3);
   cmatrix m32(b, 3, 3);
-  cmatrix m33;
 
-  LinearSolver(m31, m32, m33);
-  V(m33, "(29, 0) (-71.6667, 0) (400, 0) \n(-3, 0) (9.66667, 0) (-40, 0) \n(-2, -0) (5, 0) (-29, -0) ");
+  V(LinearSolver(m31, m32), "(29, 0) (-71.6667, 0) (400, 0) \n(-3, 0) (9.66667, 0) (-40, 0) \n(-2, -0) (5, 0) (-29, -0) ");
 
-  // single complex type
+  // double complex type
   cmatrix m41(a, 3, 3);
   cmatrix m42(b, 3, 3);
-  cmatrix m43;
 
-  LinearSolver(m41, m42, m43);
-  V(m43, "(29, 0) (-71.6667, 0) (400, 0) \n(-3, 0) (9.66667, 0) (-40, 0) \n(-2, -0) (5, 0) (-29, -0) ");
+  V(LinearSolver(m41, m42), "(29, 0) (-71.6667, 0) (400, 0) \n(-3, 0) (9.66667, 0) (-40, 0) \n(-2, -0) (5, 0) (-29, -0) ");
 
  END_TEST(MatrixLinearSolver)
+#endif
+
+#ifdef USE_MKL
+BEGIN_TEST(MatrixInverse, "MatrixInverse")
+  // float type
+  float a[] = {1., 2., 3., 4., 5., 6., 8, 20, 33};
+  smatrix m1(a, 3, 3);
+  V(Inverse(m1), "-15 28 -13.3333 \n2 -3 1.33333 \n1 -2 1 ");
+
+  // double type
+  dmatrix m2(a, 3, 3);
+  V(Inverse(m2), "-15 28 -13.3333 \n2 -3 1.33333 \n1 -2 1 ");
+
+  // double type
+  cmatrix m3(a, 3, 3);
+  V(Inverse(m3), "(-15, -0) (28, 0) (-13.3333, 0) \n(2, 0) (-3, 0) (1.33333, 0) \n(1, 0) (-2, -0) (1, 0) ");
+
+  // double type
+  zmatrix m4(a, 3, 3);
+  V(Inverse(m4), "(-15, -0) (28, 0) (-13.3333, 0) \n(2, 0) (-3, 0) (1.33333, 0) \n(1, 0) (-2, -0) (1, 0) ");
+
+END_TEST(MatrixInverse)
 #endif
 
 /**

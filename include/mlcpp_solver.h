@@ -26,5 +26,6 @@
 #include "mlcpp.h"
 #include "solver/mlcpp_solver_eigen.h"
 #include "solver/mlcpp_solver_linear.h"
+#include "solver/mlcpp_solver_inverse.h"
 
 #endif  // MLCPP_SOLVER_H_  // NOLINT
