@@ -89,7 +89,25 @@ int geev(
     T *vr, const int ldvr) {
   assert(0);  // always fails
 }
+
+/*
+ * Linear solver
+ */
+template<typename T>
+int gesv(
+    const int n, const int nrhs,
+    T *a, const int lda, T *b, const int ldb) {
+  assert(0);  // always fails
 }
 
+/*
+ * Matrix inversion 
+ */
+template<typename T>
+int matrix_inverse(
+    const int m, const int n, T *a, const int lda) {
+  assert(0);  // always fails
+}
+}
 #endif  // MLCPP_ADAPTOR_BLAS_H_  // NOLINT
 
