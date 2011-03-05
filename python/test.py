@@ -1,9 +1,9 @@
 #! /usr/bin/env python
 
-from mlpy import Complex, Matrix, CMatrix, Identity, CIdentity, Vector, CVector
-from mlpy import inverse 
-from mlpy import linear_solver
-from mlpy import eigen, left_eigen, right_eigen
+from mlcpp import Complex, Matrix, CMatrix, Identity, CIdentity, Vector, CVector
+from mlcpp import inverse 
+from mlcpp import linear_solver
+from mlcpp import eigen, left_eigen, right_eigen
 
 print "========= Test Complex ========="
 # a = 3 + 4i

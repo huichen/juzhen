@@ -12,18 +12,18 @@ endif
 endif
 
 all:
-	swig -c++ -python mlpy.i
-	$(CC) -c -fpic mlpy_wrap.cxx -I/usr/include/python2.6/ $(CFLAGS)
-	$(CC) -shared mlpy_wrap.o -o _mlpy.so $(CFLAGS)
+	swig -c++ -python mlcpp.i
+	$(CC) -c -fpic mlcpp_wrap.cxx -I/usr/include/python2.6/ $(CFLAGS)
+	$(CC) -shared mlcpp_wrap.o -o _mlcpp.so $(CFLAGS)
 	python test.py > output
 	
 clean:
-	rm *.o mlpy*.pyc *_wrap* -rf
+	rm *.o mlcpp*.pyc *_wrap* -rf
 
 distclean: clean
-	rm *.so mlpy.py *.txt *.png -rf
+	rm *.so mlcpp.py *.txt *.png -rf
 
-bench: _mlpy.so mlpy.py benchmark.py
+bench: _mlcpp.so mlcpp.py benchmark.py
 	./benchmark.py
 
 plt: benchmark.txt benchmark.plt

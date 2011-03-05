@@ -1,4 +1,4 @@
-%module mlpy
+%module mlcpp
 %{
 #include <mlcpp.h>
 #include <mlcpp_solver.h>
@@ -25,10 +25,10 @@ CMatrix CIdentity(int i) {
 }
 %}
 
-%include "mlpy_complex.i"
+%include "mlcpp_complex.i"
 
-%include "mlpy_matrix.i"
+%include "mlcpp_matrix.i"
 
-%include "mlpy_vector.i"
+%include "mlcpp_vector.i"
 
-%include "mlpy_extension.i"
+%include "mlcpp_extension.i"

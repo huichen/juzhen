@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 from numpy import *
-from mlpy import CMatrix
+from mlcpp import CMatrix
 
 import time
 
@@ -18,7 +18,7 @@ def worker_numpy(n):
   t1 = time.time()
   return t1 - t0
 
-def worker_mlpy(n):
+def worker_mlcpp(n):
   t0 = time.time()
   a = CMatrix(n, n)
   a.set(1)
@@ -29,10 +29,10 @@ def worker_mlpy(n):
   t1 = time.time()
   return t1 - t0
 
-print "Rank\tmlpy(s)\t\tnumpy(s)"
+print "Rank\tmlcpp(s)\t\tnumpy(s)"
 f = open("benchmark.txt", "w")
 for i in range(min_rank, max_rank, step_rank):
-  print '%d\t%6f\t%6f' % (i, worker_mlpy(i), worker_numpy(i))
-  f.write('%d\t%6f\t%6f\n' % (i, worker_mlpy(i), worker_numpy(i)))
+  print '%d\t%6f\t%6f' % (i, worker_mlcpp(i), worker_numpy(i))
+  f.write('%d\t%6f\t%6f\n' % (i, worker_mlcpp(i), worker_numpy(i)))
 f.close()
 
