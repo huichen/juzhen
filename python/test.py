@@ -1,6 +1,9 @@
 #! /usr/bin/env python
 
 from mlpy import Complex, Matrix, CMatrix, Identity, CIdentity, Vector, CVector
+from mlpy import inverse 
+from mlpy import linear_solver
+from mlpy import eigen, left_eigen, right_eigen
 
 print "========= Test Complex ========="
 # a = 3 + 4i
@@ -378,24 +381,35 @@ print
 print "========= Test Matrix Solver ========="
 
 a = Identity(3)
-print "a.inverse() = "
-print a.inverse()
+print "inverse(a) = "
+print inverse(a)
 print
 
 b = Matrix(3, 3)
 b.set(10)
-print "a.linear_solver(b) = "
-print a.linear_solver(b)
+
+# Solve A * X = B
+print "linear_solver(a, b) = "
+print linear_solver(a, b)
 print
 
 a.set(1, 2, 3)
 a.set(0, 1, 7)
 a.set(2, 0, 7)
-e = CMatrix(3, 3)
-vr = Matrix(3, 3)
-a.right_eigen(e, vr);
-print "a.right_eigen(e, vr); e = "
+
+# Solve eigen problem:
+#   e is a column vector contains all eigen values
+#   vl is a square matrix that contains all left eigen vectors 
+#   vr is a square matrix that contains all right eigen vectors 
+# Similarly,
+# e, vl = left_eigen(a) solves left eigen vectors only
+# e, vr = right_eigen(a) solves right eigen vectors only
+e, vl, vr = eigen(a);
+print "e, vl, vr = eigen(a); e = "
 print e 
+print
+print "vl = "
+print vl 
 print
 print "vr = "
 print vr 

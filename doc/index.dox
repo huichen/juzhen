@@ -12,10 +12,6 @@ Download the <a href="https://github.com/huichen/mlcpp/tarball/master">tarball</
 
 Read the \ref how_to_start page.
 
-@section python_interface Python Interface 
-
-A Python interface is available (generated from SWIG). See \ref python for details. 
-
 @section benchmarks Benchmarks
 
 Speed is the major concern when we design the library. The code has been extensively optimized to make sure it compares favorably to other C++ matrix libraries in terms of speed. 
@@ -23,6 +19,10 @@ Speed is the major concern when we design the library. The code has been extensi
 We have benchmarked our library and then compared the results with <a href="http://eigen.tuxfamily.org">Eigen</a> which provides similar functionalities. The results have shown that mlcpp performs at least equally good as Eigen in most scenarios while it runs significantly faster than Eigen in some key operations such as element indexing and matrix-matrix multiplication.
 
 See the \ref benchmark page for details.
+
+@section python_interface Python Interface 
+
+A Python interface is available. See \ref python for details.   
 
 @section problems_and_improvements Problems and improvements
 

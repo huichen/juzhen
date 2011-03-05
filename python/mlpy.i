@@ -30,3 +30,5 @@ CMatrix CIdentity(int i) {
 %include "mlpy_matrix.i"
 
 %include "mlpy_vector.i"
+
+%include "mlpy_extension.i"

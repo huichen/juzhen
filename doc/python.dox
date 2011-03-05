@@ -1,5 +1,7 @@
 /** 
-\page python Matrix Library for Python (mlpy) 
+\page python Python Module (mlpy) 
+
+A Python interface to MLCPP was generated from <a href="http://www.swig.org/">SWIG</a>. Thanks to its efficient C++ core, the python module runs much faster than some numerical libraries such as <a href="http://numpy.scipy.org/">Numpy</a>. Read more about \ref python_performance. 
 
 @section compile Compile Python module 
 
@@ -7,12 +9,6 @@
 -# make <br> 
 
 Two files are generated from SWIG: _mlpy.so (shared library) and mlpy.py (package declaration). Copy them to the folder you want to import mlpy from.
-
-@section mlpy_performance Performance 
-
-Mlpy's performance is close to the C++ version for large matrices/vectors. When compiled with MKL, it's about 7x faster than Numpy in matrix multiplication.
-
-\image html benchmark_mlpy.png
 
 @section use_mlpy How to use mlpy module
 
@@ -22,7 +18,8 @@ Five classes are available:
 <b>\ref matrix</b> (real and complex double precision matrix)<br>
 <b>\ref vector</b> (real and complex double precision vector)<br>
 
-See python/test.py for sample usages.
+There are also \ref solver_functions available to solve <b>inverse matrix</b>, <b>linear equation</b>, <b>eigen values/vectors</b>, etc.
+
 
 @subsection complex Complex class
 
@@ -313,6 +310,51 @@ print
 print "a.imag() = "
 print a.imag()
 print
+\endcode
+
+@subsection solver_functions Solver Functions 
+
+\code
+from mlpy import Complex, Matrix, CMatrix, Identity, CIdentity, Vector, CVector
+from mlpy import inverse 
+from mlpy import linear_solver
+from mlpy import eigen, left_eigen, right_eigen
+
+a = Identity(3)
+print "inverse(a) = "
+print inverse(a)
+print
+
+b = Matrix(3, 3)
+b.set(10)
+
+# Solve A * X = B
+print "linear_solver(a, b) = "
+print linear_solver(a, b)
+print
+
+a.set(1, 2, 3)
+a.set(0, 1, 7)
+a.set(2, 0, 7)
+
+# Solve eigen problem:
+#   e is a column vector contains all eigen values
+#   vl is a square matrix that contains all left eigen vectors 
+#   vr is a square matrix that contains all right eigen vectors 
+# Similarly,
+# e, vl = left_eigen(a) solves left eigen vectors only
+# e, vr = right_eigen(a) solves right eigen vectors only
+e, vl, vr = eigen(a);
+print "e, vl, vr = right_eigen(a); e = "
+print e 
+print
+print "vl = "
+print vl 
+print
+print "vr = "
+print vr 
+print
+
 \endcode
 
 *
