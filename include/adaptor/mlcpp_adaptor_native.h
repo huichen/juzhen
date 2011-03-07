@@ -26,8 +26,6 @@
 
 #include <assert.h>
 
-#include <cblas.h>
-
 namespace mlcpp {
 
 template<typename T>
