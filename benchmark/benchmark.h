@@ -38,21 +38,9 @@
 #define STEPN 1
 #define NB 10
 
+const int num_digits = 2;
+
 static int counter = 0;
-
-/**
- * Return number of digits of a given integer.
- */
-int NumDigits(int input) {
-  int i = 0;
-  while (input) {
-    i++;
-    input /= 10;
-  }
-  return i;
-}
-
-const int num_digits = NumDigits((MAXN - MINN) / STEPN + 1);
 
 /**
  * Convert an integer to a string and fill all prefix spaces with zero.
