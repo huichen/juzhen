@@ -30,8 +30,7 @@ namespace mlcpp {
 
 template<typename T>
 void gemm(
-    const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA,
-    const CBLAS_TRANSPOSE TransB, const int M, const int N,
+    const int M, const int N,
     const int K, const T *A, const int lda, const T *B,
     const int ldb, T *c, const int ldc) {
   const T *ai, *bi;

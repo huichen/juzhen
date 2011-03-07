@@ -717,8 +717,8 @@ Matrix<DataType> Matrix<DataType>::operator*(
 
   ma.Resize(m, n);
 
-  gemm<DataType>(CblasColMajor, CblasNoTrans, CblasNoTrans, m, n, k1,
-    raw_ptr(), lda, rhs.raw_ptr(), ldb, ma.raw_ptr(), m);
+  gemm<DataType>(m, n, k1, raw_ptr(), lda,
+                 rhs.raw_ptr(), ldb, ma.raw_ptr(), m);
 
   return ma;
 }

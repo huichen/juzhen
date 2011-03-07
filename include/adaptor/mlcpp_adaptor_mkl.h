@@ -33,8 +33,7 @@ namespace mlcpp {
 /* MKL function wrappers implemented with templates*/
 template<typename T>
 void gemm(
-    const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA,
-    const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N,
+    const MKL_INT M, const MKL_INT N,
     const MKL_INT K, const T *A, const MKL_INT lda, const T *B,
     const MKL_INT ldb, T *c, const MKL_INT ldc) {
   assert(0);  // always fails
@@ -42,45 +41,41 @@ void gemm(
 
 template<>
 void gemm<float>(
-    const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA,
-    const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N,
+    const MKL_INT M, const MKL_INT N,
     const MKL_INT K, const float *A, const MKL_INT lda, const float *B,
     const MKL_INT ldb, float *c, const MKL_INT ldc) {
-  cblas_sgemm(Order, TransA, TransB, M, N, K, 1.,
+  cblas_sgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, M, N, K, 1.,
               A, lda, B, ldb, 0., c, ldc);
 }
 
 template<>
 void gemm<double>(
-    const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA,
-    const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N,
+    const MKL_INT M, const MKL_INT N,
     const MKL_INT K, const double *A, const MKL_INT lda, const double *B,
     const MKL_INT ldb, double *c, const MKL_INT ldc) {
-  cblas_dgemm(Order, TransA, TransB, M, N, K, 1.,
+  cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, M, N, K, 1.,
               A, lda, B, ldb, 0., c, ldc);
 }
 
 template<>
 void gemm<CS>(
-    const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA,
-    const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N,
+    const MKL_INT M, const MKL_INT N,
     const MKL_INT K, const CS  *A, const MKL_INT lda, const CS  *B,
     const MKL_INT ldb, CS  *c, const MKL_INT ldc) {
   CS alpha(1., 0.);
   CS beta(0., 0.);
-  cblas_cgemm(Order, TransA, TransB, M, N, K, &alpha,
+  cblas_cgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, M, N, K, &alpha,
               A, lda, B, ldb, &beta, c, ldc);
 }
 
 template<>
 void gemm<CD>(
-    const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA,
-    const CBLAS_TRANSPOSE TransB, const MKL_INT M, const MKL_INT N,
+    const MKL_INT M, const MKL_INT N,
     const MKL_INT K, const CD  *A, const MKL_INT lda, const CD  *B,
     const MKL_INT ldb, CD  *c, const MKL_INT ldc) {
   CD alpha(1., 0.);
   CD beta(0., 0.);
-  cblas_zgemm(Order, TransA, TransB, M, N, K, &alpha,
+  cblas_zgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, M, N, K, &alpha,
               A, lda, B, ldb, &beta, c, ldc);
 }
 
