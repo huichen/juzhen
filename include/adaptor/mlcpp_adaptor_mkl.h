@@ -217,8 +217,8 @@ int matrix_inverse(
   MKL_INT info, lwork;
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
   float *work = reinterpret_cast<float *>(malloc(sizeof(float)*n));
-  sgetrf(&m, &n, a, &lda, ipiv, &info); 
-  sgetri(&n, a, &lda, ipiv, work, &lwork, &info); 
+  sgetrf(&m, &n, a, &lda, ipiv, &info);
+  sgetri(&n, a, &lda, ipiv, work, &lwork, &info);
   free(ipiv);
   free(work);
 }
@@ -229,8 +229,8 @@ int matrix_inverse(
   MKL_INT info, lwork;
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
   double *work = reinterpret_cast<double *>(malloc(sizeof(double)*n));
-  dgetrf(&m, &n, a, &lda, ipiv, &info); 
-  dgetri(&n, a, &lda, ipiv, work, &lwork, &info); 
+  dgetrf(&m, &n, a, &lda, ipiv, &info);
+  dgetri(&n, a, &lda, ipiv, work, &lwork, &info);
   free(ipiv);
   free(work);
 }
@@ -241,9 +241,9 @@ int matrix_inverse(
   MKL_INT info, lwork;
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
   CS *work = reinterpret_cast<CS *>(malloc(sizeof(CS)*n));
-  cgetrf(&m, &n, reinterpret_cast<MKL_Complex8 *>(a), &lda, ipiv, &info); 
+  cgetrf(&m, &n, reinterpret_cast<MKL_Complex8 *>(a), &lda, ipiv, &info);
   cgetri(&n, reinterpret_cast<MKL_Complex8 *>(a), &lda,
-         ipiv, reinterpret_cast<MKL_Complex8 *>(work), &lwork, &info); 
+         ipiv, reinterpret_cast<MKL_Complex8 *>(work), &lwork, &info);
   free(ipiv);
   free(work);
 }
@@ -254,9 +254,9 @@ int matrix_inverse(
   MKL_INT info, lwork;
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
   CD *work = reinterpret_cast<CD *>(malloc(sizeof(CD)*n));
-  zgetrf(&m, &n, reinterpret_cast<MKL_Complex16 *>(a), &lda, ipiv, &info); 
+  zgetrf(&m, &n, reinterpret_cast<MKL_Complex16 *>(a), &lda, ipiv, &info);
   zgetri(&n, reinterpret_cast<MKL_Complex16 *>(a), &lda,
-         ipiv, reinterpret_cast<MKL_Complex16 *>(work), &lwork, &info); 
+         ipiv, reinterpret_cast<MKL_Complex16 *>(work), &lwork, &info);
   free(ipiv);
   free(work);
 }

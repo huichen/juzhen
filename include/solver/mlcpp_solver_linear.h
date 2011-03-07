@@ -43,7 +43,6 @@ Matrix<DataType> LinearSolver(
 
   Matrix<DataType> matrix_x;
   matrix_x = matrix_b;
-  
 
   gesv<DataType>(mata.num_col(), mata.num_row(),
                  mata.raw_ptr(), mata.num_col(),

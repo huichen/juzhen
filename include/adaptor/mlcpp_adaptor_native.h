@@ -30,7 +30,6 @@
 
 namespace mlcpp {
 
-/* MKL function wrappers implemented with templates*/
 template<typename T>
 void gemm(
     const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA,
@@ -40,13 +39,13 @@ void gemm(
   const T *ai, *bi;
   T *ci;
   #pragma omp parallel for private(ai, bi, ci)
-  for(size_t i = 0; i < M; i++) {
-    for(size_t j = 0; j < N; j++) {
+  for (size_t i = 0; i < M; i++) {
+    for (size_t j = 0; j < N; j++) {
       ai = A + i;
       bi = B + j * ldb;
       ci = c + j * ldc + i;
       (*ci) = 0;
-      for(size_t k = 0; k < K; k++) {
+      for (size_t k = 0; k < K; k++) {
         (*ci) += (*ai) * (*(bi++));
         ai += lda;
       }

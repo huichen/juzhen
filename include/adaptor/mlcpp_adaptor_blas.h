@@ -28,7 +28,6 @@
 
 namespace mlcpp {
 
-/* MKL function wrappers implemented with templates*/
 template<typename T>
 void gemm(
     const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA,
