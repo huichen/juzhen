@@ -20,17 +20,66 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_ADAPTOR_H_  // NOLINT
-#define MLCPP_ADAPTOR_H_
+#ifndef MLCPP_ADAPTOR_NATIVE_H_  // NOLINT
+#define MLCPP_ADAPTOR_NATIVE_H_
+#include <omp.h>
 
-#ifdef USE_MKL
-#include "adaptor/mlcpp_adaptor_mkl.h"
-#else
-#ifdef USE_BLAS
-#include "adaptor/mlcpp_adaptor_blas.h"
-#else
-#include "adaptor/mlcpp_adaptor_native.h"
-#endif
-#endif
+#include <assert.h>
 
-#endif  // MLCPP_ADAPTOR_H_  // NOLINT
+#include <cblas.h>
+
+namespace mlcpp {
+
+/* MKL function wrappers implemented with templates*/
+template<typename T>
+void gemm(
+    const CBLAS_ORDER Order, const CBLAS_TRANSPOSE TransA,
+    const CBLAS_TRANSPOSE TransB, const int M, const int N,
+    const int K, const T *A, const int lda, const T *B,
+    const int ldb, T *c, const int ldc) {
+  const T *ai, *bi;
+  T *ci;
+  #pragma omp parallel for private(ai, bi, ci)
+  for(size_t i = 0; i < M; i++) {
+    for(size_t j = 0; j < N; j++) {
+      ai = A + i;
+      bi = B + j * ldb;
+      ci = c + j * ldc + i;
+      (*ci) = 0;
+      for(size_t k = 0; k < K; k++) {
+        (*ci) += (*ai) * (*(bi++));
+        ai += lda;
+      }
+    }
+  }
+}
+
+template<typename T>
+int geev(
+    char nl, char nr, const int n,
+    T *a, const int lda, CD * w, T *vl, const int ldvl,
+    T *vr, const int ldvr) {
+  assert(0);  // always fails
+}
+
+/*
+ * Linear solver
+ */
+template<typename T>
+int gesv(
+    const int n, const int nrhs,
+    T *a, const int lda, T *b, const int ldb) {
+  assert(0);  // always fails
+}
+
+/*
+ * Matrix inversion 
+ */
+template<typename T>
+int matrix_inverse(
+    const int m, const int n, T *a, const int lda) {
+  assert(0);  // always fails
+}
+}
+#endif  // MLCPP_ADAPTOR_NATIVE_H_  // NOLINT
+

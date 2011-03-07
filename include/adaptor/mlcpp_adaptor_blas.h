@@ -84,7 +84,7 @@ void gemm<CD>(
 
 template<typename T>
 int geev(
-    const int order, char nl, char nr, const int n,
+    char nl, char nr, const int n,
     T *a, const int lda, CD * w, T *vl, const int ldvl,
     T *vr, const int ldvr) {
   assert(0);  // always fails

@@ -6,8 +6,13 @@ ifeq (${MLCPP_BLASLIB}, gotoblas2)
 CFLAGS = -I../include -lgoto2 -pthread -std=c++0x -O3 -msse2 -DNDEBUG
 CC = g++ 
 else
+ifeq (${MLCPP_BLASLIB}, blas) 
 CFLAGS = -I../include -lblas -std=c++0x -O3 -msse2 -DNDEBUG
 CC = g++ 
+else
+CFLAGS = -I../include -std=c++0x -O3 -msse2 -DNDEBUG -fopenmp
+CC = g++ 
+endif
 endif
 endif
 
