@@ -1,16 +1,16 @@
 ifeq (${MLCPP_BLASLIB}, mkl) 
-CFLAGS_MLCPP = -I../source -DUSE_MKL -lmkl_rt -liomp5 -lpthread -DNDEBUG -DMLCPP -O3 -msse2
+CFLAGS_MLCPP = -I../src -DUSE_MKL -lmkl_rt -liomp5 -lpthread -DNDEBUG -DMLCPP -O3 -msse2
 CC_MLCPP = g++ 
 else
 ifeq (${MLCPP_BLASLIB}, gotoblas2) 
-CFLAGS_MLCPP = -DUSE_BLAS -I../source -lgoto2 -fopenmp -DNDEBUG -DMLCPP -O3 -msse2
+CFLAGS_MLCPP = -DUSE_BLAS -I../src -lgoto2 -fopenmp -DNDEBUG -DMLCPP -O3 -msse2
 CC_MLCPP = g++ 
 else
 ifeq (${MLCPP_BLASLIB}, blas) 
-CFLAGS_MLCPP = -DUSE_BLAS -I../source -lblas -DNDEBUG -DMLCPP -O3 -msse2
+CFLAGS_MLCPP = -DUSE_BLAS -I../src -lblas -DNDEBUG -DMLCPP -O3 -msse2
 CC_MLCPP = g++ 
 else
-CFLAGS_MLCPP = -I../source -DNDEBUG -DMLCPP -O3 -msse2 -fopenmp
+CFLAGS_MLCPP = -I../src -DNDEBUG -DMLCPP -O3 -msse2 -fopenmp
 CC_MLCPP = g++ 
 endif
 endif
