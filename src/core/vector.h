@@ -77,6 +77,16 @@ class Vector : public Matrix<DataType> {
   Vector<DataType> &operator=(const std::vector<DataType> &v);
 
   /**
+   * Return the vector itself.
+   */
+  Vector<DataType> &operator+();
+
+  /**
+   * Return the opposite vector.
+   */
+  Vector<DataType> operator-();
+
+  /**
    * Assign all elements in the Vector to be rhs.
    */
   Vector<DataType> &Set(const DataType &rhs);
@@ -245,6 +255,21 @@ Vector<DataType> &Vector<DataType>::operator=(
   p1 = Matrix<DataType>::raw_ptr();
   for (size_t i = 0; i < s; i++) *(p1++) = v[i];
   return *this;
+}
+
+template<typename DataType>
+Vector<DataType> &Vector<DataType>::operator+() {
+  return *this;
+}
+
+template<typename DataType>
+Vector<DataType> Vector<DataType>::operator-() {
+  Vector<DataType> vector(*this);
+  size_t endi = size();
+  for (size_t i = 0; i < endi; i++)
+    vector(i) = -vector(i);
+  vector.set_temporary(true);
+  return vector;
 }
 
 template<typename DataType>

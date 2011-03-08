@@ -71,7 +71,7 @@ BEGIN_TEST(MatrixAssignment, "MatrixAssignment")
   m2(0, 1) = 99.;
   V(m2, "1 99 \n2 4 ")
 
-  m1 = m2;
+  m1 = -(-m2);
   V(m1, "1 99 \n2 4 ")
 
   smatrix m3(b, 3, 2);
@@ -520,7 +520,7 @@ BEGIN_TEST(VectorTests, "VectorTests")
   V(svector(m1), "{1, 2, 3, 4, 5, 6}")
 
   svector v4;
-  v4 = m1;
+  v4 = -(-m1);
   V(svector(v4), "{1, 2, 3, 4, 5, 6}")
 
   V(svector(v1), "{1, 2, 3, 4}")

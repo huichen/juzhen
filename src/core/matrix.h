@@ -87,6 +87,16 @@ class Matrix {
   Matrix<DataType> &operator=(const Matrix<DataType> &rhs);
 
   /**
+   * Return the matrix itself. 
+   */
+  Matrix<DataType> &operator+();
+
+  /**
+   * Return the opposite matrix. 
+   */
+  Matrix<DataType> operator-();
+
+  /**
    * Assign all numbers in the Matrix to be rhs.
    */
   Matrix<DataType> &Set(const DataType &rhs);
@@ -408,11 +418,26 @@ Matrix<DataType> &Matrix<DataType>::operator=(
   else
     memcpy(data_ptr_->data_ptr,
            rhs.raw_ptr(),
-           rhs.num_col()*rhs.num_row()*sizeof(DataType));
+           rhs.num_col() * rhs.num_row() * sizeof(DataType));
   num_col_ = rhs.num_col();
   num_row_ = rhs.num_row();
   raw_ptr_ = data_ptr_->data_ptr;
   return *this;
+}
+
+template<typename DataType>
+Matrix<DataType> &Matrix<DataType>::operator+() {
+  return *this;
+}
+
+template<typename DataType>
+Matrix<DataType> Matrix<DataType>::operator-() {
+  Matrix<DataType> matrix(*this);
+  size_t endi = num_col() * num_row();
+  for (size_t i = 0; i < endi; i++)
+    matrix(i) = -matrix(i);
+  matrix.set_temporary(true);
+  return matrix;
 }
 
 template<typename DataType>

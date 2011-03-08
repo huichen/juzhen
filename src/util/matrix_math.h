@@ -74,6 +74,7 @@ Matrix<T> DirectProduct(
   size_t endi = matrix1.num_col() * matrix1.num_row();
   for (size_t i = 0; i < endi; i++)
     matrix_return(i) *= matrix2(i);
+  matrix_return.set_temporary(true);
   return matrix_return;
 }
 

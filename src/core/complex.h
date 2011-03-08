@@ -74,6 +74,16 @@ struct Complex {
   inline const Complex<T> &operator=(const Complex<T1> &c);
 
   /**
+   * Return the complex number itself 
+   */
+  inline Complex<T> &operator+();
+
+  /**
+   * Return the opposite of a complex number 
+   */
+  inline Complex<T> operator-();
+
+  /**
    * Check if two Complex numbers equal.
    */
   template<typename T1>
@@ -139,10 +149,20 @@ inline const Complex<T>& Complex<T>::operator=(const T &r) {
 
 template<typename T>
 template<typename T1>
-inline const Complex<T>& Complex<T>::operator=(const Complex<T1> &c) {
+inline const Complex<T> &Complex<T>::operator=(const Complex<T1> &c) {
   real = c.real;
   imag = c.imag;
   return *this;
+}
+
+template<typename T>
+inline Complex<T> &Complex<T>::operator+() {
+  return *this;
+}
+
+template<typename T>
+inline Complex<T> Complex<T>::operator-() {
+  return Complex<T>(-real, -imag);
 }
 
 template<typename T>
