@@ -27,7 +27,6 @@
 #include <sstream>
 
 #include <mlcpp.h>
-#include <mlcpp_solver.h>
 
 using mlcpp::CS;
 using mlcpp::CD;

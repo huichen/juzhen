@@ -20,17 +20,29 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_ADAPTOR_H_  // NOLINT
-#define MLCPP_ADAPTOR_H_
+#ifndef MLCPP_SOLVER_INVERSE_H_  // NOLINT
+#define MLCPP_SOLVER_INVERSE_H_
 
-#ifdef USE_MKL
-#include "adaptor/mlcpp_adaptor_mkl.h"
-#else
-#ifdef USE_BLAS
-#include "adaptor/mlcpp_adaptor_blas.h"
-#else
-#include "adaptor/mlcpp_adaptor_native.h"
-#endif
-#endif
+#include "../mlcpp.h"
 
-#endif  // MLCPP_ADAPTOR_H_  // NOLINT
+namespace mlcpp {
+
+/**
+ * Inverse a matrix
+ * X = A^(-1)
+ */
+template<typename DataType>
+Matrix<DataType> Inverse(
+    const Matrix<DataType> &matrix_a) {
+  assert(matrix_a.num_col() == matrix_a.num_row());
+
+  Matrix<DataType> matrix_x;
+  matrix_x = matrix_a;
+
+  matrix_inverse<DataType>(matrix_x.num_col(), matrix_x.num_row(),
+                 matrix_x.raw_ptr(), matrix_x.num_col());
+  matrix_x.set_temporary(true);
+  return matrix_x;
+}
+}
+#endif  // MLCPP_SOLVER_INVERSE_H_  // NOLINT

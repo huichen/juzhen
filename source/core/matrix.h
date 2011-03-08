@@ -25,9 +25,9 @@
 #include <sstream>
 #include <string>
 
-#include "mlcpp_complex.h"
-#include "mlcpp_dataarray.h"
-#include "mlcpp_adaptor.h"
+#include "complex.h"
+#include "dataarray.h"
+#include "../adaptor/adaptor.h"
 
 namespace mlcpp {
 

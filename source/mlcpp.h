@@ -24,11 +24,9 @@
 #define MLCPP_H_
 #include <assert.h>
 
-#include "mlcpp_complex.h"
-#include "mlcpp_adaptor.h"
-#include "mlcpp_dataarray.h"
-#include "mlcpp_matrix.h"
-#include "mlcpp_vector.h"
+#include "core/core.h"
+#include "adaptor/adaptor.h"
+#include "solver/solver.h"
 
 namespace mlcpp {
 }

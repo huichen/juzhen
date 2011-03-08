@@ -20,12 +20,15 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_SOLVER_H_  // NOLINT
-#define MLCPP_SOLVER_H_
+#ifndef MLCPP_CORE_H_  // NOLINT
+#define MLCPP_CORE_H_
+#include <assert.h>
 
-#include "mlcpp.h"
-#include "solver/mlcpp_solver_eigen.h"
-#include "solver/mlcpp_solver_linear.h"
-#include "solver/mlcpp_solver_inverse.h"
+#include "complex.h"
+#include "dataarray.h"
+#include "matrix.h"
+#include "vector.h"
 
-#endif  // MLCPP_SOLVER_H_  // NOLINT
+namespace mlcpp {
+}
+#endif  // MLCPP_CORE_H_  // NOLINT

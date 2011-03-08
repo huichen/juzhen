@@ -19,30 +19,36 @@
 |                                                                           |
 +---------------------------------------------------------------------------+
 */
-#include <mlcpp.h>
 
-#define N 90
-using mlcpp::cvector;
-using mlcpp::cmatrix;
+#ifndef MLCPP_SOLVER_LINEAR_H_  // NOLINT
+#define MLCPP_SOLVER_LINEAR_H_
 
-int main() {
-  /* matrix of complex<float> */
-  cmatrix H(N, N);
-  for (int i = 0; i < N; i++)
-    if (i < N/3 || i >= 2*N/3)
-      H(i, i) = 1000;
-    else
-      H(i, i) = 0;
-  for (int i = 0; i < N-1; i++) H(i, i+1) = H(i+1, i) = -1;
+#include "../mlcpp.h"
 
-#ifdef USE_MKL
-  /* vector of complex<float> */
-  cvector energy;
-  /* matrix of complex<float> */
-  cmatrix wave;
-  RightEigenSolver(H, energy, wave);
+namespace mlcpp {
 
-  std::cout << "energy= " << Sort(Real(energy)) << std::endl;
-#endif
-  return 0;
+/**
+ * Solve matrix equation A * X = B
+ */
+template<typename DataType>
+Matrix<DataType> LinearSolver(
+    const Matrix<DataType> &matrix_a,
+    const Matrix<DataType> &matrix_b) {
+  assert(matrix_a.num_col() == matrix_a.num_row());
+  assert(matrix_b.num_col() == matrix_b.num_row());
+  assert(matrix_a.num_col() == matrix_b.num_row());
+
+  Matrix<DataType> mata;
+  mata = matrix_a;
+
+  Matrix<DataType> matrix_x;
+  matrix_x = matrix_b;
+
+  gesv<DataType>(mata.num_col(), mata.num_row(),
+                 mata.raw_ptr(), mata.num_col(),
+                 matrix_x.raw_ptr(), matrix_x.num_col());
+  matrix_x.set_temporary(true);
+  return matrix_x;
 }
+}
+#endif  // MLCPP_SOLVER_LINEAR_H_  // NOLINT

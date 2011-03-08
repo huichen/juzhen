@@ -23,7 +23,7 @@
 #ifndef MLCPP_SOLVER_EIGEN_H_  // NOLINT
 #define MLCPP_SOLVER_EIGEN_H_
 
-#include <mlcpp.h>
+#include "../mlcpp.h"
 
 namespace mlcpp {
 

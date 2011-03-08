@@ -20,35 +20,12 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_SOLVER_LINEAR_H_  // NOLINT
-#define MLCPP_SOLVER_LINEAR_H_
+#ifndef MLCPP_SOLVER_H_  // NOLINT
+#define MLCPP_SOLVER_H_
 
-#include <mlcpp.h>
+#include "../mlcpp.h"
+#include "eigen.h"
+#include "linear.h"
+#include "inverse.h"
 
-namespace mlcpp {
-
-/**
- * Solve matrix equation A * X = B
- */
-template<typename DataType>
-Matrix<DataType> LinearSolver(
-    const Matrix<DataType> &matrix_a,
-    const Matrix<DataType> &matrix_b) {
-  assert(matrix_a.num_col() == matrix_a.num_row());
-  assert(matrix_b.num_col() == matrix_b.num_row());
-  assert(matrix_a.num_col() == matrix_b.num_row());
-
-  Matrix<DataType> mata;
-  mata = matrix_a;
-
-  Matrix<DataType> matrix_x;
-  matrix_x = matrix_b;
-
-  gesv<DataType>(mata.num_col(), mata.num_row(),
-                 mata.raw_ptr(), mata.num_col(),
-                 matrix_x.raw_ptr(), matrix_x.num_col());
-  matrix_x.set_temporary(true);
-  return matrix_x;
-}
-}
-#endif  // MLCPP_SOLVER_LINEAR_H_  // NOLINT
+#endif  // MLCPP_SOLVER_H_  // NOLINT

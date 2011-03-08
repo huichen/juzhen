@@ -1,7 +1,6 @@
 %module mlcpp
 %{
 #include <mlcpp.h>
-#include <mlcpp_solver.h>
 typedef mlcpp::Complex<double> Complex; 
 typedef mlcpp::Matrix<double> Matrix; 
 typedef mlcpp::Matrix<mlcpp::Complex<double> > CMatrix; 

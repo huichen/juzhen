@@ -28,7 +28,7 @@
 #include <vector>
 #include <string>
 
-#include "mlcpp_matrix.h"
+#include "matrix.h"
 
 namespace mlcpp {
 
