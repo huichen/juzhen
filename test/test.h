@@ -115,14 +115,15 @@ std::cout << " passed." << std::endl; \
 #define BEGIN_TEST(test, classname)  \
 class test : public TestFunction { \
   public: \
-  std::string m_name; \
-  test() : m_name(classname) {} \
+  std::string test_name_; \
+  virtual std::string test_name() {return test_name_;}\
+  test() : test_name_(classname) {} \
   virtual void Run() { \
   bool return_value = true; \
   std::cout << \
     "======================================================================" \
     << std::endl; \
-  std::cout << "Begin testing " << m_name << std::endl; \
+  std::cout << "Begin testing " << test_name_ << std::endl; \
   int testcount = 1; \
   std::ostringstream out;
 
@@ -130,13 +131,17 @@ class test : public TestFunction { \
  * all tests must end with END_TEST
 */
 #define END_TEST(test)  \
-std::cout << m_name << (return_value?" passed.":" FAILED!") << std::endl; \
+std::cout << test_name_ << (return_value?" passed.":" FAILED!") << std::endl; \
 } \
 }; \
 static test s_TestFunction_##test; \
 UnitTest::AddTest(&s_TestFunction_##test);
 
-#define RUN_TEST UnitTest::Run();
+#define RUN_TEST \
+if (argc == 2)\
+  UnitTest::Run(std::string(argv[1]));\
+else\
+  UnitTest::Run();
 
 /////////////////////////////////////////////////////////////////////////////
 /**
@@ -150,6 +155,11 @@ class TestFunction {
    * the macros BEGIN_TEST and END_TEST automatically.
    */
   virtual void Run() {}
+
+  /**
+   * Get the test's name.
+   */
+  virtual std::string test_name() {}
 };
 /////////////////////////////////////////////////////////////////////////////
 
@@ -164,6 +174,11 @@ class UnitTest {
    * Run all unit tests.
    */
   static void Run();
+
+  /**
+   * Run a single test.
+   */
+  static void Run(const std::string &);
 
   /**
    * Add a test.
@@ -191,6 +206,20 @@ class UnitTest {
 void UnitTest::Run() {
   for (size_t i = 0; i < UnitTest::tests_.size(); i++)
     UnitTest::tests_[i]->Run();
+  std::cout <<
+    "======================================================================"
+    << std::endl; \
+  std::cout << "Total unit tests: "
+            << UnitTest::num_success_ + UnitTest::num_fail_
+            << std::endl;
+  std::cout << "Successful: " << UnitTest::num_success_ << std::endl;
+  std::cout << "Failed: " << UnitTest::num_fail_ << std::endl;
+}
+
+void UnitTest::Run(const std::string &test_name) {
+  for (size_t i = 0; i < UnitTest::tests_.size(); i++)
+    if (UnitTest::tests_[i]->test_name() == test_name)
+      UnitTest::tests_[i]->Run();
   std::cout <<
     "======================================================================"
     << std::endl; \

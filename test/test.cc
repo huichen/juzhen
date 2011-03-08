@@ -46,7 +46,7 @@ using mlcpp::dvector;
 using mlcpp::cvector;
 using mlcpp::zvector;
 
-int main() {
+int main(int argc, char *argv[]) {
 
 #include "test_inc.h"
 

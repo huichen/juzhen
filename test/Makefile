@@ -18,7 +18,6 @@ endif
 
 test: 
 	$(CC) test.cc -o unittest $(CFLAGS) -g
-	./unittest
 
 gen:
 	./generate_tests.py

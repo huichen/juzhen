@@ -23,6 +23,10 @@ BEGIN_TEST(vector_basic, "vector_basic")
 #include "tests/vector_basic.h"
 END_TEST(vector_basic)
 
+BEGIN_TEST(matrix_statistics, "matrix_statistics")
+#include "tests/matrix_statistics.h"
+END_TEST(matrix_statistics)
+
 BEGIN_TEST(matrix_getter, "matrix_getter")
 #include "tests/matrix_getter.h"
 END_TEST(matrix_getter)
@@ -30,6 +34,10 @@ END_TEST(matrix_getter)
 BEGIN_TEST(matrix_getrow_getcol, "matrix_getrow_getcol")
 #include "tests/matrix_getrow_getcol.h"
 END_TEST(matrix_getrow_getcol)
+
+BEGIN_TEST(vector_statistics, "vector_statistics")
+#include "tests/vector_statistics.h"
+END_TEST(vector_statistics)
 
 BEGIN_TEST(matrix_block_replace, "matrix_block_replace")
 #include "tests/matrix_block_replace.h"
