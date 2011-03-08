@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_ADAPTOR_BLAS_H_  // NOLINT
-#define MLCPP_ADAPTOR_BLAS_H_
+#ifndef SRC_ADAPTOR_BLAS_H_
+#define SRC_ADAPTOR_BLAS_H_
 #include <assert.h>
 
 #include <cblas.h>
@@ -103,5 +103,5 @@ int matrix_inverse(
   assert(0);  // always fails
 }
 }
-#endif  // MLCPP_ADAPTOR_BLAS_H_  // NOLINT
+#endif  // SRC_ADAPTOR_BLAS_H_
 

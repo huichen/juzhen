@@ -20,15 +20,15 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_CORE_H_  // NOLINT
-#define MLCPP_CORE_H_
+#ifndef SRC_CORE_CORE_H_
+#define SRC_CORE_CORE_H_
 #include <assert.h>
 
-#include "complex.h"
-#include "dataarray.h"
-#include "matrix.h"
-#include "vector.h"
+#include <core/complex.h>
+#include <core/data_array.h>
+#include <core/matrix.h>
+#include <core/vector.h>
 
 namespace mlcpp {
 }
-#endif  // MLCPP_CORE_H_  // NOLINT
+#endif  // SRC_CORE_CORE_H_

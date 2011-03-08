@@ -20,12 +20,11 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_SOLVER_H_  // NOLINT
-#define MLCPP_SOLVER_H_
+#ifndef SRC_SOLVER_SOLVER_H_
+#define SRC_SOLVER_SOLVER_H_
 
-#include "../mlcpp.h"
-#include "eigen.h"
-#include "linear.h"
-#include "inverse.h"
+#include <solver/matrix_eigen.h>
+#include <solver/linear_equation.h>
+#include <solver/matrix_inverse.h>
 
-#endif  // MLCPP_SOLVER_H_  // NOLINT
+#endif  // SRC_SOLVER_SOLVER_H_

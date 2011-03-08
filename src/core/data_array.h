@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_DATAARRAY_H_  // NOLINT
-#define MLCPP_DATAARRAY_H_
+#ifndef SRC_CORE_DATA_ARRAY_H_
+#define SRC_CORE_DATA_ARRAY_H_
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -45,18 +45,18 @@ struct DataArray {
   /**
    * Construct an array of size s.
    */
-  DataArray(size_t s);
+  DataArray(size_t s);  // NOLINT
 
   /**
    * Construct an array from another array.
    */
   template<typename T>
-  DataArray(const DataArray<T> &da);
+  DataArray(const DataArray<T> &da);  // NOLINT
 
   /**
    * Construct an array from another array.
    */
-  DataArray(const DataArray<DataType> &da);
+  DataArray(const DataArray<DataType> &da);  // NOLINT
 
   /**
    * Construct an array from another array. The size of the new array
@@ -270,4 +270,4 @@ DataType &DataArray<DataType>::operator[](size_t i) const {
 }
 /////////////////////////////////////////////////////////////////////////////
 }
-#endif  // MLCPP_DATAARRAY_H_  // NOLINT
+#endif  // SRC_CORE_DATA_ARRAY_H_

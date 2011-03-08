@@ -20,15 +20,15 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_VECTOR_H_  // NOLINT
-#define MLCPP_VECTOR_H_
+#ifndef SRC_CORE_VECTOR_H_
+#define SRC_CORE_VECTOR_H_
 #include <math.h>
+
+#include <core/matrix.h>
 
 #include <algorithm>
 #include <vector>
 #include <string>
-
-#include "matrix.h"
 
 namespace mlcpp {
 
@@ -47,7 +47,7 @@ class Vector : public Matrix<DataType> {
   /**
    * Construct a Vector of size i.
    */
-  Vector(size_t i);
+  Vector(size_t i);  // NOLINT
 
   /**
    * Construct a Vector from a Matrix's column-major raw array.
@@ -64,7 +64,7 @@ class Vector : public Matrix<DataType> {
   /**
    * Construct a Vector from an existing Vector.
    */
-  Vector(const std::vector<DataType> &v);
+  Vector(const std::vector<DataType> &v);  // NOLINT
 
   /**
    * Copy a Vector from another Vector.
@@ -685,4 +685,4 @@ std::string OutputToString(const Vector<DataType> &m) {
 }
 }
 /////////////////////////////////////////////////////////////////////////////
-#endif  // MLCPP_VECTOR_H_  // NOLINT
+#endif  // SRC_CORE_VECTOR_H_

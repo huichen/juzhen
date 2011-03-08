@@ -20,10 +20,10 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_SOLVER_EIGEN_H_  // NOLINT
-#define MLCPP_SOLVER_EIGEN_H_
+#ifndef SRC_SOLVER_MATRIX_EIGEN_H_
+#define SRC_SOLVER_MATRIX_EIGEN_H_
 
-#include "../mlcpp.h"
+#include <mlcpp.h>
 
 namespace mlcpp {
 
@@ -108,4 +108,4 @@ void LeftEigenSolver(
                  NULL, mat.num_col());
 }
 }
-#endif  // MLCPP_SOLVER_EIGEN_H_  // NOLINT
+#endif  // SRC_SOLVER_MATRIX_EIGEN_H_

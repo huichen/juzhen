@@ -20,17 +20,17 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_ADAPTOR_H_  // NOLINT
-#define MLCPP_ADAPTOR_H_
+#ifndef SRC_ADAPTOR_ADAPTOR_H_
+#define SRC_ADAPTOR_ADAPTOR_H_
 
 #ifdef USE_MKL
-#include "mkl.h"
+#include <adaptor/mkl.h>
 #else
 #ifdef USE_BLAS
-#include "blas.h"
+#include <adaptor/blas.h>
 #else
-#include "native.h"
+#include <adaptor/native.h>
 #endif
 #endif
 
-#endif  // MLCPP_ADAPTOR_H_  // NOLINT
+#endif  // SRC_ADAPTOR_ADAPTOR_H_

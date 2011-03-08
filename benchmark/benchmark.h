@@ -25,13 +25,13 @@
 #include <sys/time.h>
 #include <stdio.h>
 
-#include <string>
-
 #ifdef MLCPP
 #include <mlcpp.h>
 #else
 #include <Eigen/Dense>
 #endif
+
+#include <string>
 
 #define MAXN 100
 #define MINN 2
@@ -81,7 +81,7 @@ H4.resize(ni, ni);
 {\
 {\
 char out[100];\
-snprintf(out, sizeof(out), "%s%s", PREFIX,\
+snprintf(out, sizeof(out), "%s%s", PREFIX, \
     FixedLengthInteger(num_digits, counter).c_str());\
 snprintf(filename, sizeof(filename), "%s.plt", out);\
 myfile = fopen(filename, "w");\
@@ -100,7 +100,7 @@ fclose(myfile);\
 }\
 {\
 char out[100];\
-snprintf(out, sizeof(out), "%s%s", PREFIX,\
+snprintf(out, sizeof(out), "%s%s", PREFIX, \
     FixedLengthInteger(num_digits, counter++).c_str());\
 snprintf(filename, sizeof(filename), "%s%s.txt", FNAME, out);\
 }\

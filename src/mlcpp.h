@@ -24,9 +24,9 @@
 #define MLCPP_H_
 #include <assert.h>
 
-#include "core/core.h"
-#include "adaptor/adaptor.h"
-#include "solver/solver.h"
+#include <core/core.h>
+#include <adaptor/adaptor.h>
+#include <solver/solver.h>
 
 namespace mlcpp {
 }

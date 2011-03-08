@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_COMPLEX_H_  // NOLINT
-#define MLCPP_COMPLEX_H_
+#ifndef SRC_CORE_COMPLEX_H_
+#define SRC_CORE_COMPLEX_H_
 #include <math.h>
 
 #include <iostream>  // NOLINT string fuctions are provided for compatibility
@@ -397,5 +397,5 @@ std::ostream &operator<< (std::ostream &out, const Complex<T> &m) {
 }
 /////////////////////////////////////////////////////////////////////////////
 }
-#endif  // MLCPP_COMPLEX_H_  // NOLINT
+#endif  // SRC_CORE_COMPLEX_H_
 

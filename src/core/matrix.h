@@ -20,14 +20,14 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_MATRIX_H_  // NOLINT
-#define MLCPP_MATRIX_H_
+#ifndef SRC_CORE_MATRIX_H_
+#define SRC_CORE_MATRIX_H_
+#include <core/complex.h>
+#include <core/data_array.h>
+#include <adaptor/adaptor.h>
+
 #include <sstream>
 #include <string>
-
-#include "complex.h"
-#include "dataarray.h"
-#include "../adaptor/adaptor.h"
 
 namespace mlcpp {
 
@@ -74,7 +74,7 @@ class Matrix {
   /**
    * Construct from another Matrix. All numbers are copied.
    */
-  Matrix(const Matrix<DataType> &m);
+  Matrix(const Matrix<DataType> &m);  // NOLINT
 
   /**
    * Destructor.
@@ -1119,7 +1119,7 @@ class IdentityMatrix : public Matrix<DataType> {
   /**
    * Construct an identity Matrix of n x n.
    */
-  IdentityMatrix(size_t n);
+  IdentityMatrix(size_t n);  // NOLINT
 };
 
 typedef IdentityMatrix<float> identity_smatrix;
@@ -1146,4 +1146,4 @@ IdentityMatrix<DataType>::IdentityMatrix(size_t n) {
 }
 /////////////////////////////////////////////////////////////////////////////
 }
-#endif  // MLCPP_MATRIX_H_  // NOLINT
+#endif  // SRC_CORE_MATRIX_H_

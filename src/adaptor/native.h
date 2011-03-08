@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_ADAPTOR_NATIVE_H_  // NOLINT
-#define MLCPP_ADAPTOR_NATIVE_H_
+#ifndef SRC_ADAPTOR_NATIVE_H_
+#define SRC_ADAPTOR_NATIVE_H_
 #include <omp.h>
 
 #include <assert.h>
@@ -77,5 +77,5 @@ int matrix_inverse(
   assert(0);  // always fails
 }
 }
-#endif  // MLCPP_ADAPTOR_NATIVE_H_  // NOLINT
+#endif  // SRC_ADAPTOR_NATIVE_H_
 

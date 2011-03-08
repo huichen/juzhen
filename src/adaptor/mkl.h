@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_ADAPTOR_MKL_H_  // NOLINT
-#define MLCPP_ADAPTOR_MKL_H_
+#ifndef SRC_ADAPTOR_MKL_H_
+#define SRC_ADAPTOR_MKL_H_
 #include <assert.h>
 
 #include <mkl_cblas.h>
@@ -92,8 +92,8 @@ int geev<float, CS>(
     char nl, char nr, const MKL_INT n,
     float *a, const MKL_INT lda, CS * w, float *vl, const MKL_INT ldvl,
     float *vr, const MKL_INT ldvr) {
-  float *wr = reinterpret_cast<float *>(malloc(sizeof(float)*n));  // NOLINT
-  float *wi = reinterpret_cast<float *>(malloc(sizeof(float)*n));  // NOLINT
+  float *wr = reinterpret_cast<float *>(malloc(sizeof(*a)*n));
+  float *wi = reinterpret_cast<float *>(malloc(sizeof(*a)*n));
   assert(wr);
   assert(wi);
   int res = LAPACKE_sgeev(LAPACK_COL_MAJOR, nl, nr, n,
@@ -109,8 +109,8 @@ int geev<double, CD>(
     char nl, char nr, const MKL_INT n,
     double *a, const MKL_INT lda, CD * w, double *vl, const MKL_INT ldvl,
     double *vr, const MKL_INT ldvr) {
-  double *wr = reinterpret_cast<double *>(malloc(sizeof(double)*n));  // NOLINT
-  double *wi = reinterpret_cast<double *>(malloc(sizeof(double)*n));  // NOLINT
+  double *wr = reinterpret_cast<double *>(malloc(sizeof(*a)*n));
+  double *wi = reinterpret_cast<double *>(malloc(sizeof(*a)*n));
   assert(wr);
   assert(wi);
   int res = LAPACKE_dgeev(LAPACK_COL_MAJOR, nl, nr, n,
@@ -161,7 +161,7 @@ template<>
 int gesv<float>(
     const MKL_INT n, const MKL_INT nrhs,
     float *a, const MKL_INT lda, float *b, const MKL_INT ldb) {
-  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
   LAPACKE_sgesv(LAPACK_COL_MAJOR, n, nrhs, a, lda, ipiv, b, ldb);
   free(ipiv);
 }
@@ -170,7 +170,7 @@ template<>
 int gesv<double>(
     const MKL_INT n, const MKL_INT nrhs,
     double *a, const MKL_INT lda, double *b, const MKL_INT ldb) {
-  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
   LAPACKE_dgesv(LAPACK_COL_MAJOR, n, nrhs, a, lda, ipiv, b, ldb);
   free(ipiv);
 }
@@ -179,7 +179,7 @@ template<>
 int gesv<CS>(
     const MKL_INT n, const MKL_INT nrhs,
     CS *a, const MKL_INT lda, CS *b, const MKL_INT ldb) {
-  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
   LAPACKE_cgesv(LAPACK_COL_MAJOR, n, nrhs,
       reinterpret_cast<MKL_Complex8 *>(a), lda, ipiv,
       reinterpret_cast<MKL_Complex8 *>(b), ldb);
@@ -190,7 +190,7 @@ template<>
 int gesv<CD>(
     const MKL_INT n, const MKL_INT nrhs,
     CD *a, const MKL_INT lda, CD *b, const MKL_INT ldb) {
-  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
   LAPACKE_zgesv(LAPACK_COL_MAJOR, n, nrhs,
       reinterpret_cast<MKL_Complex16 *>(a), lda, ipiv,
       reinterpret_cast<MKL_Complex16 *>(b), ldb);
@@ -210,8 +210,8 @@ template<>
 int matrix_inverse(
     const MKL_INT m, const MKL_INT n, float *a, const MKL_INT lda) {
   MKL_INT info, lwork;
-  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
-  float *work = reinterpret_cast<float *>(malloc(sizeof(float)*n));
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
+  float *work = reinterpret_cast<float *>(malloc(sizeof(*a)*n));
   sgetrf(&m, &n, a, &lda, ipiv, &info);
   lwork = n;
   sgetri(&n, a, &lda, ipiv, work, &lwork, &info);
@@ -223,8 +223,8 @@ template<>
 int matrix_inverse(
     const MKL_INT m, const MKL_INT n, double *a, const MKL_INT lda) {
   MKL_INT info, lwork;
-  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
-  double *work = reinterpret_cast<double *>(malloc(sizeof(double)*n));
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
+  double *work = reinterpret_cast<double *>(malloc(sizeof(*a)*n));
   dgetrf(&m, &n, a, &lda, ipiv, &info);
   lwork = n;
   dgetri(&n, a, &lda, ipiv, work, &lwork, &info);
@@ -236,8 +236,8 @@ template<>
 int matrix_inverse(
     const MKL_INT m, const MKL_INT n, CS *a, const MKL_INT lda) {
   MKL_INT info, lwork;
-  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
-  CS *work = reinterpret_cast<CS *>(malloc(sizeof(CS)*n));
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
+  CS *work = reinterpret_cast<CS *>(malloc(sizeof(*a)*n));
   cgetrf(&m, &n, reinterpret_cast<MKL_Complex8 *>(a), &lda, ipiv, &info);
   lwork = n;
   cgetri(&n, reinterpret_cast<MKL_Complex8 *>(a), &lda,
@@ -250,8 +250,8 @@ template<>
 int matrix_inverse(
     const MKL_INT m, const MKL_INT n, CD *a, const MKL_INT lda) {
   MKL_INT info, lwork;
-  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(MKL_INT)*n));
-  CD *work = reinterpret_cast<CD *>(malloc(sizeof(CD)*n));
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
+  CD *work = reinterpret_cast<CD *>(malloc(sizeof(*a)*n));
   zgetrf(&m, &n, reinterpret_cast<MKL_Complex16 *>(a), &lda, ipiv, &info);
   lwork = n;
   zgetri(&n, reinterpret_cast<MKL_Complex16 *>(a), &lda,
@@ -260,4 +260,4 @@ int matrix_inverse(
   free(work);
 }
 }
-#endif  // MLCPP_ADAPTOR_MKL_H_  // NOLINT
+#endif  // SRC_ADAPTOR_MKL_H_
