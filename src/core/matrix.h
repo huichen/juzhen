@@ -948,42 +948,5 @@ Matrix<DataType> &Matrix<DataType>::SwapRow(size_t r1, size_t r2) {
   return *this;
 }
 /////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////
-/**
- * Identity Matrix
- */
-template<typename DataType>
-class IdentityMatrix : public Matrix<DataType> {
- public:
-  /**
-   * Construct an identity Matrix of n x n.
-   */
-  IdentityMatrix(size_t n);  // NOLINT
-};
-
-typedef IdentityMatrix<float> identity_smatrix;
-typedef IdentityMatrix<double> identity_dmatrix;
-typedef IdentityMatrix<CS> identity_cmatrix;
-typedef IdentityMatrix<CD> identity_zmatrix;
-
-template<typename DataType>
-IdentityMatrix<DataType>::IdentityMatrix(size_t n) {
-  Matrix<DataType>::data_ptr_ = typename Matrix<DataType>::DataPtr(
-                                           new DataArray<DataType>(n*n));
-  Matrix<DataType>::num_col_ = n;
-  Matrix<DataType>::num_row_ = n;
-  Matrix<DataType>::raw_ptr_ = Matrix<DataType>::data_ptr_->data_ptr;
-
-  size_t endi = n*n;
-  DataType *p = Matrix<DataType>::raw_ptr();
-  for (size_t i = 0; i < endi; i++)
-    *(p++) = 0;
-
-  p = Matrix<DataType>::raw_ptr();
-  for (size_t i = 0; i < n; i++)
-    *(p+i*(n+1)) = 1.;
-}
-/////////////////////////////////////////////////////////////////////////////
 }
 #endif  // SRC_CORE_MATRIX_H_
