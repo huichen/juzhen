@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_TEST_H_  // NOLINT
-#define MLCPP_TEST_H_
+#ifndef TEST_TEST_H_
+#define TEST_TEST_H_
 #include <iostream>  // NOLINT stream is a much more convenient choice here
 #include <vector>
 #include <string>
@@ -226,4 +226,4 @@ std::string Serialize(std::string s) {
       os.append(s.begin()+i, s.begin()+i+1);
   return os;
 }
-#endif  // MLCPP_TEST_H_  // NOLINT
+#endif  // TEST_TEST_H_

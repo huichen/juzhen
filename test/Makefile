@@ -17,7 +17,7 @@ endif
 endif
 
 test: 
-	$(CC) mlcpp_test.cc -o unittest $(CFLAGS) -g
+	$(CC) test.cc -o unittest $(CFLAGS) -g
 	./unittest
 
 clean:
