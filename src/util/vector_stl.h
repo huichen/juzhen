@@ -20,20 +20,49 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef SRC_UTIL_UTIL_H_
-#define SRC_UTIL_UTIL_H_
-#include <assert.h>
+#ifndef SRC_UTIL_VECTOR_STL_H_
+#define SRC_UTIL_VECTOR_STL_H_
+#include <math.h>
 
-#include <util/matrix_basic.h>
-#include <util/matrix_stl.h>
-#include <util/matrix_math.h>
-#include <util/matrix_statistics.h>
+#include <core/vector.h>
 
-#include <util/vector_basic.h>
-#include <util/vector_stl.h>
-#include <util/vector_math.h>
-#include <util/vector_statistics.h>
+#include <algorithm>
+#include <vector>
+#include <string>
 
 namespace mlcpp {
+
+template<typename T>
+std::ostream &operator<< (std::ostream &out, const Vector<T> &m) {
+  out << "{";
+  for (size_t i = 0; i < m.size(); i++) {
+    if (i != m.size()-1)
+      out << m(i) << ", ";
+    else
+      out << m(i);
+  }
+  out << "}";
+  return out;
 }
-#endif  // SRC_UTIL_UTIL_H_
+
+/**
+ * Return string form of a Matrix.
+ */
+template<typename T>
+std::string String(const Vector<T> &vector) {
+  std::ostringstream out;
+  out << vector;
+  return out.str();
+}
+
+/**
+ * Build a STL vector from a MLCPP Vector.
+ */
+template<typename T>
+std::vector<T> STLVector(const Vector<T> &vector) {
+  std::vector<T> stl_vector(vector.raw_ptr(),
+                          vector.raw_ptr()+vector.size());
+  return stl_vector;
+}
+}
+#endif  // SRC_UTIL_VECTOR_STL_H_

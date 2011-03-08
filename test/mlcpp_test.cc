@@ -571,12 +571,10 @@ BEGIN_TEST(VectorTests, "VectorTests")
   V(v5, "{1, 2, 3, 4}")
 
   VDE(Max(v5), 4)
-  VDE(v5.Max(), 4)
 
-  VDE(norm(v5)*norm(v5), 30.0)
+  VDE(Norm(v5)*Norm(v5), 30.0)
 
   VDE(Sum(v5), 10)
-  VDE(v5.Sum(), 10)
 
   VDE(v1*v1, 30)
 
@@ -630,9 +628,9 @@ BEGIN_TEST(VectorTests, "VectorTests")
   v7 = v6.Adjoint();
   V(v7, "{(1, -2), (-3, 1), (2, -0.1), (-2, -0.1), (6, -7), (3, -0.1)}")
 
-  VSE(norm(v6)*norm(v6), 117.03)
+  VSE(Norm(v6)*Norm(v6), 117.03)
 
-  V(svector(v1.STL()), "{1, 2, 3, 8}")
+  V(svector(STLVector(v1)), "{1, 2, 3, 8}")
 
   svector v8 =  m3;
   V(v8.Swap(1, 2), "{1, 3, 2, 4}")

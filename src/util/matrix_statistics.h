@@ -20,20 +20,65 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef SRC_UTIL_UTIL_H_
-#define SRC_UTIL_UTIL_H_
-#include <assert.h>
-
-#include <util/matrix_basic.h>
-#include <util/matrix_stl.h>
-#include <util/matrix_math.h>
-#include <util/matrix_statistics.h>
-
-#include <util/vector_basic.h>
-#include <util/vector_stl.h>
-#include <util/vector_math.h>
-#include <util/vector_statistics.h>
+#ifndef SRC_UTIL_MATRIX_STATISTICS_H_
+#define SRC_UTIL_MATRIX_STATISTICS_H_
+#include <core/matrix.h>
 
 namespace mlcpp {
+/**
+ * Return the maximum element of a matrix 
+ */
+template<typename T>
+T Max(const Matrix<T> &matrix) {
+  size_t endi = matrix.num_col() * matrix.num_row();
+  if (endi == 0)
+    return 0;
+  T max_value = matrix(0);
+  for (size_t i = 1; i < endi; i++)
+    if (max_value < matrix(i)) max_value = matrix(i);
+  return max_value;
 }
-#endif  // SRC_UTIL_UTIL_H_
+
+/**
+ * Return the minimum element of a matrix 
+ */
+template<typename T>
+T Min(const Matrix<T> &matrix) {
+  size_t endi = matrix.num_col() * matrix.num_row();
+  if (endi == 0)
+    return 0;
+  T min_value = matrix(0);
+  for (size_t i = 1; i < endi; i++)
+    if (min_value > matrix(i)) min_value = matrix(i);
+  return min_value;
+}
+
+/**
+ * Return the sum of all elements in a matrix 
+ */
+template<typename T>
+T Sum(const Matrix<T> &matrix) {
+  size_t endi = matrix.num_col() * matrix.num_row();
+  if (endi == 0)
+    return 0;
+  T sum = 0;
+  for (size_t i = 1; i < endi; i++)
+    sum += matrix(i);  
+  return sum;
+}
+
+/**
+ * Return the average of all elements in a matrix 
+ */
+template<typename T>
+T Average(const Matrix<T> &matrix) {
+  size_t endi = matrix.num_col() * matrix.num_row();
+  if (endi == 0)
+    return 0;
+  T sum = 0;
+  for (size_t i = 1; i < endi; i++)
+    sum += matrix(i);  
+  return sum/endi;
+}
+}
+#endif  // SRC_UTIL_MATRIX_STATISTICS_H_

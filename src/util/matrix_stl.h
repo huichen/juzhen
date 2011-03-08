@@ -20,20 +20,34 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef SRC_UTIL_UTIL_H_
-#define SRC_UTIL_UTIL_H_
-#include <assert.h>
+#ifndef SRC_UTIL_MATRIX_STL_H_
+#define SRC_UTIL_MATRIX_STL_H_
+#include <core/matrix.h>
 
-#include <util/matrix_basic.h>
-#include <util/matrix_stl.h>
-#include <util/matrix_math.h>
-#include <util/matrix_statistics.h>
-
-#include <util/vector_basic.h>
-#include <util/vector_stl.h>
-#include <util/vector_math.h>
-#include <util/vector_statistics.h>
+#include <sstream>
+#include <string>
 
 namespace mlcpp {
+/* stream operator overload */
+template<typename DataType>
+std::ostream &operator<< (std::ostream &out,
+                          const Matrix<DataType> &m) {
+  for (size_t i = 0; i < m.num_row(); i++) {
+    for (size_t j = 0; j < m.num_col(); j++)
+      out << m(i, j) << " ";
+    if (i != m.num_row() - 1) out << std::endl;
+  }
+  return out;
 }
-#endif  // SRC_UTIL_UTIL_H_
+
+/**
+ * Get print form of a Matrix.
+ */
+template<typename DataType>
+std::string String(const Matrix<DataType> &m) {
+  std::ostringstream out;
+  out << m;
+  return out.str();
+}
+}
+#endif  // SRC_UTIL_MATRIX_STL_H_

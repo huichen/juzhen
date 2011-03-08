@@ -178,16 +178,6 @@ class Vector : public Matrix<DataType> {
   Vector<DataType> Conjugate() const;
 
   /**
-   * Get Sum of a Vector's all elements.
-   */
-  DataType Sum() const;
-
-  /**
-   * Get the maximum element of a Vector.
-   */
-  DataType Max() const;
-
-  /**
    * Swap two elements.
    */
   Vector<DataType> &Swap(size_t i1, size_t i2);
@@ -206,11 +196,6 @@ class Vector : public Matrix<DataType> {
    * Sort a Vector. This will give you error for a complex Vector.
    */
   Vector<DataType> &Sort();
-
-  /**
-   * Get a STL Vector from the Vector.
-   */
-  std::vector<DataType> STL();
 };
 
 typedef Vector<float> svector;
@@ -347,16 +332,6 @@ Vector<DataType> Vector<DataType>::Transpose() const {
   return *this;
 }
 
-
-template<typename DataType>
-DataType Vector<DataType>::Sum() const {
-  DataType r = 0;
-  DataType *p = Matrix<DataType>::raw_ptr();
-  for (size_t i = 0; i < size(); i++)
-    r += *(p++);
-  return r;
-}
-
 template<typename DataType>
 Vector<DataType> Vector<DataType>::Adjoint() const {
   return Matrix<DataType>::Conjugate();
@@ -365,18 +340,6 @@ Vector<DataType> Vector<DataType>::Adjoint() const {
 template<typename DataType>
 Vector<DataType> Vector<DataType>::Conjugate() const {
   return Matrix<DataType>::Conjugate();
-}
-
-template<typename DataType>
-DataType Vector<DataType>::Max() const {
-  assert(size()>0);
-  DataType r = (*this)(0);
-  DataType *p = Matrix<DataType>::raw_ptr();
-  for (size_t i = 0; i < size(); i++) {
-    if (r < *p) r = *p;
-    p++;
-  }
-  return r;
 }
 
 template<typename DataType>
@@ -411,13 +374,6 @@ Vector<DataType> &Vector<DataType>::Sort() {
   std::sort(v.begin(), v.end());
   for (size_t i = 0; i < v.size(); i++) (*this)[i] = v[i];
   return (*this);
-}
-
-template<typename DataType>
-std::vector<DataType> Vector<DataType>::STL() {
-  std::vector<DataType> v(Matrix<DataType>::raw_ptr(),
-                          Matrix<DataType>::raw_ptr()+size());
-  return v;
 }
 /////////////////////////////////////////////////////////////////////////////
 }

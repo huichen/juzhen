@@ -38,7 +38,7 @@
   return_value = false;\
   std::cout << " FAILED!" << std::endl;\
   std::cout << "  Expect " << "[" << Serialize(rhs) << "]" << std::endl; \
-  std::cout << "  Got    " << "[" << Serialize(OutputToString(lhs)) << "]" \
+  std::cout << "  Got    " << "[" << Serialize(String(lhs)) << "]" \
   << std::endl; \
   } else { \
   UnitTest::num_success_++; \
@@ -54,9 +54,9 @@ if (lhs != rhs) { \
 UnitTest::num_fail_++; \
 return_value = false;\
 std::cout << " FAILED!" << std::endl;\
-  std::cout << "  Expect " << "[" << Serialize(OutputToString(lhs)) << "]" \
+  std::cout << "  Expect " << "[" << Serialize(String(lhs)) << "]" \
             << std::endl; \
-  std::cout << "       = ["<< Serialize(OutputToString(rhs)) << "]"\
+  std::cout << "       = ["<< Serialize(String(rhs)) << "]"\
             << std::endl; \
 } else { \
 UnitTest::num_success_++; \

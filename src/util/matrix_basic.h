@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef SRC_UTIL_MATRIX_UTIL_H_
-#define SRC_UTIL_MATRIX_UTIL_H_
+#ifndef SRC_UTIL_MATRIX_BASIC_H_
+#define SRC_UTIL_MATRIX_BASIC_H_
 #include <core/matrix.h>
 
 #include <sstream>
@@ -145,7 +145,6 @@ Matrix<double> Imag(const Matrix<CD> &ma) {
   return m;
 }
 
-
 /**
  * Return transpose of a Matrix
  */
@@ -169,45 +168,5 @@ template<typename DataType>
 Matrix<DataType> Conjugate(const Matrix<DataType> &m) {
   return m.Conjugate();
 }
-
-/**
- * Multiply a double number and a Matrix
- */
-template<typename DataType>
-inline Matrix<DataType> operator*(double lhs,
-                                 const Matrix<DataType> &ma) {
-  return ma*lhs;
 }
-
-/**
- * Multiply a complex number and a Matrix
- */
-template<typename DataType>
-inline Matrix<DataType> operator*(const CD &lhs,
-                                 const Matrix<DataType> &ma) {
-  return ma*lhs;
-}
-
-/* stream operator overload */
-template<typename DataType>
-std::ostream &operator<< (std::ostream &out,
-                          const Matrix<DataType> &m) {
-  for (size_t i = 0; i < m.num_row(); i++) {
-    for (size_t j = 0; j < m.num_col(); j++)
-      out << m(i, j) << " ";
-    if (i != m.num_row() - 1) out << std::endl;
-  }
-  return out;
-}
-
-/**
- * Get print form of a Matrix.
- */
-template<typename DataType>
-std::string OutputToString(const Matrix<DataType> &m) {
-  std::ostringstream out;
-  out << m;
-  return out.str();
-}
-}
-#endif  // SRC_UTIL_MATRIX_UTIL_H_
+#endif  // SRC_UTIL_MATRIX_BASIC_H_
