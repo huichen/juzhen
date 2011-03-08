@@ -96,12 +96,12 @@ int geev<float, CS>(
   float *wi = reinterpret_cast<float *>(malloc(sizeof(*a)*n));
   assert(wr);
   assert(wi);
-  int res = LAPACKE_sgeev(LAPACK_COL_MAJOR, nl, nr, n,
+  int r = LAPACKE_sgeev(LAPACK_COL_MAJOR, nl, nr, n,
                          a, lda, wr, wi, vl, ldvl, vr, ldvr);
   for (size_t i = 0; i < n; i++) {w[i].real = wr[i]; w[i].imag = wi[i];}
   free(wr);
   free(wi);
-  return res;
+  return r;
 }
 
 template<>
@@ -113,12 +113,12 @@ int geev<double, CD>(
   double *wi = reinterpret_cast<double *>(malloc(sizeof(*a)*n));
   assert(wr);
   assert(wi);
-  int res = LAPACKE_dgeev(LAPACK_COL_MAJOR, nl, nr, n,
+  int r = LAPACKE_dgeev(LAPACK_COL_MAJOR, nl, nr, n,
                          a, lda, wr, wi, vl, ldvl, vr, ldvr);
   for (size_t i = 0; i < n; i++) {w[i].real = wr[i]; w[i].imag = wi[i];}
   free(wr);
   free(wi);
-  return res;
+  return r;
 }
 
 template<>
@@ -162,8 +162,9 @@ int gesv<float>(
     const MKL_INT n, const MKL_INT nrhs,
     float *a, const MKL_INT lda, float *b, const MKL_INT ldb) {
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
-  LAPACKE_sgesv(LAPACK_COL_MAJOR, n, nrhs, a, lda, ipiv, b, ldb);
+  int r = LAPACKE_sgesv(LAPACK_COL_MAJOR, n, nrhs, a, lda, ipiv, b, ldb);
   free(ipiv);
+  return r;
 }
 
 template<>
@@ -171,8 +172,9 @@ int gesv<double>(
     const MKL_INT n, const MKL_INT nrhs,
     double *a, const MKL_INT lda, double *b, const MKL_INT ldb) {
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
-  LAPACKE_dgesv(LAPACK_COL_MAJOR, n, nrhs, a, lda, ipiv, b, ldb);
+  int r = LAPACKE_dgesv(LAPACK_COL_MAJOR, n, nrhs, a, lda, ipiv, b, ldb);
   free(ipiv);
+  return r;
 }
 
 template<>
@@ -180,10 +182,11 @@ int gesv<CS>(
     const MKL_INT n, const MKL_INT nrhs,
     CS *a, const MKL_INT lda, CS *b, const MKL_INT ldb) {
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
-  LAPACKE_cgesv(LAPACK_COL_MAJOR, n, nrhs,
+  int r = LAPACKE_cgesv(LAPACK_COL_MAJOR, n, nrhs,
       reinterpret_cast<MKL_Complex8 *>(a), lda, ipiv,
       reinterpret_cast<MKL_Complex8 *>(b), ldb);
   free(ipiv);
+  return r;
 }
 
 template<>
@@ -191,10 +194,11 @@ int gesv<CD>(
     const MKL_INT n, const MKL_INT nrhs,
     CD *a, const MKL_INT lda, CD *b, const MKL_INT ldb) {
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
-  LAPACKE_zgesv(LAPACK_COL_MAJOR, n, nrhs,
+  int r = LAPACKE_zgesv(LAPACK_COL_MAJOR, n, nrhs,
       reinterpret_cast<MKL_Complex16 *>(a), lda, ipiv,
       reinterpret_cast<MKL_Complex16 *>(b), ldb);
   free(ipiv);
+  return r;
 }
 
 /*
@@ -211,12 +215,17 @@ int matrix_inverse(
     const MKL_INT m, const MKL_INT n, float *a, const MKL_INT lda) {
   MKL_INT info, lwork;
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
-  float *work = reinterpret_cast<float *>(malloc(sizeof(*a)*n));
   sgetrf(&m, &n, a, &lda, ipiv, &info);
+  if (info) {
+    free(ipiv);
+    return info;
+  }
   lwork = n;
+  float *work = reinterpret_cast<float *>(malloc(sizeof(*a)*n));
   sgetri(&n, a, &lda, ipiv, work, &lwork, &info);
   free(ipiv);
   free(work);
+  return info;
 }
 
 template<>
@@ -224,12 +233,17 @@ int matrix_inverse(
     const MKL_INT m, const MKL_INT n, double *a, const MKL_INT lda) {
   MKL_INT info, lwork;
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
-  double *work = reinterpret_cast<double *>(malloc(sizeof(*a)*n));
   dgetrf(&m, &n, a, &lda, ipiv, &info);
+  if (info) {
+    free(ipiv);
+    return info;
+  }
   lwork = n;
+  double *work = reinterpret_cast<double *>(malloc(sizeof(*a)*n));
   dgetri(&n, a, &lda, ipiv, work, &lwork, &info);
   free(ipiv);
   free(work);
+  return info;
 }
 
 template<>
@@ -237,13 +251,18 @@ int matrix_inverse(
     const MKL_INT m, const MKL_INT n, CS *a, const MKL_INT lda) {
   MKL_INT info, lwork;
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
-  CS *work = reinterpret_cast<CS *>(malloc(sizeof(*a)*n));
   cgetrf(&m, &n, reinterpret_cast<MKL_Complex8 *>(a), &lda, ipiv, &info);
+  if (info) {
+    free(ipiv);
+    return info;
+  }
   lwork = n;
+  CS *work = reinterpret_cast<CS *>(malloc(sizeof(*a)*n));
   cgetri(&n, reinterpret_cast<MKL_Complex8 *>(a), &lda,
          ipiv, reinterpret_cast<MKL_Complex8 *>(work), &lwork, &info);
   free(ipiv);
   free(work);
+  return info;
 }
 
 template<>
@@ -251,13 +270,18 @@ int matrix_inverse(
     const MKL_INT m, const MKL_INT n, CD *a, const MKL_INT lda) {
   MKL_INT info, lwork;
   MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(n)*n));
-  CD *work = reinterpret_cast<CD *>(malloc(sizeof(*a)*n));
   zgetrf(&m, &n, reinterpret_cast<MKL_Complex16 *>(a), &lda, ipiv, &info);
+  if (info) {
+    free(ipiv);
+    return info;
+  }
   lwork = n;
+  CD *work = reinterpret_cast<CD *>(malloc(sizeof(*a)*n));
   zgetri(&n, reinterpret_cast<MKL_Complex16 *>(a), &lda,
          ipiv, reinterpret_cast<MKL_Complex16 *>(work), &lwork, &info);
   free(ipiv);
   free(work);
+  return info;
 }
 }
 #endif  // SRC_ADAPTOR_MKL_H_

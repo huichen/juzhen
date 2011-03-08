@@ -30,6 +30,8 @@ namespace mlcpp {
 /**
  * Inverse a matrix
  * X = A^(-1)
+ *
+ * Return empty matrix if it fails.
  */
 template<typename DataType>
 Matrix<DataType> Inverse(
@@ -39,8 +41,9 @@ Matrix<DataType> Inverse(
   Matrix<DataType> matrix_x;
   matrix_x = matrix_a;
 
-  matrix_inverse<DataType>(matrix_x.num_col(), matrix_x.num_row(),
-                 matrix_x.raw_ptr(), matrix_x.num_col());
+  if (matrix_inverse<DataType>(matrix_x.num_col(), matrix_x.num_row(),
+                 matrix_x.raw_ptr(), matrix_x.num_col()))
+    return Matrix<DataType>();
   matrix_x.set_temporary(true);
   return matrix_x;
 }

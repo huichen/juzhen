@@ -29,6 +29,8 @@ namespace mlcpp {
 
 /**
  * Solve matrix equation A * X = B
+ * 
+ * Return empty matrix if it fails.
  */
 template<typename DataType>
 Matrix<DataType> LinearSolver(
@@ -44,9 +46,10 @@ Matrix<DataType> LinearSolver(
   Matrix<DataType> matrix_x;
   matrix_x = matrix_b;
 
-  gesv<DataType>(mata.num_col(), mata.num_row(),
+  if (gesv<DataType>(mata.num_col(), mata.num_row(),
                  mata.raw_ptr(), mata.num_col(),
-                 matrix_x.raw_ptr(), matrix_x.num_col());
+                 matrix_x.raw_ptr(), matrix_x.num_col()))
+    return Matrix<DataType>();
   matrix_x.set_temporary(true);
   return matrix_x;
 }

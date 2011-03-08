@@ -34,6 +34,8 @@ namespace mlcpp {
  *
  * If you are linking to basic blas library only, this function is not
  * implemented yet.
+ *
+ * Set e to be empty matrix if it fails.
  */
 template<typename DataType, typename T>
 void EigenSolver(
@@ -51,9 +53,10 @@ void EigenSolver(
   char nl = &vl ? 'V' : 'N';
   char nr = &vr ? 'V' : 'N';
 
-  geev<DataType>(nl, nr, mat.num_col(), m.raw_ptr(), mat.num_col(),
+  if (geev<DataType>(nl, nr, mat.num_col(), m.raw_ptr(), mat.num_col(),
                  e.raw_ptr(), vl.raw_ptr(), mat.num_col(),
-                 vr.raw_ptr(), mat.num_col());
+                 vr.raw_ptr(), mat.num_col()))
+    e.Resize(0, 0);
 }
 
 /**
@@ -62,6 +65,8 @@ void EigenSolver(
  *
  * If you are linking to basic blas library only, this function is not
  * implemented yet.
+ *
+ * Set e to be empty matrix if it fails.
  */
 template<typename DataType, typename T>
 void RightEigenSolver(
@@ -77,9 +82,10 @@ void RightEigenSolver(
   char nl = 'N';
   char nr = 'V';
 
-  geev<DataType>(nl, nr, mat.num_col(), m.raw_ptr(), mat.num_col(),
+  if (geev<DataType>(nl, nr, mat.num_col(), m.raw_ptr(), mat.num_col(),
                  e.raw_ptr(), NULL, mat.num_col(),
-                 vr.raw_ptr(), mat.num_col());
+                 vr.raw_ptr(), mat.num_col()))
+    e.Resize(0, 0);
 }
 
 /**
@@ -88,6 +94,8 @@ void RightEigenSolver(
  *
  * If you are linking to basic blas library only, this function is not
  * implemented yet.
+ *
+ * Set e to be empty matrix if it fails.
  */
 template<typename DataType, typename T>
 void LeftEigenSolver(
@@ -103,9 +111,10 @@ void LeftEigenSolver(
   char nl = 'V';
   char nr = 'N';
 
-  geev<DataType>(nl, nr, mat.num_col(), m.raw_ptr(), mat.num_col(),
+  if (geev<DataType>(nl, nr, mat.num_col(), m.raw_ptr(), mat.num_col(),
                  e.raw_ptr(), vl.raw_ptr(), mat.num_col(),
-                 NULL, mat.num_col());
+                 NULL, mat.num_col()))
+    e.Resize(0, 0);
 }
 }
 #endif  // SRC_SOLVER_MATRIX_EIGEN_H_
