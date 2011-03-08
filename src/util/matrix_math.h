@@ -36,7 +36,7 @@ T Trace(const Matrix<T> &matrix) {
     return 0;
   T sum = 0;
   for (size_t i = 1; i < endi; i++)
-    sum += matrix(i, i);  
+    sum += matrix(i, i);
   return sum;
 }
 

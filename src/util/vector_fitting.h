@@ -20,21 +20,20 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef SRC_UTIL_UTIL_H_
-#define SRC_UTIL_UTIL_H_
-#include <assert.h>
+#ifndef SRC_UTIL_VECTOR_FITTING_H_
+#define SRC_UTIL_VECTOR_FITTING_H_
+#include <math.h>
 
-#include <util/matrix_basic.h>
-#include <util/matrix_stl.h>
-#include <util/matrix_math.h>
-#include <util/matrix_statistics.h>
-
-#include <util/vector_basic.h>
-#include <util/vector_stl.h>
-#include <util/vector_math.h>
-#include <util/vector_statistics.h>
-#include <util/vector_fitting.h>
+#include <core/vector.h>
 
 namespace mlcpp {
+/**
+ * Least square method.
+ * Find the factor k to make |k * a + b| minimum.
+ */
+template<typename T>
+T LeastSquaresMethod(const Vector<T> &a, const Vector<T> &b) {
+  return -(a * b) / (a * a);
 }
-#endif  // SRC_UTIL_UTIL_H_
+}
+#endif  // SRC_UTIL_VECTOR_FITTING_H_
