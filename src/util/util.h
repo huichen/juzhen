@@ -20,15 +20,13 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_H_  // NOLINT
-#define MLCPP_H_
+#ifndef SRC_UTIL_UTIL_H_
+#define SRC_UTIL_UTIL_H_
 #include <assert.h>
 
-#include <core/core.h>
-#include <adaptor/adaptor.h>
-#include <solver/solver.h>
-#include <util/util.h>
+#include <util/matrix_util.h>
+#include <util/vector_util.h>
 
 namespace mlcpp {
 }
-#endif  // MLCPP_H_  // NOLINT
+#endif  // SRC_UTIL_UTIL_H_
