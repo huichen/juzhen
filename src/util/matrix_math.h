@@ -61,10 +61,10 @@ inline Matrix<DataType> operator*(
 }
 
 /**
- * Direct (Kronecker) product of two matrices.
+ * Schur (Hadamard) product of two matrices.
  */
 template<typename T>
-Matrix<T> DirectProduct(
+Matrix<T> SchurProduct(
     const Matrix<T> &matrix1,
     const Matrix<T> &matrix2) {
   assert(matrix1.num_col() == matrix2.num_col());
