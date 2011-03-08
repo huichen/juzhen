@@ -25,7 +25,7 @@ mlcpp_wrap.cc:
 	swig -c++ -python  -o mlcpp_wrap.cc mlcpp.i
 
 clean:
-	rm *.o mlcpp*.pyc *_wrap* -rf
+	rm *.o mlcpp*.pyc -rf
 
 distclean: clean
 	rm *.so mlcpp.py *.txt *.png -rf
