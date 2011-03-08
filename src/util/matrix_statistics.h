@@ -62,7 +62,7 @@ T Sum(const Matrix<T> &matrix) {
   if (endi == 0)
     return 0;
   T sum = 0;
-  for (size_t i = 1; i < endi; i++)
+  for (size_t i = 0; i < endi; i++)
     sum += matrix(i);
   return sum;
 }
@@ -76,7 +76,7 @@ T Average(const Matrix<T> &matrix) {
   if (endi == 0)
     return 0;
   T sum = 0;
-  for (size_t i = 1; i < endi; i++)
+  for (size_t i = 0; i < endi; i++)
     sum += matrix(i);
   return sum/endi;
 }

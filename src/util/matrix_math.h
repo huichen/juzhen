@@ -35,7 +35,7 @@ T Trace(const Matrix<T> &matrix) {
   if (endi == 0)
     return 0;
   T sum = 0;
-  for (size_t i = 1; i < endi; i++)
+  for (size_t i = 0; i < endi; i++)
     sum += matrix(i, i);
   return sum;
 }
@@ -79,7 +79,32 @@ Matrix<T> SchurProduct(
 }
 
 /**
- * Inner product of two matrices.
+ * Kronecker product of two matrices.
+ */
+template<typename T>
+Matrix<T> KroneckerProduct(
+    const Matrix<T> &matrix1,
+    const Matrix<T> &matrix2) {
+  Matrix<T> matrix(matrix1.num_row() * matrix2.num_row(),
+                   matrix1.num_col() * matrix2.num_col());
+
+  size_t endr1, endr2, endc1, endc2;
+  endr1 = matrix1.num_row();
+  endr2 = matrix2.num_row();
+  endc1 = matrix1.num_col();
+  endc2 = matrix2.num_col();
+  for (size_t r1 = 0; r1 < endr1; r1++)
+    for (size_t r2 = 0; r2 < endr2; r2++)
+      for (size_t c1 = 0; c1 < endc1; c1++)
+        for (size_t c2 = 0; c2 < endc2; c2++)
+          matrix(r1 * endr2 + r2, c1 * endc2 + c2) =
+              matrix1(r1, c1) * matrix2(r2, c2);
+  matrix.set_temporary(true);
+  return matrix;
+}
+
+/**
+ * Inner (Frobenius) product of two matrices.
  * 
  * Inner product of A, B = trace(B* * A)
  */
@@ -89,17 +114,17 @@ T InnerProduct(
     const Matrix<T> &matrix2) {
   assert(matrix1.num_col() == matrix2.num_col());
   assert(matrix1.num_row() == matrix2.num_row());
-  return trace(Adjoint(matrix2)*matrix1);
+  return Trace(Adjoint(matrix2)*matrix1);
 }
 
 template<typename T>
 T InnerProduct(const Matrix<T> &matrix) {
-  return InnerProduce(matrix, matrix);
+  return InnerProduct(matrix, matrix);
 }
 
 template<typename T>
 T InnerProduct(const Matrix<Complex<T> > &matrix) {
-  return InnerProduce(matrix, matrix).real;
+  return InnerProduct(matrix, matrix).real;
 }
 }
 #endif  // SRC_UTIL_MATRIX_MATH_H_

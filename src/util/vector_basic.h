@@ -110,5 +110,18 @@ Vector<double> Real(const Vector<CD> &v) {
 Vector<double> Imag(const Vector<CD> &v) {
   return Imag((Matrix<CD>)v);
 }
+
+/**
+ * Join two vectors.
+ */
+template<typename T>
+Vector<T> Join(const Vector<T> &vector1, const Vector<T> &vector2) {
+  Vector<T> vector(vector1.size() + vector2.size());
+  memcpy(vector.raw_ptr(), vector1.raw_ptr(), vector1.size() * sizeof(T));
+  memcpy(vector.raw_ptr() + vector1.size(),
+         vector2.raw_ptr(), vector2.size() * sizeof(T)); 
+  vector.set_temporary(true);
+  return vector; 
+}
 }
 #endif  // SRC_UTIL_VECTOR_BASIC_H_
