@@ -34,18 +34,18 @@ namespace mlcpp {
 /**
  * Multiply a real number and a Vector.
  */
-template<typename DataType>
-Vector<DataType> operator*(double lhs, const Vector<DataType> &ma) {
+template<typename T>
+Vector<T> operator*(double lhs, const Vector<T> &ma) {
   if (ma.temporary_) {
-    DataType *p = ma.raw_ptr();
+    T *p = ma.raw_ptr();
     size_t maxi = ma.size();
     for (size_t i = 0; i < maxi; i++)
       *(p++) *= lhs;
     return ma;
   } else {
-    Vector<DataType> m(ma.size());
-    DataType *p1 = ma.raw_ptr();
-    DataType *p2 = m.raw_ptr();
+    Vector<T> m(ma.size());
+    T *p1 = ma.raw_ptr();
+    T *p2 = m.raw_ptr();
     size_t maxi = ma.size();
     for (size_t i = 0; i < maxi; i++)
       *(p2++) = *(p1++)*lhs;
@@ -56,18 +56,18 @@ Vector<DataType> operator*(double lhs, const Vector<DataType> &ma) {
 /**
  * Multiply a complex number and a Vector.
  */
-template<typename DataType>
-Vector<DataType> operator*(const CD &lhs, const Vector<DataType> &ma) {
+template<typename T>
+Vector<T> operator*(const CD &lhs, const Vector<T> &ma) {
   if (ma.temporary_) {
-    DataType *p = ma.raw_ptr();
+    T *p = ma.raw_ptr();
     size_t maxi = ma.size();
     for (size_t i = 0; i < maxi; i++)
       *(p++) *= lhs;
     return ma;
   } else {
-    Vector<DataType> m(ma.size());
-    DataType *p1 = ma.raw_ptr();
-    DataType *p2 = m.raw_ptr();
+    Vector<T> m(ma.size());
+    T *p1 = ma.raw_ptr();
+    T *p2 = m.raw_ptr();
     size_t maxi = ma.size();
     for (size_t i = 0; i < maxi; i++)
       *(p2++) = *(p1++)*lhs;
@@ -78,46 +78,76 @@ Vector<DataType> operator*(const CD &lhs, const Vector<DataType> &ma) {
 /**
  * Multiply a Matrix and a Vector.
  */
-template<typename DataType>
-Vector<DataType> operator*(
-    const Matrix<DataType> &ma,
-    const Vector<DataType> &v) {
-  return ma * ((Matrix<DataType>&)v);
+template<typename T>
+Vector<T> operator*(
+    const Matrix<T> &ma,
+    const Vector<T> &v) {
+  return ma * ((Matrix<T>&)v);
 }
 
 /**
  * Multiply a Matrix and a Vector.
  */
-template<typename DataType>
-Vector<DataType> operator*(
-    const Vector<DataType> &v,
-    const Matrix<DataType> &ma) {
-  return ma * ((Matrix<DataType>&)v);
+template<typename T>
+Vector<T> operator*(
+    const Vector<T> &v,
+    const Matrix<T> &ma) {
+  return ma * ((Matrix<T>&)v);
 }
 
 /**
  * Multiply a Matrix and a Vector.
  */
-template<typename DataType>
-Vector<DataType> &operator*=(
-    Matrix<DataType> &ma,
-    const Vector<DataType> &v) {
-  ma *= (Matrix<DataType>&)v;
+template<typename T>
+Vector<T> &operator*=(
+    Matrix<T> &ma,
+    const Vector<T> &v) {
+  ma *= (Matrix<T>&)v;
   return ma;
 }
 
 /**
- * Vector dot product.
+ * Vector dot (inner) product.
  */
-template<typename DataType>
-DataType operator*(const Vector<DataType> &v1, const Vector<DataType> &v2) {
+template<typename T>
+T operator*(const Vector<T> &v1, const Vector<T> &v2) {
   assert(v1.size() == v2.size());
-  DataType res = 0;
+  T res = 0;
   size_t s = v1.size();
-  DataType *p1 = v1.raw_ptr();
-  DataType *p2 = v2.raw_ptr();
-  for (size_t i = 0; i < s; i++) res+=*(p1++)*(*(p2++));
+  T *p1 = v1.raw_ptr();
+  T *p2 = v2.raw_ptr();
+  for (size_t i = 0; i < s; i++) res+=*(p1++)*Conjugate(*(p2++));
   return res;
+}
+
+/**
+ * Vector cross product.
+ */
+template<typename T>
+Matrix<T> OuterProduct(const Vector<T> &vector1, const Vector<T> &vector2) {
+  Matrix<T> matrix(vector1.size(), vector2.size());
+  size_t endi = vector1.size();
+  size_t endj = vector2.size();
+  for (size_t i = 0; i < endi; i++)
+    for (size_t j = 0; j < endj; j++)
+      matrix(i, j) = vector1(i) * vector2(j);
+  matrix.set_temporary(true);
+  return matrix;
+}
+
+/**
+ * Vector cross product.
+ */
+template<typename T>
+Vector<T> CrossProduct(const Vector<T> &vector1, const Vector<T> &vector2) {
+  assert(vector1.size() == 3);
+  assert(vector2.size() == 3);
+  Vector<T> vector(3);
+  vector(0) = vector1(1) * vector2(2) - vector1(2) * vector2(1);
+  vector(1) = vector1(2) * vector2(0) - vector1(0) * vector2(2);
+  vector(2) = vector1(0) * vector2(1) - vector1(1) * vector2(0);
+  vector.set_temporary(true);
+  return vector;
 }
 }
 #endif  // SRC_UTIL_VECTOR_MATH_H_

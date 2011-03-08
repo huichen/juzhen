@@ -20,65 +20,42 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef SRC_UTIL_MATRIX_STATISTICS_H_
-#define SRC_UTIL_MATRIX_STATISTICS_H_
+#ifndef SRC_UTIL_VECTOR_MAP_REDUCE_H_
+#define SRC_UTIL_VECTOR_MAP_REDUCE_H_
+#include <math.h>
+
 #include <core/matrix.h>
+#include <core/vector.h>
+
+#include <algorithm>
+#include <vector>
+#include <string>
 
 namespace mlcpp {
 /**
- * Return the maximum element of a matrix 
+ * Map a function func to all elements in a matrix.
  */
 template<typename T>
-T Max(const Matrix<T> &matrix) {
-  size_t endi = matrix.num_col() * matrix.num_row();
-  if (endi == 0)
-    return 0;
-  T max_value = matrix(0);
-  for (size_t i = 1; i < endi; i++)
-    if (max_value < matrix(i)) max_value = matrix(i);
-  return max_value;
-}
-
-/**
- * Return the minimum element of a matrix 
- */
-template<typename T>
-T Min(const Matrix<T> &matrix) {
-  size_t endi = matrix.num_col() * matrix.num_row();
-  if (endi == 0)
-    return 0;
-  T min_value = matrix(0);
-  for (size_t i = 1; i < endi; i++)
-    if (min_value > matrix(i)) min_value = matrix(i);
-  return min_value;
-}
-
-/**
- * Return the sum of all elements in a matrix 
- */
-template<typename T>
-T Sum(const Matrix<T> &matrix) {
-  size_t endi = matrix.num_col() * matrix.num_row();
-  if (endi == 0)
-    return 0;
-  T sum = 0;
+Matrix<T> Map(const Matrix<T> &m, T (*func)(T)) {
+  Matrix<T> matrix(m);
+  size_t endi = matrix.num_row() * matrix.num_col();
   for (size_t i = 0; i < endi; i++)
-    sum += matrix(i);
-  return sum;
+    matrix(i) = func(matrix(i)); 
+  matrix.set_temporary(true);
+  return matrix;
 }
 
 /**
- * Return the average of all elements in a matrix 
+ * Map a function func to all elements in a vector.
  */
 template<typename T>
-T Mean(const Matrix<T> &matrix) {
-  size_t endi = matrix.num_col() * matrix.num_row();
-  if (endi == 0)
-    return 0;
-  T sum = 0;
+Vector<T> Map(const Vector<T> &v, T (*func)(T)) {
+  Vector<T> vector(v);
+  size_t endi = vector.size();
   for (size_t i = 0; i < endi; i++)
-    sum += matrix(i);
-  return sum/endi;
+    vector(i) = func(vector(i)); 
+  vector.set_temporary(true);
+  return vector;
 }
 }
-#endif  // SRC_UTIL_MATRIX_STATISTICS_H_
+#endif  // SRC_UTIL_VECTOR_MAP_REDUCE_H_

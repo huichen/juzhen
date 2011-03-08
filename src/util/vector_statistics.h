@@ -47,7 +47,7 @@ T Sum(const Vector<T> &vector) {
  * Return the average of a Vector's all elements.
  */
 template<typename T>
-T Average(const Vector<T> &vector) {
+T Mean(const Vector<T> &vector) {
   T sum = 0;
   size_t endi = vector.size();
   if (endi == 0) return 0;
@@ -134,5 +134,47 @@ Vector<T> Sort(const Vector<T> &v) {
   for (size_t i = 0; i < v1.size(); i++) v2[i] = v1[i];
   return v2;
 }
+
+/**
+ * Return covariance of two vectors.
+ */
+template<typename T>
+T Cov(const Vector<T> &vector1, const Vector<T> &vector2) {
+  assert(vector1.size() == vector2.size());
+  size_t endi = vector1.size();
+  if (endi == 0)
+    return 0;
+  T mean1 = Mean(vector1);
+  T mean2 = Mean(vector2);
+  T covar = 0;
+  for (size_t i = 0; i < endi; i++)
+    covar += (vector1(i) - mean2) * (vector2(i) - mean2);
+  return covar/endi;
+}
+
+/**
+ * Return variance of a vector.
+ */
+template<typename T>
+T Var(const Vector<T> &vector) {
+  return Cov(vector, vector);
+}
+
+/**
+ * Return standard deviation of a vector.
+ */
+double StdDev(const Vector<double> &vector) {
+  return sqrt(Var(vector));
+}
+
+/**
+ * Return correlation coefficient of two vectors.
+ */
+template<typename T>
+T CorrCoeff(const Vector<T> &vector1, const Vector<T> &vector2) {
+  return Cov(vector1, vector2) / (StdDev(vector1) * StdDev(vector2));
+}
+
+
 }
 #endif  // SRC_UTIL_VECTOR_STATISTICS_H_

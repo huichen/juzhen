@@ -35,6 +35,10 @@
 #include <util/vector_statistics.h>
 #include <util/vector_fitting.h>
 
+#include <util/map_reduce.h>
+#include <util/matrix_map_math.h>
+#include <util/vector_map_math.h>
+
 namespace mlcpp {
 }
 #endif  // SRC_UTIL_UTIL_H_
