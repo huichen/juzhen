@@ -54,7 +54,7 @@ class Matrix {
   %extend {
     char *__str__() {
       static char temp[1024];
-      snprintf(temp, 1024, "%s", OutputToString(*$self).c_str());
+      snprintf(temp, 1024, "%s", String(*$self).c_str());
       return temp;
     }
 
@@ -175,7 +175,7 @@ class CMatrix {
   %extend {
     char *__str__() {
       static char temp[1024];
-      snprintf(temp, 1024, "%s", OutputToString(*$self).c_str());
+      snprintf(temp, 1024, "%s", String(*$self).c_str());
       return temp;
     }
 

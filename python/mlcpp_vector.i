@@ -1,8 +1,6 @@
 %rename(conj) Vector::Conjugate;
 %rename(adj) Vector::Adjoint;
 %rename(trans) Vector::Transpose;
-%rename(sum) Vector::Sum;
-%rename(max) Vector::Max;
 %rename(sort) Vector::Sort;
 %rename(resize) Vector::Resize;
 %rename(clear) Vector::Clear;
@@ -13,8 +11,6 @@
 %rename(conj) CVector::Conjugate;
 %rename(adj) CVector::Adjoint;
 %rename(trans) CVector::Transpose;
-%rename(sum) CVector::Sum;
-%rename(max) CVector::Max;
 %rename(sort) CVector::Sort;
 %rename(resize) CVector::Resize;
 %rename(clear) CVector::Clear;
@@ -43,8 +39,6 @@ class Vector {
   Vector Transpose();
   Vector Adjoint();
 
-  double Sum();
-  double Max();
   Vector &Sort(); 
 
   Vector Block(int, int);
@@ -55,7 +49,7 @@ class Vector {
   %extend {
     char *__str__() {
       static char temp[1024];
-      snprintf(temp, 1024, "%s", OutputToString(*$self).c_str());
+      snprintf(temp, 1024, "%s", String(*$self).c_str());
       return temp;
     }
 
@@ -106,7 +100,23 @@ class Vector {
     }
 
     double norm() {
-      return norm(*$self);
+      return Norm(*$self);
+    }
+
+    double sum() {
+      return Sum(*$self);
+    }
+
+    double max() {
+      return Max(*$self);
+    }
+
+    double min() {
+      return Min(*$self);
+    }
+
+    double average() {
+      return Average(*$self);
     }
 
     Vector real() {
@@ -140,8 +150,6 @@ class CVector {
   CVector Transpose();
   CVector Adjoint();
 
-  Complex Sum();
-
   CVector Block(int, int);
   CVector &Replace(int, const CVector &);
 
@@ -150,7 +158,7 @@ class CVector {
   %extend {
     char *__str__() {
       static char temp[1024];
-      snprintf(temp, 1024, "%s", OutputToString(*$self).c_str());
+      snprintf(temp, 1024, "%s", String(*$self).c_str());
       return temp;
     }
 
@@ -219,7 +227,15 @@ class CVector {
     }
 
     double norm() {
-      return norm(*$self);
+      return Norm(*$self);
+    }
+
+    Complex sum() {
+      return Sum(*$self);
+    }
+
+    Complex average() {
+      return Average(*$self);
     }
 
     Vector real() {

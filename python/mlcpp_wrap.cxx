@@ -3054,7 +3054,7 @@ SWIG_From_int  (int value)
 
 SWIGINTERN char *Matrix___str__(Matrix *self){
       static char temp[1024];
-      snprintf(temp, 1024, "%s", OutputToString(*self).c_str());
+      snprintf(temp, 1024, "%s", String(*self).c_str());
       return temp;
     }
 
@@ -3182,7 +3182,7 @@ SWIGINTERN void Matrix_right_eigen(Matrix *self,CMatrix &e,Matrix &vr){
     }
 SWIGINTERN char *CMatrix___str__(CMatrix *self){
       static char temp[1024];
-      snprintf(temp, 1024, "%s", OutputToString(*self).c_str());
+      snprintf(temp, 1024, "%s", String(*self).c_str());
       return temp;
     }
 SWIGINTERN Complex &CMatrix___getitem__(CMatrix *self,unsigned int i){
@@ -3268,7 +3268,7 @@ SWIGINTERN void CMatrix_right_eigen(CMatrix *self,CMatrix &e,CMatrix &vr){
     }
 SWIGINTERN char *Vector___str__(Vector *self){
       static char temp[1024];
-      snprintf(temp, 1024, "%s", OutputToString(*self).c_str());
+      snprintf(temp, 1024, "%s", String(*self).c_str());
       return temp;
     }
 SWIGINTERN double &Vector___getitem__(Vector *self,unsigned int i){
@@ -3307,7 +3307,19 @@ SWIGINTERN Vector Vector___div__(Vector *self,double a){
       return (*self) / a;
     }
 SWIGINTERN double Vector_norm(Vector *self){
-      return norm(*self);
+      return Norm(*self);
+    }
+SWIGINTERN double Vector_sum(Vector *self){
+      return Sum(*self);
+    }
+SWIGINTERN double Vector_max(Vector *self){
+      return Max(*self);
+    }
+SWIGINTERN double Vector_min(Vector *self){
+      return Min(*self);
+    }
+SWIGINTERN double Vector_average(Vector *self){
+      return Average(*self);
     }
 SWIGINTERN Vector Vector_real(Vector *self){
       return Real(*self);
@@ -3317,7 +3329,7 @@ SWIGINTERN Vector Vector_imag(Vector *self){
     }
 SWIGINTERN char *CVector___str__(CVector *self){
       static char temp[1024];
-      snprintf(temp, 1024, "%s", OutputToString(*self).c_str());
+      snprintf(temp, 1024, "%s", String(*self).c_str());
       return temp;
     }
 SWIGINTERN Complex &CVector___getitem__(CVector *self,unsigned int i){
@@ -3370,7 +3382,13 @@ SWIGINTERN CVector CVector___div____SWIG_1(CVector *self,Complex &a){
       return (*self) / a;
     }
 SWIGINTERN double CVector_norm(CVector *self){
-      return norm(*self);
+      return Norm(*self);
+    }
+SWIGINTERN Complex CVector_sum(CVector *self){
+      return Sum(*self);
+    }
+SWIGINTERN Complex CVector_average(CVector *self){
+      return Average(*self);
     }
 SWIGINTERN Vector CVector_real(CVector *self){
       return Real(*self);
@@ -8312,50 +8330,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Vector_sum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Vector *arg1 = (Vector *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  double result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Vector_sum",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Vector, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Vector_sum" "', argument " "1"" of type '" "Vector *""'"); 
-  }
-  arg1 = reinterpret_cast< Vector * >(argp1);
-  result = (double)(arg1)->Sum();
-  resultobj = SWIG_From_double(static_cast< double >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Vector_max(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Vector *arg1 = (Vector *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  double result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Vector_max",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Vector, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Vector_max" "', argument " "1"" of type '" "Vector *""'"); 
-  }
-  arg1 = reinterpret_cast< Vector * >(argp1);
-  result = (double)(arg1)->Max();
-  resultobj = SWIG_From_double(static_cast< double >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Vector_sort(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Vector *arg1 = (Vector *) 0 ;
@@ -9012,6 +8986,94 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Vector_sum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Vector *arg1 = (Vector *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Vector_sum",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Vector, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Vector_sum" "', argument " "1"" of type '" "Vector *""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = (double)Vector_sum(arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Vector_max(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Vector *arg1 = (Vector *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Vector_max",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Vector, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Vector_max" "', argument " "1"" of type '" "Vector *""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = (double)Vector_max(arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Vector_min(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Vector *arg1 = (Vector *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Vector_min",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Vector, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Vector_min" "', argument " "1"" of type '" "Vector *""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = (double)Vector_min(arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Vector_average(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Vector *arg1 = (Vector *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Vector_average",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Vector, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Vector_average" "', argument " "1"" of type '" "Vector *""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = (double)Vector_average(arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Vector_real(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Vector *arg1 = (Vector *) 0 ;
@@ -9516,28 +9578,6 @@ SWIGINTERN PyObject *_wrap_CVector_adj(PyObject *SWIGUNUSEDPARM(self), PyObject 
   arg1 = reinterpret_cast< CVector * >(argp1);
   result = (arg1)->Adjoint();
   resultobj = SWIG_NewPointerObj((new CVector(static_cast< const CVector& >(result))), SWIGTYPE_p_CVector, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_CVector_sum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  CVector *arg1 = (CVector *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  Complex result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:CVector_sum",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CVector, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CVector_sum" "', argument " "1"" of type '" "CVector *""'"); 
-  }
-  arg1 = reinterpret_cast< CVector * >(argp1);
-  result = (arg1)->Sum();
-  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -10423,6 +10463,50 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_CVector_sum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CVector *arg1 = (CVector *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CVector_sum",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CVector, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CVector_sum" "', argument " "1"" of type '" "CVector *""'"); 
+  }
+  arg1 = reinterpret_cast< CVector * >(argp1);
+  result = CVector_sum(arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CVector_average(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CVector *arg1 = (CVector *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CVector_average",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CVector, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CVector_average" "', argument " "1"" of type '" "CVector *""'"); 
+  }
+  arg1 = reinterpret_cast< CVector * >(argp1);
+  result = CVector_average(arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_CVector_real(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   CVector *arg1 = (CVector *) 0 ;
@@ -10572,8 +10656,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Vector_conj", _wrap_Vector_conj, METH_VARARGS, NULL},
 	 { (char *)"Vector_trans", _wrap_Vector_trans, METH_VARARGS, NULL},
 	 { (char *)"Vector_adj", _wrap_Vector_adj, METH_VARARGS, NULL},
-	 { (char *)"Vector_sum", _wrap_Vector_sum, METH_VARARGS, NULL},
-	 { (char *)"Vector_max", _wrap_Vector_max, METH_VARARGS, NULL},
 	 { (char *)"Vector_sort", _wrap_Vector_sort, METH_VARARGS, NULL},
 	 { (char *)"Vector_block", _wrap_Vector_block, METH_VARARGS, NULL},
 	 { (char *)"Vector_replace", _wrap_Vector_replace, METH_VARARGS, NULL},
@@ -10588,6 +10670,10 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Vector___mul__", _wrap_Vector___mul__, METH_VARARGS, NULL},
 	 { (char *)"Vector___div__", _wrap_Vector___div__, METH_VARARGS, NULL},
 	 { (char *)"Vector_norm", _wrap_Vector_norm, METH_VARARGS, NULL},
+	 { (char *)"Vector_sum", _wrap_Vector_sum, METH_VARARGS, NULL},
+	 { (char *)"Vector_max", _wrap_Vector_max, METH_VARARGS, NULL},
+	 { (char *)"Vector_min", _wrap_Vector_min, METH_VARARGS, NULL},
+	 { (char *)"Vector_average", _wrap_Vector_average, METH_VARARGS, NULL},
 	 { (char *)"Vector_real", _wrap_Vector_real, METH_VARARGS, NULL},
 	 { (char *)"Vector_imag", _wrap_Vector_imag, METH_VARARGS, NULL},
 	 { (char *)"Vector_swigregister", Vector_swigregister, METH_VARARGS, NULL},
@@ -10601,7 +10687,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"CVector_conj", _wrap_CVector_conj, METH_VARARGS, NULL},
 	 { (char *)"CVector_trans", _wrap_CVector_trans, METH_VARARGS, NULL},
 	 { (char *)"CVector_adj", _wrap_CVector_adj, METH_VARARGS, NULL},
-	 { (char *)"CVector_sum", _wrap_CVector_sum, METH_VARARGS, NULL},
 	 { (char *)"CVector_block", _wrap_CVector_block, METH_VARARGS, NULL},
 	 { (char *)"CVector_replace", _wrap_CVector_replace, METH_VARARGS, NULL},
 	 { (char *)"CVector_swap", _wrap_CVector_swap, METH_VARARGS, NULL},
@@ -10615,6 +10700,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"CVector___mul__", _wrap_CVector___mul__, METH_VARARGS, NULL},
 	 { (char *)"CVector___div__", _wrap_CVector___div__, METH_VARARGS, NULL},
 	 { (char *)"CVector_norm", _wrap_CVector_norm, METH_VARARGS, NULL},
+	 { (char *)"CVector_sum", _wrap_CVector_sum, METH_VARARGS, NULL},
+	 { (char *)"CVector_average", _wrap_CVector_average, METH_VARARGS, NULL},
 	 { (char *)"CVector_real", _wrap_CVector_real, METH_VARARGS, NULL},
 	 { (char *)"CVector_imag", _wrap_CVector_imag, METH_VARARGS, NULL},
 	 { (char *)"CVector_swigregister", CVector_swigregister, METH_VARARGS, NULL},
