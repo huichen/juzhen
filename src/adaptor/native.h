@@ -76,6 +76,13 @@ int matrix_inverse(
     const int m, const int n, T *a, const int lda) {
   assert(0);  // always fails
 }
+
+/*
+ * Matrix determinant 
+ */
+template<typename T>
+T matrix_determinant(const int m, T *a) {
+  assert(0);  // always fails
+}
 }
 #endif  // SRC_ADAPTOR_NATIVE_H_
-

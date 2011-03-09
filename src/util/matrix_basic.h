@@ -226,25 +226,32 @@ Matrix<double> Imag(const Matrix<CD> &ma) {
 /**
  * Return transpose of a Matrix
  */
-template<typename DataType>
-Matrix<DataType> Transpose(const Matrix<DataType> &m) {
+template<typename T>
+Matrix<T> Transpose(const Matrix<T> &m) {
   return m.Transpose();
 }
 
 /**
  * Return hermitian of a Matrix
  */
-template<typename DataType>
-Matrix<DataType> Adjoint(const Matrix<DataType> &m) {
+template<typename T>
+Matrix<T> Adjoint(const Matrix<T> &m) {
   return m.Adjoint();
 }
 
 /**
  * Return conjugate of a Matrix
  */
-template<typename DataType>
-Matrix<DataType> Conjugate(const Matrix<DataType> &m) {
+template<typename T>
+Matrix<T> Conjugate(const Matrix<T> &m) {
   return m.Conjugate();
+}
+
+template<typename T>
+T Det(const Matrix<T> &m) {
+  assert(m.num_col() == m.num_row());
+  Matrix<T> matrix(m);
+  return matrix_determinant(matrix.num_row(), matrix.raw_ptr());
 }
 }
 #endif  // SRC_UTIL_MATRIX_BASIC_H_

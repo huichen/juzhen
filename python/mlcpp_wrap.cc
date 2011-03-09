@@ -10755,6 +10755,92 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_det__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Matrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:det",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Matrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "det" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "det" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< Matrix * >(argp1);
+  result = (double)Det((Matrix const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_det__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CMatrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:det",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CMatrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "det" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "det" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< CMatrix * >(argp1);
+  result = Det((CMatrix const &)*arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_det(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Matrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_det__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CMatrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_det__SWIG_1(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'det'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Det(Matrix const &)\n"
+    "    Det(CMatrix const &)\n");
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_transpose__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Vector *arg1 = 0 ;
@@ -15291,6 +15377,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"CVector_abs", _wrap_CVector_abs, METH_VARARGS, NULL},
 	 { (char *)"CVector_abs2", _wrap_CVector_abs2, METH_VARARGS, NULL},
 	 { (char *)"CVector_swigregister", CVector_swigregister, METH_VARARGS, NULL},
+	 { (char *)"det", _wrap_det, METH_VARARGS, NULL},
 	 { (char *)"transpose", _wrap_transpose, METH_VARARGS, NULL},
 	 { (char *)"adjoint", _wrap_adjoint, METH_VARARGS, NULL},
 	 { (char *)"conjugate", _wrap_conjugate, METH_VARARGS, NULL},

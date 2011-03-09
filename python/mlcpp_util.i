@@ -19,6 +19,10 @@ CMatrix Adjoint(const CMatrix &m);
 Matrix Conjugate(const Matrix &m);
 CMatrix Conjugate(const CMatrix &m);
 
+%rename(det) Det;
+double Det(const Matrix &m);
+Complex Det(const CMatrix &m);
+
 
 /**
  * Functions extracted from '../src/util/vector_basic.h'.

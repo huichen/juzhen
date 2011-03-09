@@ -339,6 +339,10 @@ def corr_coeff(*args):
 corr_coeff = _mlcpp.corr_coeff
 
 
+def det(*args):
+  return _mlcpp.det(*args)
+det = _mlcpp.det
+
 def transpose(*args):
   return _mlcpp.transpose(*args)
 transpose = _mlcpp.transpose

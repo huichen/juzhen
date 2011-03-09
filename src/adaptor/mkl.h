@@ -283,5 +283,101 @@ int matrix_inverse(
   free(work);
   return info;
 }
+
+/*
+ * Matrix determinant 
+ */
+template<typename T>
+T matrix_determinant(const MKL_INT m, T *a) {
+  assert(0);  // always fails
+}
+
+template<>
+float matrix_determinant(const MKL_INT m, float *a) {
+  MKL_INT n, lda;
+  MKL_INT info, lwork;
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(m)*m));
+  n = m;
+  lda = m;
+  sgetrf(&m, &n, a, &lda, ipiv, &info);
+  if (info) {
+    free(ipiv);
+    return 0;
+  }
+  float r = 1;
+  for (int i = 0; i < m; i++)
+    if (ipiv[i] == i+1)
+      r *= a[i * m + i];
+    else
+      r *= -a[i * m + i];
+  free(ipiv);
+  return r;
+}
+
+template<>
+double matrix_determinant(const MKL_INT m, double *a) {
+  MKL_INT n, lda;
+  MKL_INT info, lwork;
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(m)*m));
+  n = m;
+  lda = m;
+  dgetrf(&m, &n, a, &lda, ipiv, &info);
+  if (info) {
+    free(ipiv);
+    return 0;
+  }
+  double r = 1;
+  for (int i = 0; i < m; i++)
+    if (ipiv[i] == i+1)
+      r *= a[i * m + i];
+    else
+      r *= -a[i * m + i];
+  free(ipiv);
+  return r;
+}
+
+template<>
+CS matrix_determinant(const MKL_INT m, CS *a) {
+  MKL_INT n, lda;
+  MKL_INT info, lwork;
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(m)*m));
+  n = m;
+  lda = m;
+  cgetrf(&m, &n, reinterpret_cast<MKL_Complex8 *>(a), &lda, ipiv, &info);
+  if (info) {
+    free(ipiv);
+    return 0;
+  }
+  CS r = 1;
+  for (int i = 0; i < m; i++)
+    if (ipiv[i] == i+1)
+      r *= a[i * m + i];
+    else
+      r *= -a[i * m + i];
+  free(ipiv);
+  return r;
+}
+
+template<>
+CD matrix_determinant(const MKL_INT m, CD *a) {
+  MKL_INT n, lda;
+  MKL_INT info, lwork;
+  MKL_INT *ipiv = reinterpret_cast<MKL_INT *>(malloc(sizeof(m)*m));
+  n = m;
+  lda = m;
+  zgetrf(&m, &n, reinterpret_cast<MKL_Complex16 *>(a), &lda, ipiv, &info);
+  if (info) {
+    free(ipiv);
+    return 0;
+  }
+  CD r = 1;
+  for (int i = 0; i < m; i++)
+    if (ipiv[i] == i+1)
+      r *= a[i * m + i];
+    else
+      r *= -a[i * m + i];
+  free(ipiv);
+  return r;
+}
 }
 #endif  // SRC_ADAPTOR_MKL_H_
