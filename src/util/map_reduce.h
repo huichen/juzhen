@@ -38,7 +38,7 @@ namespace mlcpp {
 template<typename T>
 Matrix<T> Map(const Matrix<T> &m, T (*func)(T)) {
   Matrix<T> matrix(m);
-  size_t endi = matrix.num_row() * matrix.num_col();
+  size_t endi = matrix.size();
   for (size_t i = 0; i < endi; i++)
     matrix(i) = func(matrix(i));
   matrix.set_temporary(true);

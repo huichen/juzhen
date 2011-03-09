@@ -104,6 +104,14 @@ class Vector {
     Vector imag() {
       return Imag(*$self);
     }
+
+    Vector abs() {
+      return Abs(*$self);
+    }
+
+    Vector abs2() {
+      return Abs2(*$self);
+    }
   }
 }; 
 
@@ -210,6 +218,14 @@ class CVector {
 
     Vector imag() {
       return Imag(*$self);
+    }
+
+    Vector abs() {
+      return Abs(*$self);
+    }
+
+    Vector abs2() {
+      return Abs2(*$self);
     }
   }
 }; 

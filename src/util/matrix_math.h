@@ -71,7 +71,7 @@ Matrix<T> SchurProduct(
   assert(matrix1.num_row() == matrix2.num_row());
   Matrix<T> matrix_return(matrix1);
 
-  size_t endi = matrix1.num_col() * matrix1.num_row();
+  size_t endi = matrix1.size();
   for (size_t i = 0; i < endi; i++)
     matrix_return(i) *= matrix2(i);
   matrix_return.set_temporary(true);

@@ -3168,6 +3168,12 @@ SWIGINTERN Matrix Matrix_real(Matrix *self){
 SWIGINTERN Matrix Matrix_imag(Matrix *self){
       return Imag(*self);
     }
+SWIGINTERN Matrix Matrix_abs(Matrix *self){
+      return Abs(*self);
+    }
+SWIGINTERN Matrix Matrix_abs2(Matrix *self){
+      return Abs2(*self);
+    }
 SWIGINTERN Matrix Matrix_inverse(Matrix *self){
       return Inverse(*self);
     }
@@ -3254,6 +3260,12 @@ SWIGINTERN Matrix CMatrix_real(CMatrix *self){
 SWIGINTERN Matrix CMatrix_imag(CMatrix *self){
       return Imag(*self);
     }
+SWIGINTERN Matrix CMatrix_abs(CMatrix *self){
+      return Abs(*self);
+    }
+SWIGINTERN Matrix CMatrix_abs2(CMatrix *self){
+      return Abs2(*self);
+    }
 SWIGINTERN CMatrix CMatrix_inverse(CMatrix *self){
       return Inverse(*self);
     }
@@ -3315,6 +3327,12 @@ SWIGINTERN Vector Vector_real(Vector *self){
 SWIGINTERN Vector Vector_imag(Vector *self){
       return Imag(*self);
     }
+SWIGINTERN Vector Vector_abs(Vector *self){
+      return Abs(*self);
+    }
+SWIGINTERN Vector Vector_abs2(Vector *self){
+      return Abs2(*self);
+    }
 SWIGINTERN char *CVector___str__(CVector *self){
       static char temp[1024];
       snprintf(temp, 1024, "%s", String(*self).c_str());
@@ -3374,6 +3392,12 @@ SWIGINTERN Vector CVector_real(CVector *self){
     }
 SWIGINTERN Vector CVector_imag(CVector *self){
       return Imag(*self);
+    }
+SWIGINTERN Vector CVector_abs(CVector *self){
+      return Abs(*self);
+    }
+SWIGINTERN Vector CVector_abs2(CVector *self){
+      return Abs2(*self);
     }
 #ifdef __cplusplus
 extern "C" {
@@ -4648,6 +4672,28 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Matrix_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Matrix *arg1 = (Matrix *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Matrix_size",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Matrix, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Matrix_size" "', argument " "1"" of type '" "Matrix *""'"); 
+  }
+  arg1 = reinterpret_cast< Matrix * >(argp1);
+  result = (int)(arg1)->size();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Matrix_resize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Matrix *arg1 = (Matrix *) 0 ;
@@ -5732,6 +5778,50 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Matrix_abs(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Matrix *arg1 = (Matrix *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Matrix result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Matrix_abs",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Matrix, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Matrix_abs" "', argument " "1"" of type '" "Matrix *""'"); 
+  }
+  arg1 = reinterpret_cast< Matrix * >(argp1);
+  result = Matrix_abs(arg1);
+  resultobj = SWIG_NewPointerObj((new Matrix(static_cast< const Matrix& >(result))), SWIGTYPE_p_Matrix, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Matrix_abs2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Matrix *arg1 = (Matrix *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Matrix result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Matrix_abs2",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Matrix, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Matrix_abs2" "', argument " "1"" of type '" "Matrix *""'"); 
+  }
+  arg1 = reinterpret_cast< Matrix * >(argp1);
+  result = Matrix_abs2(arg1);
+  resultobj = SWIG_NewPointerObj((new Matrix(static_cast< const Matrix& >(result))), SWIGTYPE_p_Matrix, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Matrix_inverse(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Matrix *arg1 = (Matrix *) 0 ;
@@ -6185,6 +6275,28 @@ SWIGINTERN PyObject *_wrap_CMatrix_num_col(PyObject *SWIGUNUSEDPARM(self), PyObj
   }
   arg1 = reinterpret_cast< CMatrix * >(argp1);
   result = (int)(arg1)->num_col();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CMatrix_size(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CMatrix *arg1 = (CMatrix *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CMatrix_size",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CMatrix, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CMatrix_size" "', argument " "1"" of type '" "CMatrix *""'"); 
+  }
+  arg1 = reinterpret_cast< CMatrix * >(argp1);
+  result = (int)(arg1)->size();
   resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
 fail:
@@ -7596,6 +7708,50 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_CMatrix_abs(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CMatrix *arg1 = (CMatrix *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Matrix result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CMatrix_abs",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CMatrix, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CMatrix_abs" "', argument " "1"" of type '" "CMatrix *""'"); 
+  }
+  arg1 = reinterpret_cast< CMatrix * >(argp1);
+  result = CMatrix_abs(arg1);
+  resultobj = SWIG_NewPointerObj((new Matrix(static_cast< const Matrix& >(result))), SWIGTYPE_p_Matrix, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CMatrix_abs2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CMatrix *arg1 = (CMatrix *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Matrix result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CMatrix_abs2",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CMatrix, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CMatrix_abs2" "', argument " "1"" of type '" "CMatrix *""'"); 
+  }
+  arg1 = reinterpret_cast< CMatrix * >(argp1);
+  result = CMatrix_abs2(arg1);
+  resultobj = SWIG_NewPointerObj((new Matrix(static_cast< const Matrix& >(result))), SWIGTYPE_p_Matrix, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_CMatrix_inverse(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   CMatrix *arg1 = (CMatrix *) 0 ;
@@ -8987,6 +9143,50 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Vector_abs(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Vector *arg1 = (Vector *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Vector_abs",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Vector, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Vector_abs" "', argument " "1"" of type '" "Vector *""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = Vector_abs(arg1);
+  resultobj = SWIG_NewPointerObj((new Vector(static_cast< const Vector& >(result))), SWIGTYPE_p_Vector, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Vector_abs2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Vector *arg1 = (Vector *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Vector_abs2",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Vector, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Vector_abs2" "', argument " "1"" of type '" "Vector *""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = Vector_abs2(arg1);
+  resultobj = SWIG_NewPointerObj((new Vector(static_cast< const Vector& >(result))), SWIGTYPE_p_Vector, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *Vector_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -10354,6 +10554,50 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_CVector_abs(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CVector *arg1 = (CVector *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CVector_abs",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CVector, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CVector_abs" "', argument " "1"" of type '" "CVector *""'"); 
+  }
+  arg1 = reinterpret_cast< CVector * >(argp1);
+  result = CVector_abs(arg1);
+  resultobj = SWIG_NewPointerObj((new Vector(static_cast< const Vector& >(result))), SWIGTYPE_p_Vector, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CVector_abs2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CVector *arg1 = (CVector *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CVector_abs2",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_CVector, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CVector_abs2" "', argument " "1"" of type '" "CVector *""'"); 
+  }
+  arg1 = reinterpret_cast< CVector * >(argp1);
+  result = CVector_abs2(arg1);
+  resultobj = SWIG_NewPointerObj((new Vector(static_cast< const Vector& >(result))), SWIGTYPE_p_Vector, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *CVector_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -11377,6 +11621,206 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_norm_square__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Matrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_square",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Matrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_square" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_square" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< Matrix * >(argp1);
+  result = (double)NormSquare((Matrix const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_square__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CMatrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_square",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CMatrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_square" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_square" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< CMatrix * >(argp1);
+  result = NormSquare((CMatrix const &)*arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Matrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Matrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< Matrix * >(argp1);
+  result = (double)Norm((Matrix const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CMatrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CMatrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< CMatrix * >(argp1);
+  result = (double)Norm((CMatrix const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_one__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Matrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_one",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Matrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_one" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_one" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< Matrix * >(argp1);
+  result = (double)NormOne((Matrix const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_one__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CMatrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_one",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CMatrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_one" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_one" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< CMatrix * >(argp1);
+  result = NormOne((CMatrix const &)*arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_infinity__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Matrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_infinity",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Matrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_infinity" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_infinity" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< Matrix * >(argp1);
+  result = (double)NormInfinity((Matrix const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_infinity__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CMatrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_infinity",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CMatrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_infinity" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_infinity" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< CMatrix * >(argp1);
+  result = NormInfinity((CMatrix const &)*arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_sum__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Vector *arg1 = 0 ;
@@ -11689,7 +12133,111 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_norm__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_norm_square__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Vector *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_square",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Vector,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_square" "', argument " "1"" of type '" "Vector const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_square" "', argument " "1"" of type '" "Vector const &""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = (double)NormSquare((Vector const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_square__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CVector *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_square",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CVector,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_square" "', argument " "1"" of type '" "CVector const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_square" "', argument " "1"" of type '" "CVector const &""'"); 
+  }
+  arg1 = reinterpret_cast< CVector * >(argp1);
+  result = NormSquare((CVector const &)*arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_square(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Matrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_square__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CMatrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_square__SWIG_1(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Vector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_square__SWIG_2(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CVector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_square__SWIG_3(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'norm_square'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    NormSquare(Matrix const &)\n"
+    "    NormSquare(CMatrix const &)\n"
+    "    NormSquare(Vector const &)\n"
+    "    NormSquare(CVector const &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Vector *arg1 = 0 ;
   void *argp1 = 0 ;
@@ -11714,7 +12262,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_norm__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_norm__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   CVector *arg1 = 0 ;
   void *argp1 = 0 ;
@@ -11751,7 +12299,7 @@ SWIGINTERN PyObject *_wrap_norm(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Vector, 0);
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Matrix, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_norm__SWIG_0(self, args);
@@ -11759,18 +12307,244 @@ SWIGINTERN PyObject *_wrap_norm(PyObject *self, PyObject *args) {
   }
   if (argc == 1) {
     int _v;
-    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CVector, 0);
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CMatrix, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
       return _wrap_norm__SWIG_1(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Vector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm__SWIG_2(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CVector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm__SWIG_3(self, args);
     }
   }
   
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'norm'.\n"
     "  Possible C/C++ prototypes are:\n"
+    "    Norm(Matrix const &)\n"
+    "    Norm(CMatrix const &)\n"
     "    Norm(Vector const &)\n"
     "    Norm(CVector const &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_one__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Vector *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_one",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Vector,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_one" "', argument " "1"" of type '" "Vector const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_one" "', argument " "1"" of type '" "Vector const &""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = (double)NormOne((Vector const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_one__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CVector *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_one",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CVector,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_one" "', argument " "1"" of type '" "CVector const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_one" "', argument " "1"" of type '" "CVector const &""'"); 
+  }
+  arg1 = reinterpret_cast< CVector * >(argp1);
+  result = NormOne((CVector const &)*arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_one(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Matrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_one__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CMatrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_one__SWIG_1(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Vector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_one__SWIG_2(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CVector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_one__SWIG_3(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'norm_one'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    NormOne(Matrix const &)\n"
+    "    NormOne(CMatrix const &)\n"
+    "    NormOne(Vector const &)\n"
+    "    NormOne(CVector const &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_infinity__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Vector *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_infinity",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Vector,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_infinity" "', argument " "1"" of type '" "Vector const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_infinity" "', argument " "1"" of type '" "Vector const &""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = (double)NormInfinity((Vector const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_infinity__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CVector *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:norm_infinity",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CVector,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "norm_infinity" "', argument " "1"" of type '" "CVector const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "norm_infinity" "', argument " "1"" of type '" "CVector const &""'"); 
+  }
+  arg1 = reinterpret_cast< CVector * >(argp1);
+  result = NormInfinity((CVector const &)*arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_norm_infinity(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Matrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_infinity__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CMatrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_infinity__SWIG_1(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Vector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_infinity__SWIG_2(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CVector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_norm_infinity__SWIG_3(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'norm_infinity'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    NormInfinity(Matrix const &)\n"
+    "    NormInfinity(CMatrix const &)\n"
+    "    NormInfinity(Vector const &)\n"
+    "    NormInfinity(CVector const &)\n");
   return NULL;
 }
 
@@ -14392,6 +15166,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Matrix___ne__", _wrap_Matrix___ne__, METH_VARARGS, NULL},
 	 { (char *)"Matrix_num_row", _wrap_Matrix_num_row, METH_VARARGS, NULL},
 	 { (char *)"Matrix_num_col", _wrap_Matrix_num_col, METH_VARARGS, NULL},
+	 { (char *)"Matrix_size", _wrap_Matrix_size, METH_VARARGS, NULL},
 	 { (char *)"Matrix_resize", _wrap_Matrix_resize, METH_VARARGS, NULL},
 	 { (char *)"Matrix_clear", _wrap_Matrix_clear, METH_VARARGS, NULL},
 	 { (char *)"Matrix_conj", _wrap_Matrix_conj, METH_VARARGS, NULL},
@@ -14414,6 +15189,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Matrix___div__", _wrap_Matrix___div__, METH_VARARGS, NULL},
 	 { (char *)"Matrix_real", _wrap_Matrix_real, METH_VARARGS, NULL},
 	 { (char *)"Matrix_imag", _wrap_Matrix_imag, METH_VARARGS, NULL},
+	 { (char *)"Matrix_abs", _wrap_Matrix_abs, METH_VARARGS, NULL},
+	 { (char *)"Matrix_abs2", _wrap_Matrix_abs2, METH_VARARGS, NULL},
 	 { (char *)"Matrix_inverse", _wrap_Matrix_inverse, METH_VARARGS, NULL},
 	 { (char *)"Matrix_linear_solver", _wrap_Matrix_linear_solver, METH_VARARGS, NULL},
 	 { (char *)"Matrix_eigen", _wrap_Matrix_eigen, METH_VARARGS, NULL},
@@ -14426,6 +15203,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"CMatrix___ne__", _wrap_CMatrix___ne__, METH_VARARGS, NULL},
 	 { (char *)"CMatrix_num_row", _wrap_CMatrix_num_row, METH_VARARGS, NULL},
 	 { (char *)"CMatrix_num_col", _wrap_CMatrix_num_col, METH_VARARGS, NULL},
+	 { (char *)"CMatrix_size", _wrap_CMatrix_size, METH_VARARGS, NULL},
 	 { (char *)"CMatrix_resize", _wrap_CMatrix_resize, METH_VARARGS, NULL},
 	 { (char *)"CMatrix_clear", _wrap_CMatrix_clear, METH_VARARGS, NULL},
 	 { (char *)"CMatrix_conj", _wrap_CMatrix_conj, METH_VARARGS, NULL},
@@ -14448,6 +15226,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"CMatrix___div__", _wrap_CMatrix___div__, METH_VARARGS, NULL},
 	 { (char *)"CMatrix_real", _wrap_CMatrix_real, METH_VARARGS, NULL},
 	 { (char *)"CMatrix_imag", _wrap_CMatrix_imag, METH_VARARGS, NULL},
+	 { (char *)"CMatrix_abs", _wrap_CMatrix_abs, METH_VARARGS, NULL},
+	 { (char *)"CMatrix_abs2", _wrap_CMatrix_abs2, METH_VARARGS, NULL},
 	 { (char *)"CMatrix_inverse", _wrap_CMatrix_inverse, METH_VARARGS, NULL},
 	 { (char *)"CMatrix_linear_solver", _wrap_CMatrix_linear_solver, METH_VARARGS, NULL},
 	 { (char *)"CMatrix_eigen", _wrap_CMatrix_eigen, METH_VARARGS, NULL},
@@ -14481,6 +15261,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Vector___div__", _wrap_Vector___div__, METH_VARARGS, NULL},
 	 { (char *)"Vector_real", _wrap_Vector_real, METH_VARARGS, NULL},
 	 { (char *)"Vector_imag", _wrap_Vector_imag, METH_VARARGS, NULL},
+	 { (char *)"Vector_abs", _wrap_Vector_abs, METH_VARARGS, NULL},
+	 { (char *)"Vector_abs2", _wrap_Vector_abs2, METH_VARARGS, NULL},
 	 { (char *)"Vector_swigregister", Vector_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_CVector", _wrap_new_CVector, METH_VARARGS, NULL},
 	 { (char *)"delete_CVector", _wrap_delete_CVector, METH_VARARGS, NULL},
@@ -14506,6 +15288,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"CVector___div__", _wrap_CVector___div__, METH_VARARGS, NULL},
 	 { (char *)"CVector_real", _wrap_CVector_real, METH_VARARGS, NULL},
 	 { (char *)"CVector_imag", _wrap_CVector_imag, METH_VARARGS, NULL},
+	 { (char *)"CVector_abs", _wrap_CVector_abs, METH_VARARGS, NULL},
+	 { (char *)"CVector_abs2", _wrap_CVector_abs2, METH_VARARGS, NULL},
 	 { (char *)"CVector_swigregister", CVector_swigregister, METH_VARARGS, NULL},
 	 { (char *)"transpose", _wrap_transpose, METH_VARARGS, NULL},
 	 { (char *)"adjoint", _wrap_adjoint, METH_VARARGS, NULL},
@@ -14516,7 +15300,10 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"sum", _wrap_sum, METH_VARARGS, NULL},
 	 { (char *)"prod", _wrap_prod, METH_VARARGS, NULL},
 	 { (char *)"mean", _wrap_mean, METH_VARARGS, NULL},
+	 { (char *)"norm_square", _wrap_norm_square, METH_VARARGS, NULL},
 	 { (char *)"norm", _wrap_norm, METH_VARARGS, NULL},
+	 { (char *)"norm_one", _wrap_norm_one, METH_VARARGS, NULL},
+	 { (char *)"norm_infinity", _wrap_norm_infinity, METH_VARARGS, NULL},
 	 { (char *)"max", _wrap_max, METH_VARARGS, NULL},
 	 { (char *)"min", _wrap_min, METH_VARARGS, NULL},
 	 { (char *)"sort", _wrap_sort, METH_VARARGS, NULL},

@@ -73,6 +73,22 @@ Complex Prod(const CMatrix &matrix);
 double Mean(const Matrix &matrix);
 Complex Mean(const CMatrix &matrix);
 
+%rename(norm_square) NormSquare;
+double NormSquare(const Matrix &m);
+Complex NormSquare(const CMatrix &m);
+
+%rename(norm) Norm;
+double Norm(const Matrix &m);
+double Norm(const CMatrix &m);
+
+%rename(norm_one) NormOne;
+double NormOne(const Matrix &m);
+Complex NormOne(const CMatrix &m);
+
+%rename(norm_infinity) NormInfinity;
+double NormInfinity(const Matrix &m);
+Complex NormInfinity(const CMatrix &m);
+
 
 /**
  * Functions extracted from '../src/util/vector_statistics.h'.
@@ -89,9 +105,21 @@ Complex Prod(const CVector &vector);
 double Mean(const Vector &vector);
 Complex Mean(const CVector &vector);
 
+%rename(norm_square) NormSquare;
+double NormSquare(const Vector &v);
+Complex NormSquare(const CVector &v);
+
 %rename(norm) Norm;
 double Norm(const Vector &v);
 double Norm(const CVector &v);
+
+%rename(norm_one) NormOne;
+double NormOne(const Vector &v);
+Complex NormOne(const CVector &v);
+
+%rename(norm_infinity) NormInfinity;
+double NormInfinity(const Vector &v);
+Complex NormInfinity(const CVector &v);
 
 %rename(max) Max;
 double Max(const Vector &vector);

@@ -7,6 +7,10 @@ BEGIN_TEST(matrix_linear_solver, "matrix_linear_solver")
 #include "tests/matrix_linear_solver.h"
 END_TEST(matrix_linear_solver)
 
+BEGIN_TEST(matrix_basic, "matrix_basic")
+#include "tests/matrix_basic.h"
+END_TEST(matrix_basic)
+
 BEGIN_TEST(identity_matrix, "identity_matrix")
 #include "tests/identity_matrix.h"
 END_TEST(identity_matrix)

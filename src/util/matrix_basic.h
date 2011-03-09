@@ -30,11 +30,89 @@
 namespace mlcpp {
 
 /**
+ * Return the abs of a Matrix
+ */
+Matrix<float> Abs(const Matrix<float> &ma) {
+  Matrix<float> m(ma.num_row(), ma.num_col());
+  size_t endi = ma.size();
+  for (size_t i = 0; i < endi; i++)
+    m(i) = abs(ma(i)) ;
+  m.set_temporary(true);
+  return m;
+}
+
+Matrix<double> Abs(const Matrix<double> &ma) {
+  Matrix<double> m(ma.num_row(), ma.num_col());
+  size_t endi = ma.size();
+  for (size_t i = 0; i < endi; i++)
+    m(i) = abs(ma(i)) ;
+  m.set_temporary(true);
+  return m;
+}
+
+Matrix<float> Abs(const Matrix<CS> &ma) {
+  Matrix<float> m(ma.num_row(), ma.num_col());
+  size_t endi = ma.size();
+  for (size_t i = 0; i < endi; i++)
+    m(i) = abs(ma(i)) ;
+  m.set_temporary(true);
+  return m;
+}
+
+Matrix<double> Abs(const Matrix<CD> &ma) {
+  Matrix<double> m(ma.num_row(), ma.num_col());
+  size_t endi = ma.size();
+  for (size_t i = 0; i < endi; i++)
+    m(i) = abs(ma(i)) ;
+  m.set_temporary(true);
+  return m;
+}
+
+/**
+ * Return the abs-square of a Matrix
+ */
+Matrix<float> Abs2(const Matrix<float> &ma) {
+  Matrix<float> m(ma.num_row(), ma.num_col());
+  size_t endi = ma.size();
+  for (size_t i = 0; i < endi; i++)
+    m(i) = abs2(ma(i)) ;
+  m.set_temporary(true);
+  return m;
+}
+
+Matrix<double> Abs2(const Matrix<double> &ma) {
+  Matrix<double> m(ma.num_row(), ma.num_col());
+  size_t endi = ma.size();
+  for (size_t i = 0; i < endi; i++)
+    m(i) = abs2(ma(i)) ;
+  m.set_temporary(true);
+  return m;
+}
+
+Matrix<float> Abs2(const Matrix<CS> &ma) {
+  Matrix<float> m(ma.num_row(), ma.num_col());
+  size_t endi = ma.size();
+  for (size_t i = 0; i < endi; i++)
+    m(i) = abs2(ma(i)) ;
+  m.set_temporary(true);
+  return m;
+}
+
+Matrix<double> Abs2(const Matrix<CD> &ma) {
+  Matrix<double> m(ma.num_row(), ma.num_col());
+  size_t endi = ma.size();
+  for (size_t i = 0; i < endi; i++)
+    m(i) = abs2(ma(i)) ;
+  m.set_temporary(true);
+  return m;
+}
+
+/**
  * Return the real part of a Matrix
  */
 Matrix<float> Real(const Matrix<float> &ma) {
   Matrix<float> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.num_row()*ma.num_col();
+  size_t endi = ma.size();
   float *p1;
   float *p2;
   p1 = m.raw_ptr();
@@ -60,7 +138,7 @@ Matrix<float> Imag(const Matrix<float> &ma) {
  */
 Matrix<double> Real(const Matrix<double> &ma) {
   Matrix<double> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.num_row()*ma.num_col();
+  size_t endi = ma.size();
   double *p1;
   double *p2;
   p1 = m.raw_ptr();
@@ -86,7 +164,7 @@ Matrix<double> Imag(const Matrix<double> &ma) {
  */
 Matrix<float> Real(const Matrix<CS> &ma) {
   Matrix<float> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.num_row()*ma.num_col();
+  size_t endi = ma.size();
   float *p1;
   CS *p2;
   p1 = m.raw_ptr();
@@ -102,7 +180,7 @@ Matrix<float> Real(const Matrix<CS> &ma) {
  */
 Matrix<float> Imag(const Matrix<CS> &ma) {
   Matrix<float> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.num_row()*ma.num_col();
+  size_t endi = ma.size();
   float *p1;
   CS *p2;
   p1 = m.raw_ptr();
@@ -118,7 +196,7 @@ Matrix<float> Imag(const Matrix<CS> &ma) {
  */
 Matrix<double> Real(const Matrix<CD> &ma) {
   Matrix<double> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.num_row()*ma.num_col();
+  size_t endi = ma.size();
   double *p1;
   CD *p2;
   p1 = m.raw_ptr();
@@ -134,7 +212,7 @@ Matrix<double> Real(const Matrix<CD> &ma) {
  */
 Matrix<double> Imag(const Matrix<CD> &ma) {
   Matrix<double> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.num_row()*ma.num_col();
+  size_t endi = ma.size();
   double *p1;
   CD *p2;
   p1 = m.raw_ptr();

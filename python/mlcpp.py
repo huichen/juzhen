@@ -112,6 +112,7 @@ class Matrix(_object):
     def __ne__(self, *args): return _mlcpp.Matrix___ne__(self, *args)
     def num_row(self): return _mlcpp.Matrix_num_row(self)
     def num_col(self): return _mlcpp.Matrix_num_col(self)
+    def size(self): return _mlcpp.Matrix_size(self)
     def resize(self, *args): return _mlcpp.Matrix_resize(self, *args)
     def clear(self): return _mlcpp.Matrix_clear(self)
     def conj(self): return _mlcpp.Matrix_conj(self)
@@ -134,6 +135,8 @@ class Matrix(_object):
     def __div__(self, *args): return _mlcpp.Matrix___div__(self, *args)
     def real(self): return _mlcpp.Matrix_real(self)
     def imag(self): return _mlcpp.Matrix_imag(self)
+    def abs(self): return _mlcpp.Matrix_abs(self)
+    def abs2(self): return _mlcpp.Matrix_abs2(self)
     def inverse(self): return _mlcpp.Matrix_inverse(self)
     def linear_solver(self, *args): return _mlcpp.Matrix_linear_solver(self, *args)
     def eigen(self, *args): return _mlcpp.Matrix_eigen(self, *args)
@@ -158,6 +161,7 @@ class CMatrix(_object):
     def __ne__(self, *args): return _mlcpp.CMatrix___ne__(self, *args)
     def num_row(self): return _mlcpp.CMatrix_num_row(self)
     def num_col(self): return _mlcpp.CMatrix_num_col(self)
+    def size(self): return _mlcpp.CMatrix_size(self)
     def resize(self, *args): return _mlcpp.CMatrix_resize(self, *args)
     def clear(self): return _mlcpp.CMatrix_clear(self)
     def conj(self): return _mlcpp.CMatrix_conj(self)
@@ -180,6 +184,8 @@ class CMatrix(_object):
     def __div__(self, *args): return _mlcpp.CMatrix___div__(self, *args)
     def real(self): return _mlcpp.CMatrix_real(self)
     def imag(self): return _mlcpp.CMatrix_imag(self)
+    def abs(self): return _mlcpp.CMatrix_abs(self)
+    def abs2(self): return _mlcpp.CMatrix_abs2(self)
     def inverse(self): return _mlcpp.CMatrix_inverse(self)
     def linear_solver(self, *args): return _mlcpp.CMatrix_linear_solver(self, *args)
     def eigen(self, *args): return _mlcpp.CMatrix_eigen(self, *args)
@@ -231,6 +237,8 @@ class Vector(_object):
     def __div__(self, *args): return _mlcpp.Vector___div__(self, *args)
     def real(self): return _mlcpp.Vector_real(self)
     def imag(self): return _mlcpp.Vector_imag(self)
+    def abs(self): return _mlcpp.Vector_abs(self)
+    def abs2(self): return _mlcpp.Vector_abs2(self)
 Vector_swigregister = _mlcpp.Vector_swigregister
 Vector_swigregister(Vector)
 
@@ -268,6 +276,8 @@ class CVector(_object):
     def __div__(self, *args): return _mlcpp.CVector___div__(self, *args)
     def real(self): return _mlcpp.CVector_real(self)
     def imag(self): return _mlcpp.CVector_imag(self)
+    def abs(self): return _mlcpp.CVector_abs(self)
+    def abs2(self): return _mlcpp.CVector_abs2(self)
 CVector_swigregister = _mlcpp.CVector_swigregister
 CVector_swigregister(CVector)
 
@@ -365,9 +375,21 @@ def mean(*args):
   return _mlcpp.mean(*args)
 mean = _mlcpp.mean
 
+def norm_square(*args):
+  return _mlcpp.norm_square(*args)
+norm_square = _mlcpp.norm_square
+
 def norm(*args):
   return _mlcpp.norm(*args)
 norm = _mlcpp.norm
+
+def norm_one(*args):
+  return _mlcpp.norm_one(*args)
+norm_one = _mlcpp.norm_one
+
+def norm_infinity(*args):
+  return _mlcpp.norm_infinity(*args)
+norm_infinity = _mlcpp.norm_infinity
 
 def max(*args):
   return _mlcpp.max(*args)

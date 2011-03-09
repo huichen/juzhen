@@ -57,7 +57,7 @@ Vector<T> &Randomize(Vector<T> &vector) {  // NOLINT
  */
 template<typename T, typename T1>
 Matrix<T>& Randomize(Matrix<T> &matrix, T1 scale) {  // NOLINT
-  size_t size = matrix.num_col() * matrix.num_row();
+  size_t size = matrix.size();
   for (size_t i = 0; i < size; i++)
     matrix(i) = scale * (T)rand_r(&sRandomSeed) / (T)RAND_MAX;
   return matrix;

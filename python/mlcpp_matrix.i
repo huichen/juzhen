@@ -34,6 +34,7 @@ class Matrix {
 
   int num_row();
   int num_col();
+  int size();
 
   void Resize(int, int);
   void Clear();
@@ -121,6 +122,14 @@ class Matrix {
       return Imag(*$self);
     }
 
+    Matrix abs() {
+      return Abs(*$self);
+    }
+
+    Matrix abs2() {
+      return Abs2(*$self);
+    }
+
     Matrix inverse() {
       return Inverse(*$self);
     }
@@ -155,6 +164,7 @@ class CMatrix {
 
   int num_row();
   int num_col();
+  int size();
 
   void Resize(int, int);
   void Clear();
@@ -263,6 +273,14 @@ class CMatrix {
 
     Matrix imag() {
       return Imag(*$self);
+    }
+
+    Matrix abs() {
+      return Abs(*$self);
+    }
+
+    Matrix abs2() {
+      return Abs2(*$self);
     }
     
     CMatrix inverse() {

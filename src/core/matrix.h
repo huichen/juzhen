@@ -128,6 +128,11 @@ class Matrix {
   size_t num_col() const;
 
   /**
+   * Return number of elements in a matrix.
+   */
+  inline size_t size() const;
+
+  /**
    * Returns the pointer of raw array. This is pretty useful when calling
    * low level blas/lapack functions.
    */
@@ -384,7 +389,7 @@ template<typename T>
 Matrix<DataType>::Matrix(const Matrix<T> &m)
   : num_col_(m.num_col()), num_row_(m.num_row()) {
   data_ptr_ = DataPtr(
-      new DataArray<DataType>(m.raw_ptr(), m.num_row()*m.num_col()));
+      new DataArray<DataType>(m.raw_ptr(), m.size()));
   temporary_ = false;
   raw_ptr_ = data_ptr_->data_ptr;
 }
@@ -413,12 +418,12 @@ Matrix<DataType> &Matrix<DataType>::operator=(
     raw_ptr_ = data_ptr_->data_ptr;
     return *this;
   }
-  if ((raw_ptr_ == NULL) || data_ptr_->size < rhs.num_col()*rhs.num_row())
+  if ((raw_ptr_ == NULL) || data_ptr_->size < rhs.size())
     data_ptr_ = DataPtr(new DataArray<DataType>(*(rhs.data_ptr_)));
   else
     memcpy(data_ptr_->data_ptr,
            rhs.raw_ptr(),
-           rhs.num_col() * rhs.num_row() * sizeof(DataType));
+           rhs.size() * sizeof(DataType));
   num_col_ = rhs.num_col();
   num_row_ = rhs.num_row();
   raw_ptr_ = data_ptr_->data_ptr;
@@ -475,6 +480,11 @@ size_t Matrix<DataType>::num_row() const {
 template<typename DataType>
 size_t Matrix<DataType>::num_col() const {
   return num_col_;
+}
+
+template<typename DataType>
+size_t Matrix<DataType>::size() const {
+  return num_row_ * num_col_;
 }
 
 template<typename DataType>

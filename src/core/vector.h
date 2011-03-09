@@ -222,10 +222,9 @@ Vector<DataType>::Vector(size_t i) : Matrix<DataType>(i, 1) { }
 template<typename DataType>
 Vector<DataType>::Vector(const Matrix<DataType> &m) {
   Matrix<DataType>::data_ptr_ = typename Matrix<DataType>::DataPtr(
-      new DataArray<DataType>(m.raw_ptr(),
-                              m.num_row()*m.num_col()));
+      new DataArray<DataType>(m.raw_ptr(), m.size()));
   Matrix<DataType>::num_col_ =1;
-  Matrix<DataType>::num_row_ = m.num_row()*m.num_col();
+  Matrix<DataType>::num_row_ = m.size();
   Matrix<DataType>::raw_ptr_ = Matrix<DataType>::data_ptr_->data_ptr;
   Matrix<DataType>::temporary_ = m.temporary();
 }

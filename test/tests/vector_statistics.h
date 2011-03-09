@@ -11,6 +11,9 @@ VDE(Prod(v1), 24)
 VDE(Mean(v1), 2.5)
 
 VDE(Norm(v2)*Norm(v2), 30.0)
+VDE(NormSquare(v2), 30.0)
+VDE(NormOne(v2), 10.0)
+VDE(NormInfinity(v2), 4)
 
 V(Sort(v2), "{1, 2, 3, 4}")
 

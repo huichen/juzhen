@@ -71,47 +71,50 @@ T Mean(const Vector<T> &vector) {
 }
 
 /**
- * Find the Norm-2 of a Vector.
+ * Return the norm-square of a Vector.
  */
 template<typename T>
-T Norm(const Vector<T> &v)  {
-  assert(0);
-}
-
-double Norm(const Vector<CD> &v)  {
+double NormSquare(const Vector<T> &v) {
   double r = 0;
-  CD *p = v.raw_ptr();
   size_t size = v.size();
   for (size_t i = 0; i < size; i++)
-    r += abs2(*(p++));
-  return sqrt(r);
+    r += abs2(v(i));
+  return r;
 }
 
-float Norm(const Vector<CS> &v)  {
-  float r = 0;
-  CS *p = v.raw_ptr();
-  size_t size = v.size();
-  for (size_t i = 0; i < size; i++)
-    r += abs2(*(p++));
-  return sqrt(r);
+/**
+ * Return the norm of a Vector.
+ */
+template<typename T>
+double Norm(const Vector<T> &v) {
+  return sqrt(NormSquare(v));
 }
 
-double Norm(const Vector<double> &v)  {
+/**
+ * Return the 1-norm of a Vector.
+ */
+template<typename T>
+double NormOne(const Vector<T> &v) {
   double r = 0;
-  double *p = v.raw_ptr();
   size_t size = v.size();
   for (size_t i = 0; i < size; i++)
-    r += abs2(*(p++));
-  return sqrt(r);
+    r += abs(v(i));
+  return r;
 }
 
-float Norm(const Vector<float> &v)  {
-  double r = 0;
-  float *p = v.raw_ptr();
+/**
+ * Return the infinity-norm of a Vector.
+ */
+template<typename T>
+double NormInfinity(const Vector<T> &v) {
   size_t size = v.size();
-  for (size_t i = 0; i < size; i++)
-    r += abs2(*(p++));
-  return sqrt(r);
+  if (size == 0)
+    return 0;
+  double r = abs(v(0));
+  for (size_t i = 1; i < size; i++)
+    if (r < abs(v(i)))
+      r = abs(v(i));
+  return r;
 }
 
 /**
