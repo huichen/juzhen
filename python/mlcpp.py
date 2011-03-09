@@ -216,7 +216,7 @@ class Vector(_object):
     def conj(self): return _mlcpp.Vector_conj(self)
     def trans(self): return _mlcpp.Vector_trans(self)
     def adj(self): return _mlcpp.Vector_adj(self)
-    def sort(self): return _mlcpp.Vector_sort(self)
+    def Sort(self): return _mlcpp.Vector_Sort(self)
     def block(self, *args): return _mlcpp.Vector_block(self, *args)
     def replace(self, *args): return _mlcpp.Vector_replace(self, *args)
     def swap(self, *args): return _mlcpp.Vector_swap(self, *args)
@@ -229,11 +229,6 @@ class Vector(_object):
     def __sub__(self, *args): return _mlcpp.Vector___sub__(self, *args)
     def __mul__(self, *args): return _mlcpp.Vector___mul__(self, *args)
     def __div__(self, *args): return _mlcpp.Vector___div__(self, *args)
-    def norm(self): return _mlcpp.Vector_norm(self)
-    def sum(self): return _mlcpp.Vector_sum(self)
-    def max(self): return _mlcpp.Vector_max(self)
-    def min(self): return _mlcpp.Vector_min(self)
-    def average(self): return _mlcpp.Vector_average(self)
     def real(self): return _mlcpp.Vector_real(self)
     def imag(self): return _mlcpp.Vector_imag(self)
 Vector_swigregister = _mlcpp.Vector_swigregister
@@ -271,9 +266,6 @@ class CVector(_object):
     def __sub__(self, *args): return _mlcpp.CVector___sub__(self, *args)
     def __mul__(self, *args): return _mlcpp.CVector___mul__(self, *args)
     def __div__(self, *args): return _mlcpp.CVector___div__(self, *args)
-    def norm(self): return _mlcpp.CVector_norm(self)
-    def sum(self): return _mlcpp.CVector_sum(self)
-    def average(self): return _mlcpp.CVector_average(self)
     def real(self): return _mlcpp.CVector_real(self)
     def imag(self): return _mlcpp.CVector_imag(self)
 CVector_swigregister = _mlcpp.CVector_swigregister
@@ -316,4 +308,156 @@ def left_eigen(a):
 
 
 
+def sort(*args):
+  return _mlcpp.sort(*args)
+sort = _mlcpp.sort
+
+def cov(*args):
+  return _mlcpp.cov(*args)
+cov = _mlcpp.cov
+
+def var(*args):
+  return _mlcpp.var(*args)
+var = _mlcpp.var
+
+def std_dev(*args):
+  return _mlcpp.std_dev(*args)
+std_dev = _mlcpp.std_dev
+
+def corr_coeff(*args):
+  return _mlcpp.corr_coeff(*args)
+corr_coeff = _mlcpp.corr_coeff
+
+
+def transpose(*args):
+  return _mlcpp.transpose(*args)
+transpose = _mlcpp.transpose
+
+def adjoint(*args):
+  return _mlcpp.adjoint(*args)
+adjoint = _mlcpp.adjoint
+
+def conjugate(*args):
+  return _mlcpp.conjugate(*args)
+conjugate = _mlcpp.conjugate
+
+def join(*args):
+  return _mlcpp.join(*args)
+join = _mlcpp.join
+
+def outer_product(*args):
+  return _mlcpp.outer_product(*args)
+outer_product = _mlcpp.outer_product
+
+def cross_product(*args):
+  return _mlcpp.cross_product(*args)
+cross_product = _mlcpp.cross_product
+
+def sum(*args):
+  return _mlcpp.sum(*args)
+sum = _mlcpp.sum
+
+def mean(*args):
+  return _mlcpp.mean(*args)
+mean = _mlcpp.mean
+
+def norm(*args):
+  return _mlcpp.norm(*args)
+norm = _mlcpp.norm
+
+def max(*args):
+  return _mlcpp.max(*args)
+max = _mlcpp.max
+
+def min(*args):
+  return _mlcpp.min(*args)
+min = _mlcpp.min
+
+def randomize(*args):
+  return _mlcpp.randomize(*args)
+randomize = _mlcpp.randomize
+
+def least_squares_method(*args):
+  return _mlcpp.least_squares_method(*args)
+least_squares_method = _mlcpp.least_squares_method
+
+def trace(*args):
+  return _mlcpp.trace(*args)
+trace = _mlcpp.trace
+
+def schur_product(*args):
+  return _mlcpp.schur_product(*args)
+schur_product = _mlcpp.schur_product
+
+def kronecker_product(*args):
+  return _mlcpp.kronecker_product(*args)
+kronecker_product = _mlcpp.kronecker_product
+
+def inner_product(*args):
+  return _mlcpp.inner_product(*args)
+inner_product = _mlcpp.inner_product
+
+def cos(*args):
+  return _mlcpp.cos(*args)
+cos = _mlcpp.cos
+
+def sin(*args):
+  return _mlcpp.sin(*args)
+sin = _mlcpp.sin
+
+def tan(*args):
+  return _mlcpp.tan(*args)
+tan = _mlcpp.tan
+
+def acos(*args):
+  return _mlcpp.acos(*args)
+acos = _mlcpp.acos
+
+def asin(*args):
+  return _mlcpp.asin(*args)
+asin = _mlcpp.asin
+
+def atan(*args):
+  return _mlcpp.atan(*args)
+atan = _mlcpp.atan
+
+def cosh(*args):
+  return _mlcpp.cosh(*args)
+cosh = _mlcpp.cosh
+
+def sinh(*args):
+  return _mlcpp.sinh(*args)
+sinh = _mlcpp.sinh
+
+def tanh(*args):
+  return _mlcpp.tanh(*args)
+tanh = _mlcpp.tanh
+
+def exp(*args):
+  return _mlcpp.exp(*args)
+exp = _mlcpp.exp
+
+def log(*args):
+  return _mlcpp.log(*args)
+log = _mlcpp.log
+
+def log10(*args):
+  return _mlcpp.log10(*args)
+log10 = _mlcpp.log10
+
+def sqrt(*args):
+  return _mlcpp.sqrt(*args)
+sqrt = _mlcpp.sqrt
+
+def ceil(*args):
+  return _mlcpp.ceil(*args)
+ceil = _mlcpp.ceil
+
+def fabs(*args):
+  return _mlcpp.fabs(*args)
+fabs = _mlcpp.fabs
+
+def floor(*args):
+  return _mlcpp.floor(*args)
+floor = _mlcpp.floor
 

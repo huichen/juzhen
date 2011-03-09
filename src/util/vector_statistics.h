@@ -59,6 +59,11 @@ T Mean(const Vector<T> &vector) {
 /**
  * Find the Norm-2 of a Vector.
  */
+template<typename T>
+T Norm(const Vector<T> &v)  {
+  assert(0);
+}
+
 double Norm(const Vector<CD> &v)  {
   double r = 0;
   CD *p = v.raw_ptr();
@@ -163,6 +168,17 @@ T Var(const Vector<T> &vector) {
 /**
  * Return standard deviation of a vector.
  */
+template<typename T>
+T StdDev(const Vector<T> &vector) {
+  assert(0);
+}
+
+template<>
+float StdDev(const Vector<float> &vector) {
+  return sqrt(Var(vector));
+}
+
+template<>
 double StdDev(const Vector<double> &vector) {
   return sqrt(Var(vector));
 }

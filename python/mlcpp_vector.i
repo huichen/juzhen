@@ -1,7 +1,6 @@
 %rename(conj) Vector::Conjugate;
 %rename(adj) Vector::Adjoint;
 %rename(trans) Vector::Transpose;
-%rename(sort) Vector::Sort;
 %rename(resize) Vector::Resize;
 %rename(clear) Vector::Clear;
 %rename(block) Vector::Block;
@@ -11,7 +10,6 @@
 %rename(conj) CVector::Conjugate;
 %rename(adj) CVector::Adjoint;
 %rename(trans) CVector::Transpose;
-%rename(sort) CVector::Sort;
 %rename(resize) CVector::Resize;
 %rename(clear) CVector::Clear;
 %rename(block) CVector::Block;
@@ -97,26 +95,6 @@ class Vector {
 
     Vector __div__(double a) {
       return (*$self) / a;
-    }
-
-    double norm() {
-      return Norm(*$self);
-    }
-
-    double sum() {
-      return Sum(*$self);
-    }
-
-    double max() {
-      return Max(*$self);
-    }
-
-    double min() {
-      return Min(*$self);
-    }
-
-    double average() {
-      return Average(*$self);
     }
 
     Vector real() {
@@ -224,18 +202,6 @@ class CVector {
 
     CVector __div__(Complex &a) {
       return (*$self) / a;
-    }
-
-    double norm() {
-      return Norm(*$self);
-    }
-
-    Complex sum() {
-      return Sum(*$self);
-    }
-
-    Complex average() {
-      return Average(*$self);
     }
 
     Vector real() {

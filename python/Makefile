@@ -16,13 +16,16 @@ endif
 endif
 endif
 
-all: mlcpp_wrap.cc
+all: mlcpp_wrap.cc mlcpp_util.i
 	$(CC) -c -fpic mlcpp_wrap.cc -I/usr/include/python2.6/ $(CFLAGS)
 	$(CC) -shared mlcpp_wrap.o -o _mlcpp.so $(CFLAGS)
 	python test.py > output
 	
-mlcpp_wrap.cc:
+wrap:
 	swig -c++ -python  -o mlcpp_wrap.cc mlcpp.i
+
+util:
+	./extract_util.py
 
 clean:
 	rm *.o mlcpp*.pyc -rf

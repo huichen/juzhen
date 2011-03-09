@@ -31,3 +31,6 @@ CMatrix CIdentity(int i) {
 %include "mlcpp_vector.i"
 
 %include "mlcpp_extension.i"
+
+%include "mlcpp_util.i"
+

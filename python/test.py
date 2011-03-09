@@ -292,27 +292,6 @@ print "Identity(6) * a= "
 print Identity(6) * a
 print 
 
-# Sum of all elements
-print "a.sum() = "
-print a.sum()
-print 
-
-# Find the max elements
-print "a.max() = "
-print a.max()
-print 
-
-# Calculate the norm of vector a
-# norm(a) = sqrt(a_1*a_1 + a_2*a_2 + ...)
-print "a.norm() = "
-print a.norm()
-print 
-
-# Sort a vector
-print "b.sort() = "
-print b.sort()
-print 
-
 # Get the real part of a vector
 print "a.real() = "
 print a.real()
@@ -360,14 +339,6 @@ print
 
 print "a / 3 = "
 print a / 3 
-print 
-
-print "a.sum() = "
-print a.sum()
-print 
-
-print "a.norm() = "
-print a.norm()
 print 
 
 print "a.real() = "
