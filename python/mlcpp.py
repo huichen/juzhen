@@ -357,6 +357,10 @@ def sum(*args):
   return _mlcpp.sum(*args)
 sum = _mlcpp.sum
 
+def prod(*args):
+  return _mlcpp.prod(*args)
+prod = _mlcpp.prod
+
 def mean(*args):
   return _mlcpp.mean(*args)
 mean = _mlcpp.mean

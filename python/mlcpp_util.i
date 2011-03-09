@@ -65,6 +65,10 @@ double Min(const Matrix &matrix);
 double Sum(const Matrix &matrix);
 Complex Sum(const CMatrix &matrix);
 
+%rename(prod) Prod;
+double Prod(const Matrix &matrix);
+Complex Prod(const CMatrix &matrix);
+
 %rename(mean) Mean;
 double Mean(const Matrix &matrix);
 Complex Mean(const CMatrix &matrix);
@@ -76,6 +80,10 @@ Complex Mean(const CMatrix &matrix);
 %rename(sum) Sum;
 double Sum(const Vector &vector);
 Complex Sum(const CVector &vector);
+
+%rename(prod) Prod;
+double Prod(const Vector &vector);
+Complex Prod(const CVector &vector);
 
 %rename(mean) Mean;
 double Mean(const Vector &vector);

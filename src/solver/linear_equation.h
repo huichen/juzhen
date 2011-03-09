@@ -37,8 +37,7 @@ Matrix<DataType> LinearSolver(
     const Matrix<DataType> &matrix_a,
     const Matrix<DataType> &matrix_b) {
   assert(matrix_a.num_col() == matrix_a.num_row());
-  assert(matrix_b.num_col() == matrix_b.num_row());
-  assert(matrix_a.num_col() == matrix_b.num_row());
+  assert(matrix_a.num_row() == matrix_b.num_row());
 
   Matrix<DataType> mata;
   mata = matrix_a;
@@ -46,9 +45,9 @@ Matrix<DataType> LinearSolver(
   Matrix<DataType> matrix_x;
   matrix_x = matrix_b;
 
-  if (gesv<DataType>(mata.num_col(), mata.num_row(),
-                 mata.raw_ptr(), mata.num_col(),
-                 matrix_x.raw_ptr(), matrix_x.num_col()))
+  if (gesv<DataType>(mata.num_col(), matrix_x.num_col(),
+                 mata.raw_ptr(), mata.num_row(),
+                 matrix_x.raw_ptr(), matrix_x.num_row()))
     return Matrix<DataType>();
   matrix_x.set_temporary(true);
   return matrix_x;

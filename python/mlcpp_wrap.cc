@@ -11277,6 +11277,56 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_prod__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Matrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:prod",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Matrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "prod" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "prod" "', argument " "1"" of type '" "Matrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< Matrix * >(argp1);
+  result = (double)Prod((Matrix const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_prod__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CMatrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:prod",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CMatrix,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "prod" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "prod" "', argument " "1"" of type '" "CMatrix const &""'"); 
+  }
+  arg1 = reinterpret_cast< CMatrix * >(argp1);
+  result = Prod((CMatrix const &)*arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_mean__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Matrix *arg1 = 0 ;
@@ -11427,6 +11477,110 @@ fail:
     "    Sum(CMatrix const &)\n"
     "    Sum(Vector const &)\n"
     "    Sum(CVector const &)\n");
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_prod__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Vector *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:prod",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Vector,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "prod" "', argument " "1"" of type '" "Vector const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "prod" "', argument " "1"" of type '" "Vector const &""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = (double)Prod((Vector const &)*arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_prod__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CVector *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Complex result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:prod",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CVector,  0  | 0);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "prod" "', argument " "1"" of type '" "CVector const &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "prod" "', argument " "1"" of type '" "CVector const &""'"); 
+  }
+  arg1 = reinterpret_cast< CVector * >(argp1);
+  result = Prod((CVector const &)*arg1);
+  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_prod(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[2];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = (int)PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 1); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Matrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_prod__SWIG_0(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CMatrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_prod__SWIG_1(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_Vector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_prod__SWIG_2(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    int res = SWIG_ConvertPtr(argv[0], 0, SWIGTYPE_p_CVector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_prod__SWIG_3(self, args);
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'prod'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    Prod(Matrix const &)\n"
+    "    Prod(CMatrix const &)\n"
+    "    Prod(Vector const &)\n"
+    "    Prod(CVector const &)\n");
   return NULL;
 }
 
@@ -14360,6 +14514,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"outer_product", _wrap_outer_product, METH_VARARGS, NULL},
 	 { (char *)"cross_product", _wrap_cross_product, METH_VARARGS, NULL},
 	 { (char *)"sum", _wrap_sum, METH_VARARGS, NULL},
+	 { (char *)"prod", _wrap_prod, METH_VARARGS, NULL},
 	 { (char *)"mean", _wrap_mean, METH_VARARGS, NULL},
 	 { (char *)"norm", _wrap_norm, METH_VARARGS, NULL},
 	 { (char *)"max", _wrap_max, METH_VARARGS, NULL},

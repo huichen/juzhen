@@ -7,6 +7,7 @@ dvector v2(c2, 4);
 VDE(Max(v1), 4)
 VDE(Min(v1), 1)
 VDE(Sum(v1), 10)
+VDE(Prod(v1), 24)
 VDE(Mean(v1), 2.5)
 
 VDE(Norm(v2)*Norm(v2), 30.0)

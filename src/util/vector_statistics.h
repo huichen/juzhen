@@ -44,6 +44,20 @@ T Sum(const Vector<T> &vector) {
 }
 
 /**
+ * Return the product of a Vector's all elements.
+ */
+template<typename T>
+T Prod(const Vector<T> &vector) {
+  size_t endi = vector.size();
+  if (endi == 0)
+    return 0;
+  T prod = 1;
+  for (size_t i = 0; i < endi; i++)
+    prod *= vector(i);
+  return prod;
+}
+
+/**
  * Return the average of a Vector's all elements.
  */
 template<typename T>

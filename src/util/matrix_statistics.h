@@ -68,6 +68,20 @@ T Sum(const Matrix<T> &matrix) {
 }
 
 /**
+ * Return the product of all elements in a matrix 
+ */
+template<typename T>
+T Prod(const Matrix<T> &matrix) {
+  size_t endi = matrix.num_col() * matrix.num_row();
+  if (endi == 0)
+    return 0;
+  T prod = 1;
+  for (size_t i = 0; i < endi; i++)
+    prod *= matrix(i);
+  return prod;
+}
+
+/**
  * Return the average of all elements in a matrix 
  */
 template<typename T>
