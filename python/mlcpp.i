@@ -22,6 +22,9 @@ CMatrix CIdentity(int i) {
     m(j, j) = 1;
   return m;
 }
+
+using mlcpp::RandVector;
+using mlcpp::RandMatrix;
 %}
 
 %include "mlcpp_complex.i"

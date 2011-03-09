@@ -8,7 +8,7 @@ util_directory = "../src/util/"
 output = open("mlcpp_util.i", "w")
 
 ignore_file_list = ["map_reduce.h", "matrix_stl.h", "vector_stl.h", "util.h"]
-ignore_func_list = ["Map"]
+ignore_func_list = ["Map", "RandVector", "RandMatrix"]
 
 no_complex_file_list = ["vector_map_math.h", "matrix_map_math.h"]
 no_complex_func_list = ["Sort", "Max", "Min", "StdDev", "CorrCoeff", "Var", "Cov", "InnerProduct"]
@@ -64,21 +64,21 @@ def extract_func(filename):
       func = func.replace("  ", " ")
     func = func.replace("( ", "(")
     func = func.replace(" )", ")")
-    func = func.strip() + ";"
+    func = "  " + func.strip() + ";"
     if (func.find("operator") == -1):
       func_name = re.findall("[ *&](\w+)\(.*\)", func)
       func_name = func_name[0]
       if not func_name in ignore_func_list:
         my_print("%%rename(%s) %s;" % (change_func_name(func_name), func_name))
-        my_print(func)
+        my_print(func.strip())
         if not (filename in no_complex_file_list) and not (func_name in no_complex_func_list):
-          func = func.replace("Matrix", "CMatrix")
-          func = func.replace("CCMatrix", "CMatrix")
           func = func.replace("Vector", "CVector")
           func = func.replace("CCVector", "CVector")
+          func = func.replace("Matrix", "CMatrix")
+          func = func.replace("CCMatrix", "CMatrix")
           if not (func_name in return_double_func_list):
             func = func.replace("double", "Complex")
-          my_print(func)
+          my_print(func.strip())
 	my_print("")
   my_print("")
 

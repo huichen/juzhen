@@ -2811,6 +2811,9 @@ CMatrix CIdentity(int i) {
   return m;
 }
 
+using mlcpp::RandVector;
+using mlcpp::RandMatrix;
+
 
 SWIGINTERN int
 SWIG_AsVal_double (PyObject *obj, double *val)
@@ -11967,6 +11970,56 @@ fail:
 
 SWIGINTERN PyObject *_wrap_randomize__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
+  Vector *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Vector *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:randomize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Vector,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "randomize" "', argument " "1"" of type '" "Vector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "randomize" "', argument " "1"" of type '" "Vector &""'"); 
+  }
+  arg1 = reinterpret_cast< Vector * >(argp1);
+  result = (Vector *) &Randomize(*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Vector, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_randomize__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CVector *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  CVector *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:randomize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CVector,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "randomize" "', argument " "1"" of type '" "CVector &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "randomize" "', argument " "1"" of type '" "CVector &""'"); 
+  }
+  arg1 = reinterpret_cast< CVector * >(argp1);
+  result = (CVector *) &Randomize(*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_CVector, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_randomize__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
   Matrix *arg1 = 0 ;
   double arg2 ;
   void *argp1 = 0 ;
@@ -11999,7 +12052,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_randomize__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_randomize__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   CMatrix *arg1 = 0 ;
   Complex arg2 ;
@@ -12041,6 +12094,56 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_randomize__SWIG_6(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Matrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  Matrix *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:randomize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Matrix,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "randomize" "', argument " "1"" of type '" "Matrix &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "randomize" "', argument " "1"" of type '" "Matrix &""'"); 
+  }
+  arg1 = reinterpret_cast< Matrix * >(argp1);
+  result = (Matrix *) &Randomize(*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Matrix, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_randomize__SWIG_7(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  CMatrix *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  CMatrix *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:randomize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CMatrix,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "randomize" "', argument " "1"" of type '" "CMatrix &""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "randomize" "', argument " "1"" of type '" "CMatrix &""'"); 
+  }
+  arg1 = reinterpret_cast< CMatrix * >(argp1);
+  result = (CMatrix *) &Randomize(*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_CMatrix, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_randomize(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
@@ -12050,6 +12153,70 @@ SWIGINTERN PyObject *_wrap_randomize(PyObject *self, PyObject *args) {
   argc = (int)PyObject_Length(args);
   for (ii = 0; (ii < argc) && (ii < 2); ii++) {
     argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Vector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_randomize__SWIG_2(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_CVector, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_randomize__SWIG_3(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Matrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_randomize__SWIG_6(self, args);
+    }
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_CMatrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_randomize__SWIG_7(self, args);
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Matrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_double(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_randomize__SWIG_4(self, args);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_CMatrix, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_Complex, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_randomize__SWIG_5(self, args);
+      }
+    }
   }
   if (argc == 2) {
     int _v;
@@ -12079,42 +12246,18 @@ SWIGINTERN PyObject *_wrap_randomize(PyObject *self, PyObject *args) {
       }
     }
   }
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Matrix, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      {
-        int res = SWIG_AsVal_double(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        return _wrap_randomize__SWIG_2(self, args);
-      }
-    }
-  }
-  if (argc == 2) {
-    int _v;
-    void *vptr = 0;
-    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_CMatrix, 0);
-    _v = SWIG_CheckState(res);
-    if (_v) {
-      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_Complex, 0);
-      _v = SWIG_CheckState(res);
-      if (_v) {
-        return _wrap_randomize__SWIG_3(self, args);
-      }
-    }
-  }
   
 fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'randomize'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    Randomize(Vector &,double)\n"
     "    Randomize(CVector &,Complex)\n"
+    "    Randomize(Vector &)\n"
+    "    Randomize(CVector &)\n"
     "    Randomize(Matrix &,double)\n"
-    "    Randomize(CMatrix &,Complex)\n");
+    "    Randomize(CMatrix &,Complex)\n"
+    "    Randomize(Matrix &)\n"
+    "    Randomize(CMatrix &)\n");
   return NULL;
 }
 

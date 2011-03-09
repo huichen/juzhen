@@ -115,8 +115,16 @@ Vector &Randomize(Vector &vector, double scale);
 CVector &Randomize(CVector &vector, Complex scale);
 
 %rename(randomize) Randomize;
+Vector &Randomize(Vector &vector);
+CVector &Randomize(CVector &vector);
+
+%rename(randomize) Randomize;
 Matrix& Randomize(Matrix &matrix, double scale);
 CMatrix& Randomize(CMatrix &matrix, Complex scale);
+
+%rename(randomize) Randomize;
+Matrix& Randomize(Matrix &matrix);
+CMatrix& Randomize(CMatrix &matrix);
 
 
 /**
