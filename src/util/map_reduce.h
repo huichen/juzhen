@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef SRC_UTIL_VECTOR_MAP_REDUCE_H_
-#define SRC_UTIL_VECTOR_MAP_REDUCE_H_
+#ifndef SRC_UTIL_MAP_REDUCE_H_
+#define SRC_UTIL_MAP_REDUCE_H_
 #include <math.h>
 
 #include <core/matrix.h>
@@ -40,7 +40,7 @@ Matrix<T> Map(const Matrix<T> &m, T (*func)(T)) {
   Matrix<T> matrix(m);
   size_t endi = matrix.num_row() * matrix.num_col();
   for (size_t i = 0; i < endi; i++)
-    matrix(i) = func(matrix(i)); 
+    matrix(i) = func(matrix(i));
   matrix.set_temporary(true);
   return matrix;
 }
@@ -53,9 +53,9 @@ Vector<T> Map(const Vector<T> &v, T (*func)(T)) {
   Vector<T> vector(v);
   size_t endi = vector.size();
   for (size_t i = 0; i < endi; i++)
-    vector(i) = func(vector(i)); 
+    vector(i) = func(vector(i));
   vector.set_temporary(true);
   return vector;
 }
 }
-#endif  // SRC_UTIL_VECTOR_MAP_REDUCE_H_
+#endif  // SRC_UTIL_MAP_REDUCE_H_

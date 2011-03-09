@@ -174,7 +174,5 @@ template<typename T>
 T CorrCoeff(const Vector<T> &vector1, const Vector<T> &vector2) {
   return Cov(vector1, vector2) / (StdDev(vector1) * StdDev(vector2));
 }
-
-
 }
 #endif  // SRC_UTIL_VECTOR_STATISTICS_H_

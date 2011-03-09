@@ -119,9 +119,9 @@ Vector<T> Join(const Vector<T> &vector1, const Vector<T> &vector2) {
   Vector<T> vector(vector1.size() + vector2.size());
   memcpy(vector.raw_ptr(), vector1.raw_ptr(), vector1.size() * sizeof(T));
   memcpy(vector.raw_ptr() + vector1.size(),
-         vector2.raw_ptr(), vector2.size() * sizeof(T)); 
+         vector2.raw_ptr(), vector2.size() * sizeof(T));
   vector.set_temporary(true);
-  return vector; 
+  return vector;
 }
 }
 #endif  // SRC_UTIL_VECTOR_BASIC_H_
