@@ -20,27 +20,37 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef SRC_UTIL_UTIL_H_
-#define SRC_UTIL_UTIL_H_
-#include <assert.h>
+#ifndef SRC_UTIL_RANDOM_H_
+#define SRC_UTIL_RANDOM_H_
+#include <stdlib.h>
+#include <time.h>
 
-#include <util/matrix_basic.h>
-#include <util/matrix_stl.h>
-#include <util/matrix_math.h>
-#include <util/matrix_statistics.h>
-
-#include <util/vector_basic.h>
-#include <util/vector_stl.h>
-#include <util/vector_math.h>
-#include <util/vector_statistics.h>
-#include <util/vector_fitting.h>
-
-#include <util/map_reduce.h>
-#include <util/matrix_map_math.h>
-#include <util/vector_map_math.h>
-
-#include <util/random.h>
+#include <core/matrix.h>
+#include <core/vector.h>
 
 namespace mlcpp {
+/**
+ * Return a random Vector with elements between 0 and scale.
+ */
+template<typename T, typename T1>
+Vector<T> &Randomize(Vector<T> &vector, T1 scale) {  // NOLINT
+  unsigned int seed = (unsigned int)time(0);
+  size_t size = vector.size();
+  for (size_t i = 0; i < size; i++)
+    vector(i) = scale * (T)rand_r(&seed) / (T)RAND_MAX;
+  return vector;
 }
-#endif  // SRC_UTIL_UTIL_H_
+
+/**
+ * Return a random Matrix with elements between 0 and scale.
+ */
+template<typename T, typename T1>
+Matrix<T>& Randomize(Matrix<T> &matrix, T1 scale) {  // NOLINT
+  unsigned int seed = (unsigned int)time(0);
+  size_t size = matrix.num_col() * matrix.num_row();
+  for (size_t i = 0; i < size; i++)
+    matrix(i) = scale * (T)rand_r(&seed) / (T)RAND_MAX;
+  return matrix;
+}
+}
+#endif  // SRC_UTIL_RANDOM_H_

@@ -47,6 +47,10 @@ BEGIN_TEST(matrix_block_replace, "matrix_block_replace")
 #include "tests/matrix_block_replace.h"
 END_TEST(matrix_block_replace)
 
+BEGIN_TEST(random, "random")
+#include "tests/random.h"
+END_TEST(random)
+
 BEGIN_TEST(vector_fitting, "vector_fitting")
 #include "tests/vector_fitting.h"
 END_TEST(vector_fitting)
