@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -26,7 +26,7 @@
 #include <stdio.h>
 
 #ifdef MLCPP
-#include <mlcpp.h>
+#include <juzhen.h>
 #else
 #include <Eigen/Dense>
 #endif
@@ -34,9 +34,10 @@
 #include <string>
 
 #define MAXN 100
-#define MINN 2
+#define MINN 2 
 #define STEPN 1
 #define NB 10
+#define PREFIX "small_"
 
 const int num_digits = 2;
 
@@ -57,10 +58,8 @@ std::string FixedLengthInteger(int num_digits, int input) {
   return target;
 }
 
-#define PREFIX "small_"
-
 #ifdef MLCPP
-#define FNAME "mlcpp_"
+#define FNAME "juzhen_"
 #else
 #define FNAME "eigen_"
 #endif
@@ -92,8 +91,8 @@ snprintf(output_string, sizeof(output_string), \
 "set title \"%s\"\n"\
 "set xlabel \"N\"\n"\
 "set ylabel \"Seconds\"\n"\
-"plot 'mlcpp_%s.txt' using 1:2 title 'mlcpp' w l, "\
-"'eigen_%s.txt' using 1:2 title 'eigen' w l ", \
+"plot 'juzhen_%s.txt' using 1:2 title 'Juzhen' w l, "\
+"'eigen_%s.txt' using 1:2 title 'Eigen' w l ", \
     out, s, out, out);\
 fprintf(myfile, "%s", output_string);\
 fclose(myfile);\
@@ -137,7 +136,7 @@ H##vi(i, j) = 1;
 
 
 #ifdef MLCPP
-using mlcpp::zmatrix;
+using juzhen::zmatrix;
 #else
 using Eigen::MatrixXcd;
 #endif

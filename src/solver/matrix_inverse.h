@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -23,9 +23,9 @@
 #ifndef SRC_SOLVER_MATRIX_INVERSE_H_
 #define SRC_SOLVER_MATRIX_INVERSE_H_
 
-#include <mlcpp.h>
+#include <juzhen.h>
 
-namespace mlcpp {
+namespace juzhen {
 
 /**
  * Inverse a matrix

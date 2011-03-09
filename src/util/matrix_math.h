@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -24,7 +24,7 @@
 #define SRC_UTIL_MATRIX_MATH_H_
 #include <core/matrix.h>
 
-namespace mlcpp {
+namespace juzhen {
 /**
  * Return the trace of a matrix 
  */

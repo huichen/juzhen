@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -29,7 +29,7 @@
 #include <sstream>
 #include <string>
 
-namespace mlcpp {
+namespace juzhen {
 
 /////////////////////////////////////////////////////////////////////////////
 /**
@@ -832,7 +832,7 @@ Matrix<DataType> Matrix<DataType>::Adjoint() const {
     for (size_t j = 0; j < num_col_; j++) {
       p1 = p0 + j;
       for (size_t i = 0; i < num_row_; i++) {
-        *p1 = mlcpp::Conjugate(*(p2++));
+        *p1 = juzhen::Conjugate(*(p2++));
         p1 += num_col_;
       }
     }
@@ -848,7 +848,7 @@ Matrix<DataType> Matrix<DataType>::Conjugate() const {
     DataType *p2;
     p2 = raw_ptr();
     for (size_t i = 0; i < endi; i++) {
-      *(p2)=mlcpp::Conjugate(*(p2));
+      *(p2)=juzhen::Conjugate(*(p2));
       p2++;
     }
     return *this;
@@ -859,7 +859,7 @@ Matrix<DataType> Matrix<DataType>::Conjugate() const {
     p1 = m.raw_ptr();
     p2 = raw_ptr();
     for (size_t i = 0; i < endi; i++)
-        *(p1++)=mlcpp::Conjugate(*(p2++));
+        *(p1++)=juzhen::Conjugate(*(p2++));
     m.temporary_ = true;
     return m;
   }

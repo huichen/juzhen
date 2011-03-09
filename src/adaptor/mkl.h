@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -28,7 +28,7 @@
 #include <mkl_lapacke.h>
 #include <mkl.h>
 
-namespace mlcpp {
+namespace juzhen {
 
 /* MKL function wrappers implemented with templates*/
 template<typename T>

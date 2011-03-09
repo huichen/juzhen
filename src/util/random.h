@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -28,7 +28,7 @@
 #include <core/matrix.h>
 #include <core/vector.h>
 
-namespace mlcpp {
+namespace juzhen {
 
 static unsigned int sRandomSeed = 9527;
 

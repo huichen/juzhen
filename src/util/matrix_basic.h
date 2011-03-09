@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -27,7 +27,7 @@
 #include <sstream>
 #include <string>
 
-namespace mlcpp {
+namespace juzhen {
 
 /**
  * Return the abs of a Matrix

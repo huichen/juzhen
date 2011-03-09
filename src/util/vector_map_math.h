@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -26,7 +26,7 @@
 #include <core/vector.h>
 #include <util/map_reduce.h>
 
-namespace mlcpp {
+namespace juzhen {
 
 /// Trigonometric functions
 template<typename T>

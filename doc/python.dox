@@ -8,9 +8,9 @@ A Python interface to MLCPP was generated from <a href="http://www.swig.org/">SW
 -# cd python <br>
 -# make <br> 
 
-Two files are generated from SWIG: _mlcpp.so (shared library) and mlcpp.py (package declaration). Copy them to the folder you want to import mlcpp from.
+Two files are generated from SWIG: _juzhen.so (shared library) and juzhen.py (package declaration). Copy them to the folder you want to import juzhen from.
 
-@section use_mlcpp How to use mlcpp module
+@section use_juzhen How to use Juzhen's Python module
 
 Five classes are available:
 
@@ -24,7 +24,7 @@ There are also \ref solver_functions available to solve <b>inverse matrix</b>, <
 @subsection complex Complex class
 
 \code
-from mlcpp import Complex
+from juzhen import Complex
 
 # a = 3 + 4i
 a = Complex(3, 4)
@@ -70,7 +70,7 @@ print "a / 3 = ", a / 3
 Replace Matrix with CMatrix in following code to use complex matrix. 
 
 \code
-from mlcpp import Matrix, CMatrix, Identity, CIdentity
+from juzhen import Matrix, CMatrix, Identity, CIdentity
 
 # Define a matrix of 3 rows (1st parameter) and 3 columns (2nd parameter)
 # Row and column indices start from zero
@@ -212,7 +212,7 @@ print
 Replace Vector with CVector in following code to use complex vector. 
 
 \code
-from mlcpp import Vector, CVector, Identity, CIdentity
+from juzhen import Vector, CVector, Identity, CIdentity
 
 # Define a vector of length 6
 a = Vector(6)
@@ -315,10 +315,10 @@ print
 @subsection solver_functions Solver Functions 
 
 \code
-from mlcpp import Complex, Matrix, CMatrix, Identity, CIdentity, Vector, CVector
-from mlcpp import inverse 
-from mlcpp import linear_solver
-from mlcpp import eigen, left_eigen, right_eigen
+from juzhen import Complex, Matrix, CMatrix, Identity, CIdentity, Vector, CVector
+from juzhen import inverse 
+from juzhen import linear_solver
+from juzhen import eigen, left_eigen, right_eigen
 
 a = Identity(3)
 print "inverse(a) = "

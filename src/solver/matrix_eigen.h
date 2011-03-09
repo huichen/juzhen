@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -23,9 +23,9 @@
 #ifndef SRC_SOLVER_MATRIX_EIGEN_H_
 #define SRC_SOLVER_MATRIX_EIGEN_H_
 
-#include <mlcpp.h>
+#include <juzhen.h>
 
-namespace mlcpp {
+namespace juzhen {
 
 /**
  * Solve eigen system and put eigen values into e, corresponding

@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -26,7 +26,7 @@
 
 #include <iostream>  // NOLINT string fuctions are provided for compatibility
 
-namespace mlcpp {
+namespace juzhen {
 
 /////////////////////////////////////////////////////////////////////////////
 /**

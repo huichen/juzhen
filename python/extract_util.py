@@ -5,7 +5,7 @@ import re
 
 util_directory = "../src/util/"
 
-output = open("mlcpp_util.i", "w")
+output = open("util.i", "w")
 
 ignore_file_list = ["map_reduce.h", "matrix_stl.h", "vector_stl.h", "util.h"]
 ignore_func_list = ["Map", "RandVector", "RandMatrix"]

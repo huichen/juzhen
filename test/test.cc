@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -26,25 +26,25 @@
 #include <vector>
 #include <sstream>
 
-#include <mlcpp.h>
+#include <juzhen.h>
 
-using mlcpp::CS;
-using mlcpp::CD;
+using juzhen::CS;
+using juzhen::CD;
 
-using mlcpp::smatrix;
-using mlcpp::dmatrix;
-using mlcpp::cmatrix;
-using mlcpp::zmatrix;
+using juzhen::smatrix;
+using juzhen::dmatrix;
+using juzhen::cmatrix;
+using juzhen::zmatrix;
 
-using mlcpp::identity_smatrix;
-using mlcpp::identity_dmatrix;
-using mlcpp::identity_cmatrix;
-using mlcpp::identity_zmatrix;
+using juzhen::identity_smatrix;
+using juzhen::identity_dmatrix;
+using juzhen::identity_cmatrix;
+using juzhen::identity_zmatrix;
 
-using mlcpp::svector;
-using mlcpp::dvector;
-using mlcpp::cvector;
-using mlcpp::zvector;
+using juzhen::svector;
+using juzhen::dvector;
+using juzhen::cvector;
+using juzhen::zvector;
 
 int main(int argc, char *argv[]) {
 

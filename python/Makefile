@@ -16,24 +16,24 @@ endif
 endif
 endif
 
-all: mlcpp_wrap.cc mlcpp_util.i
-	$(CC) -c -fpic mlcpp_wrap.cc -I/usr/include/python2.6/ $(CFLAGS)
-	$(CC) -shared mlcpp_wrap.o -o _mlcpp.so $(CFLAGS)
+all: juzhen_wrap.cc util.i
+	$(CC) -c -fpic juzhen_wrap.cc -I/usr/include/python2.6/ $(CFLAGS)
+	$(CC) -shared juzhen_wrap.o -o _juzhen.so $(CFLAGS)
 	python test.py > output
 	
 wrap:
-	swig -c++ -python  -o mlcpp_wrap.cc mlcpp.i
+	swig -c++ -python  -o juzhen_wrap.cc juzhen.i
 
 util:
 	./extract_util.py
 
 clean:
-	rm *.o mlcpp*.pyc -rf
+	rm *.o juzhen*.pyc -rf
 
 distclean: clean
-	rm *.so mlcpp.py *.txt *.png -rf
+	rm *.so juzhen.py *.txt *.png -rf
 
-bench: _mlcpp.so mlcpp.py benchmark.py
+bench: _juzhen.so juzhen.py benchmark.py
 	./benchmark.py
 
 plt: benchmark.txt benchmark.plt

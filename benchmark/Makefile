@@ -20,15 +20,15 @@ CFLAGS_EIGEN = -I../../eigen -DNDEBUG -O3 -msse2 -fopenmp
 CC_EIGEN = g++ 
 
 all:
-	time -p $(CC_MLCPP) benchmark.cc -o mlcpp $(CFLAGS_MLCPP)
+	time -p $(CC_MLCPP) benchmark.cc -o juzhen $(CFLAGS_MLCPP)
 	time -p $(CC_EIGEN) benchmark.cc -o eigen $(CFLAGS_EIGEN)
 
 run:
-	./mlcpp
+	./juzhen
 	./eigen
 
 clean:
-	rm *.plt *.txt *.png *.tar mlcpp eigen -rf
+	rm *.plt *.txt *.png *.tar juzhen eigen -rf
 
 plt:
 	gnuplot *.plt

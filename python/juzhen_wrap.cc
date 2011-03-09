@@ -2704,16 +2704,16 @@ static swig_module_info swig_module = {swig_types, 7, 0, 0, 0, 0};
 #endif
 
 /*-----------------------------------------------
-              @(target):= _mlcpp.so
+              @(target):= _juzhen.so
   ------------------------------------------------*/
 #if PY_VERSION_HEX >= 0x03000000
-#  define SWIG_init    PyInit__mlcpp
+#  define SWIG_init    PyInit__juzhen
 
 #else
-#  define SWIG_init    init_mlcpp
+#  define SWIG_init    init_juzhen
 
 #endif
-#define SWIG_name    "_mlcpp"
+#define SWIG_name    "_juzhen"
 
 #define SWIGVERSION 0x020001 
 #define SWIG_VERSION SWIGVERSION
@@ -2788,12 +2788,12 @@ namespace swig {
 }
 
 
-#include <mlcpp.h>
-typedef mlcpp::Complex<double> Complex; 
-typedef mlcpp::Matrix<double> Matrix; 
-typedef mlcpp::Matrix<mlcpp::Complex<double> > CMatrix; 
-typedef mlcpp::Vector<double> Vector; 
-typedef mlcpp::Vector<mlcpp::Complex<double> > CVector; 
+#include <juzhen.h>
+typedef juzhen::Complex<double> Complex; 
+typedef juzhen::Matrix<double> Matrix; 
+typedef juzhen::Matrix<juzhen::Complex<double> > CMatrix; 
+typedef juzhen::Vector<double> Vector; 
+typedef juzhen::Vector<juzhen::Complex<double> > CVector; 
 
 Matrix Identity(int i) {
   Matrix m = Matrix(i, i);
@@ -2811,8 +2811,8 @@ CMatrix CIdentity(int i) {
   return m;
 }
 
-using mlcpp::RandVector;
-using mlcpp::RandMatrix;
+using juzhen::RandVector;
+using juzhen::RandMatrix;
 
 
 SWIGINTERN int

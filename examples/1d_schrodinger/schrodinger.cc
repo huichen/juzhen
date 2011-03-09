@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -19,11 +19,11 @@
 |                                                                           |
 +---------------------------------------------------------------------------+
 */
-#include <mlcpp.h>
+#include <juzhen.h>
 
 #define N 90
-using mlcpp::cvector;
-using mlcpp::cmatrix;
+using juzhen::cvector;
+using juzhen::cmatrix;
 
 int main() {
   /* matrix of complex<float> */

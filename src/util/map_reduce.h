@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -31,7 +31,7 @@
 #include <vector>
 #include <string>
 
-namespace mlcpp {
+namespace juzhen {
 /**
  * Map a function func to all elements in a matrix.
  */

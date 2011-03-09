@@ -1,6 +1,6 @@
 /*
 +---------------------------------------------------------------------------+
-|  Matrix Library for C++ (mlcpp)                                           |
+|  Juzhen: C++ library for linear algebra                                           |
 +---------------------------------------------------------------------------+
 |                                                                           |
 |  Copyright 2011 Hui Chen                                                  |
@@ -23,7 +23,7 @@
 #ifndef SRC_ADAPTOR_NATIVE_GEMM_H_
 #define SRC_ADAPTOR_NATIVE_GEMM_H_
 
-namespace mlcpp {
+namespace juzhen {
 template<typename T>
 void gemm(
     const int M, const int N,
