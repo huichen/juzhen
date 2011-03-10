@@ -29,11 +29,25 @@
 namespace juzhen {
 /**
  * Least square method.
- * Find the factor k to make |k * a + b| minimum.
+ * Find the factors k1 and k2 to make sum(|k1*a + k2 - b|^2) minimum.
  */
 template<typename T>
-T LeastSquaresMethod(const Vector<T> &a, const Vector<T> &b) {
-  return -(a * b) / (a * a);
+Vector<T> LinearLeastSquares(const Vector<T> &a, const Vector<T> &b) {
+  assert(a.size() == b.size());
+  int n = a.size();
+  T mean_a = Mean(a);
+  T mean_b = Mean(b);
+  Vector<T> vector(2);
+  vector.Clear();
+
+  T temp = a * a - n * mean_a * mean_a;
+  if (temp != 0) {
+    vector(0) = (a * b - n * mean_a * mean_b) / temp;
+    vector(1) = mean_b - mean_a * vector(0);
+  }
+
+  vector.set_temporary(true);
+  return vector;
 }
 }
 #endif  // SRC_UTIL_VECTOR_FITTING_H_
