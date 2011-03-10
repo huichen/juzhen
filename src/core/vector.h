@@ -84,7 +84,7 @@ class Vector : public Matrix<DataType> {
   /**
    * Return the opposite vector.
    */
-  Vector<DataType> operator-();
+  Vector<DataType> operator-() const;
 
   /**
    * Assign all elements in the Vector to be rhs.
@@ -107,10 +107,20 @@ class Vector : public Matrix<DataType> {
   inline size_t size() const;
 
   /**
+   * Add a scalar and a vector.
+   */
+  Vector<DataType> operator+(const DataType &rhs) const;
+
+  /**
    * Add two Vectors.
    */
   template<typename T>
   Vector<DataType> operator+(const Vector<T> &rhs) const;
+
+  /**
+   * Add a scalar.
+   */
+  Vector<DataType> &operator+=(const DataType &rhs);
 
   /**
    * Add two Vectors.
@@ -119,12 +129,22 @@ class Vector : public Matrix<DataType> {
   Vector<DataType> &operator+=(const Vector<T> &rhs);
 
   /**
+   * Subtract a scalar.
+   */
+  Vector<DataType> operator-(const DataType &rhs) const;
+
+  /**
    * Subtract two Vectors.
    */
   template<typename T>
   Vector<DataType> operator-(const Vector<T> &rhs) const;
 
   /**
+   * Subtract a scalar.
+   */
+  Vector<DataType> &operator-=(const DataType &rhs);
+
+   /**
    * Subtract two Vectors.
    */
   template<typename T>
@@ -262,13 +282,8 @@ Vector<DataType> &Vector<DataType>::operator+() {
 }
 
 template<typename DataType>
-Vector<DataType> Vector<DataType>::operator-() {
-  Vector<DataType> vector(*this);
-  size_t endi = size();
-  for (size_t i = 0; i < endi; i++)
-    vector(i) = -vector(i);
-  vector.set_temporary(true);
-  return vector;
+Vector<DataType> Vector<DataType>::operator-() const {
+  return Matrix<DataType>::operator-();
 }
 
 template<typename DataType>
@@ -293,9 +308,20 @@ inline size_t Vector<DataType>::size() const {
 }
 
 template<typename DataType>
+Vector<DataType> Vector<DataType>::operator+(const DataType &rhs) const {
+  return Matrix<DataType>::operator+(rhs);
+}
+
+template<typename DataType>
 template<typename T>
 Vector<DataType> Vector<DataType>::operator+(const Vector<T> &rhs) const {
   return Matrix<DataType>::operator+(rhs);
+}
+
+template<typename DataType>
+Vector<DataType> &Vector<DataType>::operator+=(const DataType &rhs) {
+  Matrix<DataType>::operator+=(rhs);
+  return *this;
 }
 
 template<typename DataType>
@@ -306,9 +332,20 @@ Vector<DataType> &Vector<DataType>::operator+=(const Vector<T> &rhs) {
 }
 
 template<typename DataType>
+Vector<DataType> Vector<DataType>::operator-(const DataType &rhs) const {
+  return Matrix<DataType>::operator-(rhs);
+}
+
+template<typename DataType>
 template<typename T>
 Vector<DataType> Vector<DataType>::operator-(const Vector<T> &rhs) const {
   return Matrix<DataType>::operator-(rhs);
+}
+
+template<typename DataType>
+Vector<DataType> &Vector<DataType>::operator-=(const DataType &rhs) {
+  Matrix<DataType>::operator-=(rhs);
+  return *this;
 }
 
 template<typename DataType>

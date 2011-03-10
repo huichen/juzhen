@@ -41,6 +41,40 @@ T Trace(const Matrix<T> &matrix) {
 }
 
 /**
+ * scalar + matrix 
+ */
+template<typename DataType>
+inline Matrix<DataType> operator+(
+    double lhs,
+    const Matrix<DataType> &ma) {
+  return ma + lhs;
+}
+
+template<typename DataType>
+inline Matrix<DataType> operator+(
+    const CD &lhs,
+    const Matrix<DataType> &ma) {
+  return ma + lhs;
+}
+
+/**
+ * scalar - matrix 
+ */
+template<typename DataType>
+inline Matrix<DataType> operator-(
+    double lhs,
+    const Matrix<DataType> &ma) {
+  return (-ma) + lhs;
+}
+
+template<typename DataType>
+inline Matrix<DataType> operator-(
+    const CD &lhs,
+    const Matrix<DataType> &ma) {
+  return (-ma) + lhs;
+}
+
+/**
  * Multiply a double number and a Matrix
  */
 template<typename DataType>

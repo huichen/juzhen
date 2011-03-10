@@ -94,7 +94,7 @@ class Matrix {
   /**
    * Return the opposite matrix. 
    */
-  Matrix<DataType> operator-();
+  Matrix<DataType> operator-() const;
 
   /**
    * Assign all numbers in the Matrix to be rhs.
@@ -199,6 +199,11 @@ class Matrix {
    ***************************/
 
   /**
+   * Add a matrix and a scalar
+   */
+  Matrix<DataType> operator+(const DataType &rhs) const;
+
+  /**
    * Add two matrices
    */
   template<typename T>
@@ -210,10 +215,20 @@ class Matrix {
   Matrix<DataType> operator+(const Matrix<DataType> &rhs) const;
 
   /**
+   * Add a scalar upto a Matrix.
+   */
+  Matrix<DataType> &operator+=(const DataType &rhs);
+
+  /**
    * Add one matrices upto another Matrix.
    */
   template<typename T>
   Matrix<DataType> &operator+=(const Matrix<T> &rhs);
+
+  /**
+   * Subtract a Matrix and a scalar.
+   */
+  Matrix<DataType> operator-(const DataType &rhs) const;
 
   /**
    * Subtract one Matrix and another Matrix.
@@ -225,6 +240,11 @@ class Matrix {
    * Subtract one Matrix and another Matrix.
    */
   Matrix<DataType> operator-(const Matrix<DataType> &rhs) const;
+
+  /**
+   * Subtract a scalar from a Matrix.
+   */
+  Matrix<DataType> &operator-=(const DataType &rhs);
 
   /**
    * Subtract one Matrix from another Matrix.
@@ -436,13 +456,21 @@ Matrix<DataType> &Matrix<DataType>::operator+() {
 }
 
 template<typename DataType>
-Matrix<DataType> Matrix<DataType>::operator-() {
-  Matrix<DataType> matrix(*this);
-  size_t endi = num_col() * num_row();
-  for (size_t i = 0; i < endi; i++)
-    matrix(i) = -matrix(i);
-  matrix.set_temporary(true);
-  return matrix;
+Matrix<DataType> Matrix<DataType>::operator-() const {
+  if (temporary_) {
+    Matrix<DataType> *matrix = const_cast<Matrix<DataType>*>(this);
+    size_t endi = num_col() * num_row();
+    for (size_t i = 0; i < endi; i++)
+      (*matrix)(i) = -(*matrix)(i);
+    return *matrix;
+  } else {
+    Matrix<DataType> matrix(*this);
+    size_t endi = num_col() * num_row();
+    for (size_t i = 0; i < endi; i++)
+      matrix(i) = -matrix(i);
+    matrix.set_temporary(true);
+    return matrix;
+  }
 }
 
 template<typename DataType>
@@ -556,6 +584,23 @@ inline DataType &Matrix<DataType>::operator[](size_t i) const {
 }
 
 // arithmetic
+template<typename DataType>
+Matrix<DataType> Matrix<DataType>::operator+(const DataType &rhs) const {
+  if (temporary_) {
+    (const_cast<Matrix<DataType>*>(this))->operator+=(rhs);
+    return *this;
+  } else {
+    Matrix<DataType> m(num_row_, num_col_);
+    size_t endi = num_row_*num_col_;
+    DataType *p1, *p2;
+    p1 = m.raw_ptr();
+    p2 = raw_ptr();
+    for (size_t i = 0; i < endi; i++)
+      *(p1++) = *(p2++) + rhs;
+    m.temporary_ = true;
+    return m;
+  }
+}
 
 template<typename DataType>
 template<typename T>
@@ -603,6 +648,16 @@ Matrix<DataType> Matrix<DataType>::operator+(
 }
 
 template<typename DataType>
+Matrix<DataType> &Matrix<DataType>::operator+=(const DataType &rhs) {
+  size_t endi = num_row_*num_col_;
+  DataType *p2;
+  p2 = raw_ptr();
+  for (size_t i = 0; i < endi; i++)
+    *(p2++) += rhs;
+  return *this;
+}
+
+template<typename DataType>
 template<typename T>
 Matrix<DataType> &Matrix<DataType>::operator+=(const Matrix<T> &rhs) {
   assert(num_col_ == rhs.num_col() && num_row_ == rhs.num_row());
@@ -613,6 +668,24 @@ Matrix<DataType> &Matrix<DataType>::operator+=(const Matrix<T> &rhs) {
   for (size_t i = 0; i < endi; i++)
     *(p2++) += *(p3++);
   return *this;
+}
+
+template<typename DataType>
+Matrix<DataType> Matrix<DataType>::operator-(const DataType &rhs) const {
+  if (temporary_) {
+    (const_cast<Matrix<DataType>*>(this))->operator-=(rhs);
+    return *this;
+  } else {
+    Matrix<DataType> m(num_row_, num_col_);
+    size_t endi = num_row_*num_col_;
+    DataType *p1, *p2;
+    p1 = m.raw_ptr();
+    p2 = raw_ptr();
+    for (size_t i = 0; i < endi; i++)
+      *(p1++) = *(p2++) - rhs;
+    m.temporary_ = true;
+    return m;
+  }
 }
 
 template<typename DataType>
@@ -631,7 +704,7 @@ Matrix<DataType> Matrix<DataType>::operator-(const Matrix<T> &rhs) const {
     p3 = rhs.raw_ptr();
     for (size_t i = 0; i < endi; i++)
       *(p1++) = *(p2++) - *(p3++);
-    temporary_ = true;
+    m.temporary_ = true;
     return m;
   }
 }
@@ -665,6 +738,16 @@ Matrix<DataType> Matrix<DataType>::operator-(
     m.temporary_ = true;
     return m;
   }
+}
+
+template<typename DataType>
+Matrix<DataType> &Matrix<DataType>::operator-=(const DataType &rhs) {
+  size_t endi = num_row_*num_col_;
+  DataType *p2;
+  p2 = raw_ptr();
+  for (size_t i = 0; i < endi; i++)
+    *(p2++) -= rhs;
+  return *this;
 }
 
 template<typename DataType>

@@ -31,12 +31,33 @@
 #include <string>
 
 namespace juzhen {
+
+template<typename T>
+Vector<T> operator+(double lhs, const Vector<T> &v) {
+  return v + lhs;
+}
+
+template<typename T>
+Vector<T> operator+(const CD &lhs, const Vector<T> &v) {
+  return v + lhs;
+}
+
+template<typename T>
+Vector<T> operator-(double lhs, const Vector<T> &v) {
+  return (-v) + lhs;
+}
+
+template<typename T>
+Vector<T> operator-(const CD &lhs, const Vector<T> &v) {
+  return (-v) + lhs;
+}
+
 /**
  * Multiply a real number and a Vector.
  */
 template<typename T>
 Vector<T> operator*(double lhs, const Vector<T> &ma) {
-  if (ma.temporary_) {
+  if (ma.temporary()) {
     T *p = ma.raw_ptr();
     size_t maxi = ma.size();
     for (size_t i = 0; i < maxi; i++)
@@ -58,7 +79,7 @@ Vector<T> operator*(double lhs, const Vector<T> &ma) {
  */
 template<typename T>
 Vector<T> operator*(const CD &lhs, const Vector<T> &ma) {
-  if (ma.temporary_) {
+  if (ma.temporary()) {
     T *p = ma.raw_ptr();
     size_t maxi = ma.size();
     for (size_t i = 0; i < maxi; i++)
