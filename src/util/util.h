@@ -41,6 +41,8 @@
 
 #include <util/random.h>
 
+#include <util/comma_initializer.h>
+
 namespace juzhen {
 }
 #endif  // SRC_UTIL_UTIL_H_

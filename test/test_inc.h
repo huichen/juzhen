@@ -91,6 +91,10 @@ BEGIN_TEST(matrix_assignment, "matrix_assignment")
 #include "tests/matrix_assignment.h"
 END_TEST(matrix_assignment)
 
+BEGIN_TEST(comma_initializer, "comma_initializer")
+#include "tests/comma_initializer.h"
+END_TEST(comma_initializer)
+
 BEGIN_TEST(vector_map_math, "vector_map_math")
 #include "tests/vector_map_math.h"
 END_TEST(vector_map_math)
