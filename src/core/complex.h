@@ -316,7 +316,7 @@ inline Complex<T>& operator/=(Complex<T> &a, const T1 &b) {
 template<typename T>
 inline const Complex<T> operator/(const T &b, const Complex<T> &a) {
   Complex<T> c;
-  double temp = b / (a.real * a.real + a.imag * a.imag);
+  T temp = b / (a.real * a.real + a.imag * a.imag);
   c.real = a.real * temp;
   c.imag = -a.imag * temp;
   return c;

@@ -256,23 +256,14 @@ class Matrix {
    * Multiply each element in the Matrix by a real number and
    * get a new Matrix.
    */
-  Matrix<DataType> operator*(double rhs) const;
-
-  /**
-   * Multiply each element in the Matrix by a complex number and
-   * get a new Matrix.
-   */
-  Matrix<DataType> operator*(const CD &rhs) const;
+  template<typename T>
+  Matrix<DataType> operator*(const T &rhs) const;
 
   /**
    * Multiply each element in the Matrix by a real number.
    */
-  Matrix<DataType> &operator*=(double rhs);
-
-  /**
-   * Multiply each element in the Matrix by a complex number.
-   */
-  Matrix<DataType> &operator*=(const CD &rhs);
+  template<typename T>
+  Matrix<DataType> &operator*=(const T &rhs);
 
   /**
    * Multiply two matrices and get a new Matrix. Number of columns of the first
@@ -764,7 +755,8 @@ Matrix<DataType> &Matrix<DataType>::operator-=(const Matrix<T> &rhs) {
 }
 
 template<typename DataType>
-Matrix<DataType> Matrix<DataType>::operator*(double rhs) const {
+template<typename T>
+Matrix<DataType> Matrix<DataType>::operator*(const T &rhs) const {
   if (temporary_) {
     (const_cast<Matrix<DataType>*>(this))->operator*=(rhs);
     return *this;
@@ -782,35 +774,8 @@ Matrix<DataType> Matrix<DataType>::operator*(double rhs) const {
 }
 
 template<typename DataType>
-Matrix<DataType> Matrix<DataType>::operator*(const CD &rhs) const {
-  if (temporary_) {
-    (const_cast<Matrix<DataType>*>(this))->operator*=(rhs);
-    return *this;
-  } else {
-    Matrix<DataType> m(num_row_, num_col_);
-    size_t endi = num_row_*num_col_;
-    DataType *p1, *p2;
-    p1 = m.raw_ptr();
-    p2 = raw_ptr();
-    for (size_t i = 0; i < endi; i++)
-      *(p1++) = *(p2++)*rhs;
-    m.temporary_ = true;
-    return m;
-  }
-}
-
-template<typename DataType>
-Matrix<DataType> &Matrix<DataType>::operator*=(double rhs) {
-  size_t endi = num_row_*num_col_;
-  DataType *p2;
-  p2 = raw_ptr();
-  for (size_t i = 0; i < endi; i++)
-    *(p2++) *= rhs;
-  return *this;
-}
-
-template<typename DataType>
-Matrix<DataType> &Matrix<DataType>::operator*=(const CD &rhs) {
+template<typename T>
+Matrix<DataType> &Matrix<DataType>::operator*=(const T &rhs) {
   size_t endi = num_row_*num_col_;
   DataType *p2;
   p2 = raw_ptr();
