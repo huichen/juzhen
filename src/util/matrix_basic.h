@@ -33,19 +33,19 @@ namespace juzhen {
  * Return the abs of a Matrix
  */
 Matrix<float> Abs(const Matrix<float> &ma) {
-  Matrix<float> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.size();
+  Matrix<float> m(ma);
+  size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs(ma(i));
+    m(i) = abs(m(i));
   m.set_temporary(true);
   return m;
 }
 
 Matrix<double> Abs(const Matrix<double> &ma) {
-  Matrix<double> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.size();
+  Matrix<double> m(ma);
+  size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs(ma(i));
+    m(i) = abs(m(i));
   m.set_temporary(true);
   return m;
 }
@@ -72,19 +72,19 @@ Matrix<double> Abs(const Matrix<CD> &ma) {
  * Return the abs-square of a Matrix
  */
 Matrix<float> Abs2(const Matrix<float> &ma) {
-  Matrix<float> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.size();
+  Matrix<float> m(ma);
+  size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs2(ma(i));
+    m(i) = abs2(m(i));
   m.set_temporary(true);
   return m;
 }
 
 Matrix<double> Abs2(const Matrix<double> &ma) {
-  Matrix<double> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.size();
+  Matrix<double> m(ma);
+  size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs2(ma(i));
+    m(i) = abs2(m(i));
   m.set_temporary(true);
   return m;
 }
@@ -111,23 +111,14 @@ Matrix<double> Abs2(const Matrix<CD> &ma) {
  * Return the real part of a Matrix
  */
 Matrix<float> Real(const Matrix<float> &ma) {
-  Matrix<float> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.size();
-  float *p1;
-  float *p2;
-  p1 = m.raw_ptr();
-  p2 = ma.raw_ptr();
-  for (size_t i = 0; i < endi; i++)
-    *(p1++)=*(p2++);
-  m.set_temporary(true);
-  return m;
+  return ma;
 }
 
 /**
  * Return the imaginary part of a Matrix
  */
 Matrix<float> Imag(const Matrix<float> &ma) {
-  Matrix<float> m(ma.num_row(), ma.num_col());
+  Matrix<float> m(ma);
   m.Clear();
   m.set_temporary(true);
   return m;
@@ -137,23 +128,14 @@ Matrix<float> Imag(const Matrix<float> &ma) {
  * Return the real part of a Matrix
  */
 Matrix<double> Real(const Matrix<double> &ma) {
-  Matrix<double> m(ma.num_row(), ma.num_col());
-  size_t endi = ma.size();
-  double *p1;
-  double *p2;
-  p1 = m.raw_ptr();
-  p2 = ma.raw_ptr();
-  for (size_t i = 0; i < endi; i++)
-    *(p1++)=*(p2++);
-  m.set_temporary(true);
-  return m;
+  return ma;
 }
 
 /**
  * Return the imaginary part of a Matrix
  */
 Matrix<double> Imag(const Matrix<double> &ma) {
-  Matrix<double> m(ma.num_row(), ma.num_col());
+  Matrix<double> m(ma);
   m.Clear();
   m.set_temporary(true);
   return m;

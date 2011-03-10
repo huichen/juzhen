@@ -58,7 +58,7 @@ T Prod(const Vector<T> &vector) {
 }
 
 /**
- * Return the average of a Vector's all elements.
+ * Return the mean of a Vector's all elements.
  */
 template<typename T>
 T Mean(const Vector<T> &vector) {
@@ -150,11 +150,12 @@ T Min(const Vector<T> &vector) {
  */
 template<typename T>
 Vector<T> Sort(const Vector<T> &v) {
-  Vector<T> v2(v.size());
-  std::vector<T> v1(v.raw_ptr(), v.raw_ptr()+v.size());
-  std::sort(v1.begin(), v1.end());
-  for (size_t i = 0; i < v1.size(); i++) v2[i] = v1[i];
-  return v2;
+  Vector<T> v1(v);
+  std::vector<T> v2(v1.raw_ptr(), v1.raw_ptr()+v1.size());
+  std::sort(v2.begin(), v2.end());
+  for (size_t i = 0; i < v1.size(); i++) v1[i] = v2[i];
+  v1.set_temporary(true);
+  return v1;
 }
 
 /**

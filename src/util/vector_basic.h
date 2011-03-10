@@ -115,26 +115,26 @@ Vector<double> Imag(const Vector<CD> &v) {
  * Return the abs of a Vector
  */
 Vector<float> Abs(const Vector<float> &vector) {
-  Vector<float> v(vector.size());
-  size_t endi = vector.size();
+  Vector<float> v(vector);
+  size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
-    v(i) = abs(vector(i));
+    v(i) = abs(v(i));
   v.set_temporary(true);
   return v;
 }
 
 Vector<double> Abs(const Vector<double> &vector) {
-  Vector<double> v(vector.size());
-  size_t endi = vector.size();
+  Vector<double> v(vector);
+  size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
-    v(i) = abs(vector(i));
+    v(i) = abs(v(i));
   v.set_temporary(true);
   return v;
 }
 
 Vector<float> Abs(const Vector<CS> &vector) {
   Vector<float> v(vector.size());
-  size_t endi = vector.size();
+  size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
     v(i) = abs(vector(i));
   v.set_temporary(true);
@@ -143,7 +143,7 @@ Vector<float> Abs(const Vector<CS> &vector) {
 
 Vector<double> Abs(const Vector<CD> &vector) {
   Vector<double> v(vector.size());
-  size_t endi = vector.size();
+  size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
     v(i) = abs(vector(i));
   v.set_temporary(true);
@@ -154,19 +154,19 @@ Vector<double> Abs(const Vector<CD> &vector) {
  * Return the abs-square of a Vector
  */
 Vector<float> Abs2(const Vector<float> &vector) {
-  Vector<float> v(vector.size());
-  size_t endi = vector.size();
+  Vector<float> v(vector);
+  size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
-    v(i) = abs2(vector(i));
+    v(i) = abs2(v(i));
   v.set_temporary(true);
   return v;
 }
 
 Vector<double> Abs2(const Vector<double> &vector) {
-  Vector<double> v(vector.size());
-  size_t endi = vector.size();
+  Vector<double> v(vector);
+  size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
-    v(i) = abs2(vector(i));
+    v(i) = abs2(v(i));
   v.set_temporary(true);
   return v;
 }

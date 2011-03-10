@@ -37,6 +37,13 @@ class IdentityMatrix : public Matrix<DataType> {
    * Construct an identity Matrix of n x n.
    */
   IdentityMatrix(size_t n);  // NOLINT
+
+ private:
+
+  /**
+   * No default constructor.
+   */
+  IdentityMatrix();
 };
 
 typedef IdentityMatrix<float> identity_smatrix;
@@ -51,6 +58,7 @@ IdentityMatrix<DataType>::IdentityMatrix(size_t n) {
   Matrix<DataType>::num_col_ = n;
   Matrix<DataType>::num_row_ = n;
   Matrix<DataType>::raw_ptr_ = Matrix<DataType>::data_ptr_->data_ptr;
+  Matrix<DataType>::temporary_ = false;
 
   size_t endi = n*n;
   DataType *p = Matrix<DataType>::raw_ptr();

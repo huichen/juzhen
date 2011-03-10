@@ -139,6 +139,11 @@ class Matrix {
   inline DataType *raw_ptr() const;
 
   /**
+   * Returns the data pointer.
+   */  
+  DataPtr data_ptr();
+
+  /**
    * Get a Matrix's temporary flag.
    */
   inline bool temporary() const;
@@ -401,7 +406,7 @@ Matrix<DataType>::Matrix(const Matrix<T> &m)
   : num_col_(m.num_col()), num_row_(m.num_row()) {
   data_ptr_ = DataPtr(
       new DataArray<DataType>(m.raw_ptr(), m.size()));
-  temporary_ = false;
+  temporary_ = m.temporary();
   raw_ptr_ = data_ptr_->data_ptr;
 }
 
@@ -510,6 +515,11 @@ template<typename DataType>
 inline DataType * Matrix<DataType>::raw_ptr() const {
 //  return data_ptr_->data_ptr;
   return raw_ptr_;
+}
+
+template<typename DataType>
+typename Matrix<DataType>::DataPtr Matrix<DataType>::data_ptr() {
+  return data_ptr_;
 }
 
 /* resizing/reshaping Matrix */

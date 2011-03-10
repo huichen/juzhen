@@ -50,6 +50,23 @@ class Vector : public Matrix<DataType> {
   Vector(size_t i);  // NOLINT
 
   /**
+   * Construct a Vector from another vector.
+   */
+  template<typename T>
+  Vector(const Vector<T> &m);  // NOLINT
+
+  /**
+   * Construct a Vector from another vector.
+   */
+  Vector(const Vector<DataType> &m);  // NOLINT
+
+  /**
+   * Construct a Vector from a Matrix's column-major raw array.
+   */
+  template<typename T>
+  Vector(const Matrix<T> &m);  // NOLINT
+
+  /**
    * Construct a Vector from a Matrix's column-major raw array.
    */
   Vector(const Matrix<DataType> &m);  // NOLINT
@@ -240,13 +257,57 @@ template<typename DataType>
 Vector<DataType>::Vector(size_t i) : Matrix<DataType>(i, 1) { }
 
 template<typename DataType>
-Vector<DataType>::Vector(const Matrix<DataType> &m) {
+template<typename T>
+Vector<DataType>::Vector(const Vector<T> &v) {
+  Matrix<DataType>::data_ptr_ = typename Matrix<DataType>::DataPtr(
+      new DataArray<DataType>(v.raw_ptr(), v.size()));
+  Matrix<DataType>::num_col_ = 1;
+  Matrix<DataType>::num_row_ = v.size();
+  Matrix<DataType>::raw_ptr_ = Matrix<DataType>::data_ptr_->data_ptr;
+  Matrix<DataType>::temporary_ = v.temporary();
+}
+
+template<typename DataType>
+Vector<DataType>::Vector(const Vector<DataType> &v) {
+  if (v.temporary()) {
+    Matrix<DataType>::data_ptr_ =
+        (const_cast<Vector<DataType>&>(v)).data_ptr_;
+    Matrix<DataType>::temporary_ = true;
+  } else {
+    Matrix<DataType>::data_ptr_ = typename Matrix<DataType>::DataPtr(
+        new DataArray<DataType>(*(v.data_ptr_)));
+    Matrix<DataType>::temporary_ = false;
+  }
+  Matrix<DataType>::num_col_ = 1;
+  Matrix<DataType>::num_row_ = v.size();
+  Matrix<DataType>::raw_ptr_ = Matrix<DataType>::data_ptr_->data_ptr;
+}
+
+template<typename DataType>
+template<typename T>
+Vector<DataType>::Vector(const Matrix<T> &m) {
   Matrix<DataType>::data_ptr_ = typename Matrix<DataType>::DataPtr(
       new DataArray<DataType>(m.raw_ptr(), m.size()));
-  Matrix<DataType>::num_col_ =1;
+  Matrix<DataType>::num_col_ = 1;
   Matrix<DataType>::num_row_ = m.size();
   Matrix<DataType>::raw_ptr_ = Matrix<DataType>::data_ptr_->data_ptr;
   Matrix<DataType>::temporary_ = m.temporary();
+}
+
+template<typename DataType>
+Vector<DataType>::Vector(const Matrix<DataType> &m) {
+  if (m.temporary()) {
+    Matrix<DataType>::data_ptr_ =
+        (const_cast<Matrix<DataType>&>(m)).data_ptr();
+    Matrix<DataType>::temporary_ = true;
+  } else {
+    Matrix<DataType>::data_ptr_ = typename Matrix<DataType>::DataPtr(
+      new DataArray<DataType>(m.raw_ptr(), m.size()));
+    Matrix<DataType>::temporary_ = false;
+  }
+  Matrix<DataType>::num_col_ = 1;
+  Matrix<DataType>::num_row_ = m.size();
+  Matrix<DataType>::raw_ptr_ = Matrix<DataType>::data_ptr_->data_ptr;
 }
 
 template<typename DataType>
