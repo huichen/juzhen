@@ -313,8 +313,8 @@ inline Complex<T>& operator/=(Complex<T> &a, const T1 &b) {
   return a;
 }
 
-template<typename T>
-inline const Complex<T> operator/(const T &b, const Complex<T> &a) {
+template<typename T, typename T1>
+inline const Complex<T> operator/(const T1 &b, const Complex<T> &a) {
   Complex<T> c;
   T temp = b / (a.real * a.real + a.imag * a.imag);
   c.real = a.real * temp;

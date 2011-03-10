@@ -261,14 +261,12 @@ class Matrix {
    * Multiply each element in the Matrix by a real number and
    * get a new Matrix.
    */
-  template<typename T>
-  Matrix<DataType> operator*(const T &rhs) const;
+  Matrix<DataType> operator*(const DataType &rhs) const;
 
   /**
    * Multiply each element in the Matrix by a real number.
    */
-  template<typename T>
-  Matrix<DataType> &operator*=(const T &rhs);
+  Matrix<DataType> &operator*=(const DataType &rhs);
 
   /**
    * Multiply two matrices and get a new Matrix. Number of columns of the first
@@ -285,14 +283,12 @@ class Matrix {
   /**
    * Divide each element in the Matrix by a constant to get a new Matrix.
    */
-  template<typename T>
-  Matrix<DataType> operator/(const T &rhs) const;
+  Matrix<DataType> operator/(const DataType &rhs) const;
 
   /**
    * Divide each element in the Matrix by a constant.
    */
-  template<typename T>
-  Matrix<DataType> &operator/=(const T &rhs);
+  Matrix<DataType> &operator/=(const DataType &rhs);
 
   /*************************************
    *  Matrix specific operations
@@ -764,8 +760,7 @@ Matrix<DataType> &Matrix<DataType>::operator-=(const Matrix<T> &rhs) {
 }
 
 template<typename DataType>
-template<typename T>
-Matrix<DataType> Matrix<DataType>::operator*(const T &rhs) const {
+Matrix<DataType> Matrix<DataType>::operator*(const DataType &rhs) const {
   if (temporary_) {
     (const_cast<Matrix<DataType>*>(this))->operator*=(rhs);
     return *this;
@@ -783,8 +778,7 @@ Matrix<DataType> Matrix<DataType>::operator*(const T &rhs) const {
 }
 
 template<typename DataType>
-template<typename T>
-Matrix<DataType> &Matrix<DataType>::operator*=(const T &rhs) {
+Matrix<DataType> &Matrix<DataType>::operator*=(const DataType &rhs) {
   size_t endi = num_row_*num_col_;
   DataType *p2;
   p2 = raw_ptr();
@@ -822,14 +816,12 @@ Matrix<DataType> &Matrix<DataType>::operator*=(const Matrix<DataType> &rhs) {
 }
 
 template<typename DataType>
-template<typename T>
-Matrix<DataType> Matrix<DataType>::operator/(const T &rhs) const {
+Matrix<DataType> Matrix<DataType>::operator/(const DataType &rhs) const {
   return operator*(1.0/rhs);
 }
 
 template<typename DataType>
-template<typename T>
-Matrix<DataType> &Matrix<DataType>::operator/=(const T &rhs) {
+Matrix<DataType> &Matrix<DataType>::operator/=(const DataType &rhs) {
   return operator*=(1.0/rhs);
 }
 

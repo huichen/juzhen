@@ -247,7 +247,7 @@ class CMatrix {
       return (*$self) * a;
     }
 
-    CMatrix __mul__(Complex &a) {
+    CMatrix __mul__(const Complex &a) {
       return (*$self) * a;
     }
 
@@ -259,7 +259,7 @@ class CMatrix {
       return (*$self) * a;
     }
 
-    CMatrix __div__(Complex &a) {
+    CMatrix __div__(const Complex &a) {
       return (*$self) / a;
     }
 

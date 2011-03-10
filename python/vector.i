@@ -200,7 +200,7 @@ class CVector {
       return (*$self) * a;
     }
 
-    CVector __mul__(Complex &a) {
+    CVector __mul__(const Complex &a) {
       return $self->operator*(a);
     }
 
@@ -208,7 +208,7 @@ class CVector {
       return (*$self) / a;
     }
 
-    CVector __div__(Complex &a) {
+    CVector __div__(const Complex &a) {
       return (*$self) / a;
     }
 

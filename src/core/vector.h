@@ -170,14 +170,12 @@ class Vector : public Matrix<DataType> {
   /**
    * Multiply a Vector with a real number.
    */
-  template<typename T>
-  Vector<DataType> operator*(const T &rhs) const;
+  Vector<DataType> operator*(const DataType &rhs) const;
 
   /**
    * Multiply a Vector with a real number.
    */
-  template<typename T>
-  Vector<DataType> &operator*=(const T &rhs);
+  Vector<DataType> &operator*=(const DataType &rhs);
 
   /**
    * Multiply a Vector and a Matrix. The Vector's size must be equal
@@ -188,14 +186,12 @@ class Vector : public Matrix<DataType> {
   /**
    * Divide a Vector by a constant.
    */
-  template<typename T>
-  Vector<DataType> operator/(const T &rhs) const;
+  Vector<DataType> operator/(const DataType &rhs) const;
 
   /**
    * Divide a Vector by a constant.
    */
-  template<typename T>
-  Vector<DataType> &operator/=(const T &rhs);
+  Vector<DataType> &operator/=(const DataType &rhs);
 
   /**
    * Get real part of a Vector.
@@ -417,14 +413,12 @@ Vector<DataType> &Vector<DataType>::operator-=(const Vector<T> &rhs) {
 }
 
 template<typename DataType>
-template<typename T>
-Vector<DataType> Vector<DataType>::operator*(const T &rhs) const {
+Vector<DataType> Vector<DataType>::operator*(const DataType &rhs) const {
   return Matrix<DataType>::operator*(rhs);
 }
 
 template<typename DataType>
-template<typename T>
-Vector<DataType> &Vector<DataType>::operator*=(const T &rhs) {
+Vector<DataType> &Vector<DataType>::operator*=(const DataType &rhs) {
   Matrix<DataType>::operator*=(rhs);
   return *this;
 }
@@ -437,14 +431,12 @@ Vector<DataType> &Vector<DataType>::operator*=(const Matrix<DataType> &rhs) {
 }
 
 template<typename DataType>
-template<typename T>
-Vector<DataType> Vector<DataType>::operator/(const T &rhs) const {
+Vector<DataType> Vector<DataType>::operator/(const DataType &rhs) const {
   return Matrix<DataType>::operator/(rhs);
 }
 
 template<typename DataType>
-template<typename T>
-Vector<DataType> &Vector<DataType>::operator/=(const T &rhs) {
+Vector<DataType> &Vector<DataType>::operator/=(const DataType &rhs) {
   Matrix<DataType>::operator/=(rhs);
   return *this;
 }

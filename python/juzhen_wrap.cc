@@ -3239,7 +3239,7 @@ SWIGINTERN CMatrix CMatrix___sub__(CMatrix *self,CMatrix const &a){
 SWIGINTERN CMatrix CMatrix___mul____SWIG_0(CMatrix *self,CMatrix const &a){
       return (*self) * a;
     }
-SWIGINTERN CMatrix CMatrix___mul____SWIG_1(CMatrix *self,Complex &a){
+SWIGINTERN CMatrix CMatrix___mul____SWIG_1(CMatrix *self,Complex const &a){
       return (*self) * a;
     }
 SWIGINTERN CVector CMatrix___mul____SWIG_2(CMatrix *self,CVector const &a){
@@ -3248,7 +3248,7 @@ SWIGINTERN CVector CMatrix___mul____SWIG_2(CMatrix *self,CVector const &a){
 SWIGINTERN CMatrix CMatrix___mul____SWIG_3(CMatrix *self,double a){
       return (*self) * a;
     }
-SWIGINTERN CMatrix CMatrix___div____SWIG_0(CMatrix *self,Complex &a){
+SWIGINTERN CMatrix CMatrix___div____SWIG_0(CMatrix *self,Complex const &a){
       return (*self) / a;
     }
 SWIGINTERN CMatrix CMatrix___div____SWIG_1(CMatrix *self,double a){
@@ -3378,13 +3378,13 @@ SWIGINTERN Complex CVector___mul____SWIG_1(CVector *self,CVector const &a){
 SWIGINTERN CVector CVector___mul____SWIG_2(CVector *self,double a){
       return (*self) * a;
     }
-SWIGINTERN CVector CVector___mul____SWIG_3(CVector *self,Complex &a){
+SWIGINTERN CVector CVector___mul____SWIG_3(CVector *self,Complex const &a){
       return self->operator*(a);
     }
 SWIGINTERN CVector CVector___div____SWIG_0(CVector *self,double a){
       return (*self) / a;
     }
-SWIGINTERN CVector CVector___div____SWIG_1(CVector *self,Complex &a){
+SWIGINTERN CVector CVector___div____SWIG_1(CVector *self,Complex const &a){
       return (*self) / a;
     }
 SWIGINTERN Vector CVector_real(CVector *self){
@@ -7400,15 +7400,15 @@ SWIGINTERN PyObject *_wrap_CMatrix___mul____SWIG_1(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CMatrix___mul__" "', argument " "1"" of type '" "CMatrix *""'"); 
   }
   arg1 = reinterpret_cast< CMatrix * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Complex,  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Complex,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CMatrix___mul__" "', argument " "2"" of type '" "Complex &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CMatrix___mul__" "', argument " "2"" of type '" "Complex const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CMatrix___mul__" "', argument " "2"" of type '" "Complex &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CMatrix___mul__" "', argument " "2"" of type '" "Complex const &""'"); 
   }
   arg2 = reinterpret_cast< Complex * >(argp2);
-  result = CMatrix___mul____SWIG_1(arg1,*arg2);
+  result = CMatrix___mul____SWIG_1(arg1,(Complex const &)*arg2);
   resultobj = SWIG_NewPointerObj((new CMatrix(static_cast< const CMatrix& >(result))), SWIGTYPE_p_CMatrix, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
@@ -7510,8 +7510,7 @@ SWIGINTERN PyObject *_wrap_CMatrix___mul__(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_CMatrix, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Complex, 0);
+      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_Complex, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
         return _wrap_CMatrix___mul____SWIG_1(self, args);
@@ -7571,15 +7570,15 @@ SWIGINTERN PyObject *_wrap_CMatrix___div____SWIG_0(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CMatrix___div__" "', argument " "1"" of type '" "CMatrix *""'"); 
   }
   arg1 = reinterpret_cast< CMatrix * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Complex,  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Complex,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CMatrix___div__" "', argument " "2"" of type '" "Complex &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CMatrix___div__" "', argument " "2"" of type '" "Complex const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CMatrix___div__" "', argument " "2"" of type '" "Complex &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CMatrix___div__" "', argument " "2"" of type '" "Complex const &""'"); 
   }
   arg2 = reinterpret_cast< Complex * >(argp2);
-  result = CMatrix___div____SWIG_0(arg1,*arg2);
+  result = CMatrix___div____SWIG_0(arg1,(Complex const &)*arg2);
   resultobj = SWIG_NewPointerObj((new CMatrix(static_cast< const CMatrix& >(result))), SWIGTYPE_p_CMatrix, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
@@ -7634,8 +7633,7 @@ SWIGINTERN PyObject *_wrap_CMatrix___div__(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_CMatrix, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Complex, 0);
+      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_Complex, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
         return _wrap_CMatrix___div____SWIG_0(self, args);
@@ -10311,15 +10309,15 @@ SWIGINTERN PyObject *_wrap_CVector___mul____SWIG_3(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CVector___mul__" "', argument " "1"" of type '" "CVector *""'"); 
   }
   arg1 = reinterpret_cast< CVector * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Complex,  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Complex,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CVector___mul__" "', argument " "2"" of type '" "Complex &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CVector___mul__" "', argument " "2"" of type '" "Complex const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CVector___mul__" "', argument " "2"" of type '" "Complex &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CVector___mul__" "', argument " "2"" of type '" "Complex const &""'"); 
   }
   arg2 = reinterpret_cast< Complex * >(argp2);
-  result = CVector___mul____SWIG_3(arg1,*arg2);
+  result = CVector___mul____SWIG_3(arg1,(Complex const &)*arg2);
   resultobj = SWIG_NewPointerObj((new CVector(static_cast< const CVector& >(result))), SWIGTYPE_p_CVector, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
@@ -10369,8 +10367,7 @@ SWIGINTERN PyObject *_wrap_CVector___mul__(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_CVector, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Complex, 0);
+      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_Complex, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
         return _wrap_CVector___mul____SWIG_3(self, args);
@@ -10448,15 +10445,15 @@ SWIGINTERN PyObject *_wrap_CVector___div____SWIG_1(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "CVector___div__" "', argument " "1"" of type '" "CVector *""'"); 
   }
   arg1 = reinterpret_cast< CVector * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Complex,  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Complex,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CVector___div__" "', argument " "2"" of type '" "Complex &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "CVector___div__" "', argument " "2"" of type '" "Complex const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CVector___div__" "', argument " "2"" of type '" "Complex &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "CVector___div__" "', argument " "2"" of type '" "Complex const &""'"); 
   }
   arg2 = reinterpret_cast< Complex * >(argp2);
-  result = CVector___div____SWIG_1(arg1,*arg2);
+  result = CVector___div____SWIG_1(arg1,(Complex const &)*arg2);
   resultobj = SWIG_NewPointerObj((new CVector(static_cast< const CVector& >(result))), SWIGTYPE_p_CVector, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
@@ -10480,8 +10477,7 @@ SWIGINTERN PyObject *_wrap_CVector___div__(PyObject *self, PyObject *args) {
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_CVector, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
-      void *vptr = 0;
-      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_Complex, 0);
+      int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_Complex, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
         return _wrap_CVector___div____SWIG_1(self, args);

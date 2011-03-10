@@ -35,21 +35,9 @@ BEGIN_TEST(matrix_statistics, "matrix_statistics")
 #include "tests/matrix_statistics.h"
 END_TEST(matrix_statistics)
 
-BEGIN_TEST(matrix_getter, "matrix_getter")
-#include "tests/matrix_getter.h"
-END_TEST(matrix_getter)
-
-BEGIN_TEST(matrix_getrow_getcol, "matrix_getrow_getcol")
-#include "tests/matrix_getrow_getcol.h"
-END_TEST(matrix_getrow_getcol)
-
 BEGIN_TEST(vector_statistics, "vector_statistics")
 #include "tests/vector_statistics.h"
 END_TEST(vector_statistics)
-
-BEGIN_TEST(matrix_block_replace, "matrix_block_replace")
-#include "tests/matrix_block_replace.h"
-END_TEST(matrix_block_replace)
 
 BEGIN_TEST(random, "random")
 #include "tests/random.h"
@@ -71,17 +59,17 @@ BEGIN_TEST(matrix_inverse, "matrix_inverse")
 #include "tests/matrix_inverse.h"
 END_TEST(matrix_inverse)
 
-BEGIN_TEST(matrix_adjoint_transpose_conjugate, "matrix_adjoint_transpose_conjugate")
-#include "tests/matrix_adjoint_transpose_conjugate.h"
-END_TEST(matrix_adjoint_transpose_conjugate)
-
 BEGIN_TEST(matrix_map_math, "matrix_map_math")
 #include "tests/matrix_map_math.h"
 END_TEST(matrix_map_math)
 
-BEGIN_TEST(matrix_arithmetic_operations, "matrix_arithmetic_operations")
-#include "tests/matrix_arithmetic_operations.h"
-END_TEST(matrix_arithmetic_operations)
+BEGIN_TEST(matrix_math, "matrix_math")
+#include "tests/matrix_math.h"
+END_TEST(matrix_math)
+
+BEGIN_TEST(matrix_submatrix, "matrix_submatrix")
+#include "tests/matrix_submatrix.h"
+END_TEST(matrix_submatrix)
 
 BEGIN_TEST(matrix_compare, "matrix_compare")
 #include "tests/matrix_compare.h"
