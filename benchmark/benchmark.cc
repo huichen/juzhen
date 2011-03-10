@@ -32,11 +32,11 @@ int main() {
   char filename[100];
 
   BEGIN_BENCH("M1 = M2")
-    M1 = M2;
+  M1 = M2;
   END_BENCH
 
-  BEGIN_BENCH("M(i,j), 1M times")
-  for (size_t j = 0; j < 100000; j++) M1(ni/2, ni/2) = M2(ni/2, ni/2) + M3(ni/2, ni/2);
+  BEGIN_BENCH("M(i,j) = s, 10M times")
+  for (size_t j = 0; j < 100000; j++) M1(ni/2, ni/2) = 100.;
   END_BENCH
 
   BEGIN_BENCH("M1 = M2.block, 1K times")
