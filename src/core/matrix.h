@@ -313,11 +313,10 @@ class Matrix {
   Matrix<DataType> Conjugate()const;
 
   /**
-   * Get a sub-block of the Matrix between r1th (containing) row and r2th
-   * (not containing) row, and between c1th (containing) column and c2th
-   * (not containing) column.
+   * Get a sub-block of the Matrix
+   * The upper-left corner is (r1, c1), lower-right corner is (r2, c2) 
    */
-  Matrix<DataType> Block(size_t r1, size_t r2, size_t c1, size_t c2) const;
+  Matrix<DataType> Block(size_t r1, size_t c1, size_t r2, size_t c2) const;
 
   /**
    * Replace a sub-block of the Matrix with another Matrix value. The
@@ -924,19 +923,19 @@ Matrix<DataType> Matrix<DataType>::Conjugate() const {
 }
 
 template<typename DataType>
-Matrix<DataType> Matrix<DataType>::Block(size_t r1, size_t r2,
-                                         size_t c1, size_t c2) const {
+Matrix<DataType> Matrix<DataType>::Block(size_t r1, size_t c1,
+                                         size_t r2, size_t c2) const {
   assert(r1 <= r2 && c1 <= c2);
-  Matrix<DataType> m(r2-r1, c2-c1);
+  Matrix<DataType> m(r2 - r1 + 1, c2 - c1 + 1);
   DataType *p1, *p2;
   size_t n1, n2;
   n1 = num_row_;
-  n2 = n1-r2+r1;
+  n2 = n1 - r2 + r1 - 1;
   p2 = m.raw_ptr();
   p1 = data_ptr_->data_ptr + r1+n1*c1;
 
-  for (size_t j = c1; j < c2; j++) {
-    for (size_t i = r1; i < r2; i++)
+  for (size_t j = c1; j <= c2; j++) {
+    for (size_t i = r1; i <= r2; i++)
       *(p2++) = *(p1++);
     p1 += n2;
   }

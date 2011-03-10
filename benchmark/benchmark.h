@@ -33,11 +33,7 @@
 
 #include <string>
 
-#define MAXN 100
-#define MINN 2 
-#define STEPN 1
 #define NB 10
-#define PREFIX "small_"
 
 const int num_digits = 2;
 
@@ -113,6 +109,7 @@ for(size_t i = 0; i < NB; i++) {
 #define END_BENCH \
 }\
 gettimeofday(&t2, NULL); \
+printf("N = %ld\t", ni);\
 printf("%f s\n", (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000.);\
 fprintf(myfile, "%zu\t%f\n", ni, (t2.tv_sec-t1.tv_sec) \
                                  + (t2.tv_usec-t1.tv_usec)/1000000.);\

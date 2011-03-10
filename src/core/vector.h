@@ -477,7 +477,7 @@ Vector<DataType> &Vector<DataType>::Swap(size_t i1, size_t i2) {
 
 template<typename DataType>
 Vector<DataType> Vector<DataType>::Block(size_t i1, size_t i2) {
-  return Matrix<DataType>::Block(i1, i2, 0, 1);
+  return Matrix<DataType>::Block(i1, 0, i2, 0);
 }
 
 template<typename DataType>

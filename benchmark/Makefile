@@ -23,9 +23,13 @@ all:
 	time -p $(CC_MLCPP) benchmark.cc -o juzhen $(CFLAGS_MLCPP)
 	time -p $(CC_EIGEN) benchmark.cc -o eigen $(CFLAGS_EIGEN)
 
-run:
-	./juzhen
-	./eigen
+run_small:
+	./juzhen 100 2 1 small_
+	./eigen 100 2 1 small_
+
+run_big:
+	./juzhen 1000 100 10 big_
+	./eigen 1000 100 10 big_
 
 clean:
 	rm *.plt *.txt *.png *.tar juzhen eigen -rf

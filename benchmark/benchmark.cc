@@ -21,7 +21,23 @@
 */
 #include "benchmark.h"  // NOLINT
 
-int main() {
+int MAXN, MINN, STEPN;
+char PREFIX[100]; 
+
+int main(int argc, char *argv[]) {
+
+  if (argc != 5) {
+    MAXN = 100;
+    MINN = 2;
+    STEPN = 1;
+    strcpy(PREFIX, "small_");
+  } else {
+    MAXN = atoi(argv[1]);
+    MINN = atoi(argv[2]);
+    STEPN = atoi(argv[3]);
+    strcpy(PREFIX, argv[4]);
+  }
+  
   DEFV(1)
   DEFV(2)
   DEFV(3)
@@ -39,9 +55,9 @@ int main() {
   for (size_t j = 0; j < 100000; j++) M1(ni/2, ni/2) = 100.;
   END_BENCH
 
-  BEGIN_BENCH("M1 = M2.block, 1K times")
+  BEGIN_BENCH("M1 = M2.block (upper-left quarter block), 1K times")
 #ifdef MLCPP
-  for (size_t j = 0; j < 100; j++) M1 = M2.Block(0, 0, ni/2, ni/2);
+  for (size_t j = 0; j < 100; j++) M1 = M2.Block(0, 0, ni/2-1, ni/2-1);
 #else
   for (size_t j = 0; j < 100; j++) M1 = M2.block(0, 0, ni/2, ni/2);
 #endif
