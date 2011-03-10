@@ -110,7 +110,7 @@ for(size_t i = 0; i < NB; i++) {
 }\
 gettimeofday(&t2, NULL); \
 printf("N = %ld\t", ni);\
-printf("%f s\n", (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000.);\
+printf("T = %f s\n", (t2.tv_sec-t1.tv_sec) + (t2.tv_usec-t1.tv_usec)/1000000.);\
 fprintf(myfile, "%zu\t%f\n", ni, (t2.tv_sec-t1.tv_sec) \
                                  + (t2.tv_usec-t1.tv_usec)/1000000.);\
 }\

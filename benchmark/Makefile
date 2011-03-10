@@ -19,7 +19,7 @@ endif
 CFLAGS_EIGEN = -I../../eigen -DNDEBUG -O3 -msse2 -fopenmp
 CC_EIGEN = g++ 
 
-all:
+all: benchmark.cc benchmark.h
 	time -p $(CC_MLCPP) benchmark.cc -o juzhen $(CFLAGS_MLCPP)
 	time -p $(CC_EIGEN) benchmark.cc -o eigen $(CFLAGS_EIGEN)
 
@@ -32,7 +32,7 @@ run_big:
 	./eigen 1000 100 10 big_
 
 clean:
-	rm *.plt *.txt *.png *.tar juzhen eigen -rf
+	rm *.plt *.txt *.png *.tar -rf
 
 plt:
 	gnuplot *.plt
