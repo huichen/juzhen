@@ -3,7 +3,7 @@
 
 @section juzhen_performance Performance 
 
-Mlpy's performance is close to the C++ version for large matrices/vectors. When compiled with MKL, it's about 7x faster than Numpy in matrix multiplication.
+Python module's performance is close to the C++ version for large matrices/vectors. When compiled with MKL, it's about 7x faster than Numpy in matrix multiplication.
 
 \image html benchmark_juzhen.png
 
