@@ -65,15 +65,15 @@ std::string FixedLengthInteger(int num_digits, int input) {
 #endif
 
 #ifdef MLCPP
-#define RESIZE_MATRIX H1.Resize(ni, ni); \
-H2.Resize(ni, ni); \
-H3.Resize(ni, ni); \
-H4.Resize(ni, ni);
+#define RESIZE_MATRIX M1.Resize(ni, ni); \
+M2.Resize(ni, ni); \
+M3.Resize(ni, ni); \
+M4.Resize(ni, ni);
 #else
-#define RESIZE_MATRIX H1.resize(ni, ni); \
-H2.resize(ni, ni); \
-H3.resize(ni, ni); \
-H4.resize(ni, ni);
+#define RESIZE_MATRIX M1.resize(ni, ni); \
+M2.resize(ni, ni); \
+M3.resize(ni, ni); \
+M4.resize(ni, ni);
 #endif
 
 #define BEGIN_BENCH(s) \
@@ -122,16 +122,16 @@ fclose(myfile);\
 
 #ifdef MLCPP
 #define DEFV(vi) \
-zmatrix H##vi(MAXN, MAXN); \
+zmatrix M##vi(MAXN, MAXN); \
 for (size_t i = 0; i < MAXN; i++) \
 for (size_t j = 0; j < MAXN; j++) \
-H##vi(i, j) = 1;
+M##vi(i, j) = 1;
 #else
 #define DEFV(vi) \
-MatrixXcd H##vi(MAXN, MAXN); \
+MatrixXcd M##vi(MAXN, MAXN); \
 for (size_t i = 0; i < MAXN; i++) \
 for (size_t j = 0; j < MAXN; j++) \
-H##vi(i, j) = 1;
+M##vi(i, j) = 1;
 #endif
 
 
