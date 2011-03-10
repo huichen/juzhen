@@ -19,7 +19,6 @@ endif
 all: juzhen_wrap.cc util.i
 	$(CC) -c -fpic juzhen_wrap.cc -I/usr/include/python2.6/ $(CFLAGS)
 	$(CC) -shared juzhen_wrap.o -o _juzhen.so $(CFLAGS)
-	python test.py > output
 	
 wrap:
 	swig -c++ -python  -o juzhen_wrap.cc juzhen.i

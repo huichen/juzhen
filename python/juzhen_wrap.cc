@@ -13276,7 +13276,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_least_squares_method__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_linear_least_squares__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Vector *arg1 = 0 ;
   Vector *arg2 = 0 ;
@@ -13286,34 +13286,34 @@ SWIGINTERN PyObject *_wrap_least_squares_method__SWIG_0(PyObject *SWIGUNUSEDPARM
   int res2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  double result;
+  Vector result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:least_squares_method",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:linear_least_squares",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_Vector,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "least_squares_method" "', argument " "1"" of type '" "Vector const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "linear_least_squares" "', argument " "1"" of type '" "Vector const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "least_squares_method" "', argument " "1"" of type '" "Vector const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "linear_least_squares" "', argument " "1"" of type '" "Vector const &""'"); 
   }
   arg1 = reinterpret_cast< Vector * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_Vector,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "least_squares_method" "', argument " "2"" of type '" "Vector const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "linear_least_squares" "', argument " "2"" of type '" "Vector const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "least_squares_method" "', argument " "2"" of type '" "Vector const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "linear_least_squares" "', argument " "2"" of type '" "Vector const &""'"); 
   }
   arg2 = reinterpret_cast< Vector * >(argp2);
-  result = (double)LeastSquaresMethod((Vector const &)*arg1,(Vector const &)*arg2);
-  resultobj = SWIG_From_double(static_cast< double >(result));
+  result = LinearLeastSquares((Vector const &)*arg1,(Vector const &)*arg2);
+  resultobj = SWIG_NewPointerObj((new Vector(static_cast< const Vector& >(result))), SWIGTYPE_p_Vector, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_least_squares_method__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_linear_least_squares__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   CVector *arg1 = 0 ;
   CVector *arg2 = 0 ;
@@ -13323,34 +13323,34 @@ SWIGINTERN PyObject *_wrap_least_squares_method__SWIG_1(PyObject *SWIGUNUSEDPARM
   int res2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
-  Complex result;
+  CVector result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:least_squares_method",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:linear_least_squares",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_CVector,  0  | 0);
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "least_squares_method" "', argument " "1"" of type '" "CVector const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "linear_least_squares" "', argument " "1"" of type '" "CVector const &""'"); 
   }
   if (!argp1) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "least_squares_method" "', argument " "1"" of type '" "CVector const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "linear_least_squares" "', argument " "1"" of type '" "CVector const &""'"); 
   }
   arg1 = reinterpret_cast< CVector * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_CVector,  0  | 0);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "least_squares_method" "', argument " "2"" of type '" "CVector const &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "linear_least_squares" "', argument " "2"" of type '" "CVector const &""'"); 
   }
   if (!argp2) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "least_squares_method" "', argument " "2"" of type '" "CVector const &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "linear_least_squares" "', argument " "2"" of type '" "CVector const &""'"); 
   }
   arg2 = reinterpret_cast< CVector * >(argp2);
-  result = LeastSquaresMethod((CVector const &)*arg1,(CVector const &)*arg2);
-  resultobj = SWIG_NewPointerObj((new Complex(static_cast< const Complex& >(result))), SWIGTYPE_p_Complex, SWIG_POINTER_OWN |  0 );
+  result = LinearLeastSquares((CVector const &)*arg1,(CVector const &)*arg2);
+  resultobj = SWIG_NewPointerObj((new CVector(static_cast< const CVector& >(result))), SWIGTYPE_p_CVector, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_least_squares_method(PyObject *self, PyObject *args) {
+SWIGINTERN PyObject *_wrap_linear_least_squares(PyObject *self, PyObject *args) {
   int argc;
   PyObject *argv[3];
   int ii;
@@ -13368,7 +13368,7 @@ SWIGINTERN PyObject *_wrap_least_squares_method(PyObject *self, PyObject *args) 
       int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_Vector, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_least_squares_method__SWIG_0(self, args);
+        return _wrap_linear_least_squares__SWIG_0(self, args);
       }
     }
   }
@@ -13380,16 +13380,16 @@ SWIGINTERN PyObject *_wrap_least_squares_method(PyObject *self, PyObject *args) 
       int res = SWIG_ConvertPtr(argv[1], 0, SWIGTYPE_p_CVector, 0);
       _v = SWIG_CheckState(res);
       if (_v) {
-        return _wrap_least_squares_method__SWIG_1(self, args);
+        return _wrap_linear_least_squares__SWIG_1(self, args);
       }
     }
   }
   
 fail:
-  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'least_squares_method'.\n"
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'linear_least_squares'.\n"
     "  Possible C/C++ prototypes are:\n"
-    "    LeastSquaresMethod(Vector const &,Vector const &)\n"
-    "    LeastSquaresMethod(CVector const &,CVector const &)\n");
+    "    LinearLeastSquares(Vector const &,Vector const &)\n"
+    "    LinearLeastSquares(CVector const &,CVector const &)\n");
   return NULL;
 }
 
@@ -15399,7 +15399,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"std_dev", _wrap_std_dev, METH_VARARGS, NULL},
 	 { (char *)"corr_coeff", _wrap_corr_coeff, METH_VARARGS, NULL},
 	 { (char *)"randomize", _wrap_randomize, METH_VARARGS, NULL},
-	 { (char *)"least_squares_method", _wrap_least_squares_method, METH_VARARGS, NULL},
+	 { (char *)"linear_least_squares", _wrap_linear_least_squares, METH_VARARGS, NULL},
 	 { (char *)"trace", _wrap_trace, METH_VARARGS, NULL},
 	 { (char *)"schur_product", _wrap_schur_product, METH_VARARGS, NULL},
 	 { (char *)"kronecker_product", _wrap_kronecker_product, METH_VARARGS, NULL},

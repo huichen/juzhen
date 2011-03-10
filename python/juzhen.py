@@ -407,9 +407,9 @@ def randomize(*args):
   return _juzhen.randomize(*args)
 randomize = _juzhen.randomize
 
-def least_squares_method(*args):
-  return _juzhen.least_squares_method(*args)
-least_squares_method = _juzhen.least_squares_method
+def linear_least_squares(*args):
+  return _juzhen.linear_least_squares(*args)
+linear_least_squares = _juzhen.linear_least_squares
 
 def trace(*args):
   return _juzhen.trace(*args)

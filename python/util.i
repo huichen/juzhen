@@ -170,9 +170,9 @@ CMatrix& Randomize(CMatrix &matrix);
 /**
  * Functions extracted from '../src/util/vector_fitting.h'.
  */
-%rename(least_squares_method) LeastSquaresMethod;
-double LeastSquaresMethod(const Vector &a, const Vector &b);
-Complex LeastSquaresMethod(const CVector &a, const CVector &b);
+%rename(linear_least_squares) LinearLeastSquares;
+Vector LinearLeastSquares(const Vector &a, const Vector &b);
+CVector LinearLeastSquares(const CVector &a, const CVector &b);
 
 
 /**
