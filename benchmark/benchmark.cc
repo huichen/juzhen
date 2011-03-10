@@ -55,11 +55,11 @@ int main(int argc, char *argv[]) {
   for (size_t j = 0; j < 100000; j++) M1(ni/2, ni/2) = 100.;
   END_BENCH
 
-  BEGIN_BENCH("M1 = M2.block (upper-left quarter), 1K times")
+  BEGIN_BENCH("M1 = M2.block (upper-left quarter), 10 times")
 #ifdef MLCPP
-  for (size_t j = 0; j < 100; j++) M1 = M2.Block(0, 0, ni/2-1, ni/2-1);
+  M1 = M2.Block(0, 0, ni/2-1, ni/2-1);
 #else
-  for (size_t j = 0; j < 100; j++) M1 = M2.block(0, 0, ni/2, ni/2);
+  M1 = M2.block(0, 0, ni/2, ni/2);
 #endif
   END_BENCH
 
