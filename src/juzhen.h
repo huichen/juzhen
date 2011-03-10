@@ -20,8 +20,8 @@
 +---------------------------------------------------------------------------+
 */
 
-#ifndef MLCPP_H_  // NOLINT
-#define MLCPP_H_
+#ifndef JUZHEN_H_  // NOLINT
+#define JUZHEN_H_
 #include <assert.h>
 
 #include <core/core.h>
@@ -31,4 +31,4 @@
 
 namespace juzhen {
 }
-#endif  // MLCPP_H_  // NOLINT
+#endif  // JUZHEN_H_  // NOLINT

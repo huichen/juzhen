@@ -1,12 +1,12 @@
-ifeq (${MLCPP_BLASLIB}, mkl) 
+ifeq (${JUZHEN_BLASLIB}, mkl) 
 CFLAGS = -DUSE_MKL -I../src -lmkl_rt -liomp5 -lpthread -lmkl_intel_thread -lmkl_core -std=c++0x -O3 -msse2 -DNDEBUG
 CC = g++ 
 else
-ifeq (${MLCPP_BLASLIB}, gotoblas2) 
+ifeq (${JUZHEN_BLASLIB}, gotoblas2) 
 CFLAGS = -I../src -lgoto2 -pthread -std=c++0x -O3 -msse2 -DNDEBUG
 CC = g++ 
 else
-ifeq (${MLCPP_BLASLIB}, blas) 
+ifeq (${JUZHEN_BLASLIB}, blas) 
 CFLAGS = -I../src -lblas -std=c++0x -O3 -msse2 -DNDEBUG
 CC = g++ 
 else

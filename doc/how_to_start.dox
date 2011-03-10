@@ -7,10 +7,10 @@ You need a package that provides CBLAS functions. I recommend optimized BLAS lib
 
 @section usage How to use Juzhen 
 
--# Set MLCPP_BLASLIB envron if you want to use MKL or GotoBlas2<br> <br> 
-   export MLCPP_BLASLIB=mkl<br><br> 
+-# Set JUZHEN_BLASLIB envron if you want to use MKL or GotoBlas2<br> <br> 
+   export JUZHEN_BLASLIB=mkl<br><br> 
    or <br><br> 
-   export MLCPP_BLASLIB=gotoblas2<br><br> 
+   export JUZHEN_BLASLIB=gotoblas2<br><br> 
 -# Run unit tests and make sure it passes everything:<br><br> 
    cd test <br> <br> 
    make <br><br> 

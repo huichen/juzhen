@@ -56,7 +56,7 @@ std::string String(const Vector<T> &vector) {
 }
 
 /**
- * Build a STL vector from a MLCPP Vector.
+ * Build a STL vector from a JUZHEN Vector.
  */
 template<typename T>
 std::vector<T> STLVector(const Vector<T> &vector) {

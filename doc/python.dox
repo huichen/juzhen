@@ -1,7 +1,7 @@
 /** 
 \page python Python Module 
 
-A Python interface to MLCPP was generated from <a href="http://www.swig.org/">SWIG</a>. Thanks to its efficient C++ core, the python module runs much faster than some numerical libraries such as <a href="http://numpy.scipy.org/">Numpy</a>. Read more about \ref python_performance. 
+A Python interface to JUZHEN was generated from <a href="http://www.swig.org/">SWIG</a>. Thanks to its efficient C++ core, the python module runs much faster than some numerical libraries such as <a href="http://numpy.scipy.org/">Numpy</a>. Read more about \ref python_performance. 
 
 @section compile Compile Python module 
 

@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
   END_BENCH
 
   BEGIN_BENCH("M1 = M2.block (upper-left quarter), 10 times")
-#ifdef MLCPP
+#ifdef JUZHEN
   M1 = M2.Block(0, 0, ni/2-1, ni/2-1);
 #else
   M1 = M2.block(0, 0, ni/2, ni/2);
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
   END_BENCH
 
   BEGIN_BENCH("M1 = M2.col(i), 1K times")
-#ifdef MLCPP
+#ifdef JUZHEN
   for (size_t j = 0; j < 100; j++) M1 = M2.GetCol(ni/2);
 #else
   for (size_t j = 0; j < 100; j++) M1 = M2.col(ni/2);
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
   END_BENCH
 
   BEGIN_BENCH("M1 = M2.row(i), 1K times")
-#ifdef MLCPP
+#ifdef JUZHEN
   for (size_t j = 0; j < 100; j++) M1 = M2.GetRow(ni/2);
 #else
   for (size_t j = 0; j < 100; j++) M1 = M2.row(ni/2);
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
   END_BENCH
 
   BEGIN_BENCH("M1 = M2.Conjugate()")
-#ifdef MLCPP
+#ifdef JUZHEN
   M1 = M2.Conjugate();
 #else
   M1 = M2.conjugate();
@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
   END_BENCH
 
   BEGIN_BENCH("M1 = M2.Transpose()")
-#ifdef MLCPP
+#ifdef JUZHEN
   M1 = M2.Transpose();
 #else
   M1 = M2.transpose();
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
   END_BENCH
 
   BEGIN_BENCH("M1 = M2.Adjoint()")
-#ifdef MLCPP
+#ifdef JUZHEN
   M1 = M2.Adjoint();
 #else
   M1 = M2.adjoint();

@@ -25,7 +25,7 @@
 #include <sys/time.h>
 #include <stdio.h>
 
-#ifdef MLCPP
+#ifdef JUZHEN
 #include <juzhen.h>
 #else
 #include <Eigen/Dense>
@@ -54,13 +54,13 @@ std::string FixedLengthInteger(int num_digits, int input) {
   return target;
 }
 
-#ifdef MLCPP
+#ifdef JUZHEN
 #define FNAME "juzhen_"
 #else
 #define FNAME "eigen_"
 #endif
 
-#ifdef MLCPP
+#ifdef JUZHEN
 #define RESIZE_MATRIX M1.Resize(ni, ni); \
 M2.Resize(ni, ni); \
 M3.Resize(ni, ni); \
@@ -117,7 +117,7 @@ fprintf(myfile, "%zu\t%f\n", ni, (t2.tv_sec-t1.tv_sec) \
 fclose(myfile);\
 }
 
-#ifdef MLCPP
+#ifdef JUZHEN
 #define DEFV(vi) \
 zmatrix M##vi(MAXN, MAXN); \
 for (size_t i = 0; i < MAXN; i++) \
@@ -132,7 +132,7 @@ M##vi(i, j) = 1;
 #endif
 
 
-#ifdef MLCPP
+#ifdef JUZHEN
 using juzhen::zmatrix;
 #else
 using Eigen::MatrixXcd;
