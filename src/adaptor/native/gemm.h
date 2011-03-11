@@ -32,13 +32,13 @@ void gemm(
   const T *ai, *bi;
   T *ci;
   #pragma omp parallel for private(ai, bi, ci)
-  for (size_t i = 0; i < M; i++) {
-    for (size_t j = 0; j < N; j++) {
+  for (int i = 0; i < M; i++) {
+    for (int j = 0; j < N; j++) {
       ai = A + i;
       bi = B + j * ldb;
       ci = c + j * ldc + i;
       (*ci) = 0;
-      for (size_t k = 0; k < K; k++) {
+      for (int k = 0; k < K; k++) {
         (*ci) += (*ai) * (*(bi++));
         ai += lda;
       }
