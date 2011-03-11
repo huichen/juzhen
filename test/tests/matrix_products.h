@@ -1,8 +1,10 @@
-double c1[] = {1, 2, 3, 4};
-double c2[] = {1, 5, 2, 4};
 
-dmatrix m1(c1, 2, 2); 
-dmatrix m2(c2, 2, 2); 
+dmatrix m1(2, 2); 
+m1 << 1, 3,
+      2, 4;
+dmatrix m2(2, 2); 
+m2 << 1, 2,
+      5, 4;
 
 VDE(Trace(m1), 5);
 V(SchurProduct(m1, m2), "1 6 \n10 16 ")

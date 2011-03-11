@@ -1,13 +1,14 @@
-double a[] = {1., 2., 3., 4.};
-double b[] = {1., 2., 3., 4., 5., 6.};
-
-smatrix m1(a, 2, 2);
+smatrix m1(2, 2);
+m1 << 1, 3,
+      2, 4;
 V(m1, "1 3 \n2 4 ")
 
 smatrix m2 = m1;
 V(m2, "1 3 \n2 4 ")
 
-m2 = dmatrix(a, 2, 2);
+m2 = dmatrix(2, 2);
+m2 << 1, 3,
+      2, 4;
 V(m2, "1 3 \n2 4 ")
 
 dmatrix mm;
@@ -20,7 +21,10 @@ V(m2, "1 99 \n2 4 ")
 m1 = -(-m2);
 V(m1, "1 99 \n2 4 ")
 
-smatrix m3(b, 3, 2);
+smatrix m3(3, 2);
+m3 << 1, 4,
+      2, 5,
+      3, 6;
 V(m3, "1 4 \n2 5 \n3 6 ")
 
 smatrix m4(3, 3);

@@ -1,7 +1,7 @@
-double c1[] = {1., 2., 3.};
-double c2[] = {2., 1., 7.};
-dvector v1(c1, 3);
-dvector v2(c2, 3);
+dvector v1(3);
+v1 << 1, 2, 3;
+dvector v2(3);
+v2 << 2, 1, 7;
 
 V(CrossProduct(v1, v2), "{11, -1, -3}")
 

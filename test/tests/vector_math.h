@@ -1,11 +1,11 @@
-double c1[] = {1, 2, 3, 4};
-double c2[] = {1, 3, 2, 4};
+svector v1 (4);
+v1 << 1, 2, 3, 4;
+svector v2 (4);
+v2 << 1, 3, 2, 4;
 
-svector v1 (c1, 4);
-svector v2 (c2, 4);
-
-double cm1[] = {1, 2, 3, 4, 5, 6};
-smatrix m1(cm1, 2, 3);
+smatrix m1(2, 3);
+m1 << 1, 3, 5, 
+      2, 4, 6;
 
 V(svector(m1), "{1, 2, 3, 4, 5, 6}")
 

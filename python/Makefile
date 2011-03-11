@@ -1,16 +1,16 @@
 ifeq (${JUZHEN_BLASLIB}, mkl) 
-CFLAGS = -DUSE_MKL -I../src -lmkl_rt -liomp5 -lpthread -lmkl_intel_thread -lmkl_core -std=c++0x -O3 -msse2 -DNDEBUG
+CFLAGS = -DUSE_MKL -I../src -lmkl_rt -liomp5 -lpthread -lmkl_intel_thread -lmkl_core -O3 -msse2 -DNDEBUG
 CC = g++ 
 else
 ifeq (${JUZHEN_BLASLIB}, gotoblas2) 
-CFLAGS = -I../src -lgoto2 -pthread -std=c++0x -O3 -msse2 -DNDEBUG
+CFLAGS = -I../src -lgoto2 -pthread -O3 -msse2 -DNDEBUG
 CC = g++ 
 else
 ifeq (${JUZHEN_BLASLIB}, blas) 
-CFLAGS = -I../src -lblas -std=c++0x -O3 -msse2 -DNDEBUG
+CFLAGS = -I../src -lblas -O3 -msse2 -DNDEBUG
 CC = g++ 
 else
-CFLAGS = -I../src -std=c++0x -O3 -msse2 -DNDEBUG -fopenmp
+CFLAGS = -I../src -O3 -msse2 -DNDEBUG -fopenmp
 CC = g++ 
 endif
 endif
