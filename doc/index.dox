@@ -8,9 +8,9 @@ Download the <a href="https://github.com/huichen/juzhen/tarball/master">tarball<
 
 - git clone https://github.com/huichen/juzhen.git
 
-@section howtostart How to start
+@section manual User's Manual 
 
-Read the \ref how_to_start page.
+Download the <a href="Juzhen_manual.pdf">User's Manual</a>.
 
 @section benchmarks Benchmarks
 
