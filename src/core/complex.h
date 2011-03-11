@@ -323,35 +323,35 @@ inline const Complex<T> operator/(const T1 &b, const Complex<T> &a) {
 }
 
 template<typename T>
-inline T abs2(const Complex<T> &a) {
+inline T Abs2(const Complex<T> &a) {
   return a.real * a.real + a.imag * a.imag;
 }
 
-inline double abs2(double a) {
+inline double Abs2(double a) {
   return a * a;
 }
 
-inline float abs2(float a) {
+inline float Abs2(float a) {
   return a * a;
 }
 
 template<typename T>
-inline T abs(const Complex<T> &a) {
+inline T Abs(const Complex<T> &a) {
   return sqrt(a.real * a.real + a.imag * a.imag);
 }
 
-inline double abs(double a) {
+inline double Abs(double a) {
   return a > 0 ? a : -a;
 }
 
-inline float abs(float a) {
+inline float Abs(float a) {
   return a > 0 ? a : -a;
 }
 
 template<typename T, typename T1>
 inline const Complex<T> operator/(const Complex<T> &a, const Complex<T1> &b) {
   Complex<T> c;
-  T de = 1 / abs2(b);
+  T de = 1 / Abs2(b);
   c.real = de * (a.real * b.real + a.imag * b.imag);
   c.imag = de * (-a.real * b.imag + a.imag * b.real);
   return c;
@@ -359,7 +359,7 @@ inline const Complex<T> operator/(const Complex<T> &a, const Complex<T1> &b) {
 
 template<typename T, typename T1>
 inline Complex<T> &operator/=(Complex<T> &a, const Complex<T1> &b) {
-  T de = 1 / abs2(b);
+  T de = 1 / Abs2(b);
   T temp = a.real;
   a.real = de * (a.real * b.real + a.imag * b.imag);
   a.imag = de * (-temp * b.imag + a.imag * b.real);
@@ -383,30 +383,30 @@ inline float Conjugate(float a) {
 }
 
 template<typename T>
-inline T real(const Complex<T> &a) {
+inline T Real(const Complex<T> &a) {
   return a.real;
 }
 
 template<typename T>
-inline T imag(const Complex<T> &a) {
+inline T Imag(const Complex<T> &a) {
   return a.imag;
 }
 
-inline float real(float a) {
+inline float Real(float a) {
   return a;
 }
 
 template<typename T>
-inline float imag(float a) {
+inline float Imag(float a) {
   return a;
 }
 
-inline double real(double a) {
+inline double Real(double a) {
   return a;
 }
 
 template<typename T>
-inline double imag(double a) {
+inline double Imag(double a) {
   return a;
 }
 

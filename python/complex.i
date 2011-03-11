@@ -54,7 +54,11 @@ struct Complex {
     }
 
     double abs() {
-      return abs(*$self);
+      return Abs(*$self);
+    }
+
+    double abs2() {
+      return Abs2(*$self);
     }
   }
 

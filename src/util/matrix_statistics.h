@@ -103,7 +103,7 @@ double NormSquare(const Matrix<T> &m) {
   double r = 0;
   size_t size = m.size();
   for (size_t i = 0; i < size; i++)
-    r += abs2(m(i));
+    r += Abs2(m(i));
   return r;
 }
 
@@ -123,7 +123,7 @@ double NormOne(const Matrix<T> &m) {
   double r = 0;
   size_t size = m.size();
   for (size_t i = 0; i < size; i++)
-    r += abs(m(i));
+    r += Abs(m(i));
   return r;
 }
 
@@ -135,10 +135,10 @@ double NormInfinity(const Matrix<T> &m) {
   size_t size = m.size();
   if (size == 0)
     return 0;
-  double r = abs(m(0));
+  double r = Abs(m(0));
   for (size_t i = 1; i < size; i++)
-    if (r < abs(m(i)))
-      r = abs(m(i));
+    if (r < Abs(m(i)))
+      r = Abs(m(i));
   return r;
 }
 }

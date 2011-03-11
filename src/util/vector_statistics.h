@@ -78,7 +78,7 @@ double NormSquare(const Vector<T> &v) {
   double r = 0;
   size_t size = v.size();
   for (size_t i = 0; i < size; i++)
-    r += abs2(v(i));
+    r += Abs2(v(i));
   return r;
 }
 
@@ -98,7 +98,7 @@ double NormOne(const Vector<T> &v) {
   double r = 0;
   size_t size = v.size();
   for (size_t i = 0; i < size; i++)
-    r += abs(v(i));
+    r += Abs(v(i));
   return r;
 }
 
@@ -110,10 +110,10 @@ double NormInfinity(const Vector<T> &v) {
   size_t size = v.size();
   if (size == 0)
     return 0;
-  double r = abs(v(0));
+  double r = Abs(v(0));
   for (size_t i = 1; i < size; i++)
-    if (r < abs(v(i)))
-      r = abs(v(i));
+    if (r < Abs(v(i)))
+      r = Abs(v(i));
   return r;
 }
 

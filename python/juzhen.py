@@ -87,6 +87,7 @@ class Complex(_object):
     def __div__(self, *args): return _juzhen.Complex___div__(self, *args)
     def conj(self): return _juzhen.Complex_conj(self)
     def abs(self): return _juzhen.Complex_abs(self)
+    def abs2(self): return _juzhen.Complex_abs2(self)
     __swig_setmethods__["real"] = _juzhen.Complex_real_set
     __swig_getmethods__["real"] = _juzhen.Complex_real_get
     if _newclass:real = _swig_property(_juzhen.Complex_real_get, _juzhen.Complex_real_set)

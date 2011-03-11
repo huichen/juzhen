@@ -2939,11 +2939,14 @@ SWIGINTERN Complex Complex_conj(Complex *self){
       return Conjugate(*self);
     }
 SWIGINTERN double Complex_abs(Complex *self){
-      return abs(*self);
+      return Abs(*self);
     }
 
   #define SWIG_From_double   PyFloat_FromDouble 
 
+SWIGINTERN double Complex_abs2(Complex *self){
+      return Abs2(*self);
+    }
 
 #include <limits.h>
 #if !defined(SWIG_NO_LLONG_MAX)
@@ -4304,6 +4307,28 @@ SWIGINTERN PyObject *_wrap_Complex_abs(PyObject *SWIGUNUSEDPARM(self), PyObject 
   }
   arg1 = reinterpret_cast< Complex * >(argp1);
   result = (double)Complex_abs(arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Complex_abs2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Complex *arg1 = (Complex *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Complex_abs2",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Complex, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Complex_abs2" "', argument " "1"" of type '" "Complex *""'"); 
+  }
+  arg1 = reinterpret_cast< Complex * >(argp1);
+  result = (double)Complex_abs2(arg1);
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
@@ -15237,6 +15262,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Complex___div__", _wrap_Complex___div__, METH_VARARGS, NULL},
 	 { (char *)"Complex_conj", _wrap_Complex_conj, METH_VARARGS, NULL},
 	 { (char *)"Complex_abs", _wrap_Complex_abs, METH_VARARGS, NULL},
+	 { (char *)"Complex_abs2", _wrap_Complex_abs2, METH_VARARGS, NULL},
 	 { (char *)"Complex_real_set", _wrap_Complex_real_set, METH_VARARGS, NULL},
 	 { (char *)"Complex_real_get", _wrap_Complex_real_get, METH_VARARGS, NULL},
 	 { (char *)"Complex_imag_set", _wrap_Complex_imag_set, METH_VARARGS, NULL},

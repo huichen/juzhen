@@ -30,13 +30,13 @@
 namespace juzhen {
 
 /**
- * Return the abs of a Matrix
+ * Return the Abs of a Matrix
  */
 Matrix<float> Abs(const Matrix<float> &ma) {
   Matrix<float> m(ma);
   size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs(m(i));
+    m(i) = Abs(m(i));
   m.set_temporary(true);
   return m;
 }
@@ -45,7 +45,7 @@ Matrix<double> Abs(const Matrix<double> &ma) {
   Matrix<double> m(ma);
   size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs(m(i));
+    m(i) = Abs(m(i));
   m.set_temporary(true);
   return m;
 }
@@ -54,7 +54,7 @@ Matrix<float> Abs(const Matrix<CS> &ma) {
   Matrix<float> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs(ma(i));
+    m(i) = Abs(ma(i));
   m.set_temporary(true);
   return m;
 }
@@ -63,19 +63,19 @@ Matrix<double> Abs(const Matrix<CD> &ma) {
   Matrix<double> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs(ma(i));
+    m(i) = Abs(ma(i));
   m.set_temporary(true);
   return m;
 }
 
 /**
- * Return the abs-square of a Matrix
+ * Return the Abs-square of a Matrix
  */
 Matrix<float> Abs2(const Matrix<float> &ma) {
   Matrix<float> m(ma);
   size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs2(m(i));
+    m(i) = Abs2(m(i));
   m.set_temporary(true);
   return m;
 }
@@ -84,7 +84,7 @@ Matrix<double> Abs2(const Matrix<double> &ma) {
   Matrix<double> m(ma);
   size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs2(m(i));
+    m(i) = Abs2(m(i));
   m.set_temporary(true);
   return m;
 }
@@ -93,7 +93,7 @@ Matrix<float> Abs2(const Matrix<CS> &ma) {
   Matrix<float> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs2(ma(i));
+    m(i) = Abs2(ma(i));
   m.set_temporary(true);
   return m;
 }
@@ -102,7 +102,7 @@ Matrix<double> Abs2(const Matrix<CD> &ma) {
   Matrix<double> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   for (size_t i = 0; i < endi; i++)
-    m(i) = abs2(ma(i));
+    m(i) = Abs2(ma(i));
   m.set_temporary(true);
   return m;
 }
