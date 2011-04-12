@@ -58,63 +58,63 @@ Vector<T> Conjugate(const Vector<T> &v) {
 /**
  * Return the real part of a Vector.
  */
-Vector<float> Real(const Vector<float> &v) {
+inline Vector<float> Real(const Vector<float> &v) {
   return Real((Matrix<float>)v);
 }
 
 /**
  * Return the imaginary part of a Vector.
  */
-Vector<float> Imag(const Vector<float> &v) {
+inline Vector<float> Imag(const Vector<float> &v) {
   return Imag((Matrix<float>)v);
 }
 
 /**
  * Return the real part of a Vector.
  */
-Vector<double> Real(const Vector<double> &v) {
+inline Vector<double> Real(const Vector<double> &v) {
   return Real((Matrix<double>)v);
 }
 
 /**
  * Return the imaginary part of a Vector.
  */
-Vector<double> Imag(const Vector<double> &v) {
+inline Vector<double> Imag(const Vector<double> &v) {
   return Imag((Matrix<double>)v);
 }
 
 /**
  * Return the real part of a Vector.
  */
-Vector<float> Real(const Vector<CS> &v) {
+inline Vector<float> Real(const Vector<CS> &v) {
   return Real((Matrix<CS>)v);
 }
 
 /**
  * Return the imaginary part of a Vector.
  */
-Vector<float> Imag(const Vector<CS> &v) {
+inline Vector<float> Imag(const Vector<CS> &v) {
   return Imag((Matrix<CS>)v);
 }
 
 /**
  * Return the real part of a Vector.
  */
-Vector<double> Real(const Vector<CD> &v) {
+inline Vector<double> Real(const Vector<CD> &v) {
   return Real((Matrix<CD>)v);
 }
 
 /**
  * Return the imaginary part of a Vector.
  */
-Vector<double> Imag(const Vector<CD> &v) {
+inline Vector<double> Imag(const Vector<CD> &v) {
   return Imag((Matrix<CD>)v);
 }
 
 /**
  * Return the Abs of a Vector
  */
-Vector<float> Abs(const Vector<float> &vector) {
+inline Vector<float> Abs(const Vector<float> &vector) {
   Vector<float> v(vector);
   size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
@@ -123,7 +123,7 @@ Vector<float> Abs(const Vector<float> &vector) {
   return v;
 }
 
-Vector<double> Abs(const Vector<double> &vector) {
+inline Vector<double> Abs(const Vector<double> &vector) {
   Vector<double> v(vector);
   size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
@@ -132,7 +132,7 @@ Vector<double> Abs(const Vector<double> &vector) {
   return v;
 }
 
-Vector<float> Abs(const Vector<CS> &vector) {
+inline Vector<float> Abs(const Vector<CS> &vector) {
   Vector<float> v(vector.size());
   size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
@@ -141,7 +141,7 @@ Vector<float> Abs(const Vector<CS> &vector) {
   return v;
 }
 
-Vector<double> Abs(const Vector<CD> &vector) {
+inline Vector<double> Abs(const Vector<CD> &vector) {
   Vector<double> v(vector.size());
   size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
@@ -153,7 +153,7 @@ Vector<double> Abs(const Vector<CD> &vector) {
 /**
  * Return the Abs-square of a Vector
  */
-Vector<float> Abs2(const Vector<float> &vector) {
+inline Vector<float> Abs2(const Vector<float> &vector) {
   Vector<float> v(vector);
   size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
@@ -162,7 +162,7 @@ Vector<float> Abs2(const Vector<float> &vector) {
   return v;
 }
 
-Vector<double> Abs2(const Vector<double> &vector) {
+inline Vector<double> Abs2(const Vector<double> &vector) {
   Vector<double> v(vector);
   size_t endi = v.size();
   for (size_t i = 0; i < endi; i++)
@@ -171,7 +171,7 @@ Vector<double> Abs2(const Vector<double> &vector) {
   return v;
 }
 
-Vector<float> Abs2(const Vector<CS> &vector) {
+inline Vector<float> Abs2(const Vector<CS> &vector) {
   Vector<float> v(vector.size());
   size_t endi = vector.size();
   for (size_t i = 0; i < endi; i++)
@@ -180,7 +180,7 @@ Vector<float> Abs2(const Vector<CS> &vector) {
   return v;
 }
 
-Vector<double> Abs2(const Vector<CD> &vector) {
+inline Vector<double> Abs2(const Vector<CD> &vector) {
   Vector<double> v(vector.size());
   size_t endi = vector.size();
   for (size_t i = 0; i < endi; i++)

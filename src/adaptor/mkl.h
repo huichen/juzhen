@@ -39,7 +39,7 @@ void gemm(
   assert(0);  // always fails
 }
 
-template<>
+template<> inline
 void gemm<float>(
     const MKL_INT M, const MKL_INT N,
     const MKL_INT K, const float *A, const MKL_INT lda, const float *B,
@@ -48,7 +48,7 @@ void gemm<float>(
               A, lda, B, ldb, 0., c, ldc);
 }
 
-template<>
+template<> inline
 void gemm<double>(
     const MKL_INT M, const MKL_INT N,
     const MKL_INT K, const double *A, const MKL_INT lda, const double *B,
@@ -57,7 +57,7 @@ void gemm<double>(
               A, lda, B, ldb, 0., c, ldc);
 }
 
-template<>
+template<> inline
 void gemm<CS>(
     const MKL_INT M, const MKL_INT N,
     const MKL_INT K, const CS  *A, const MKL_INT lda, const CS  *B,
@@ -68,7 +68,7 @@ void gemm<CS>(
               A, lda, B, ldb, &beta, c, ldc);
 }
 
-template<>
+template<> inline
 void gemm<CD>(
     const MKL_INT M, const MKL_INT N,
     const MKL_INT K, const CD  *A, const MKL_INT lda, const CD  *B,
@@ -87,7 +87,7 @@ int geev(
   assert(0);  // always fails
 }
 
-template<>
+template<> inline
 int geev<float, CS>(
     char nl, char nr, const MKL_INT n,
     float *a, const MKL_INT lda, CS * w, float *vl, const MKL_INT ldvl,
@@ -104,7 +104,7 @@ int geev<float, CS>(
   return r;
 }
 
-template<>
+template<> inline
 int geev<double, CD>(
     char nl, char nr, const MKL_INT n,
     double *a, const MKL_INT lda, CD * w, double *vl, const MKL_INT ldvl,
@@ -121,7 +121,7 @@ int geev<double, CD>(
   return r;
 }
 
-template<>
+template<> inline
 int geev<CS, CS>(
     char nl, char nr, const MKL_INT n,
     CS *a, const MKL_INT lda, CS * w, CS *vl, const MKL_INT ldvl,
@@ -134,7 +134,7 @@ int geev<CS, CS>(
       reinterpret_cast<MKL_Complex8 *>(vr), ldvr);
 }
 
-template<>
+template<> inline
 int geev<CD, CD>(
     char nl, char nr, const MKL_INT n,
     CD *a, const MKL_INT lda, CD * w, CD *vl, const MKL_INT ldvl,
@@ -157,7 +157,7 @@ int gesv(
   assert(0);  // always fails
 }
 
-template<>
+template<> inline
 int gesv<float>(
     const MKL_INT n, const MKL_INT nrhs,
     float *a, const MKL_INT lda, float *b, const MKL_INT ldb) {
@@ -167,7 +167,7 @@ int gesv<float>(
   return r;
 }
 
-template<>
+template<> inline
 int gesv<double>(
     const MKL_INT n, const MKL_INT nrhs,
     double *a, const MKL_INT lda, double *b, const MKL_INT ldb) {
@@ -177,7 +177,7 @@ int gesv<double>(
   return r;
 }
 
-template<>
+template<> inline
 int gesv<CS>(
     const MKL_INT n, const MKL_INT nrhs,
     CS *a, const MKL_INT lda, CS *b, const MKL_INT ldb) {
@@ -189,7 +189,7 @@ int gesv<CS>(
   return r;
 }
 
-template<>
+template<> inline
 int gesv<CD>(
     const MKL_INT n, const MKL_INT nrhs,
     CD *a, const MKL_INT lda, CD *b, const MKL_INT ldb) {
@@ -210,7 +210,7 @@ int matrix_inverse(
   assert(0);  // always fails
 }
 
-template<>
+template<> inline
 int matrix_inverse(
     const MKL_INT m, const MKL_INT n, float *a, const MKL_INT lda) {
   MKL_INT info, lwork;
@@ -228,7 +228,7 @@ int matrix_inverse(
   return info;
 }
 
-template<>
+template<> inline
 int matrix_inverse(
     const MKL_INT m, const MKL_INT n, double *a, const MKL_INT lda) {
   MKL_INT info, lwork;
@@ -246,7 +246,7 @@ int matrix_inverse(
   return info;
 }
 
-template<>
+template<> inline
 int matrix_inverse(
     const MKL_INT m, const MKL_INT n, CS *a, const MKL_INT lda) {
   MKL_INT info, lwork;
@@ -265,7 +265,7 @@ int matrix_inverse(
   return info;
 }
 
-template<>
+template<> inline
 int matrix_inverse(
     const MKL_INT m, const MKL_INT n, CD *a, const MKL_INT lda) {
   MKL_INT info, lwork;
@@ -292,7 +292,7 @@ T matrix_determinant(const MKL_INT m, T *a) {
   assert(0);  // always fails
 }
 
-template<>
+template<> inline
 float matrix_determinant(const MKL_INT m, float *a) {
   MKL_INT n, lda;
   MKL_INT info, lwork;
@@ -314,7 +314,7 @@ float matrix_determinant(const MKL_INT m, float *a) {
   return r;
 }
 
-template<>
+template<> inline
 double matrix_determinant(const MKL_INT m, double *a) {
   MKL_INT n, lda;
   MKL_INT info, lwork;
@@ -336,7 +336,7 @@ double matrix_determinant(const MKL_INT m, double *a) {
   return r;
 }
 
-template<>
+template<> inline
 CS matrix_determinant(const MKL_INT m, CS *a) {
   MKL_INT n, lda;
   MKL_INT info, lwork;
@@ -358,7 +358,7 @@ CS matrix_determinant(const MKL_INT m, CS *a) {
   return r;
 }
 
-template<>
+template<> inline
 CD matrix_determinant(const MKL_INT m, CD *a) {
   MKL_INT n, lda;
   MKL_INT info, lwork;

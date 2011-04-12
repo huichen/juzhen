@@ -32,7 +32,7 @@ namespace juzhen {
 
 static unsigned int sRandomSeed = 9527;
 
-void UpdateRandomSeed() {
+inline void UpdateRandomSeed() {
   sRandomSeed = (unsigned int)time(0);
 }
 

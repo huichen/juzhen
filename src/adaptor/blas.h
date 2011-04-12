@@ -36,7 +36,7 @@ void gemm(
   assert(0);  // always fails
 }
 
-template<>
+template<> inline
 void gemm<float>(
     const int M, const int N,
     const int K, const float *A, const int lda, const float *B,
@@ -45,7 +45,7 @@ void gemm<float>(
               A, lda, B, ldb, 0., c, ldc);
 }
 
-template<>
+template<> inline
 void gemm<double>(
     const int M, const int N,
     const int K, const double *A, const int lda, const double *B,
@@ -54,7 +54,7 @@ void gemm<double>(
               A, lda, B, ldb, 0., c, ldc);
 }
 
-template<>
+template<> inline
 void gemm<CS>(
     const int M, const int N,
     const int K, const CS  *A, const int lda, const CS *B,
@@ -65,7 +65,7 @@ void gemm<CS>(
               A, lda, B, ldb, &beta, c, ldc);
 }
 
-template<>
+template<> inline
 void gemm<CD>(
     const int M, const int N,
     const int K, const CD  *A, const int lda, const CD  *B,

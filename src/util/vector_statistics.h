@@ -191,12 +191,12 @@ T StdDev(const Vector<T> &vector) {
   assert(0);
 }
 
-template<>
+template<> inline
 float StdDev(const Vector<float> &vector) {
   return sqrt(Var(vector));
 }
 
-template<>
+template<> inline
 double StdDev(const Vector<double> &vector) {
   return sqrt(Var(vector));
 }

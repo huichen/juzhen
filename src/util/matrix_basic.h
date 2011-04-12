@@ -32,7 +32,7 @@ namespace juzhen {
 /**
  * Return the Abs of a Matrix
  */
-Matrix<float> Abs(const Matrix<float> &ma) {
+inline Matrix<float> Abs(const Matrix<float> &ma) {
   Matrix<float> m(ma);
   size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
@@ -41,7 +41,7 @@ Matrix<float> Abs(const Matrix<float> &ma) {
   return m;
 }
 
-Matrix<double> Abs(const Matrix<double> &ma) {
+inline Matrix<double> Abs(const Matrix<double> &ma) {
   Matrix<double> m(ma);
   size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
@@ -50,7 +50,7 @@ Matrix<double> Abs(const Matrix<double> &ma) {
   return m;
 }
 
-Matrix<float> Abs(const Matrix<CS> &ma) {
+inline Matrix<float> Abs(const Matrix<CS> &ma) {
   Matrix<float> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   for (size_t i = 0; i < endi; i++)
@@ -59,7 +59,7 @@ Matrix<float> Abs(const Matrix<CS> &ma) {
   return m;
 }
 
-Matrix<double> Abs(const Matrix<CD> &ma) {
+inline Matrix<double> Abs(const Matrix<CD> &ma) {
   Matrix<double> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   for (size_t i = 0; i < endi; i++)
@@ -71,7 +71,7 @@ Matrix<double> Abs(const Matrix<CD> &ma) {
 /**
  * Return the Abs-square of a Matrix
  */
-Matrix<float> Abs2(const Matrix<float> &ma) {
+inline Matrix<float> Abs2(const Matrix<float> &ma) {
   Matrix<float> m(ma);
   size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
@@ -80,7 +80,7 @@ Matrix<float> Abs2(const Matrix<float> &ma) {
   return m;
 }
 
-Matrix<double> Abs2(const Matrix<double> &ma) {
+inline Matrix<double> Abs2(const Matrix<double> &ma) {
   Matrix<double> m(ma);
   size_t endi = m.size();
   for (size_t i = 0; i < endi; i++)
@@ -89,7 +89,7 @@ Matrix<double> Abs2(const Matrix<double> &ma) {
   return m;
 }
 
-Matrix<float> Abs2(const Matrix<CS> &ma) {
+inline Matrix<float> Abs2(const Matrix<CS> &ma) {
   Matrix<float> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   for (size_t i = 0; i < endi; i++)
@@ -98,7 +98,7 @@ Matrix<float> Abs2(const Matrix<CS> &ma) {
   return m;
 }
 
-Matrix<double> Abs2(const Matrix<CD> &ma) {
+inline Matrix<double> Abs2(const Matrix<CD> &ma) {
   Matrix<double> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   for (size_t i = 0; i < endi; i++)
@@ -110,14 +110,14 @@ Matrix<double> Abs2(const Matrix<CD> &ma) {
 /**
  * Return the real part of a Matrix
  */
-Matrix<float> Real(const Matrix<float> &ma) {
+inline Matrix<float> Real(const Matrix<float> &ma) {
   return ma;
 }
 
 /**
  * Return the imaginary part of a Matrix
  */
-Matrix<float> Imag(const Matrix<float> &ma) {
+inline Matrix<float> Imag(const Matrix<float> &ma) {
   Matrix<float> m(ma);
   m.Clear();
   m.set_temporary(true);
@@ -127,14 +127,14 @@ Matrix<float> Imag(const Matrix<float> &ma) {
 /**
  * Return the real part of a Matrix
  */
-Matrix<double> Real(const Matrix<double> &ma) {
+inline Matrix<double> Real(const Matrix<double> &ma) {
   return ma;
 }
 
 /**
  * Return the imaginary part of a Matrix
  */
-Matrix<double> Imag(const Matrix<double> &ma) {
+inline Matrix<double> Imag(const Matrix<double> &ma) {
   Matrix<double> m(ma);
   m.Clear();
   m.set_temporary(true);
@@ -144,7 +144,7 @@ Matrix<double> Imag(const Matrix<double> &ma) {
 /**
  * Return the real part of a Matrix
  */
-Matrix<float> Real(const Matrix<CS> &ma) {
+inline Matrix<float> Real(const Matrix<CS> &ma) {
   Matrix<float> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   float *p1;
@@ -160,7 +160,7 @@ Matrix<float> Real(const Matrix<CS> &ma) {
 /**
  * Return the imaginary part of a Matrix
  */
-Matrix<float> Imag(const Matrix<CS> &ma) {
+inline Matrix<float> Imag(const Matrix<CS> &ma) {
   Matrix<float> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   float *p1;
@@ -176,7 +176,7 @@ Matrix<float> Imag(const Matrix<CS> &ma) {
 /**
  * Return the real part of a Matrix
  */
-Matrix<double> Real(const Matrix<CD> &ma) {
+inline Matrix<double> Real(const Matrix<CD> &ma) {
   Matrix<double> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   double *p1;
@@ -192,7 +192,7 @@ Matrix<double> Real(const Matrix<CD> &ma) {
 /**
  * Return the imaginary part of a Matrix
  */
-Matrix<double> Imag(const Matrix<CD> &ma) {
+inline Matrix<double> Imag(const Matrix<CD> &ma) {
   Matrix<double> m(ma.num_row(), ma.num_col());
   size_t endi = ma.size();
   double *p1;
